@@ -4,6 +4,7 @@ __pycache__/
 
 # Setting up of PyCharm
 .idea/
+*.sqlite3
 
 # C extensions
 *.so
