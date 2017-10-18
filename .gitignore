@@ -3,7 +3,7 @@ __pycache__/
 *$py.class
 
 # Setting up of PyCharm
-.idea/workspace.xml
+.idea/
 
 # C extensions
 *.so
