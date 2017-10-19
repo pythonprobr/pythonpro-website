@@ -1,7 +1,10 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
 *$py.class
+
+# Setting up of PyCharm
+.idea/
+*.sqlite3
 
 # C extensions
 *.so
