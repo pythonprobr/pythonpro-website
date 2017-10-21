@@ -1,0 +1,12 @@
+python-targets:
+  - 3
+
+uses:
+  - django
+
+ignore-paths:
+   - staticfiles
+   - pythonpro/core/static
+   - pythonpro/wsgi.py
+   - pythonpro/core/migrations
+   - pythonpro/core/admin.py
