@@ -1,2 +1,7 @@
 Django==2.0b1
+dj_database_url==0.4.2
 pytz==2017.2
+dynaconf==0.5.2
+python_box==3.1.1
+six==1.11.0
+PyYAML==3.12
