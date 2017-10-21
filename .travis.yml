@@ -1,0 +1,10 @@
+language: python
+python:
+  - 3.6
+install:
+  - pip install -r requirements.txt
+  - pip install codecov
+script:
+  - pytest --cov=pythonpro
+after_success:
+  - codecov

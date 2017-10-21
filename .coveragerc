@@ -1,0 +1,3 @@
+[run]
+source=pythonpro
+omit=pythonpro/wsgi.py
