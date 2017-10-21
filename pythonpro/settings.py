@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'collectfast',
     'django.contrib.staticfiles',
 ]
 
@@ -113,8 +114,50 @@ USE_L10N = True
 
 USE_TZ = True
 
+if DEBUG:
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/dev/howto/static-files/
+    # Static files (CSS, JavaScript, Images)
+    # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+else:
+
+    # STORAGE CONFIGURATION IN S3 AWS
+    # ------------------------------------------------------------------------------
+    # Uploaded Media Files
+    # ------------------------------------------------------------------------------
+
+    INSTALLED_APPS.append('storages',)
+    INSTALLED_APPS.append('s3_folder_storage',)
+
+    AWS_ACCESS_KEY_ID = 'Aqui vem a Key Id gerada na AWS'
+    AWS_SECRET_ACCESS_KEY = 'Aqui vem o Secret Access Key gerado na AWS '
+    AWS_STORAGE_BUCKET_NAME = 'Aqui vem o nome do Buket criado para armazenar os arquivos na AWS'
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400', }
+    AWS_PRELOAD_METADATA = True
+    AWS_AUTO_CREATE_BUCKET = True
+    AWS_QUERYSTRING_AUTH = False
+
+    # AWS cache settings, don't change unless you know what you're doing:
+    AWS_EXPIRY = 60 * 60 * 24 * 7
+
+    # Revert the following and use str after the above-mentioned bug is fixed in
+    # either django-storage-redux or boto
+    control = 'max-age=%d, s-maxage=%d, must-revalidate' % (AWS_EXPIRY, AWS_EXPIRY)
+
+    # Upload Media Folder
+    DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
+    DEFAULT_S3_PATH = "media"
+    MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
+    MEDIA_URL = '//s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME
+
+    # Static Assets
+    # ------------------------------------------------------------------------------
+    STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
+    STATIC_S3_PATH = "static"
+    STATIC_ROOT = "/%s/" % STATIC_S3_PATH
+    STATIC_URL = '//s3.amazonaws.com/%s/static/' % AWS_STORAGE_BUCKET_NAME
+    ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
