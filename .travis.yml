@@ -4,6 +4,7 @@ python:
 install:
   - pip install -r requirements-dev.txt codecov
 script:
+  - flake8 .
   - pytest --cov=pythonpro
 after_success:
   - codecov
