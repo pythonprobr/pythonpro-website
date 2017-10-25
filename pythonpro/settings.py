@@ -13,20 +13,23 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+import dj_database_url
+from dynaconf import settings
 
+settings.configure('settings.yml')
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_vx-n(yf&188g_nn1k5z5o3=_mgq7byjeafh@rvttzw-okpmtm'
+SECRET_KEY = settings.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = settings.get('DEBUG', False)
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 # Application definition
 
@@ -74,12 +77,10 @@ WSGI_APPLICATION = 'pythonpro.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-
+default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+default_db_url = settings.get('DATABASE', default_db_url)
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.parse(default_db_url)
 }
 
 
@@ -132,7 +133,7 @@ else:
     # ------------------------------------------------------------------------------
 
     INSTALLED_APPS.append('storages',)
-    INSTALLED_APPS.append('s3_folder_storage',)
+    # INSTALLED_APPS.append('s3_folder_storage')
 
     AWS_ACCESS_KEY_ID = 'Aqui vem a Key Id gerada na AWS'
     AWS_SECRET_ACCESS_KEY = 'Aqui vem o Secret Access Key gerado na AWS '

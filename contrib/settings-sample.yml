@@ -1,0 +1,5 @@
+DYNACONF:
+  DEBUG: False
+  SECRET_KEY: 'put a real secret here'
+  # DATABASE_URL:
+  ALLOWED_HOSTS: ['127.0.0.1', .localhost, .herokuapp.com]

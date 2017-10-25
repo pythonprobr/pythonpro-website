@@ -2,6 +2,7 @@ language: python
 python:
   - 3.6
 install:
+  - cp contrib/settings-sample.yml settings.yml
   - pip install -r requirements-dev.txt codecov
 script:
   - flake8 .
