@@ -9,7 +9,7 @@ addons:
   postgresql: "9.5"
 
 install:
-  - cp contrib/settings-sample.yml settings.yml
+  - cp contrib/env-sample .env
   - pip install -q -r requirements-dev.txt codecov
 
 before_script:
