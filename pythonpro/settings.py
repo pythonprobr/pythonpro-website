@@ -16,7 +16,8 @@ import os
 import dj_database_url
 from dynaconf import settings
 
-settings.configure('settings.yml')
+if os.path.exists('settings.yml'):
+    settings.configure('settings.yml')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

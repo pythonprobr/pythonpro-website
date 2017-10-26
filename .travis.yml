@@ -1,11 +1,25 @@
 language: python
 python:
   - 3.6
+
+services:
+  postgresql
+
+addons:
+  postgresql: "9.5"
+
 install:
   - cp contrib/settings-sample.yml settings.yml
-  - pip install -r requirements-dev.txt codecov
+  - pip install -q -r requirements-dev.txt codecov
+
+before_script:
+  - psql -c "CREATE DATABASE testdb;" -U postgres
+  - python manage.py migrate --noinput
+  - python manage.py collectstatic
+
 script:
   - flake8 .
   - pytest --cov=pythonpro
+
 after_success:
   - codecov
