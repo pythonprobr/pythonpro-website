@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import raven
 from decouple import config, Csv
 from dj_database_url import parse as dburl
 
@@ -167,5 +166,5 @@ if SENTRY_DNS:
         'dsn': SENTRY_DNS,
         # If you are using git, you can also automatically configure the
         # release based on the git info.
-        'release': raven.fetch_git_sha(BASE_DIR),
+        'release': config('HEROKU_SLUG_COMMIT'),
     }
