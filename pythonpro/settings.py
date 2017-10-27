@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import raven
 from decouple import config, Csv
 from dj_database_url import parse as dburl
 
@@ -156,3 +157,15 @@ else:
     STATIC_ROOT = "/%s/" % STATIC_S3_PATH
     STATIC_URL = '//s3.amazonaws.com/%s/static/' % AWS_STORAGE_BUCKET_NAME
     ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+
+# Configuring Sentry
+SENTRY_DNS = config('SENTRY_DNS', default=None)
+
+if SENTRY_DNS:
+    INSTALLED_APPS.append('raven.contrib.django.raven_compat')
+    RAVEN_CONFIG = {
+        'dsn': SENTRY_DNS,
+        # If you are using git, you can also automatically configure the
+        # release based on the git info.
+        'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+    }
