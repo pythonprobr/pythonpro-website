@@ -1,11 +1,21 @@
 language: python
 python:
-  - 3.6
+- 3.6
+services: postgresql
+addons:
+  postgresql: '9.5'
 install:
-  - cp contrib/settings-sample.yml settings.yml
-  - pip install -r requirements-dev.txt codecov
+- cp contrib/env-sample .env
+- pip install -q -r requirements-dev.txt codecov
+before_script:
+- psql -c "CREATE DATABASE testdb;" -U postgres
+- python manage.py migrate --noinput
+- python manage.py collectstatic
 script:
-  - flake8 .
-  - pytest --cov=pythonpro
+- flake8 .
+- pytest --cov=pythonpro
 after_success:
-  - codecov
+- codecov
+notifications:
+  slack:
+    secure: HuUqTCV+9ZwaPX4++tJU0ahLpi1vI4d610p8Yha9cLH6+07kaUvm2tK/j48nhDXYeQWMun+HoIiPOohEd/AHeUj9LONb11wmvu00u1HAKATdQ+FEPT2NbD7tPz2o1/+aPRPZIEw0PY+YJSdAQ+22o8NSPPYFCRqv1jodXz61DgOeM68zG5IbJ3pfR4Ke4OnwrSFWUnhCrDBMv/Ds+dsBXaFgy53w71fMVdDmMDvJoH5oRjWdnWZQZj81fMK/HD7RgFVYwCl2H5GSVXAYKDCABe/BxfJBK7wQHGRO3AqirQjnQ3qVcYUWONd1Mv6DMrxRAmr6rJaBKzXTQnoOESn+InojnGq3iXEa9MWiGX3H8ATsv4HUACGsMMZu088eFZX6wwTiuqQ5YnqS3Fokgy3Pey8e5nbihiXfuBlCn7oIfs9x1Hd8+4QCm1E9ZnLs9BysiwuGuCnneS5bej8yijHkYnTsjao6ixgQBkA6mYrjQInvkWfuXNaAUnftKst1gfuLWPUDXLRK/PpqHcKzNEK1sHYzE52/ACpfGFInHP1whVl9FvfSogxFPvyeLasRM9LP448cm+XQCnGimAqYQwER+lvxOMIGtInwhwr6PN2dQveHx4JqgL0lzatSdga3WUZmttDM68d0eToF4whcKUNykR/vgd2D456Y5LcWSX43Jes=

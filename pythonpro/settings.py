@@ -13,10 +13,8 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import dj_database_url
-from dynaconf import settings
-
-settings.configure('settings.yml')
+from decouple import config, Csv
+from dj_database_url import parse as dburl
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,12 +22,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = settings.SECRET_KEY
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = settings.get('DEBUG', False)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = settings.ALLOWED_HOSTS
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
 # Application definition
 
@@ -74,15 +72,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pythonpro.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
-default_db_url = settings.get('DATABASE', default_db_url)
 DATABASES = {
-    'default': dj_database_url.parse(default_db_url)
+    'default': config('DATABASE_URL', default=default_db_url, cast=dburl),
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
@@ -101,7 +96,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
@@ -132,7 +126,7 @@ else:
     # Uploaded Media Files
     # ------------------------------------------------------------------------------
 
-    INSTALLED_APPS.append('storages',)
+    INSTALLED_APPS.append('storages', )
     # INSTALLED_APPS.append('s3_folder_storage')
 
     AWS_ACCESS_KEY_ID = 'Aqui vem a Key Id gerada na AWS'
@@ -163,3 +157,15 @@ else:
     STATIC_ROOT = "/%s/" % STATIC_S3_PATH
     STATIC_URL = '//s3.amazonaws.com/%s/static/' % AWS_STORAGE_BUCKET_NAME
     ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+
+# Configuring Sentry
+SENTRY_DNS = config('SENTRY_DNS', default=None)
+
+if SENTRY_DNS:
+    INSTALLED_APPS.append('raven.contrib.django.raven_compat')
+    RAVEN_CONFIG = {
+        'dsn': SENTRY_DNS,
+        # If you are using git, you can also automatically configure the
+        # release based on the git info.
+        'release': config('HEROKU_SLUG_COMMIT'),
+    }
