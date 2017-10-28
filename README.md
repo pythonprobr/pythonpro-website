@@ -16,7 +16,7 @@ How to install in locally (supposing you have git and python 3 installed):
 ```console
 git clone https://github.com/pythonprobr/pythonpro-website.git
 cd pythonpro-website
-cp contrib/settings-sample.yml settings.yml
+cp contrib/env-sample .env
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.dev
