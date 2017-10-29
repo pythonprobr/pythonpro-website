@@ -24,3 +24,36 @@ def test_new_lead_status(new_resp):
 @pytest.mark.usefixtures("new_resp")
 def test_saved_lead():
     assert Lead.objects.exists()
+
+
+@pytest.fixture()
+def blank_resp(client):
+    return client.post(
+        reverse('leads:new'),
+        {
+            'name': '',
+            'email': ''
+        }
+    )
+
+
+@pytest.mark.django_db(transaction=True)
+def test_error_status(blank_resp):
+    assert 200 == blank_resp.status_code
+
+
+@pytest.mark.parametrize(
+    'form_content',
+    [
+        '<form action="." method="post"',
+        '<input type="text" name="name"',
+        '<input type="email" name="email"',
+        '<button type="submit"'
+    ]
+)
+def test_lead_form(form_content, dj_assert_contains, blank_resp):
+    dj_assert_contains(blank_resp, form_content)
+
+
+def test_lead_error_msgs(dj_assert_contains, blank_resp):
+    dj_assert_contains(blank_resp, 'Este campo é obrigatório.', 2)
