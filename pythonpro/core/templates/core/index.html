@@ -8,7 +8,7 @@
 <h1>pythonpro</h1>
 <h2>Python para Profissionais</h2>
 <p>Cadastre-se na lista de espera:</p>
-<form>
+<form action="{% url 'leads:new'  %}" method="post">
   Nome: <input type="text" name="name"/>
   Email: <input type="email" name="email"/>
   <button type="submit">Enviar</button>

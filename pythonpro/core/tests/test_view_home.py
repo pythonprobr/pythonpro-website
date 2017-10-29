@@ -1,10 +1,9 @@
 import pytest
-from django.shortcuts import resolve_url
 
 
 @pytest.fixture()
 def home_resp(client):
-    return client.get(resolve_url('/'))
+    return client.get('/')
 
 
 def test_home_status_code(home_resp):
@@ -18,7 +17,7 @@ def test_home_template(home_resp):
 @pytest.mark.parametrize(
     'form_content',
     [
-        '<form',
+        '<form action="/interessados/" method="post"',
         '<input type="text" name="name"',
         '<input type="email" name="email"',
         '<button type="submit"'
