@@ -1,6 +1,8 @@
 import pytest
 from django.urls import reverse
 
+from pythonpro.leads.models import Lead
+
 
 @pytest.fixture()
 def new_resp(client):
@@ -13,5 +15,12 @@ def new_resp(client):
     )
 
 
+@pytest.mark.django_db(transaction=True)
 def test_new_lead_status(new_resp):
-    assert 200 == new_resp.status_code
+    assert 302 == new_resp.status_code
+
+
+@pytest.mark.django_db(transaction=True)
+@pytest.mark.usefixtures("new_resp")
+def test_saved_lead():
+    assert Lead.objects.exists()
