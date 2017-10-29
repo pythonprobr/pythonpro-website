@@ -9,6 +9,7 @@
 <h2>Python para Profissionais</h2>
 <p>Cadastre-se na lista de espera:</p>
 <form action="{% url 'leads:new'  %}" method="post">
+  {% csrf_token %}
   Nome: <input type="text" name="name"/>
   Email: <input type="email" name="email"/>
   <button type="submit">Enviar</button>
