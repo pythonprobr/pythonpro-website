@@ -57,3 +57,11 @@ def test_lead_form(form_content, dj_assert_contains, blank_resp):
 
 def test_lead_error_msgs(dj_assert_contains, blank_resp):
     dj_assert_contains(blank_resp, 'Este campo é obrigatório.', 2)
+
+
+@pytest.mark.django_db(transaction=True)
+def test_dup_not_revealed(client):
+    """Duplicates would expose what emails are already on lead database. It's better not sharing this info"""
+    new_resp(client)
+    dup_resp = new_resp(client)
+    assert 302 == dup_resp.status_code
