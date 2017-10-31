@@ -1,7 +1,4 @@
-from django.core.exceptions import ValidationError
-from django.forms.fields import EmailField
 from django.http.response import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
 from django.urls.base import reverse_lazy
 from django.views.generic.edit import CreateView
 
@@ -12,17 +9,15 @@ def subscribed(request):
     return HttpResponse(b'Ok')
 
 
-_create_lead_view = CreateView.as_view(
-    model=Lead, fields='name email'.split(), success_url=reverse_lazy('leads:subscribed'))
+class LeadCreateView(CreateView):
+    model = Lead
+    fields = 'name email'.split()
+    success_url = reverse_lazy('leads:subscribed')
+
+    def form_invalid(self, form):
+        if len(form.errors) == 1 and form.has_error('email', 'unique'):
+            return HttpResponseRedirect(self.success_url)
+        return super().form_invalid(form)
 
 
-def new(request):
-    """Creates a new Lead if the email is not already on database"""
-    email_field = EmailField()
-    try:
-        if Lead.objects.filter(email__exact=email_field.clean(request.POST['email'])).exists():
-            return HttpResponseRedirect(reverse('leads:subscribed'))
-    except ValidationError:
-        pass
-
-    return _create_lead_view(request)
+new = LeadCreateView.as_view()
