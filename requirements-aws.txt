@@ -1,0 +1,10 @@
+boto3==1.4.7
+botocore==1.7.40
+Collectfast==0.5.2
+django-s3-folder-storage==0.5
+django-storages==1.6.5
+docutils==0.14
+jmespath==0.9.3
+python-dateutil==2.6.1
+s3transfer==0.1.11
+six==1.11.0
