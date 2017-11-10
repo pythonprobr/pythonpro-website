@@ -123,7 +123,7 @@ COLLECTFAST_ENABLED = False
 # Uploaded Media Files
 # ------------------------------------------------------------------------------
 AWS_ACCESS_KEY_ID = config('DJANGO_AWS_ACCESS_KEY_ID')
-if AWS_ACCESS_KEY_ID:
+if AWS_ACCESS_KEY_ID:  # pragma: no cover
     COLLECTFAST_ENABLED = True
     INSTALLED_APPS.append('s3_folder_storage')
     INSTALLED_APPS.append('storages')
