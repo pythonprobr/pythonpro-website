@@ -12,6 +12,7 @@ before_script:
   - psql -c "CREATE DATABASE testdb;" -U postgres
   - python manage.py migrate --noinput
   - python manage.py collectstatic --noinput
+
 script:
   - flake8 .
   - pytest --cov=pythonpro
