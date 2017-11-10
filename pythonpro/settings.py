@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # 'collectfast',
+    'collectfast',
     'django.contrib.staticfiles',
     'pythonpro.core',
     'pythonpro.leads',
@@ -111,53 +111,44 @@ USE_L10N = True
 
 USE_TZ = True
 
-if DEBUG:
+# STORAGE CONFIGURATION IN S3 AWS
+# ------------------------------------------------------------------------------
+# Uploaded Media Files
+# ------------------------------------------------------------------------------
 
-    # Static files (CSS, JavaScript, Images)
-    # https://docs.djangoproject.com/en/1.11/howto/static-files/
+INSTALLED_APPS.append('storages')
+INSTALLED_APPS.append('s3_folder_storage')
 
-    STATIC_URL = '/static/'
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-else:
+AWS_ACCESS_KEY_ID = config('DJANGO_AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('DJANGO_AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('DJANGO_AWS_STORAGE_BUCKET_NAME')
+AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400', }
+AWS_PRELOAD_METADATA = True
+AWS_AUTO_CREATE_BUCKET = True
+AWS_QUERYSTRING_AUTH = False
 
-    # STORAGE CONFIGURATION IN S3 AWS
-    # ------------------------------------------------------------------------------
-    # Uploaded Media Files
-    # ------------------------------------------------------------------------------
+# AWS cache settings, don't change unless you know what you're doing:
+AWS_EXPIRY = 60 * 60 * 24 * 7
 
-    INSTALLED_APPS.append('storages', )
-    # INSTALLED_APPS.append('s3_folder_storage')
+# Revert the following and use str after the above-mentioned bug is fixed in
+# either django-storage-redux or boto
+control = f'max-age={AWS_EXPIRY:d}, s-maxage={AWS_EXPIRY:d}, must-revalidate'
 
-    AWS_ACCESS_KEY_ID = 'Aqui vem a Key Id gerada na AWS'
-    AWS_SECRET_ACCESS_KEY = 'Aqui vem o Secret Access Key gerado na AWS '
-    AWS_STORAGE_BUCKET_NAME = 'Aqui vem o nome do Buket criado para armazenar os arquivos na AWS'
-    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400', }
-    AWS_PRELOAD_METADATA = True
-    AWS_AUTO_CREATE_BUCKET = True
-    AWS_QUERYSTRING_AUTH = False
+# Upload Media Folder
+DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
+DEFAULT_S3_PATH = 'media'
+MEDIA_ROOT = f'/{DEFAULT_S3_PATH}/'
+MEDIA_URL = f'//s3.amazonaws.com/{AWS_STORAGE_BUCKET_NAME}/media/'
 
-    # AWS cache settings, don't change unless you know what you're doing:
-    AWS_EXPIRY = 60 * 60 * 24 * 7
+# Static Assets
+# ------------------------------------------------------------------------------
+STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
+STATIC_S3_PATH = 'static'
+STATIC_ROOT = f'/{STATIC_S3_PATH}/'
+STATIC_URL = f'//s3.amazonaws.com/{AWS_STORAGE_BUCKET_NAME}/static/'
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
-    # Revert the following and use str after the above-mentioned bug is fixed in
-    # either django-storage-redux or boto
-    control = 'max-age=%d, s-maxage=%d, must-revalidate' % (AWS_EXPIRY, AWS_EXPIRY)
-
-    # Upload Media Folder
-    DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
-    DEFAULT_S3_PATH = "media"
-    MEDIA_ROOT = '/%s/' % DEFAULT_S3_PATH
-    MEDIA_URL = '//s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME
-
-    # Static Assets
-    # ------------------------------------------------------------------------------
-    STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
-    STATIC_S3_PATH = "static"
-    STATIC_ROOT = "/%s/" % STATIC_S3_PATH
-    STATIC_URL = '//s3.amazonaws.com/%s/static/' % AWS_STORAGE_BUCKET_NAME
-    ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+# ------------------------------------------------------------------------------
 
 # Configuring Sentry
 SENTRY_DNS = config('SENTRY_DNS', default=None)
