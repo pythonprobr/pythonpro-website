@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>PythonPro</title>
+  <meta charset="UTF-8">
+  <title>PythonPro</title>
 </head>
 <body>
 <h1>pythonpro</h1>
 <h2>Python para Profissionais</h2>
-<p>Teste com template</p>
+<p>Cadastre-se na lista de espera:</p>
+<form action="{% url 'leads:new'  %}" method="post">
+  {% csrf_token %}
+  Nome: <input type="text" name="name"/>
+  Email: <input type="email" name="email"/>
+  <button type="submit">Enviar</button>
+
+</form>
 </body>
 </html>
