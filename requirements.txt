@@ -9,7 +9,7 @@ python-decouple==3.1
 raven==6.4.0
 
 #Amazon S3 Stuff
-boto3==1.5.7
+boto3==1.5.9
 Collectfast==0.6.0
 botocore==1.8.21
 django-s3-folder-storage==0.5
