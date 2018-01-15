@@ -1,19 +1,206 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>PythonPro</title>
+  <title>Python Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+  <link rel="stylesheet" href="{% static 'css/default.css' %}"/>
+  <script type="application/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+  <script type="application/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <link href='//fonts.googleapis.com/css?family=Ubuntu:400,500' rel='stylesheet' type='text/css'/>
 </head>
 <body>
-<h1>pythonpro</h1>
-<h2>Python para Profissionais</h2>
-<p>Cadastre-se na lista de espera:</p>
-<form action="{% url 'leads:new'  %}" method="post">
-  {% csrf_token %}
-  Nome: <input type="text" name="name"/>
-  Email: <input type="email" name="email"/>
-  <button type="submit">Enviar</button>
+<nav class="navbar navbar-dark bg-dark justify-content-between">
+  <a class="navbar-brand" href="/">Python Pro</a>
+  <form class="form-inline">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Entrar</button>
+  </form>
+</nav>
+<div class="colors-pallet d-none d-md-block">
+  <div class="color-1 pallet"></div>
+  <div class="color-2 pallet"></div>
+  <div class="color-3 pallet"></div>
+  <div class="color-4 pallet"></div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1 class="pythonpro-title mt-3"><span class="python">Python</span> Pro</h1>
+      <h2 class="pythonpro-subtitle mb-5">Python para Profissionais</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="jumbotron justify-content-center text-center">
+        <h1>Cadastre-se na lista de espera</h1>
+        <form class="form-inline justify-content-center"
+              action="https://python.us17.list-manage.com/subscribe/post?u=ff7c56095f83f9c254edd749e&amp;id=a88d1dd555"
+              method="post" name="mc-embedded-subscribe-form"
+              target="_blank">
+          <div class="form-row">
+            <div class="col">
+              <input type="email" name="EMAIL" class="form-control" placeholder="Email" required="required">
+            </div>
+            <div class="col">
+              <input type="text" name="FNAME" class="form-control" placeholder="Nome" required="required">
+            </div>
+            <div style="position: absolute; left: -5000px;" aria-hidden="true">
+              <input type="text"
+                     name="b_ff7c56095f83f9c254edd749e_a88d1dd555"
+                     tabindex="-1" value=""></div>
+            <div class="col">
+              <button type="submit" class="btn btn-primary mb-2">Cadastrar</button>
+            </div>
 
-</form>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col">
+      <h3 class="mb-4">Para quem é voltado esse curso?</h3>
+      <p>Profissionais de outras áreas que desejam atuar com TI</p>
+      <p>Programdores de outra linguagens que querem migrar para Python</p>
+      <p>Quem já programa com Python mas quer se aperfeiçoar</p>
+      <p>Quem busca vaga no mercado Python, remoto ou presencial</p>
+    </div>
+    <div class="col">
+      <h3 class="mb-4">Módulo Python Birds Grátis</h3>
+      <p>Cadastre seu email para aprender o básico de Python e Orientação a objetos implementenando o jogo Angry
+        Birds</p>
+
+      <form action="https://python.us17.list-manage.com/subscribe/post?u=ff7c56095f83f9c254edd749e&amp;id=e3072e0df0"
+            method="post" name="mc-embedded-subscribe-form"
+            target="_blank">
+        <div class="form-group row">
+          <label for="email-input" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" name="EMAIL" class="form-control" id="email-input" placeholder="Email"
+                   required="required">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="name-input" class="col-sm-2 col-form-label">Nome</label>
+          <div class="col-sm-10">
+            <input type="text" name="FNAME" class="form-control" id="name-input" placeholder="Nome">
+          </div>
+        </div>
+
+        <div style="position: absolute; left: -5000px;" aria-hidden="true">
+          <input type="text"
+                 name="b_ff7c56095f83f9c254edd749e_e3072e0df0"
+                 tabindex="-1" value="">
+        </div>
+
+        <input type="hidden" name="SUBSCRIP[day]" value="{% now "d" %}">
+        <input type="hidden" name="SUBSCRIP[month]" value="{% now "m" %}">
+        <input type="hidden" name="SUBSCRIP[year]" value="{% now "Y" %}">
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col">
+      <h1 class="text-center mt-4 mb-3">Conheça os Instrutores</h1>
+      <div class="row">
+        <div class="col">
+          <div class="card">
+
+            <div class="card-body">
+              <h5 class="card-title text-center">Luciano Ramalho</h5>
+              <p class="card-text">
+                <img class="img-thumbnail float-right ml-1"
+                     src="{% static 'img/instructors/luciano-ramalho.png' %}"
+                     alt="Instrutor Luciano Ramalho">Ramalho é sócio e professor nas Oficinas Turing. Foi diretor
+                técnico do Brasil
+                Online, primeiro portal da Abril S/A na Web. Liderou times para os portais IDG Now, BOL, UOL, AOL Brasil
+                e outros, usando Python desde 1998. Como instrutor, atendeu clientes como Citibank, CPqD, Serpro,
+                Presidência da República, Globo.com e Itaú. Palestrante em eventos internacionais como FISL, PyCon US e
+                OSCON. Ajudou a criar a Associação Python Brasil e foi seu presidente. É membro da Python Software
+                Foundation e fundador do Garoa Hacker Clube, o primeiro hackerspace do Brasil.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+
+            <div class="card-body">
+              <h5 class="card-title text-center">Renzo Nuccitelli</h5>
+              <p class="card-text">
+                <img class="img-thumbnail float-right ml-1"
+                     src="{% static 'img/instructors/renzo-nuccitelli.png' %}"
+                     alt="Instrutor Renzo Nuccitelli">Engenheiro de Computação formado pelo ITA. Especialista em
+                programação web no Google App Engine, usa Python desde 2009. Foi Diretor de Tecnologia na startup de
+                educação QMagico, Apaixonado por dar aulas, é professor da Fatec onde ministra as matérias de
+                "Orientação a Objetos" e "Aplicações para Internet Utilizando Banco de Dados". Já palestrou em eventos
+                como Pycon US, Google Developer Bus, DevFest, Rupy e Python Brasil. Escreve sobre tecnologia em seu
+                blog.renzo.pro.br. Atualmente é Engenheiro de Qualidade na Red Hat.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col">
+      <h1 class="text-center mt-4 mb-3">Opinião de ex-aluno</h1>
+      <div style="margin: auto auto 0 0; text-align: center">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/3g0g4atd858" frameborder="0"
+                allowfullscreen></iframe>
+      </div>
+
+    </div>
+  </div>
+</div>
+<footer class="main-footer mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h3 class="mt-3">Entre em contato</h3>
+        <address class="main-address">
+          +55 12 99741-1854<br/>
+          <a href="mailto:ramalho@python.pro.br">ramalho@python.pro.br</a><br/>
+          <a href="mailto:renzo@python.pro.br">renzo@python.pro.br</a>
+        </address>
+      </div>
+    </div>
+  </div>
+  <div class="rights pt-1">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <p>{% now "Y" %} Python Pro. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+  ga('create', 'UA-44718512-1', 'python.pro.br');
+  ga('send', 'pageview');
+
+</script>
 </body>
 </html>
