@@ -4,5 +4,6 @@ from . import views
 
 app_name = 'promos'
 urlpatterns = [
-    path('<slug:slug>', views.video, name='video')
+    path('video/<slug:slug>', views.video, name='video'),
+    path('obrigado', views.thanks, name='thanks'),
 ]
