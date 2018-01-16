@@ -14,6 +14,13 @@ def test_video_status(video_resp):
     assert 200 == video_resp.status_code
 
 
+def test_ty_status(client):
+    resp = client.get(
+        reverse(viewname='promos:thanks'),
+    )
+    assert 200 == resp.status_code
+
+
 @pytest.mark.parametrize(
     'content',
     [
