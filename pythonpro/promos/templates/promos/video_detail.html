@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block body %}
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col text-center">
+        <iframe src="https://player.vimeo.com/video/251224475" width="640" height="360" frameborder="0"
+                webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      </div>
+    </div>
+    {% include 'core/leads_form.html' only %}
+  </div>
+{% endblock body %}

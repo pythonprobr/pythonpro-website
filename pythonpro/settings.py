@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pythonpro.core',
     'pythonpro.leads',
+    'pythonpro.promos',
 ]
 
 MIDDLEWARE = [
