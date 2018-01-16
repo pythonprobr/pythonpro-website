@@ -1,6 +1,7 @@
 from datetime import date
 
 import pytest
+from django.urls import reverse
 
 
 @pytest.fixture
@@ -10,6 +11,11 @@ def home_resp(client):
 
 def test_home_status_code(home_resp):
     assert 200 == home_resp.status_code
+
+
+def test_thanks_status_code(client):
+    resp = client.get(reverse('core:thanks'))
+    assert 200 == resp.status_code
 
 
 def test_home_template(dj_assert_template_used):
