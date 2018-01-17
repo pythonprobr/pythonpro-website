@@ -24,6 +24,8 @@ def test_ty_status(client):
 @pytest.mark.parametrize(
     'content',
     [
+        '<title>Motivação</title>',
+        '<h1>Motivação</h1>',
         '<iframe src="https://player.vimeo.com/video/251224475"',
         '<form class="form-inline justify-content-center" '
         'action="https://python.us17.list-manage.com/subscribe/post?u=ff7c56095f83f9c254edd749e&amp;id=a88d1dd555"',
@@ -33,5 +35,5 @@ def test_ty_status(client):
         '<button type="submit"'
     ]
 )
-def test_content(content, video_resp, dj_assert_contains):
+def test_video_content(content, video_resp, dj_assert_contains):
     dj_assert_contains(video_resp, content)
