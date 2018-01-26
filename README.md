@@ -28,6 +28,12 @@ To run server locally (with virtualenv activated):
 python manager.py runserver
 ```
 
+#License Details
+
+The AGPL license here cover everything relate to source code but Python Pro logo and Image.
+So you need to change this data for you own trademark.
+
+
 Have fun!
 
 
