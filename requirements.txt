@@ -4,7 +4,7 @@ pytz==2017.3
 python_box==3.1.1
 six==1.11.0
 gunicorn==19.7.1
-psycopg2==2.7.3.2
+psycopg2==2.7.4
 python-decouple==3.1
 raven==6.5.0
 
