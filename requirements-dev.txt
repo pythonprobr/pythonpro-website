@@ -1,5 +1,5 @@
 -r requirements.txt
-coverage==4.4.2
+coverage==4.5.1
 flake8==3.5.0
 mccabe==0.6.1
 py==1.5.2
