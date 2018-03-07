@@ -102,3 +102,5 @@ ENV/
 
 #dynaconf settings
 /settings.yml
+/frontend/css/
+/frontend/node_modules/

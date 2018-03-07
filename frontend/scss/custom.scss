@@ -1,0 +1,10 @@
+$green: #9fd25f;
+$blue: #178eee;
+$yellow: #ffcc29;
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+$theme-colors: (
+  "primary": #178eee,
+  "success": #9fd25f,
+  "warning": #ffcc29
+);
