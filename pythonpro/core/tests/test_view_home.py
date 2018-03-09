@@ -3,6 +3,8 @@ from datetime import date
 import pytest
 from django.urls import reverse
 
+from pythonpro.django_assertions import dj_assert_contains, dj_assert_template_used
+
 
 @pytest.fixture
 def home_resp(client):
@@ -18,7 +20,7 @@ def test_thanks_status_code(client):
     assert 200 == resp.status_code
 
 
-def test_home_template(dj_assert_template_used):
+def test_home_template():
     dj_assert_template_used(template_name='core/index.html')
 
 
@@ -32,7 +34,7 @@ def test_home_template(dj_assert_template_used):
         '<button type="submit"'
     ]
 )
-def test_lead_form(form_content, dj_assert_contains, home_resp):
+def test_lead_form(form_content,  home_resp):
     dj_assert_contains(home_resp, form_content)
 
 
@@ -44,6 +46,6 @@ def test_lead_form(form_content, dj_assert_contains, home_resp):
         ('year', date.today().strftime('%Y')),
     ]
 )
-def test_subscription_today_date(name, value, dj_assert_contains, home_resp):
+def test_subscription_today_date(name, value, home_resp):
     value = f'<input type="hidden" name="SUBSCRIP[{name}]" value="{value}"'
     dj_assert_contains(home_resp, value)

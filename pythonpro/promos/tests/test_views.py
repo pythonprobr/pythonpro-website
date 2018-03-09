@@ -2,6 +2,7 @@ import pytest
 from django.urls import reverse
 from model_mommy import mommy
 
+from pythonpro.django_assertions import dj_assert_contains
 from pythonpro.promos.models import Video
 
 
@@ -39,19 +40,19 @@ def test_ty_status(client):
         '<button type="submit"'
     ]
 )
-def test_video_lead_form(content, video_resp, dj_assert_contains):
+def test_video_lead_form(content, video_resp):
     dj_assert_contains(video_resp, content)
 
 
-def test_video_title(video, video_resp, dj_assert_contains):
+def test_video_title(video, video_resp):
     dj_assert_contains(video_resp, f'<title>{video.title}</title>')
 
 
-def test_video_h1(video, video_resp, dj_assert_contains):
+def test_video_h1(video, video_resp):
     dj_assert_contains(video_resp, f'<h1>{video.title}</h1>')
 
 
-def test_video_iframe(video, video_resp, dj_assert_contains):
+def test_video_iframe(video, video_resp):
     dj_assert_contains(video_resp, f'<iframe src="https://player.vimeo.com/video/{video.vimeo_id}"')
 
 
