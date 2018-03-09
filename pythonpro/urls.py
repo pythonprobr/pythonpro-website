@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('aperitivo/', include('pythonpro.promos.urls')),
     path('', include('pythonpro.core.urls')),
+    path('', include('pythonpro.users.urls')),
 
 ]
