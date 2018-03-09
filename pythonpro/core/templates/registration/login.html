@@ -1,0 +1,43 @@
+{% extends "core/base.html" %}
+
+{% block body %}
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <h1 class="mb-4 mt-4">Formulário de Login</h1>
+        {% if form.errors %}
+          <p class="text-danger">Seu login e senha não conferem. Tente Novamente.</p>
+        {% endif %}
+
+        {% if next %}
+          {% if user.is_authenticated %}
+            <p>Você não tem permissão para ver essa página, por favor faça login com uma conta que tenh e essa
+              permissão.</p>
+          {% else %}
+            <p>Faça login para ver a página.</p>
+          {% endif %}
+        {% endif %}
+
+        <form method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ next }}"/>
+          <div class="form-group">
+            <label for="{{ form.username.id_for_label }}">{{ form.username.label_tag }}</label>
+            <input type="text" name="{{ form.username.html_name }}" class="form-control" value="{{ field.value }}" autofocus="" maxlength="{{ form.username.max_length }}" required="required" id="{{ form.username.id_for_label }}">
+          </div>
+          <div class="form-group">
+            <label for="{{ form.password.id_for_label }}">{{ form.password.label_tag }}</label>
+            <input type="password" name="{{ form.password.html_name }}" class="form-control" value="{{ field.value }}" autofocus="" maxlength="{{ form.password.max_length }}" required="required" id="{{ form.password.id_for_label }}">
+          </div>
+          <button type="submit" class="btn btn-primary">Entrar</button>
+        </form>
+
+
+        <p class="mt-4"><a href="{% url 'password_reset' %}">Esqueceu a senha?</a></p>
+
+
+      </div>
+    </div>
+  </div>
+
+{% endblock body %}
