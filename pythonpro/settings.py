@@ -49,6 +49,7 @@ LOGIN_REDIRECT_URL = LOGOUT_REDIRECT_URL = '/'
 INSTALLED_APPS = [
     'pythonpro.core',
     'pythonpro.promos',
+    'pythonpro.discourse',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -68,6 +69,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Discourse config
+DISCOURSE_BASE_URL = 'https://forum.python.pro.br'
+DISCOURSE_SSO_SECRET = config('DISCOURSE_SSO_SECRET')
+
 ROOT_URLCONF = 'pythonpro.urls'
 
 TEMPLATES = [
@@ -81,6 +86,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'pythonpro.core.context_processors.global_settings',
             ],
         },
     },

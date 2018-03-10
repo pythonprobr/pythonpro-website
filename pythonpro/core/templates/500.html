@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}500. Erro interno inesperado{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <h1 class="mt-4">500</h1>
+        <h2>Erro interno inesperado</h2>
+        <p>Desculpe. Ocorreu um erro inesperado.</p>
+        <p>Nossa equipe já foi notificada do problema.<br/>
+          Caso necessário entre em contato com <a
+                  href="mailto:renzo@python.pro.br?subject=500 Erro interno inesperado">renzo@python.pro.br</a>
+        </p>
+      </div>
+    </div>
+  </div>
+{% endblock body %}
