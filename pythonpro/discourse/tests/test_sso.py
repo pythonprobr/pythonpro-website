@@ -40,12 +40,22 @@ def client_with_user(client, logged_user):
 
 
 @pytest.fixture
-def response(client_with_user, payload):
+def response(client_with_user, payload, sig=None):
     encoded_payload = base64.encodebytes(payload.encode('utf-8'))
     hmac_obj = hmac.new(settings.DISCOURSE_SSO_SECRET.encode('utf-8'), encoded_payload, digestmod=hashlib.sha256)
-    sig = hmac_obj.hexdigest()
+    sig = hmac_obj.hexdigest() if sig is None else sig
     return client_with_user.get(reverse('discourse:sso'),
                                 data={'sso': encoded_payload, 'sig': sig})
+
+
+@pytest.fixture
+def response_with_wrong_sig(client_with_user, payload):
+    return response(client_with_user, payload)
+
+
+@pytest.fixture
+def response_without_nonce(client_with_user):
+    return response(client_with_user, '')
 
 
 def _extract_from_payload(response):
@@ -93,3 +103,7 @@ def test_redirect_payload_user_data(logged_user, nonce, response: HttpResponseRe
 def test_status_invalid_data(client_with_user, invalid_data):
     response = client_with_user.get(reverse('discourse:sso'), data=invalid_data)
     return response.status_code == 400
+
+
+def test_payload_with_mismatch_signature(response_with_wrong_sig):
+    return response_with_wrong_sig.status_code == 400

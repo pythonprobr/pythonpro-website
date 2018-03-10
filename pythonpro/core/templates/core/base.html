@@ -12,13 +12,30 @@
   <link href='//fonts.googleapis.com/css?family=Ubuntu:400,500' rel='stylesheet' type='text/css'/>
 </head>
 <body>
-<nav class="navbar navbar-dark bg-dark justify-content-between">
+<nav class="navbar navbar-dark bg-dark navbar-expand-md">
   <a class="navbar-brand" href="/">Python Pro</a>
-    {% if user.is_authenticated %}
-      <a class="btn btn-outline-danger my-2 my-sm-0" href="{% url 'logout' %}">Sair</a>
-    {% else %}
-      <a class="btn btn-outline-light my-2 my-sm-0" href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">Entrar</a>
-    {% endif %}
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      {% if user.is_authenticated and DISCOURSE_BASE_URL%}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ DISCOURSE_BASE_URL }}">Fórum</a>
+        </li>
+      {% endif %}
+    </ul>
+    <div class="form-inline my-2 my-lg-">
+      {% if user.is_authenticated %}
+        <a class="btn btn-outline-danger my-2 my-sm-0" href="{% url 'logout' %}">Sair</a>
+      {% else %}
+        <a class="btn btn-outline-light my-2 my-sm-0"
+           href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">Entrar</a>
+      {% endif %}
+    </div>
+  </div>
 </nav>
 {% block body %}
 {% endblock body %}
@@ -29,7 +46,7 @@
         <h3 class="mt-3">Entre em contato</h3>
         <address class="main-address">
           +55 12 99741-1854<br/>
-          <a href="mailto:renzo@python.pro.br" class="text-light">renzo@python.pro.br</a>
+          <a href="mailto:{{ DEFAULT_FROM_EMAIL }}" class="text-light">{{ DEFAULT_FROM_EMAIL }}</a>
         </address>
       </div>
     </div>
