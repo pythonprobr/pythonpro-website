@@ -50,7 +50,7 @@ def response(client_with_user, payload, sig=None):
 
 @pytest.fixture
 def response_with_wrong_sig(client_with_user, payload):
-    return response(client_with_user, payload)
+    return response(client_with_user, payload, 'wrong sinature')
 
 
 @pytest.fixture
@@ -103,6 +103,10 @@ def test_redirect_payload_user_data(logged_user, nonce, response: HttpResponseRe
 def test_status_invalid_data(client_with_user, invalid_data):
     response = client_with_user.get(reverse('discourse:sso'), data=invalid_data)
     return response.status_code == 400
+
+
+def test_payload_without_nonce(response_without_nonce):
+    return response_without_nonce.status_code == 400
 
 
 def test_payload_with_mismatch_signature(response_with_wrong_sig):
