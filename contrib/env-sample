@@ -15,3 +15,7 @@ EMAIL_PORT=25
 EMAIL_USE_TLS=False
 EMAIL_HOST_USER=
 EMAIL_HOST_PASSWORD=
+
+
+# Discourse config
+DISCOURSE_SSO_SECRET='paste_your_secret_here'
