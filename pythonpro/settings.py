@@ -43,6 +43,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 # Login Config
 
 LOGIN_REDIRECT_URL = LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
 
 # Application definition
 

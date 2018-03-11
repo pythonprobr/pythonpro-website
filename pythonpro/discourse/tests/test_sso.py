@@ -111,3 +111,15 @@ def test_payload_without_nonce(response_without_nonce):
 
 def test_payload_with_mismatch_signature(response_with_wrong_sig):
     return response_with_wrong_sig.status_code == 400
+
+
+def test_user_not_logged_status_code(client):
+    response = client.get(reverse('discourse:sso'))
+    assert response.status_code == 302
+
+
+def test_user_not_logged(client):
+    discourse_path = reverse('discourse:sso')
+    response = client.get(discourse_path)
+    login_path = reverse('login')
+    assert response.url == f'{login_path}?next={discourse_path}'
