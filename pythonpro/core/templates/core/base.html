@@ -21,7 +21,28 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      {% if user.is_authenticated and DISCOURSE_BASE_URL%}
+      {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarCourses" role="button" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Cursos
+          </a>
+          <div class="dropdown-menu bg-dark border-light" aria-labelledby="navbarCourses">
+            {% for course in ALL_COURSES %}
+              <a class="dropdown-item text-light" href="{{ course.url }}">{{ course.title }}</a>
+              {% if not forloop.last %}
+                <div class="dropdown-divider"></div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </li>
+
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'courses:index' %}">Cursos</a>
+        </li>
+      {% endif %}
+      {% if user.is_authenticated and DISCOURSE_BASE_URL %}
         <li class="nav-item">
           <a class="nav-link" href="{{ DISCOURSE_BASE_URL }}">Fórum</a>
         </li>

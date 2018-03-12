@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ course.title }}{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="mt-4 mb-3">{{ course.title }}</h1>
+        <dd>
+        <dt>Pré-requisitos</dt>
+        <dd>
+          <ul>
+            {% for req_course in course.pre_requirements %}
+              <li>
+                <a href="{{ course.url }}">{{ req_course.title }}</a>
+              </li>
+
+            {% empty %}
+              <li>Nenhum pré-requisito.</li>
+            {% endfor %}
+          </ul>
+        </dd>
+        <dt>Objetivo</dt>
+        <dd>
+          <ul>
+            <li>{{ course.objective }}</li>
+          </ul>
+        </dd>
+        <dt>Público</dt>
+        <dd>
+          <ul>
+            <li>{{ course.target }}</li>
+          </ul>
+        </dd>
+        <dt>Descrição</dt>
+        <dd>
+          <ul>
+            <li>{{ course.description }}</li>
+          </ul>
+        </dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+{% endblock body %}

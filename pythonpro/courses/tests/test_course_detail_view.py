@@ -1,0 +1,59 @@
+import pytest
+from django.urls import reverse
+from model_mommy import mommy
+
+from pythonpro.django_assertions import dj_assert_contains
+
+
+def generate_resp(slug, client):
+    return client.get(reverse('courses:detail', kwargs={'slug': slug}))
+
+
+@pytest.fixture
+def client_with_user(client, django_user_model):
+    user = mommy.make(django_user_model)
+    client.force_login(user)
+    return client
+
+
+def test_status_code(client_with_user):
+    resp = generate_resp('python-birds', client_with_user)
+    assert resp.status_code == 200
+
+
+@pytest.mark.parametrize(
+    'content',
+    [
+        'Python Birds',
+        'Introduzir programação Procedural e Orientação a Objetos em Python.',
+        'Alunos com nenhuma ou pouca experiência.',
+        'Nenhum pré-requisito.',
+        'Durante o curso será desenvolvida uma versão simplificada do jogo Angry Birds. Assim o aluno aprenderá os '
+        'conceitos ao mesmo tempo em que implementa um projeto prático.'
+
+    ]
+
+)
+def test_page_content_without_pre_requisite(content, client_with_user):
+    resp = generate_resp('python-birds', client_with_user)
+    dj_assert_contains(resp, content)
+
+
+@pytest.mark.parametrize(
+    'content',
+    [
+        'Objetos Pythônicos',
+        'Aprofundar o conhecimento de Orientação a Objetos tendo em vista as peculiaridade do Python.',
+        'Alunos que conhecem OO e estão começando com Python ou que já usam a linguagem no dia-a-dia, mas querem '
+        'aperfeiçoar o modo pythônico de programar.',
+        'Python Birds',
+        'Aprofundamento no conhecimento da linguagem: tipagem dinâmica, protocolos versus interfaces, '
+        'classes abstratas, herança múltipla e sobrecarga de operadores são alguns dos temas cobertos.',
+        reverse('courses:detail', kwargs={'slug': 'python-birds'}),
+
+    ]
+
+)
+def test_page_content_with_pre_requisite(content, client_with_user):
+    resp = generate_resp('objetos-pythonicos', client_with_user)
+    dj_assert_contains(resp, content)
