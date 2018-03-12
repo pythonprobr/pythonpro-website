@@ -28,6 +28,7 @@ urlpatterns = [
     path('conta/reiniciar/ok', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('aperitivo/', include('pythonpro.promos.urls')),
     path('discourse/', include('pythonpro.discourse.urls')),
+    path('cursos/', include('pythonpro.courses.urls')),
     path('', include('pythonpro.core.urls')),
 
 ]
