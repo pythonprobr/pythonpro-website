@@ -5,15 +5,15 @@
 
 {% block body %}
   <div class="container">
-  {% for course in ALL_COURSES %}
+  {% for module in ALL_MODULES %}
     <div class="row">
       <div class="col">
-        <h1 id="{{course.slug}}" class="mt-4 mb-3" >{{ course.title }}</h1>
+        <h1 id="{{module.slug}}" class="mt-4 mb-3" >{{ module.title }}</h1>
         <dd>
         <dt>Pré-requisitos</dt>
         <dd>
           <ul>
-            {% for req_course in course.pre_requirements %}
+            {% for req_course in module.pre_requirements %}
               <li>
                 <a href="#{{req_course.slug}}">{{ req_course.title }}</a>
               </li>
@@ -24,11 +24,11 @@
           </ul>
         </dd>
         <dt>Objetivo</dt>
-        <dd><ul><li>{{ course.objective }}</li></ul></dd>
+        <dd><ul><li>{{ module.objective }}</li></ul></dd>
         <dt>Público</dt>
-        <dd><ul><li>{{ course.target }}</li></ul></dd>
+        <dd><ul><li>{{ module.target }}</li></ul></dd>
         <dt>Descrição</dt>
-        <dd><ul><li>{{ course.description }}</li></ul></dd>
+        <dd><ul><li>{{ module.description }}</li></ul></dd>
         </dl>
       </div>
     </div>

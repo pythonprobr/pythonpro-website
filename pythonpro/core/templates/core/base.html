@@ -25,11 +25,11 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarCourses" role="button" data-toggle="dropdown"
              aria-haspopup="true" aria-expanded="false">
-            Cursos
+            Módulos
           </a>
           <div class="dropdown-menu bg-dark border-light" aria-labelledby="navbarCourses">
-            {% for course in ALL_COURSES %}
-              <a class="dropdown-item text-light" href="{{ course.url }}">{{ course.title }}</a>
+            {% for module in ALL_MODULES %}
+              <a class="dropdown-item text-light" href="{{ module.url }}">{{ module.title }}</a>
               {% if not forloop.last %}
                 <div class="dropdown-divider"></div>
               {% endif %}
@@ -39,7 +39,7 @@
 
       {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'courses:index' %}">Cursos</a>
+          <a class="nav-link" href="{% url 'modules:index' %}">Cursos</a>
         </li>
       {% endif %}
       {% if user.is_authenticated and DISCOURSE_BASE_URL %}

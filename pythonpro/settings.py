@@ -49,7 +49,7 @@ LOGIN_URL = 'login'
 
 INSTALLED_APPS = [
     'pythonpro.core',
-    'pythonpro.courses',
+    'pythonpro.modules',
     'pythonpro.promos',
     'pythonpro.discourse',
     'django.contrib.admin',
@@ -89,7 +89,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'pythonpro.core.context_processors.global_settings',
-                'pythonpro.courses.context_processors.global_settings',
+                'pythonpro.modules.context_processors.global_settings',
             ],
         },
     },

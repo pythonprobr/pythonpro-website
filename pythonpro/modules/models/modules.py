@@ -3,7 +3,7 @@ from django.urls import reverse
 ALL = {}
 
 
-class Course:
+class Module:
     def __init__(self, title, slug, objective, description, target, *pre_requirements):
         self.slug = slug
         self.pre_requirements = pre_requirements
@@ -14,21 +14,21 @@ class Course:
         ALL[self.slug] = self
 
     def url(self):
-        return reverse('courses:detail', kwargs={'slug': self.slug})
+        return reverse('modules:detail', kwargs={'slug': self.slug})
 
 
-PYTHON_BIRDS = Course(
+PYTHON_BIRDS = Module(
     'Python Birds',
     'python-birds',
     'Introduzir programação Procedural e Orientação a Objetos em Python.',
     (
-        'Durante o curso será desenvolvida uma versão simplificada do jogo Angry Birds. Assim o aluno aprenderá os '
+        'Durante o módulo será desenvolvida uma versão simplificada do jogo Angry Birds. Assim o aluno aprenderá os '
         'conceitos ao mesmo tempo em que implementa um projeto prático.'
     ),
     'Alunos com nenhuma ou pouca experiência.'
 )
 
-PYTHONIC_OBJECTS = Course(
+PYTHONIC_OBJECTS = Module(
     'Objetos Pythônicos',
     'objetos-pythonicos',
     'Aprofundar o conhecimento de Orientação a Objetos tendo em vista as peculiaridade do Python.',
@@ -45,24 +45,24 @@ PYTHONIC_OBJECTS = Course(
     PYTHON_BIRDS
 )
 
-PYTOOLS = Course(
+PYTOOLS = Module(
     'PyTools',
     'pytools',
     'Apresentar um conjunto de ferramentas básico, mas poderoso, que Pythonistas experientes usam no dia-a-dia.',
     (
-        'Nesse curso será abordada a leitura e escrita de arquivos, com definição de unicode e encode. Instalação e '
+        'Nesse módulo será abordada a leitura e escrita de arquivos, com definição de unicode e encode. Instalação e '
         'criação de bibliotecas utilizando pip, virtualenv e pypi. Criação de testes automáticos com o framework pytest'
     ),
     'Alunos iniciantes de Python que desejam conhecer as ferramentas de seu ecossistema.',
     PYTHON_BIRDS
 )
 
-PYTHON_FOR_PYTHONISTS = Course(
+PYTHON_FOR_PYTHONISTS = Module(
     'Python para Pythonistas',
     'python-para-pythonistas',
-    'Curso para desvendar recursos avançados da linguagem, em geral utilizados em diversos frameworks.',
+    'Curso para desvendar remódulos avançados da linguagem, em geral utilizados em diversos frameworks.',
     (
-        'Este curso vai te mostrar o modo pythônico de abordar concorrência, escalabilidade e metaprogramação, '
+        'Este módulo vai te mostrar o modo pythônico de abordar concorrência, escalabilidade e metaprogramação, '
         'aproveitando o que Python tem de mais avançado. '
     ),
     'Alunos com conhecimento intermediário/avançado de Python, que já programam com a linguagem em seu dia-a-dia',
@@ -70,13 +70,13 @@ PYTHON_FOR_PYTHONISTS = Course(
     PYTHONIC_OBJECTS
 )
 
-PYTHON_WEB = Course(
+PYTHON_WEB = Module(
     'Python Web',
     'python-web',
     'Construir uma aplicação web utilizando Flask e SQLAlchemy',
     (
-        'Nesse curso será construído uma aplicação web real utilizando o framework web Flask o o ORM SQLAlchemy.'
-        'Ele serve como curso prático onde todos os conceitos vistos nos demais cursos são colados em prática.'
+        'Nesse módulo será construído uma aplicação web real utilizando o framework web Flask o o ORM SQLAlchemy.'
+        'Ele serve como módulo prático onde todos os conceitos vistos nos demais módulos são colados em prática.'
     ),
     (
         'Alunos com conhecimento avançado de Python que desejam desenvolver para web.'
@@ -84,14 +84,14 @@ PYTHON_WEB = Course(
     PYTHON_BIRDS, PYTHONIC_OBJECTS, PYTHON_FOR_PYTHONISTS
 )
 
-PYTHON_PATTERNS = Course(
+PYTHON_PATTERNS = Module(
     'Python Patterns',
     'python-patterns',
     (
         'Apresentar técnicas de programação orientada a objetos e padrões de projeto otimizados para as '
         'características dinâmicas da linguagem Python.'),
     (
-        'Neste curso analisamos as características específicas dos objetos, classes e interfaces em Python, '
+        'Neste módulo analisamos as características específicas dos objetos, classes e interfaces em Python, '
         'e aplicamos esse entendimento na análise e refatoração de vários padrões de projeto clássicos do livro '
         'Padrões de Projeto de Gamma, Helm, Johnson e Vlissides. Além de padrões arquiteturais, também estudamos '
         'padrões de codificação em uma escala menor, relacionados ao gerenciamento de atributos e usos dinâmicos de '
@@ -104,14 +104,14 @@ PYTHON_PATTERNS = Course(
     ),
     PYTHON_BIRDS, PYTHONIC_OBJECTS, PYTHON_FOR_PYTHONISTS
 )
-TECH_INTERVIEW = Course(
+TECH_INTERVIEW = Module(
     'Entrevistas Técnicas',
     'entrevistas-tecnicas',
     (
         'Aprender como ocorre o processo seletivo de empresas gringas e as questões técnicas que são feitas na '
         'entrevista técnica.'),
     (
-        'Nesse curso será passada uma visão geral sobre os processos seletivos de empresas estrangeiras: envio de '
+        'Nesse módulo será passada uma visão geral sobre os processos seletivos de empresas estrangeiras: envio de '
         'currículo, análise de algorítmos, estruturas de dados e resolução de questões.'
     ),
     (
