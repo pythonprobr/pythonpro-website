@@ -4,16 +4,20 @@
 {% block title %}{{ section.title }}{% endblock %}
 
 {% block body %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      {% for title, url in section.breadcrumb %}
+        {% if not forloop.last %}
+          <li class="breadcrumb-item"><a href="{{ url }}">{{ title }}</a></li>
+        {% else %}
+          <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+        {% endif %}
+      {% endfor %}
+    </ol>
+  </nav>
   <div class="container">
     <div class="row">
       <div class="col">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Library</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Data</li>
-          </ol>
-        </nav>
         <h1 class="mt-4 mb-3">{{ section.title }}</h1>
         <dt>Descrição</dt>
         <dd>

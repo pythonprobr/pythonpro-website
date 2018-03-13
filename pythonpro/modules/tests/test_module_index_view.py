@@ -39,7 +39,7 @@ def test_module_index_link_not_logged(resp_not_logged):
 @modules_dec
 def test_module_link_not_logged(module: Module, resp_not_logged):
     """ Assert module links are not present when user is not logged """
-    dj_assert_not_contains(resp_not_logged, f'href="{module.get_absolut_url()}"')
+    dj_assert_not_contains(resp_not_logged, f'href="{module.get_absolute_url()}"')
 
 
 def test_module_index_link_logged(resp):
@@ -51,7 +51,7 @@ def test_module_index_link_logged(resp):
 @modules_dec
 def test_module_link_logged(module: Module, resp):
     """ Assert module links are present when user is logged """
-    dj_assert_contains(resp, f'href="{module.get_absolut_url()}"')
+    dj_assert_contains(resp, f'href="{module.get_absolute_url()}"')
 
 
 @modules_dec

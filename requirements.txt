@@ -1,5 +1,6 @@
 Django==2.0.3
 dj_database_url==0.5.0
+django-ordered-model==1.4.3
 pytz==2018.3
 python_box==3.1.1
 six==1.11.0
