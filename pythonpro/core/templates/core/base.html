@@ -29,7 +29,7 @@
           </a>
           <div class="dropdown-menu bg-dark border-light" aria-labelledby="navbarCourses">
             {% for module in ALL_MODULES %}
-              <a class="dropdown-item text-light" href="{{ module.get_absolut_url }}">{{ module.title }}</a>
+              <a class="dropdown-item text-light" href="{{ module.get_absolute_url }}">{{ module.title }}</a>
               {% if not forloop.last %}
                 <div class="dropdown-divider"></div>
               {% endif %}

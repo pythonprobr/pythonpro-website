@@ -1,9 +1,11 @@
 from django.urls import reverse
 
+from pythonpro.content import ContentWithTitleMixin
+
 ALL = {}
 
 
-class Module:
+class Module(ContentWithTitleMixin):
     def __init__(self, title, slug, objective, description, target, *pre_requirements):
         self.slug = slug
         self.pre_requirements = pre_requirements
@@ -13,8 +15,11 @@ class Module:
         self.title = title
         ALL[self.slug] = self
 
-    def get_absolut_url(self):
+    def get_absolute_url(self):
         return reverse('modules:detail', kwargs={'slug': self.slug})
+
+    def parent(self):
+        None
 
 
 PYTHON_BIRDS = Module(
