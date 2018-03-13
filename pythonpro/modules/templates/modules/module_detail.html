@@ -8,7 +8,6 @@
     <div class="row">
       <div class="col">
         <h1 class="mt-4 mb-3">{{ module.title }}</h1>
-        <dd>
         <dt>Pré-requisitos</dt>
         <dd>
           <ul>
@@ -16,7 +15,6 @@
               <li>
                 <a href="{{ module.get_absolut_url }}">{{ req_module.title }}</a>
               </li>
-
             {% empty %}
               <li>Nenhum pré-requisito.</li>
             {% endfor %}
@@ -40,7 +38,21 @@
             <li>{{ module.description }}</li>
           </ul>
         </dd>
-        </dl>
+        <dt>Conteúdo</dt>
+        <dd>
+          <ol>
+            <li><a href="#">Paradima Procedural</a>
+              <ol>
+                <li><a href="#"> Introdução</a></li>
+                <li><a href="#"> Instalação e Edição</a></li>
+                <li><a href="#"> Tipos Embutidos</a></li>
+                <li><a href="#"> Containers</a></li>
+              </ol>
+            </li>
+            <li><a href="#">Orientação a Objetos</a>
+            </li>
+          </ol>
+        </dd>
       </div>
     </div>
   </div>

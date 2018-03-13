@@ -49,9 +49,10 @@ LOGIN_URL = 'login'
 
 INSTALLED_APPS = [
     'pythonpro.core',
+    'pythonpro.discourse',
     'pythonpro.modules',
     'pythonpro.promos',
-    'pythonpro.discourse',
+    'pythonpro.sections',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
