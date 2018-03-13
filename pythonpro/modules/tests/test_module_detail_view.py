@@ -6,7 +6,7 @@ from pythonpro.django_assertions import dj_assert_contains
 
 
 def generate_resp(slug, client):
-    return client.get(reverse('courses:detail', kwargs={'slug': slug}))
+    return client.get(reverse('modules:detail', kwargs={'slug': slug}))
 
 
 @pytest.fixture
@@ -28,7 +28,7 @@ def test_status_code(client_with_user):
         'Introduzir programação Procedural e Orientação a Objetos em Python.',
         'Alunos com nenhuma ou pouca experiência.',
         'Nenhum pré-requisito.',
-        'Durante o curso será desenvolvida uma versão simplificada do jogo Angry Birds. Assim o aluno aprenderá os '
+        'Durante o módulo será desenvolvida uma versão simplificada do jogo Angry Birds. Assim o aluno aprenderá os '
         'conceitos ao mesmo tempo em que implementa um projeto prático.'
 
     ]
@@ -49,7 +49,7 @@ def test_page_content_without_pre_requisite(content, client_with_user):
         'Python Birds',
         'Aprofundamento no conhecimento da linguagem: tipagem dinâmica, protocolos versus interfaces, '
         'classes abstratas, herança múltipla e sobrecarga de operadores são alguns dos temas cobertos.',
-        reverse('courses:detail', kwargs={'slug': 'python-birds'}),
+        reverse('modules:detail', kwargs={'slug': 'python-birds'}),
 
     ]
 

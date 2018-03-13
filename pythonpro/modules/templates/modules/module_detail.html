@@ -1,20 +1,20 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}{{ course.title }}{% endblock %}
+{% block title %}{{ module.title }}{% endblock %}
 
 {% block body %}
   <div class="container">
     <div class="row">
       <div class="col">
-        <h1 class="mt-4 mb-3">{{ course.title }}</h1>
+        <h1 class="mt-4 mb-3">{{ module.title }}</h1>
         <dd>
         <dt>Pré-requisitos</dt>
         <dd>
           <ul>
-            {% for req_course in course.pre_requirements %}
+            {% for req_module in module.pre_requirements %}
               <li>
-                <a href="{{ course.url }}">{{ req_course.title }}</a>
+                <a href="{{ module.url }}">{{ req_module.title }}</a>
               </li>
 
             {% empty %}
@@ -25,19 +25,19 @@
         <dt>Objetivo</dt>
         <dd>
           <ul>
-            <li>{{ course.objective }}</li>
+            <li>{{ module.objective }}</li>
           </ul>
         </dd>
         <dt>Público</dt>
         <dd>
           <ul>
-            <li>{{ course.target }}</li>
+            <li>{{ module.target }}</li>
           </ul>
         </dd>
         <dt>Descrição</dt>
         <dd>
           <ul>
-            <li>{{ course.description }}</li>
+            <li>{{ module.description }}</li>
           </ul>
         </dd>
         </dl>

@@ -1,9 +1,9 @@
-from pythonpro.courses.models import courses
+from pythonpro.modules.models import modules
 
 
 def global_settings(request):
     # return any necessary values
     dct = {
-        'ALL_COURSES': list(courses.ALL.values()),
+        'ALL_MODULES': list(modules.ALL.values()),
     }
     return dct
