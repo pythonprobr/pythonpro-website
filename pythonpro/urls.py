@@ -29,6 +29,7 @@ urlpatterns = [
     path('aperitivo/', include('pythonpro.promos.urls')),
     path('discourse/', include('pythonpro.discourse.urls')),
     path('modulos/', include('pythonpro.modules.urls')),
+    path('secoes/', include('pythonpro.sections.urls')),
     path('', include('pythonpro.core.urls')),
 
 ]
