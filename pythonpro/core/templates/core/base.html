@@ -39,7 +39,7 @@
 
       {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'modules:index' %}">Cursos</a>
+          <a class="nav-link" href="{% url 'modules:index' %}">Módulos</a>
         </li>
       {% endif %}
       {% if user.is_authenticated and DISCOURSE_BASE_URL %}
