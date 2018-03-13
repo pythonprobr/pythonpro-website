@@ -14,7 +14,7 @@
           <ul>
             {% for req_module in module.pre_requirements %}
               <li>
-                <a href="{{ module.url }}">{{ req_module.title }}</a>
+                <a href="{{ module.get_absolut_url }}">{{ req_module.title }}</a>
               </li>
 
             {% empty %}

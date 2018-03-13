@@ -13,7 +13,7 @@ class Module:
         self.title = title
         ALL[self.slug] = self
 
-    def url(self):
+    def get_absolut_url(self):
         return reverse('modules:detail', kwargs={'slug': self.slug})
 
 
