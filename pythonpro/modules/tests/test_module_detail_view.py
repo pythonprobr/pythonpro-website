@@ -5,7 +5,7 @@ from model_mommy import mommy
 
 from pythonpro.django_assertions import dj_assert_contains
 from pythonpro.modules import facade
-from pythonpro.modules.models import Section, PYTHON_BIRDS, Module
+from pythonpro.modules.models import Section, Module
 
 
 def generate_resp(slug, client):
@@ -70,13 +70,18 @@ def test_page_content_with_pre_requisite(content, client_with_user):
 
 
 @pytest.fixture
-def sections(transactional_db):
-    return mommy.make(Section, 2, module=Module.objects.filter(slug='python-birds').get())
+def sections(python_birds):
+    return mommy.make(Section, 2, module=python_birds)
 
 
 @pytest.fixture
-def resp_with_user(client_with_user, sections):
-    return client_with_user.get(reverse('modules:detail', kwargs={'slug': PYTHON_BIRDS.slug}))
+def python_birds(modules):
+    return Module.objects.filter(slug='python-birds').get()
+
+
+@pytest.fixture
+def resp_with_user(client_with_user, sections, python_birds):
+    return client_with_user.get(reverse('modules:detail', kwargs={'slug': python_birds.slug}))
 
 
 def test_sections_urls(resp_with_user, sections):
