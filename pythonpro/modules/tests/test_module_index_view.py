@@ -2,8 +2,8 @@ import pytest
 from django.urls import reverse
 from model_mommy import mommy
 
-from pythonpro.modules.models import modules
-from pythonpro.modules.models.modules import Module
+from pythonpro.modules import models
+from pythonpro.modules.models import Module
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains
 
 
@@ -19,7 +19,7 @@ def resp_not_logged(client):
     return client.get(reverse('modules:index'))
 
 
-modules_dec = pytest.mark.parametrize('module', modules.ALL.values())
+modules_dec = pytest.mark.parametrize('module', models.ALL.values())
 
 
 def test_status_code_logged(resp):

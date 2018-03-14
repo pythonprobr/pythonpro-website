@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
-from pythonpro.sections.models import Section
+from pythonpro.modules.models import Section
 
 
 def detail(request, slug):
