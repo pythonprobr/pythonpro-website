@@ -10,18 +10,6 @@
       <div class="col">
         <h1 id="{{module.slug}}" class="mt-4 mb-3" >{{ module.title }}</h1>
         <dd>
-        <dt>Pré-requisitos</dt>
-        <dd>
-          <ul>
-            {% for req_course in module.pre_requirements %}
-              <li>
-                <a href="#{{req_course.slug}}">{{ req_course.title }}</a>
-              </li>
-
-            {% empty %}
-              <li>Nenhum pré-requisito.</li>
-            {% endfor %}
-          </ul>
         </dd>
         <dt>Objetivo</dt>
         <dd><ul><li>{{ module.objective }}</li></ul></dd>

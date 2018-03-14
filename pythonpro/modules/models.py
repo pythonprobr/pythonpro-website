@@ -2,8 +2,6 @@ from django.db import models
 from django.urls import reverse
 from ordered_model.models import OrderedModel
 
-ALL = {}
-
 
 class Content(OrderedModel):
     """Mixing for defining content that can produce a breacrumb interface"""
@@ -60,7 +58,6 @@ class Module(Content):
 
 
 class Section(Content):
-    _module_slug = models.SlugField(choices=((m.slug, m.title) for m in ALL.values()))
     module = models.ForeignKey('Module', on_delete=models.CASCADE)
     order_with_respect_to = '_module_slug'
 

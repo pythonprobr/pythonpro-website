@@ -37,7 +37,6 @@ def test_status_code(client_with_user):
         'Python Birds',
         'Introduzir programação Procedural e Orientação a Objetos em Python.',
         'Alunos com nenhuma ou pouca experiência.',
-        'Nenhum pré-requisito.',
         'Durante o módulo será desenvolvida uma versão simplificada do jogo Angry Birds. Assim o aluno aprenderá os '
         'conceitos ao mesmo tempo em que implementa um projeto prático.'
 
