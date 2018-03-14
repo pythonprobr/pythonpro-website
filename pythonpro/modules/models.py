@@ -2,12 +2,64 @@ from django.db import models
 from django.urls import reverse
 from ordered_model.models import OrderedModel
 
-from pythonpro.modules.content import ContentWithTitleMixin, gen_breadcrum
-
 ALL = {}
 
 
-class Module(ContentWithTitleMixin):
+class Content(OrderedModel):
+    """Mixing for defining content that can produce a breacrumb interface"""
+    title = models.CharField(max_length=50)
+    description = models.TextField()
+    slug = models.SlugField(unique=True)
+
+    class Meta:
+        abstract = True
+        ordering = ('order',)
+
+    def parent(self):
+        """Must return the parent of current content, which must be also implement Content or None"""
+        raise NotImplementedError()
+
+    def breadcrumb(self):
+        """Must return an iterable with where which item is a tuple of (title, url) to content """
+        return gen_breadcrum(self)
+
+    def get_absolute_url(self):
+        """Must return the absolute url for this content"""
+        return reverse('modules:detail', kwargs={'slug': self.slug})
+
+
+class ContentWithTitleMixin(Content):
+    """
+    Mising implementing breadcrumb method for models which has a title
+    """
+
+    class Meta:
+        abstract = True
+
+    def breadcrumb(self):
+        return gen_breadcrum(self)
+
+
+def gen_breadcrum(content):
+    """Function that generates breadcrumb for contents that respect Content protocol"""
+    parent = content.parent()
+    if parent is not None:
+        yield from parent.breadcrumb()
+    yield content.title, content.get_absolute_url()
+
+
+class Module(Content):
+    objective = models.TextField()
+    target = models.TextField()
+
+    def parent(self):
+        return None
+
+
+class ModuleHardCoded(ContentWithTitleMixin):
+    class Meta:
+        abstract = True
+
     def __init__(self, title, slug, objective, description, target, *pre_requirements):
         self.slug = slug
         self.pre_requirements = pre_requirements
@@ -21,10 +73,10 @@ class Module(ContentWithTitleMixin):
         return reverse('modules:detail', kwargs={'slug': self.slug})
 
     def parent(self):
-        None
+        return None
 
 
-PYTHON_BIRDS = Module(
+PYTHON_BIRDS = ModuleHardCoded(
     'Python Birds',
     'python-birds',
     'Introduzir programação Procedural e Orientação a Objetos em Python.',
@@ -35,7 +87,7 @@ PYTHON_BIRDS = Module(
     'Alunos com nenhuma ou pouca experiência.'
 )
 
-PYTHONIC_OBJECTS = Module(
+PYTHONIC_OBJECTS = ModuleHardCoded(
     'Objetos Pythônicos',
     'objetos-pythonicos',
     'Aprofundar o conhecimento de Orientação a Objetos tendo em vista as peculiaridade do Python.',
@@ -52,7 +104,7 @@ PYTHONIC_OBJECTS = Module(
     PYTHON_BIRDS
 )
 
-PYTOOLS = Module(
+PYTOOLS = ModuleHardCoded(
     'PyTools',
     'pytools',
     'Apresentar um conjunto de ferramentas básico, mas poderoso, que Pythonistas experientes usam no dia-a-dia.',
@@ -64,7 +116,7 @@ PYTOOLS = Module(
     PYTHON_BIRDS
 )
 
-PYTHON_FOR_PYTHONISTS = Module(
+PYTHON_FOR_PYTHONISTS = ModuleHardCoded(
     'Python para Pythonistas',
     'python-para-pythonistas',
     'Curso para desvendar remódulos avançados da linguagem, em geral utilizados em diversos frameworks.',
@@ -77,7 +129,7 @@ PYTHON_FOR_PYTHONISTS = Module(
     PYTHONIC_OBJECTS
 )
 
-PYTHON_WEB = Module(
+PYTHON_WEB = ModuleHardCoded(
     'Python Web',
     'python-web',
     'Construir uma aplicação web utilizando Flask e SQLAlchemy',
@@ -91,7 +143,7 @@ PYTHON_WEB = Module(
     PYTHON_BIRDS, PYTHONIC_OBJECTS, PYTHON_FOR_PYTHONISTS
 )
 
-PYTHON_PATTERNS = Module(
+PYTHON_PATTERNS = ModuleHardCoded(
     'Python Patterns',
     'python-patterns',
     (
@@ -112,7 +164,7 @@ PYTHON_PATTERNS = Module(
     PYTHON_BIRDS, PYTHONIC_OBJECTS, PYTHON_FOR_PYTHONISTS
 )
 
-TECH_INTERVIEW = Module(
+TECH_INTERVIEW = ModuleHardCoded(
     'Entrevistas Técnicas',
     'entrevistas-tecnicas',
     (
@@ -131,10 +183,7 @@ TECH_INTERVIEW = Module(
 )
 
 
-class Section(OrderedModel):
-    title = models.CharField(max_length=50)
-    description = models.TextField()
-    slug = models.SlugField(unique=True)
+class Section(Content):
     _module_slug = models.SlugField(choices=((m.slug, m.title) for m in ALL.values()))
     order_with_respect_to = '_module_slug'
 
@@ -146,6 +195,3 @@ class Section(OrderedModel):
 
     def parent(self):
         return ALL[self._module_slug]
-
-    def breadcrumb(self):
-        return gen_breadcrum(self)

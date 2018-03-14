@@ -50,7 +50,7 @@ def test_page_content_without_pre_requisite(content, client_with_user):
         'Python Birds',
         'Aprofundamento no conhecimento da linguagem: tipagem dinâmica, protocolos versus interfaces, '
         'classes abstratas, herança múltipla e sobrecarga de operadores são alguns dos temas cobertos.',
-        reverse('modules:detail', kwargs={'slug': 'python-birds'}),
+        # reverse('modules:detail', kwargs={'slug': 'python-birds'}),
 
     ]
 
