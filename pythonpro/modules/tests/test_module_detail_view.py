@@ -3,6 +3,8 @@ from django.urls import reverse
 from model_mommy import mommy
 
 from pythonpro.django_assertions import dj_assert_contains
+from pythonpro.modules import PYTHON_BIRDS
+from pythonpro.sections.models import Section
 
 
 def generate_resp(slug, client):
@@ -57,3 +59,18 @@ def test_page_content_without_pre_requisite(content, client_with_user):
 def test_page_content_with_pre_requisite(content, client_with_user):
     resp = generate_resp('objetos-pythonicos', client_with_user)
     dj_assert_contains(resp, content)
+
+
+@pytest.fixture
+def sections(transactional_db):
+    return mommy.make(Section, 2, _module_slug=PYTHON_BIRDS.slug)
+
+
+@pytest.fixture
+def resp_with_user(client_with_user, sections):
+    return client_with_user.get(reverse('modules:detail', kwargs={'slug': PYTHON_BIRDS.slug}))
+
+
+def test_sections_urls(resp_with_user, sections):
+    for section in sections:
+        dj_assert_contains(resp_with_user, section.get_absolute_url())

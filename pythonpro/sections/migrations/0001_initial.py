@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -19,7 +18,11 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=50)),
                 ('description', models.TextField()),
                 ('slug', models.SlugField(unique=True)),
-                ('_module_slug', models.SlugField(choices=[('python-birds', 'Python Birds'), ('objetos-pythonicos', 'Objetos Pythônicos'), ('pytools', 'PyTools'), ('python-para-pythonistas', 'Python para Pythonistas'), ('python-web', 'Python Web'), ('python-patterns', 'Python Patterns'), ('entrevistas-tecnicas', 'Entrevistas Técnicas')])),
+                ('_module_slug', models.SlugField(
+                    choices=[('python-birds', 'Python Birds'), ('objetos-pythonicos', 'Objetos Pythônicos'),
+                             ('pytools', 'PyTools'), ('python-para-pythonistas', 'Python para Pythonistas'),
+                             ('python-web', 'Python Web'), ('python-patterns', 'Python Patterns'),
+                             ('entrevistas-tecnicas', 'Entrevistas Técnicas')])),
             ],
             options={
                 'ordering': ['_module_slug', 'order'],
