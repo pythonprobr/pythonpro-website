@@ -185,6 +185,7 @@ TECH_INTERVIEW = ModuleHardCoded(
 
 class Section(Content):
     _module_slug = models.SlugField(choices=((m.slug, m.title) for m in ALL.values()))
+    module = models.ForeignKey('Module', on_delete=models.CASCADE)
     order_with_respect_to = '_module_slug'
 
     class Meta:
@@ -194,4 +195,4 @@ class Section(Content):
         return reverse('sections:detail', kwargs={'slug': self.slug})
 
     def parent(self):
-        return ALL[self._module_slug]
+        return self.module
