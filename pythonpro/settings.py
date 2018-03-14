@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'pythonpro.discourse',
     'pythonpro.modules',
     'pythonpro.promos',
-    'pythonpro.sections',
     'ordered_model',
     'django.contrib.admin',
     'django.contrib.auth',

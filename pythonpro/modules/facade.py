@@ -1,6 +1,6 @@
 from django.urls import reverse as _reverse
 
-from pythonpro.sections.models import Section as _Section
+from pythonpro.modules.models import Section as _Section
 
 
 def get_module_sections(module):

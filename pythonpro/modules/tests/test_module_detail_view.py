@@ -3,8 +3,7 @@ from django.urls import reverse
 from model_mommy import mommy
 
 from pythonpro.django_assertions import dj_assert_contains
-from pythonpro.modules import PYTHON_BIRDS
-from pythonpro.sections.models import Section
+from pythonpro.modules.models import Section, PYTHON_BIRDS
 
 
 def generate_resp(slug, client):
