@@ -3,12 +3,17 @@ from django.urls import reverse
 from model_mommy import mommy
 
 from pythonpro.django_assertions import dj_assert_contains
-from pythonpro.modules.models import Section, PYTHON_BIRDS
+from pythonpro.modules.models import Section, Module
 
 
 @pytest.fixture
-def section():
-    return mommy.make(Section, slug='procedural', _module_slug=PYTHON_BIRDS.slug)
+def module():
+    return mommy.make(Module)
+
+
+@pytest.fixture
+def section(module):
+    return mommy.make(Section, slug='procedural', module=module)
 
 
 @pytest.fixture
@@ -27,10 +32,10 @@ def test_title(resp, section, property_name):
     dj_assert_contains(resp, getattr(section, property_name))
 
 
-def test_breadcrumb_parent(resp):
+def test_breadcrumb_parent(resp, module):
     dj_assert_contains(
         resp,
-        '<li class="breadcrumb-item"><a href="/modulos/python-birds/">Python Birds</a></li>'
+        f'<li class="breadcrumb-item"><a href="{module.get_absolute_url()}">{module.title}</a></li>'
     )
 
 

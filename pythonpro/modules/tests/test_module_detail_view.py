@@ -1,9 +1,11 @@
 import pytest
+from django.core.management import call_command
 from django.urls import reverse
 from model_mommy import mommy
 
 from pythonpro.django_assertions import dj_assert_contains
-from pythonpro.modules.models import Section, PYTHON_BIRDS
+from pythonpro.modules import facade
+from pythonpro.modules.models import Section, PYTHON_BIRDS, Module
 
 
 def generate_resp(slug, client):
@@ -11,7 +13,14 @@ def generate_resp(slug, client):
 
 
 @pytest.fixture
-def client_with_user(client, django_user_model):
+def modules(transactional_db):
+    call_command('loaddata', 'pythonpro_modules.json')
+    modules = facade.get_all_modules()
+    return modules
+
+
+@pytest.fixture
+def client_with_user(client, django_user_model, modules):
     user = mommy.make(django_user_model)
     client.force_login(user)
     return client
@@ -62,7 +71,7 @@ def test_page_content_with_pre_requisite(content, client_with_user):
 
 @pytest.fixture
 def sections(transactional_db):
-    return mommy.make(Section, 2, _module_slug=PYTHON_BIRDS.slug)
+    return mommy.make(Section, 2, module=Module.objects.filter(slug='python-birds').get())
 
 
 @pytest.fixture

@@ -1,4 +1,4 @@
-from django.urls import reverse as _reverse
+from django.db.models import Prefetch
 
 from pythonpro.modules.models import Section as _Section, Module as _Module
 
@@ -11,20 +11,16 @@ def get_all_modules():
     return tuple(_Module.objects.order_by('order'))
 
 
-def get_module_sections(module):
+def get_module_sections(slug):
     """
-    Search for all module's sections. Only Section's title and slug is returned
-    :param module:
-    :return:
+    Search for a module with respective sections
+    :param slug: module slugs
+    :return: Module with respective section on attribute sections
     """
 
-    def set_absolut_url(dct):
-        dct['get_absolute_url'] = _reverse('sections:detail', kwargs={'slug': dct['slug']})
-        return dct
-
-    mapped = map(
-        set_absolut_url,
-        _Section.objects.values('title', 'slug').filter(_module_slug=module.slug).order_by('order')
-    )
-
-    return tuple(mapped)
+    return _Module.objects.filter(slug=slug).prefetch_related(
+        Prefetch(
+            'section_set',
+            queryset=_Section.objects.order_by('order'),
+            to_attr='sections')
+    ).get()

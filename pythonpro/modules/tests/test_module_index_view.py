@@ -11,7 +11,6 @@ from pythonpro.modules import facade
 def modules(transactional_db):
     call_command('loaddata', 'pythonpro_modules.json')
     modules = facade.get_all_modules()
-    assert len(modules) > 0
     return modules
 
 
