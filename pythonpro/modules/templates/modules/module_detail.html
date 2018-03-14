@@ -8,18 +8,6 @@
     <div class="row">
       <div class="col">
         <h1 class="mt-4 mb-3">{{ module.title }}</h1>
-        <dt>Pré-requisitos</dt>
-        <dd>
-          <ul>
-            {% for req_module in module.pre_requirements %}
-              <li>
-                <a href="{{ module.get_absolut_url }}">{{ req_module.title }}</a>
-              </li>
-            {% empty %}
-              <li>Nenhum pré-requisito.</li>
-            {% endfor %}
-          </ul>
-        </dd>
         <dt>Objetivo</dt>
         <dd>
           <ul>
