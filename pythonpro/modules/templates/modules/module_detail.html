@@ -41,15 +41,11 @@
         <dt>Conteúdo</dt>
         <dd>
           <ol>
-            <li><a href="#">Paradima Procedural</a>
-              <ol>
-                <li><a href="#"> Introdução</a></li>
-                <li><a href="#"> Instalação e Edição</a></li>
-                <li><a href="#"> Tipos Embutidos</a></li>
-                <li><a href="#"> Containers</a></li>
-              </ol>
-            </li>
-            <li><a href="#">Orientação a Objetos</a>
+            {% for section in module.sections %}
+              <li><a href="{{ section.get_absolute_url }}">{{ section.title }}</a></li>
+            {% empty %}
+              <li>Nenhuma seção definida ainda</li>
+            {% endfor %}
             </li>
           </ol>
         </dd>
