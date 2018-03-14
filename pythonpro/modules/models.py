@@ -27,6 +27,9 @@ class Content(OrderedModel):
         """Must return the absolute url for this content"""
         return reverse('modules:detail', kwargs={'slug': self.slug})
 
+    def __str__(self):
+        return self.title
+
 
 class ContentWithTitleMixin(Content):
     """
