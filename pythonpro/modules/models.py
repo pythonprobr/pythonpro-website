@@ -59,10 +59,10 @@ class Module(Content):
 
 class Section(Content):
     module = models.ForeignKey('Module', on_delete=models.CASCADE)
-    order_with_respect_to = '_module_slug'
+    order_with_respect_to = 'module'
 
     class Meta:
-        ordering = ['_module_slug', 'order']
+        ordering = ['module', 'order']
 
     def get_absolute_url(self):
         return reverse('sections:detail', kwargs={'slug': self.slug})

@@ -5,7 +5,7 @@ from pythonpro.modules.models import Section, Module
 
 
 class SectionAdmin(OrderedModelAdmin):
-    list_display = 'title slug _module_slug order move_up_down_links'.split()
+    list_display = 'title slug module order move_up_down_links'.split()
 
 
 class ModuleAdmin(OrderedModelAdmin):
