@@ -1,6 +1,14 @@
 from django.urls import reverse as _reverse
 
-from pythonpro.modules.models import Section as _Section
+from pythonpro.modules.models import Section as _Section, Module as _Module
+
+
+def get_all_modules():
+    """
+    Search all modules on database sorted by order
+    :return: tuple of Module
+    """
+    return tuple(_Module.objects.order_by('order'))
 
 
 def get_module_sections(module):

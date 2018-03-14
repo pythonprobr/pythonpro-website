@@ -1,25 +1,30 @@
 import pytest
+from django.core.management import call_command
 from django.urls import reverse
 from model_mommy import mommy
 
-from pythonpro.modules import models
-from pythonpro.modules.models import Module
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains
+from pythonpro.modules import facade
 
 
 @pytest.fixture
-def resp(client, django_user_model):
+def modules(transactional_db):
+    call_command('loaddata', 'pythonpro_modules.json')
+    modules = facade.get_all_modules()
+    assert len(modules) > 0
+    return modules
+
+
+@pytest.fixture
+def resp(client, django_user_model, modules):
     user = mommy.make(django_user_model)
     client.force_login(user)
-    return resp_not_logged(client)
+    return resp_not_logged(client, modules)
 
 
 @pytest.fixture
-def resp_not_logged(client):
+def resp_not_logged(client, modules):
     return client.get(reverse('modules:index'))
-
-
-modules_dec = pytest.mark.parametrize('module', models.ALL.values())
 
 
 def test_status_code_logged(resp):
@@ -36,10 +41,10 @@ def test_module_index_link_not_logged(resp_not_logged):
     dj_assert_contains(resp_not_logged, f'href="{url}"')
 
 
-@modules_dec
-def test_module_link_not_logged(module: Module, resp_not_logged):
+def test_module_link_not_logged(modules, resp_not_logged):
     """ Assert module links are not present when user is not logged """
-    dj_assert_not_contains(resp_not_logged, f'href="{module.get_absolute_url()}"')
+    for module in modules:
+        dj_assert_not_contains(resp_not_logged, f'href="{module.get_absolute_url()}"')
 
 
 def test_module_index_link_logged(resp):
@@ -48,32 +53,18 @@ def test_module_index_link_logged(resp):
     dj_assert_not_contains(resp, f'href="{url}"')
 
 
-@modules_dec
-def test_module_link_logged(module: Module, resp):
+def test_module_link_logged(modules, resp):
     """ Assert module links are present when user is logged """
-    dj_assert_contains(resp, f'href="{module.get_absolute_url()}"')
+    for module in modules:
+        dj_assert_contains(resp, f'href="{module.get_absolute_url()}"')
 
 
-@modules_dec
-def test_anchor(module, resp_not_logged):
-    dj_assert_contains(resp_not_logged, f'<h1 id="{module.slug}"')
+def test_anchor(modules, resp_not_logged):
+    for module in modules:
+        dj_assert_contains(resp_not_logged, f'<h1 id="{module.slug}"')
 
 
-@modules_dec
-def test_title(module, resp_not_logged):
-    dj_assert_contains(resp_not_logged, module.title)
-
-
-@modules_dec
-def test_objective(module: Module, resp_not_logged):
-    dj_assert_contains(resp_not_logged, module.objective)
-
-
-@modules_dec
-def test_descritption(module: Module, resp_not_logged):
-    dj_assert_contains(resp_not_logged, module.description)
-
-
-@modules_dec
-def test_target(module: Module, resp_not_logged):
-    dj_assert_contains(resp_not_logged, module.target)
+@pytest.mark.parametrize('attr_name', 'title objective description target'.split())
+def test_present_attrs(modules, resp_not_logged, attr_name):
+    for module in modules:
+        dj_assert_contains(resp_not_logged, getattr(module, attr_name))

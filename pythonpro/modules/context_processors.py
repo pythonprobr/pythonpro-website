@@ -1,9 +1,11 @@
-from pythonpro.modules import models
+from pythonpro.modules.facade import get_all_modules
 
 
 def global_settings(request):
     # return any necessary values
-    dct = {
-        'ALL_MODULES': list(models.ALL.values()),
+    if not request.user.is_authenticated:
+        return {}
+
+    return {
+        'ALL_MODULES': get_all_modules(),
     }
-    return dct
