@@ -139,7 +139,6 @@ class Section(OrderedModel):
     order_with_respect_to = '_module_slug'
 
     class Meta:
-        db_table = 'sections_section'
         ordering = ['_module_slug', 'order']
 
     def get_absolute_url(self):

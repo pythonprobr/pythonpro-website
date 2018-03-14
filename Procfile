@@ -1,2 +1,2 @@
-release: python manage.py migrate --noinput  --fake-initial
+release: python manage.py migrate --noinput
 web: gunicorn pythonpro.wsgi --log-file -
