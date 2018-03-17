@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 
-from pythonpro.modules.models import Section
+from pythonpro.modules import facade
 
 
 def detail(request, slug):
-    ctx = {'section': get_object_or_404(Section, slug=slug)}
+    ctx = {'section': facade.get_section_with_module_and_chapters(slug=slug)}
     return render(request, 'sections/section_detail.html', ctx)

@@ -2,6 +2,7 @@ DEBUG=True
 SECRET_KEY=Change for a secret here
 ALLOWED_HOSTS=localhost, 127.0.0.1
 SENTRY_DSN=
+DATABASE_URL=
 
 # Amazon S3 configuration
 DJANGO_AWS_ACCESS_KEY_ID=

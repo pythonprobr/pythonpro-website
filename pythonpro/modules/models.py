@@ -69,3 +69,17 @@ class Section(Content):
 
     def parent(self):
         return self.module
+
+
+class Chapter(Content):
+    section = models.ForeignKey('Section', on_delete=models.CASCADE)
+    order_with_respect_to = 'section'
+
+    class Meta:
+        ordering = ['section', 'order']
+
+    def get_absolute_url(self):
+        return reverse('chapters:detail', kwargs={'slug': self.slug})
+
+    def parent(self):
+        return self.section
