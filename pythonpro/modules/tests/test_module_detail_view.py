@@ -5,7 +5,7 @@ from model_mommy import mommy
 
 from pythonpro.django_assertions import dj_assert_contains
 from pythonpro.modules import facade
-from pythonpro.modules.models import Section, Module
+from pythonpro.modules.models import Section, Module, Chapter
 
 
 def generate_resp(slug, client):
@@ -79,10 +79,38 @@ def python_birds(modules):
 
 
 @pytest.fixture
-def resp_with_user(client_with_user, sections, python_birds):
+def resp_with_sections(client_with_user, sections, python_birds):
     return client_with_user.get(reverse('modules:detail', kwargs={'slug': python_birds.slug}))
 
 
-def test_sections_urls(resp_with_user, sections):
+def test_section_titles(resp_with_sections, sections):
     for section in sections:
-        dj_assert_contains(resp_with_user, section.get_absolute_url())
+        dj_assert_contains(resp_with_sections, section.title)
+
+
+def test_section_urls(resp_with_sections, sections):
+    for section in sections:
+        dj_assert_contains(resp_with_sections, section.get_absolute_url())
+
+
+@pytest.fixture
+def chapters(sections):
+    result = []
+    for section in sections:
+        result.extend(mommy.make(Chapter, 2, section=section))
+    return result
+
+
+@pytest.fixture
+def resp_with_chapters(client_with_user, python_birds, sections, chapters):
+    return resp_with_sections(client_with_user, sections, python_birds)
+
+
+def test_chapter_titles(resp_with_chapters, chapters):
+    for chapter in chapters:
+        dj_assert_contains(resp_with_chapters, chapter.title)
+
+
+def test_chapter_urls(resp_with_chapters, chapters):
+    for chapter in chapters:
+        dj_assert_contains(resp_with_chapters, chapter.get_absolute_url())
