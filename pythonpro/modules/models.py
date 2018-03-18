@@ -83,3 +83,18 @@ class Chapter(Content):
 
     def parent(self):
         return self.section
+
+
+class Topic(Content):
+    chapter = models.ForeignKey('Chapter', on_delete=models.CASCADE)
+    vimeo_id = models.CharField(max_length=11, db_index=False)
+    order_with_respect_to = 'chapter'
+
+    class Meta:
+        ordering = ['chapter', 'order']
+
+    def get_absolute_url(self):
+        return reverse('topics:detail', kwargs={'slug': self.slug})
+
+    def parent(self):
+        return self.chapter
