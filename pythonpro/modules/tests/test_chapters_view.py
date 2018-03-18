@@ -66,10 +66,10 @@ def test_breadcrumb_section(resp, section):
         resp,
         f'<li class="breadcrumb-item"><a href="{section.get_absolute_url()}">{section.title}</a></li>'
     )
-#
-#
-# def test_breadcrumb_current(resp, section):
-#     dj_assert_contains(
-#         resp,
-#         f'<li class="breadcrumb-item active" aria-current="page">{section.title}</li>'
-#     )
+
+
+def test_breadcrumb_current(resp, chapter):
+    dj_assert_contains(
+        resp,
+        f'<li class="breadcrumb-item active" aria-current="page">{chapter.title}</li>'
+    )

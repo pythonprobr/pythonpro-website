@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ topic.title }}{% endblock %}
+
+{% block body %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      {% for title, url in topic.breadcrumb %}
+        {% if not forloop.last %}
+          <li class="breadcrumb-item"><a href="{{ url }}">{{ title }}</a></li>
+        {% else %}
+          <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+        {% endif %}
+      {% endfor %}
+    </ol>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="mt-4 mb-3">{{ topic.title }}</h1>
+        <p>{{ topic.description }}</p>
+        <div class="embed-container">
+          <iframe src="https://player.vimeo.com/video/{{ topic.vimeo_id }}" width="640" height="360" frameborder="0"
+                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock body %}

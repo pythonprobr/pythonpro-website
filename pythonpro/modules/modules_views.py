@@ -2,12 +2,12 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 # Create your views here.
-from pythonpro.modules.facade import get_module_with_sections_and_chapters, get_all_modules
+from pythonpro.modules.facade import get_module_with_contents, get_all_modules
 
 
 @login_required
 def detail(request, slug):
-    module = get_module_with_sections_and_chapters(slug)
+    module = get_module_with_contents(slug)
     return render(request, 'modules/module_detail.html', {'module': module})
 
 

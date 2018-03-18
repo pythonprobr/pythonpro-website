@@ -31,6 +31,7 @@ urlpatterns = [
     path('modulos/', include('pythonpro.modules.module_urls')),
     path('secoes/', include('pythonpro.modules.sections_urls')),
     path('capitulos/', include('pythonpro.modules.chapters_urls')),
+    path('topicos/', include('pythonpro.modules.topics_urls')),
     path('', include('pythonpro.core.urls')),
 
 ]

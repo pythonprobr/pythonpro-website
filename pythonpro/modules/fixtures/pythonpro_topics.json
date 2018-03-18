@@ -1,0 +1,1 @@
+[{"model": "modules.topic", "pk": 1, "fields": {"order": 0, "title": "Curso Python Pro", "description": "V\u00eddeo explicando como funciona o curso Python Pro.", "slug": "curso-python-pro", "chapter": 1, "vimeo_id": "258681672"}}]
