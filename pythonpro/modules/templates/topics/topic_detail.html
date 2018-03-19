@@ -29,7 +29,7 @@
         <script type="text/javascript">
           DiscourseEmbed = {
             discourseUrl: '{{ DISCOURSE_BASE_URL }}',
-            discourseEmbedUrl: '{{ request.build_absolute_uri }}' };
+            topicId: {{ topic.discourse_topic_id }} };
 
           (function () {
             var d = document.createElement('script');

@@ -88,6 +88,7 @@ class Chapter(Content):
 class Topic(Content):
     chapter = models.ForeignKey('Chapter', on_delete=models.CASCADE)
     vimeo_id = models.CharField(max_length=11, db_index=False)
+    discourse_topic_id = models.CharField(max_length=11, db_index=False)
     order_with_respect_to = 'chapter'
 
     class Meta:

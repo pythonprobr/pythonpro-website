@@ -97,5 +97,9 @@ def test_breadcrumb_current(resp, topic):
     )
 
 
+def test_discourse_topic_id(resp, topic):
+    dj_assert_contains(resp, f"topicId: {topic.discourse_topic_id}")
+
+
 def test_discourse_url(resp, topic):
     dj_assert_contains(resp, f"discourseUrl: '{settings.DISCOURSE_BASE_URL}'")
