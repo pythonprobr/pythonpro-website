@@ -73,7 +73,7 @@ MIDDLEWARE = [
 ]
 
 # Discourse config
-DISCOURSE_BASE_URL = 'https://forum.python.pro.br'
+DISCOURSE_BASE_URL = 'https://forum.python.pro.br/'
 DISCOURSE_SSO_SECRET = config('DISCOURSE_SSO_SECRET')
 
 ROOT_URLCONF = 'pythonpro.urls'
