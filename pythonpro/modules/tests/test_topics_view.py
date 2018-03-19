@@ -1,4 +1,5 @@
 import pytest
+from django.conf import settings
 from django.urls import reverse
 from model_mommy import mommy
 
@@ -94,3 +95,7 @@ def test_breadcrumb_current(resp, topic):
         resp,
         f'<li class="breadcrumb-item active" aria-current="page">{topic.title}</li>'
     )
+
+
+def test_discourse_url(resp, topic):
+    dj_assert_contains(resp, f"discourseUrl: '{settings.DISCOURSE_BASE_URL}'")

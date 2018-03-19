@@ -24,6 +24,22 @@
           <iframe src="https://player.vimeo.com/video/{{ topic.vimeo_id }}" width="640" height="360" frameborder="0"
                   webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
         </div>
+
+        <div id='discourse-comments'></div>
+        <script type="text/javascript">
+          DiscourseEmbed = {
+            discourseUrl: '{{ DISCOURSE_BASE_URL }}',
+            discourseEmbedUrl: '{{ request.build_absolute_uri }}' };
+
+          (function () {
+            var d = document.createElement('script');
+            d.type = 'text/javascript';
+            d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+          })();
+        </script>
+
       </div>
     </div>
   </div>
