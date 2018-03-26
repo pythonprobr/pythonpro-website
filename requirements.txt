@@ -12,7 +12,7 @@ raven==6.6.0
 #Amazon S3 Stuff
 boto3==1.6.16
 Collectfast==0.6.2
-botocore==1.9.16
+botocore==1.9.17
 django-s3-folder-storage==0.5
 django-storages==1.6.5
 docutils==0.14
