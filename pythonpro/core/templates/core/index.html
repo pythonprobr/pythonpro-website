@@ -14,6 +14,18 @@
         <h2 class="pythonpro-subtitle mb-4 mb-md-5">Python para Profissionais</h2>
       </div>
     </div>
+    {% if SUBSCRIPTIONS_OPEN %}
+      <div class="row">
+        <div class="col">
+          <div class="jumbotron">
+            <h1 class="display-4">Inscrições Abertas!</h1>
+            <p class="lead">Inscrições abertas para turma que começa em junho. Vagas Limitadas.</p>
+            <a class="btn btn-primary btn-lg text-light p-4" href="{% url 'payments:options' %}" role="button">QUERO ME
+              MATRICULAR &raquo;</a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
     <div class="row mt-8">
       <div class="col-12 col-md mb-3">
         <h3 class="mb-2 mb-md-4">Para quem é voltado esse curso?</h3>

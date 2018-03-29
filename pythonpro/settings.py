@@ -29,6 +29,9 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
+# Control subscriptions ads and payment.
+SUBSCRIPTIONS_OPEN = True
+
 # Email Configuration
 
 DEFAULT_FROM_EMAIL = 'renzo@python.pro.br'
@@ -52,6 +55,7 @@ INSTALLED_APPS = [
     'pythonpro.discourse',
     'pythonpro.modules',
     'pythonpro.promos',
+    'pythonpro.payments',
     'ordered_model',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -91,6 +95,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'pythonpro.core.context_processors.global_settings',
                 'pythonpro.modules.context_processors.global_settings',
+                'pythonpro.payments.context_processors.global_settings',
             ],
         },
     },

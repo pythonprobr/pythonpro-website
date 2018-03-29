@@ -12,6 +12,15 @@
         </div>
       </div>
     </div>
-    {% include 'core/leads_form.html' only %}
+    {% if SUBSCRIPTIONS_OPEN %}
+      <div class="row">
+        <div class="col text-center">
+          <a class="btn btn-primary btn-lg text-light p-4" href="{% url 'payments:options' %}" role="button">QUERO ME
+            MATRICULAR &raquo;</a>
+        </div>
+      </div>
+    {% else %}
+      {% include 'core/leads_form.html' only %}
+    {% endif %}
   </div>
 {% endblock body %}

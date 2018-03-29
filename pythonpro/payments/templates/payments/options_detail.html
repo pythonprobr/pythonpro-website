@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Formas de Pagamento{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="mt-4 mb-3">Inscrições Abertas</h1>
+        <p>Essa turma vai começar em junho e durar 8 semanas.</p>
+        <p>Em cada semana haverá encontro online para retiradas de dúvidas e também 4 webinários com profissionais da
+          área de TI.</p>
+        <p>Os inscritos viram membros vitalícios tendo acesso a todo novo conteúdo de turmas futuras. Além disso ganham
+          acesso a fórum exclusivo para retiradas de dúvidas.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h2 class="mt-4 mb-3">Formas de Pagamento</h2>
+        <p>O curso custa R$ 1800,00 e pode ser pago de duas maneiras:</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md">
+        <h3 class="mt-4 mb-3">Parcelada sem Juros</h3>
+        <p>10x de R$ 180,00 sem juros pelo pagseguro</p>
+        <form action="https://pagseguro.uol.com.br/pre-approvals/request.html" method="post">
+          <input type="hidden" name="code" value="28B4C9D65353AD8554943F8ED0585371"/>
+          <input type="hidden" name="iot" value="button"/>
+          <input type="image" src="https://stc.pagseguro.uol.com.br/public/img/botoes/assinaturas/120x53-contratar.gif"
+                 name="submit" alt="Pague com PagSeguro - É rápido, grátis e seguro!" width="120" height="53"/>
+        </form>
+        <hr class="mb-3"/>
+      </div>
+      <div class="col-12 col-md">
+        <h3 class="mt-4 mb-3">À Vista com Desconto</h3>
+        <p>Pague a vista por boleto e ganhe R$ 300,00 de desconto.</p>
+        <p>Envie um email para <a href="mailto:renzo@python.pro.br?subject=Inscrição%20Boleto">renzo@python.pro.br</a>
+          com assunto "Inscrição" para receber um boleto no valor de R$1500,00.</p>
+        <hr/>
+      </div>
+    </div>
+  </div>
+{% endblock body %}
