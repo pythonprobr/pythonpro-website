@@ -2,12 +2,21 @@ import pytest
 from django.urls import reverse
 from model_mommy import mommy
 
-from pythonpro.django_assertions import dj_assert_contains
+from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains
 from pythonpro.promos.models import Video
 
 
 @pytest.fixture
-def video_resp(client, video):
+def video_resp(client, video, settings):
+    settings.SUBSCRIPTIONS_OPEN = False
+    return client.get(
+        reverse(viewname='promos:video', args=(video.slug,)),
+    )
+
+
+@pytest.fixture
+def video_resp_subscriptions_open(client, video, settings):
+    settings.SUBSCRIPTIONS_OPEN = True
     return client.get(
         reverse(viewname='promos:video', args=(video.slug,)),
     )
@@ -29,7 +38,7 @@ def test_ty_status(client):
     assert 200 == resp.status_code
 
 
-@pytest.mark.parametrize(
+mail_chimp_content = pytest.mark.parametrize(
     'content',
     [
         '<form class="form-inline justify-content-center" '
@@ -40,8 +49,24 @@ def test_ty_status(client):
         '<button type="submit"'
     ]
 )
+
+
+@mail_chimp_content
 def test_video_lead_form(content, video_resp):
     dj_assert_contains(video_resp, content)
+
+
+@mail_chimp_content
+def test_video_lead_form_not_present(content, video_resp_subscriptions_open):
+    dj_assert_not_contains(video_resp_subscriptions_open, content)
+
+
+def test_video_subscription_link_not_present(video_resp):
+    dj_assert_not_contains(video_resp, reverse('payments:options'))
+
+
+def test_video_subscription_link_present(video_resp_subscriptions_open):
+    dj_assert_contains(video_resp_subscriptions_open, reverse('payments:options'))
 
 
 def test_video_title(video, video_resp):

@@ -73,3 +73,29 @@ def test_forum_tab_is_present(home_resp_with_user):
     Assert Forum tab is present when user is logged in
     """
     dj_assert_contains(home_resp_with_user, f'href="{settings.DISCOURSE_BASE_URL}"')
+
+
+@pytest.fixture
+def home_resp_open_subscriptions(settings, client):
+    settings.SUBSCRIPTIONS_OPEN = True
+    return home_resp(client)
+
+
+def test_payment_link_is_present(home_resp_open_subscriptions):
+    """
+    Assert Payment link is present on home page when subscriptions are open
+    """
+    dj_assert_contains(home_resp_open_subscriptions, reverse('payments:options'))
+
+
+@pytest.fixture
+def home_resp_closed_subscriptions(settings, client):
+    settings.SUBSCRIPTIONS_OPEN = False
+    return home_resp(client)
+
+
+def test_payment_link_is_not_present(home_resp_closed_subscriptions):
+    """
+    Assert Payment link is not present on home page when subscriptions are closed
+    """
+    dj_assert_not_contains(home_resp_closed_subscriptions, reverse('payments:options'))
