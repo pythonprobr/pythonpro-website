@@ -91,6 +91,10 @@ class Topic(Content):
     discourse_topic_id = models.CharField(max_length=11, db_index=False)
     order_with_respect_to = 'chapter'
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._next_topic_cache = None
+
     class Meta:
         ordering = ['chapter', 'order']
 
@@ -99,3 +103,8 @@ class Topic(Content):
 
     def parent(self):
         return self.chapter
+
+    def next_topic(self):
+        if self._next_topic_cache is None:
+            self._next_topic_cache = Topic.objects.filter(chapter=self.chapter, order=self.order + 1).get()
+        return self._next_topic_cache
