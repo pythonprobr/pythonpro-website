@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{ video.title }}{% endblock %}
+{% block body %}
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col text-center mb-5">
+        <h1>{{ video.title }}</h1>
+        <div class="embed-container">
+          <iframe src="https://player.vimeo.com/video/{{ video.vimeo_id }}" width="640" height="360" frameborder="0"
+                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    {% if SUBSCRIPTIONS_OPEN %}
+      <div class="row">
+        <div class="col text-center">
+          <a class="btn btn-primary btn-lg text-light p-4" href="{% url 'payments:options' %}" role="button">QUERO ME
+            MATRICULAR &raquo;</a>
+        </div>
+      </div>
+    {% else %}
+      {% include 'core/leads_form.html' only %}
+    {% endif %}
+  </div>
+{% endblock body %}

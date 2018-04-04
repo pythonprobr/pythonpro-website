@@ -1,21 +1,22 @@
-Django==2.0
-dj_database_url==0.4.2
-pytz==2017.3
+Django==2.0.4
+dj_database_url==0.5.0
+django-ordered-model==1.4.3
+pytz==2018.3
 python_box==3.1.1
 six==1.11.0
 gunicorn==19.7.1
-psycopg2==2.7.3.2
+psycopg2==2.7.4
 python-decouple==3.1
-raven==6.3.0
+raven==6.6.0
 
 #Amazon S3 Stuff
-boto3==1.4.8
-Collectfast==0.6.0
-botocore==1.8.11
+boto3==1.6.23
+Collectfast==0.6.2
+botocore==1.9.23
 django-s3-folder-storage==0.5
-django-storages==1.6.5
+django-storages==1.6.6
 docutils==0.14
 jmespath==0.9.3
-python-dateutil==2.6.1
-s3transfer==0.1.12
+python-dateutil==2.7.2
+s3transfer==0.1.13
 six==1.11.0

@@ -1,0 +1,52 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ module.title }}{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="mt-4 mb-3">{{ module.title }}</h1>
+        <dt>Objetivo</dt>
+        <dd>
+          <ul>
+            <li>{{ module.objective }}</li>
+          </ul>
+        </dd>
+        <dt>Público</dt>
+        <dd>
+          <ul>
+            <li>{{ module.target }}</li>
+          </ul>
+        </dd>
+        <dt>Descrição</dt>
+        <dd>
+          <ul>
+            <li>{{ module.description }}</li>
+          </ul>
+        </dd>
+        <dt>Conteúdo</dt>
+        <dd>
+          <ol>
+            {% for section in module.sections %}
+              <li><a href="{{ section.get_absolute_url }}">{{ section.title }}</a></li>
+              <dd>
+                <ol>
+                  {% for chapter in section.chapters %}
+                    <li><a href="{{chapter.get_absolute_url}}">{{ chapter.title }}</a></li>
+                  {% empty %}
+                    <li>Nenhum Capítulo definido ainda</li>
+                  {% endfor %}
+                </ol>
+              </dd>
+            {% empty %}
+              <li>Nenhuma seção definida ainda</li>
+            {% endfor %}
+        </li>
+        </ol>
+        </dd>
+      </div>
+    </div>
+  </div>
+{% endblock body %}

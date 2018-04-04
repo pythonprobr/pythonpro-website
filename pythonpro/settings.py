@@ -29,9 +29,34 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
+# Control subscriptions ads and payment.
+SUBSCRIPTIONS_OPEN = True
+
+# Email Configuration
+
+DEFAULT_FROM_EMAIL = 'renzo@python.pro.br'
+
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+# Login Config
+
+LOGIN_REDIRECT_URL = LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
+
 # Application definition
 
 INSTALLED_APPS = [
+    'pythonpro.core',
+    'pythonpro.discourse',
+    'pythonpro.modules',
+    'pythonpro.promos',
+    'pythonpro.payments',
+    'ordered_model',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,8 +64,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'collectfast',
     'django.contrib.staticfiles',
-    'pythonpro.core',
-    'pythonpro.leads',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +75,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Discourse config
+DISCOURSE_BASE_URL = 'https://forum.python.pro.br/'
+DISCOURSE_SSO_SECRET = config('DISCOURSE_SSO_SECRET')
 
 ROOT_URLCONF = 'pythonpro.urls'
 
@@ -66,6 +93,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'pythonpro.core.context_processors.global_settings',
+                'pythonpro.modules.context_processors.global_settings',
+                'pythonpro.payments.context_processors.global_settings',
             ],
         },
     },

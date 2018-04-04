@@ -2,8 +2,21 @@ DEBUG=True
 SECRET_KEY=Change for a secret here
 ALLOWED_HOSTS=localhost, 127.0.0.1
 SENTRY_DSN=
+DATABASE_URL=Put your Database URL here
 
 # Amazon S3 configuration
 DJANGO_AWS_ACCESS_KEY_ID=
 DJANGO_AWS_SECRET_ACCESS_KEY=
 DJANGO_AWS_STORAGE_BUCKET_NAME=
+
+# Email Configuration
+EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+EMAIL_HOST=localhost
+EMAIL_PORT=25
+EMAIL_USE_TLS=False
+EMAIL_HOST_USER=
+EMAIL_HOST_PASSWORD=
+
+
+# Discourse config
+DISCOURSE_SSO_SECRET='paste_your_secret_here'

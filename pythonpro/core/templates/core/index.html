@@ -1,19 +1,133 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>PythonPro</title>
-</head>
-<body>
-<h1>pythonpro</h1>
-<h2>Python para Profissionais</h2>
-<p>Cadastre-se na lista de espera:</p>
-<form action="{% url 'leads:new'  %}" method="post">
-  {% csrf_token %}
-  Nome: <input type="text" name="name"/>
-  Email: <input type="email" name="email"/>
-  <button type="submit">Enviar</button>
+{% extends 'core/base.html' %}
+{% load static %}
+{% block body %}
+  <div class="colors-pallet d-none d-md-block">
+    <div class="color-1 pallet"></div>
+    <div class="color-2 pallet"></div>
+    <div class="color-3 pallet"></div>
+    <div class="color-4 pallet"></div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="pythonpro-title mt-3"><span class="python">Python</span> Pro</h1>
+        <h2 class="pythonpro-subtitle mb-4 mb-md-5">Python para Profissionais</h2>
+      </div>
+    </div>
+    {% if SUBSCRIPTIONS_OPEN %}
+      <div class="row">
+        <div class="col">
+          <div class="jumbotron">
+            <h1 class="display-4">Inscrições Abertas!</h1>
+            <p class="lead">Inscrições abertas para turma que começa em junho. Vagas Limitadas.</p>
+            <a class="btn btn-primary btn-lg text-light p-4" href="{% url 'payments:options' %}" role="button">QUERO ME
+              MATRICULAR &raquo;</a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    <div class="row mt-8">
+      <div class="col-12 col-md mb-3">
+        <div class="embed-container">
+          <iframe src="https://player.vimeo.com/video/258681672" width="640" height="360" frameborder="0"
+                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="col-12 col-md">
+        <h3 class="mb-3">Módulo Python Birds Grátis</h3>
+        <p>Cadastre seu email para aprender o básico de Python e Orientação a Objetos implementando o jogo Angry
+          Birds</p>
 
-</form>
-</body>
-</html>
+        <form action="https://python.us17.list-manage.com/subscribe/post?u=ff7c56095f83f9c254edd749e&amp;id=e3072e0df0"
+              method="post" name="mc-embedded-subscribe-form"
+              target="_blank">
+          <div class="form-group row">
+            <label for="email-input" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+              <input type="email" name="EMAIL" class="form-control" id="email-input" placeholder="Email"
+                     required="required">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="name-input" class="col-sm-2 col-form-label">Nome</label>
+            <div class="col-sm-10">
+              <input type="text" name="FNAME" class="form-control" id="name-input" placeholder="Nome">
+            </div>
+          </div>
+
+          <div style="position: absolute; left: -5000px;" aria-hidden="true">
+            <input type="text"
+                   name="b_ff7c56095f83f9c254edd749e_e3072e0df0"
+                   tabindex="-1" value="">
+          </div>
+
+          <input type="hidden" name="SUBSCRIP[day]" value="{% now "d" %}">
+          <input type="hidden" name="SUBSCRIP[month]" value="{% now "m" %}">
+          <input type="hidden" name="SUBSCRIP[year]" value="{% now "Y" %}">
+          <div class="form-group row">
+            <div class="col-sm-10">
+              <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div class="col">
+        <h1 class="text-center mt-4 mb-3">Conheça os Instrutores</h1>
+        <div class="row">
+          <div class="col mb-2">
+            <div class="card">
+
+              <div class="card-body">
+                <h5 class="card-title text-center">Luciano Ramalho</h5>
+                <p class="card-text">
+                  <img class="img-thumbnail float-right ml-1"
+                       src="{% static 'img/instructors/luciano-ramalho.png' %}"
+                       alt="Instrutor Luciano Ramalho">Ramalho é sócio e professor nas Oficinas Turing. Foi diretor
+                  técnico do Brasil
+                  Online, primeiro portal da Abril S/A na Web. Liderou times para os portais IDG Now, BOL, UOL, AOL
+                  Brasil
+                  e outros, usando Python desde 1998. Como instrutor, atendeu clientes como Citibank, CPqD, Serpro,
+                  Presidência da República, Globo.com e Itaú. Palestrante em eventos internacionais como FISL, PyCon US
+                  e
+                  OSCON. Ajudou a criar a Associação Python Brasil e foi seu presidente. É membro da Python Software
+                  Foundation e fundador do Garoa Hacker Clube, o primeiro hackerspace do Brasil.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+
+              <div class="card-body">
+                <h5 class="card-title text-center">Renzo Nuccitelli</h5>
+                <p class="card-text">
+                  <img class="img-thumbnail float-right ml-1"
+                       src="{% static 'img/instructors/renzo-nuccitelli.png' %}"
+                       alt="Instrutor Renzo Nuccitelli">Engenheiro de Computação formado pelo ITA. Especialista em
+                  programação web no Google App Engine, usa Python desde 2009. Foi Diretor de Tecnologia na startup de
+                  educação QMagico, Apaixonado por dar aulas, é professor da Fatec onde ministra as matérias de
+                  "Orientação a Objetos" e "Aplicações para Internet Utilizando Banco de Dados". Já palestrou em eventos
+                  como Pycon US, Google Developer Bus, DevFest, Rupy e Python Brasil. Escreve sobre tecnologia em seu
+                  blog.renzo.pro.br. Atualmente é Engenheiro de Qualidade na Red Hat.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div class="col">
+        <h1 class="text-center mt-4 mb-3">Opinião de ex-aluno</h1>
+        <div class="embed-container">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/3g0g4atd858" frameborder="0"
+                  allowfullscreen></iframe>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock body %}

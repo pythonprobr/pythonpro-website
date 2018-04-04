@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ chapter.title }}{% endblock %}
+
+{% block body %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      {% for title, url in chapter.breadcrumb %}
+        {% if not forloop.last %}
+          <li class="breadcrumb-item"><a href="{{ url }}">{{ title }}</a></li>
+        {% else %}
+          <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+        {% endif %}
+      {% endfor %}
+    </ol>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="mt-4 mb-3">{{ chapter.title }}</h1>
+        <dt>Descrição</dt>
+        <dd>
+          <ul>
+            <li>{{ chapter.description }}</li>
+          </ul>
+        </dd>
+        <dt>Tópicos</dt>
+        <dd>
+          <ol>
+            {% for topic in chapter.topics %}
+              <li><a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a></li>
+            {% empty %}
+              <li>Nenhum Tópico definido ainda</li>
+            {% endfor %}
+          </ol>
+        </dd>
+      </div>
+    </div>
+  </div>
+{% endblock body %}
