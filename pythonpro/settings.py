@@ -30,7 +30,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
 # Control subscriptions ads and payment.
-SUBSCRIPTIONS_OPEN = True
+SUBSCRIPTIONS_OPEN = False
 
 # Email Configuration
 
