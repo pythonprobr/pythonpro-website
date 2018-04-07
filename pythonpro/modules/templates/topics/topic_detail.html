@@ -25,8 +25,10 @@
                   webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
         </div>
         {% if topic.next_topic %}
-          <div class="mt-5 mb-5">
-            <a class="btn btn-success" href="{{ topic.next_topic.get_absolute_url }}">Próximo Tópico &raquo;</a>
+          <div class="mt-5 mb-5" style="float: right">
+            <a class="btn btn-success" href="{{ topic.next_topic.get_absolute_url }}">
+                Próximo Tópico: <strong>{{ topic.next_topic.title }}</strong> &raquo;
+            </a>
           </div>
         {% endif %}
         <div id='discourse-comments'></div>
