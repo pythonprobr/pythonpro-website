@@ -64,7 +64,7 @@ def get_chapter_with_contents(slug):
 
 def get_topic_with_contents(slug):
     """
-    Search for a topic respective to slug with it's module, section anc chapter
+    Search for a topic respective to slug with it's module, section and chapter
     :param slug: topic's slug
     :return: Topic
     """
