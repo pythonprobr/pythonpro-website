@@ -1,6 +1,6 @@
 -r requirements.txt
 coverage==4.5.1
-Faker==0.8.13
+Faker==0.8.14
 flake8==3.5.0
 mccabe==0.6.1
 py==1.5.3
