@@ -11,6 +11,6 @@ pytest-cov==2.5.1
 pytest-django==3.2.1
 freezegun==0.3.10
 pytest-freezegun==0.2.0
-model-mommy==1.5.1
+model-mommy==1.6.0
 text_unidecode==1.2
 pytest-mock==1.10.0
