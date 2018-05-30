@@ -35,7 +35,7 @@ def logged_user(django_user_model, fake):
 
 @pytest.fixture
 def client_with_user(client, logged_user):
-    client.login(username=logged_user.username, password=logged_user.plain_password)
+    client.login(username=logged_user.email, password=logged_user.plain_password)
     return client
 
 
