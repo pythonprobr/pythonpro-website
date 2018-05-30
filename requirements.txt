@@ -7,7 +7,7 @@ six==1.11.0
 gunicorn==19.8.1
 psycopg2==2.7.4
 python-decouple==3.1
-raven==6.8.0
+raven==6.9.0
 
 #Amazon S3 Stuff
 boto3==1.7.28
