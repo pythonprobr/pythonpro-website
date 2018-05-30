@@ -52,7 +52,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
-        db_table = 'auth_user'
 
     def clean(self):
         super().clean()
