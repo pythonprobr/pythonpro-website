@@ -104,3 +104,6 @@ ENV/
 /settings.yml
 /frontend/css/
 /frontend/node_modules/
+
+# no including dumps
+*.dump
