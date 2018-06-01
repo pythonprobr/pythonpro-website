@@ -25,8 +25,7 @@ def payload(nonce):
 @pytest.fixture
 def logged_user(django_user_model, fake):
     profile = fake.profile()
-    user = django_user_model(username=profile['username'], email=profile['mail'],
-                             first_name=profile['name'])
+    user = django_user_model(email=profile['mail'], first_name=profile['name'])
     user.set_password('password')
     user.save()
     user.plain_password = 'password'
@@ -86,7 +85,6 @@ def test_redirect_payload_user_data(logged_user, nonce, response: HttpResponseRe
                'nonce': nonce,
                'email': logged_user.email,
                'external_id': str(logged_user.id),
-               'username': logged_user.username,
                'require_activation': 'false'
            } == dct
 
