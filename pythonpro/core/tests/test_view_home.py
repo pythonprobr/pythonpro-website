@@ -6,7 +6,7 @@ from django.test import Client
 from django.urls import reverse
 from model_mommy import mommy
 
-from pythonpro.django_assertions import dj_assert_contains, dj_assert_template_used, dj_assert_not_contains
+from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains, dj_assert_template_used
 
 
 @pytest.fixture

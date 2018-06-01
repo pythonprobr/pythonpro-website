@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Perfil{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="mt-4 mb-3">Perfil de {{ user.first_name }}</h1>
+                <div class="mb-3">
+                    Editar: <a href="{% url 'core:profile_name' %}">Nome</a>
+                    - <a href="{% url 'core:profile_email' %}">Email</a>
+                    - <a href="{% url 'core:profile_password' %}">Senha</a>
+                </div>
+                <dt>Nome</dt>
+                <dd>
+                    {{ user.first_name }}
+                </dd>
+                <dt>Email</dt>
+                <dd>
+                    {{ user.email }}
+                </dd>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

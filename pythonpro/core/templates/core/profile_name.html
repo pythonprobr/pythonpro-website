@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h1 class="mb-4 mt-4">Alteração de Nome</h1>
+                <form method="post" action="{% url 'core:profile_name' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label_tag }}</label>
+                        <input type="text" name="{{ form.first_name.html_name }}"
+                               class="form-control{% if form.first_name.errors %} is-invalid{% endif %}"
+                               value="{{ form.first_name.value }}" autofocus=""
+                               maxlength="{{ form.first_name.max_length }}"
+                               required="required" id="{{ form.first_name.id_for_label }}">
+                        <div class="invalid-feedback">
+                            {{ form.first_name.errors }}
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Editar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

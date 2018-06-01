@@ -46,7 +46,6 @@ def _generate_discourse_login_url(nonce, user):
         'nonce': nonce,
         'email': user.email,
         'external_id': user.id,
-        'username': user.username,
         'require_activation': 'false'
     }
     return_payload = base64.encodebytes(parse.urlencode(params).encode('utf-8'))

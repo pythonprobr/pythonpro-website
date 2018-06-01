@@ -1,0 +1,35 @@
+{% extends "core/base.html" %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h1 class="mb-4 mt-4">Alteração de Email</h1>
+                <form method="post" action="{% url 'core:profile_email' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.email.id_for_label }}">{{ form.email.label_tag }}</label>
+                        <input type="email" name="{{ form.email.html_name }}"
+                               class="form-control{% if form.email.errors %} is-invalid{% endif %}"
+                               value="{{ form.email.value }}" autofocus="" maxlength="{{ form.email.max_length }}"
+                               required="required" id="{{ form.email.id_for_label }}">
+                        <div class="invalid-feedback">
+                            {{ form.email.errors }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.current_password.id_for_label }}">{{ form.current_password.label_tag }}</label>
+                        <input type="password" name="{{ form.current_password.html_name }}"
+                               class="form-control{% if form.current_password.errors %} is-invalid{% endif %}"
+                               value="{{ field.value }}" autofocus="" maxlength="{{ form.current_password.max_length }}"
+                               required="required" id="{{ form.current_password.id_for_label }}">
+                        <div class="invalid-feedback">
+                            {{ form.current_password.errors }}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Editar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
