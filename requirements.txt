@@ -1,4 +1,4 @@
-Django==2.0.5
+Django==2.0.6
 dj_database_url==0.5.0
 django-ordered-model==1.4.3
 pytz==2018.4
