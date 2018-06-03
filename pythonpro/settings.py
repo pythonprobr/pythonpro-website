@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'pythonpro.modules',
     'pythonpro.promos',
     'pythonpro.payments',
+    'pythonpro.cohorts',
     'ordered_model',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -96,6 +97,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'pythonpro.core.context_processors.global_settings',
                 'pythonpro.modules.context_processors.global_settings',
+                'pythonpro.cohorts.context_processors.global_settings',
                 'pythonpro.payments.context_processors.global_settings',
             ],
         },
@@ -145,7 +147,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Configuration for dev environment
-MEDIA_URL = f'/media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
