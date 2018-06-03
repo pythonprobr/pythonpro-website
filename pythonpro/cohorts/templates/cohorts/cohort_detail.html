@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Turma {{ cohort.title }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="mt-4 mb-3">Turma {{ cohort.title }}</h1>
+                <img src="{{ cohort.image.url }}" class="rounded float-left mr-3" alt="Foto de {{ cohort.title }}"
+                     width="300px" height="300px">
+                <blockquote class="blockquote">
+                    <p class="mb-0">"{{ cohort.quote }}"</p>
+                    <footer class="blockquote-footer">{{ cohort.title }}
+                    </footer>
+                </blockquote>
+                <dt>
+                    Inicio:
+                </dt>
+                <dd>
+                    {{ cohort.start }}
+                </dd>
+                <dt>
+                    Fim:
+                </dt>
+                <dd>
+                    {{ cohort.end }}
+                </dd>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2 class="mt-5">Intruções</h2>
+                <dt>Passo 1</dt>
+                <dd>Cadastre-se na <a href="{{ cohort.mail_list }}" target="_blank">lista de emails da turma</a></dd>
+                <dt>Passo 2</dt>
+                <dd>Se apresente no <a href="{{ cohort.forum_post }}" target="_blank">post do fórum</a></dd>
+                <dt>Passo 3</dt>
+                <dd>Entre no nosso  <a href="https://t.me/joinchat/DZ2HMkC_wRSHCm5YwIM1UQ" target="_blank">grupo do Telegram</a> para tirar dúvidas e interagir!</dd>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
