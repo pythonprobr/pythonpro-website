@@ -25,8 +25,21 @@ def cohort(client, django_user_model):
 
 @pytest.fixture
 def resp(client, cohort):
+    return client.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
+
+
+@pytest.fixture
+def resp_without_user(client, db):
+    image = SimpleUploadedFile(name='renzo-nuccitelli.png', content=open(_img_path, 'rb').read(),
+                               content_type='image/png')
+    cohort = mommy.make(Cohort, slug='guido-van-rossum', image=image)
     resp = client.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
     return resp
+
+
+def test_no_access(resp_without_user):
+    """Assert only logged user can acess cohort pages"""
+    assert 302 == resp_without_user.status_code
 
 
 def test_cohort_links_for_logged_user(client, django_user_model):
