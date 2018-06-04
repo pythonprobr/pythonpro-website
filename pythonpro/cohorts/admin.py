@@ -7,6 +7,7 @@ from pythonpro.cohorts.models import Cohort, LiveClass
 class ClassInline(admin.TabularInline):
     extra = 1
     model = LiveClass
+    ordering = ('start',)
 
 
 @admin.register(Cohort)
