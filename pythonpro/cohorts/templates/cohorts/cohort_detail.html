@@ -38,7 +38,28 @@
                 <dt>Passo 2</dt>
                 <dd>Se apresente no <a href="{{ cohort.forum_post }}" target="_blank">post do fórum</a></dd>
                 <dt>Passo 3</dt>
-                <dd>Entre no nosso  <a href="https://t.me/joinchat/DZ2HMkC_wRSHCm5YwIM1UQ" target="_blank">grupo do Telegram</a> para tirar dúvidas e interagir!</dd>
+                <dd>Entre no nosso <a href="https://t.me/joinchat/DZ2HMkC_wRSHCm5YwIM1UQ" target="_blank">grupo do
+                    Telegram</a> para tirar dúvidas e interagir!
+                </dd>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2 class="mt-3">Aulas ao Vivo</h2>
+                {% for class in cohort.classes %}
+                    <dt>{{ class.start }}</dt>
+                    <dd>
+                        {% if class.vimeo_id %}
+                            <div class="embed-container mb-3">
+                                <iframe src="https://player.vimeo.com/video/{{ class.vimeo_id }}" width="640"
+                                        height="360" frameborder="0"
+                                        webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            </div>
+                        {% else %}
+                            Upload de Vídeo Pendente
+                        {% endif %}
+                    </dd>
+                {% endfor %}
             </div>
         </div>
     </div>

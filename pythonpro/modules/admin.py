@@ -1,26 +1,34 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 from ordered_model.admin import OrderedModelAdmin
 
 from pythonpro.modules.models import Section, Module, Chapter, Topic
 
 
-class ModuleAdmin(OrderedModelAdmin):
-    list_display = 'title slug order move_up_down_links'.split()
+class BaseAdmin(OrderedModelAdmin):
+    prepopulated_fields = {'slug': ('title',)}
+
+    def page_link(self, content):
+        return mark_safe(f'<a href="{content.get_absolute_url()}">See on Page</a>')
+
+    page_link.short_description = 'page'
 
 
-class SectionAdmin(OrderedModelAdmin):
-    list_display = 'title slug module order move_up_down_links'.split()
+@admin.register(Module)
+class ModuleAdmin(BaseAdmin):
+    list_display = 'title slug order move_up_down_links page_link'.split()
 
 
-class ChapterAdmin(OrderedModelAdmin):
-    list_display = 'title slug section order move_up_down_links'.split()
+@admin.register(Section)
+class SectionAdmin(BaseAdmin):
+    list_display = 'title slug module order move_up_down_links page_link'.split()
 
 
-class TopicAdmin(OrderedModelAdmin):
-    list_display = 'title slug chapter order move_up_down_links'.split()
+@admin.register(Chapter)
+class ChapterAdmin(BaseAdmin):
+    list_display = 'title slug section order move_up_down_links page_link'.split()
 
 
-admin.site.register(Module, ModuleAdmin)
-admin.site.register(Section, SectionAdmin)
-admin.site.register(Chapter, ChapterAdmin)
-admin.site.register(Topic, TopicAdmin)
+@admin.register(Topic)
+class TopicAdmin(BaseAdmin):
+    list_display = 'title slug chapter order move_up_down_links page_link'.split()

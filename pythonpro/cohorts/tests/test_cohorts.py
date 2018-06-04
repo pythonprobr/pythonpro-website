@@ -1,3 +1,5 @@
+import operator
+from datetime import datetime, timedelta
 from os import path
 
 import pytest
@@ -7,7 +9,8 @@ from django.urls import reverse
 from model_mommy import mommy
 
 from pythonpro import settings
-from pythonpro.cohorts.models import Cohort
+from pythonpro.cohorts import facade
+from pythonpro.cohorts.models import Cohort, LiveClass
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains
 
 _img_path = path.join(settings.BASE_DIR, 'pythonpro', 'core', 'static', 'img', 'instructors', 'renzo-nuccitelli.png')
@@ -82,3 +85,33 @@ def test_cohort_start(cohort: Cohort, resp):
 
 def test_cohort_end(cohort: Cohort, resp):
     dj_assert_contains(resp, date(cohort.end))
+
+
+@pytest.fixture
+def live_classes(cohort):
+    now = datetime.now()
+    return [
+        mommy.make(LiveClass, cohort=cohort, vimeo_id=str(i), start=now + timedelta(days=i)) for i in range(100, 105)
+    ]
+
+
+@pytest.fixture
+def resp_with_classes(live_classes, cohort, client):
+    assert len(live_classes) > 0
+    return client.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
+
+
+def test_live_classes_are_sorted(live_classes: list, cohort):
+    live_classes.sort(key=operator.attrgetter('start'))
+    db_cohort = facade.find_cohort(slug=cohort.slug)
+    assert live_classes == db_cohort.classes
+
+
+def test_live_classes_datetime(resp_with_classes, live_classes):
+    for live_class in live_classes:
+        dj_assert_contains(resp_with_classes, date(live_class.start))
+
+
+def test_live_classes_vimeo(resp_with_classes, live_classes):
+    for live_class in live_classes:
+        dj_assert_contains(resp_with_classes, live_class.vimeo_id)

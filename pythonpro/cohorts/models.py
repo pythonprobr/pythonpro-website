@@ -23,3 +23,9 @@ class Cohort(models.Model):
 class CohortStudent(models.Model):
     cohort = models.ForeignKey(Cohort, on_delete=models.DO_NOTHING)
     user = models.ForeignKey(get_user_model(), on_delete=models.DO_NOTHING)
+
+
+class LiveClass(models.Model):
+    start = models.DateTimeField()
+    vimeo_id = models.CharField(max_length=11, db_index=False, blank=True)
+    cohort = models.ForeignKey(Cohort, models.CASCADE)
