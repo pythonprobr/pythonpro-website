@@ -45,31 +45,42 @@
         </div>
         <div class="row">
             <div class="col">
-                <h2 class="mt-4 mb-3">Aulas ao Vivo</h2>
-                {% for class in cohort.classes %}
-                    <div class="card mb-4">
-                        <div class="card-header bg-success">
-                            {{ class.start }}
-                        </div>
-                        <div class="card-body bg-light">
-                            {% if class.vimeo_id %}
-                                <div class="embed-container mb-3 mt-2 border rounded">
-                                    <iframe src="https://player.vimeo.com/video/{{ class.vimeo_id }}" width="640"
-                                            height="360" frameborder="0"
-                                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="classes-tab" data-toggle="tab" href="#classes" role="tab"
+                           aria-controls="classes" aria-selected="true">Aulas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="webnars-tab" data-toggle="tab" href="#webnars" role="tab"
+                           aria-controls="webnars" aria-selected="false">Webinários</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="classes" role="tabpanel" aria-labelledby="classes-tab">
+                        <h2 class="mt-4 mb-3">Aulas ao Vivo</h2>
+                        {% for class in cohort.classes %}
+                            <div class="card mb-4">
+                                <div class="card-header bg-success">
+                                    {{ class.start }}
                                 </div>
-                            {% else %}
-                                Vídeo Pendente
-                            {% endif %}
-                        </div>
-                    </div>
+                                <div class="card-body bg-light">
+                                    {% if class.vimeo_id %}
+                                        <div class="embed-container mb-3 mt-2 border rounded">
+                                            <iframe src="https://player.vimeo.com/video/{{ class.vimeo_id }}"
+                                                    width="640"
+                                                    height="360" frameborder="0"
+                                                    webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                                        </div>
+                                    {% else %}
+                                        Vídeo Pendente
+                                    {% endif %}
+                                </div>
+                            </div>
 
-                {% endfor %}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <h2 class="mt-4 mb-3">Webinários</h2>
+                        {% endfor %}
+                    </div>
+                    <div class="tab-pane fade" id="webnars" role="tabpanel" aria-labelledby="webnars-tab">
+                         <h2 class="mt-4 mb-3">Webinários</h2>
                 {% for webinar in cohort.webinars %}
                     <div class="card mb-4">
                         <div class="card-header bg-warning">
@@ -94,6 +105,8 @@
                         </div>
                     </div>
                 {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
