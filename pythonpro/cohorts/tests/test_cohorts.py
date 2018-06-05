@@ -89,7 +89,7 @@ def test_cohort_end(cohort: Cohort, resp):
 
 @pytest.fixture
 def live_classes(cohort):
-    now = datetime.now()
+    now = datetime.utcnow()
     return [
         mommy.make(LiveClass, cohort=cohort, vimeo_id=str(i), start=now + timedelta(days=i)) for i in range(100, 105)
     ]
@@ -118,7 +118,7 @@ def test_live_classes_vimeo(resp_with_classes, live_classes):
 
 @pytest.fixture
 def webinars(cohort):
-    now = datetime.now()
+    now = datetime.utcnow()
     return [
         mommy.make(Webinar, cohort=cohort, vimeo_id=str(i), start=now + timedelta(days=i)) for i in range(100, 105)
     ]
