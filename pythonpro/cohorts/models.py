@@ -29,3 +29,13 @@ class LiveClass(models.Model):
     start = models.DateTimeField()
     vimeo_id = models.CharField(max_length=11, db_index=False, blank=True)
     cohort = models.ForeignKey(Cohort, models.CASCADE)
+
+
+class Webinar(models.Model):
+    cohort = models.ForeignKey(Cohort, on_delete=models.DO_NOTHING)
+    title = models.CharField(max_length=50)
+    speaker = models.CharField(max_length=50)
+    speaker_title = models.CharField(max_length=50)
+    slug = models.SlugField(unique=True)
+    vimeo_id = models.CharField(max_length=11, db_index=False, blank=True)
+    start = models.DateTimeField()

@@ -10,7 +10,7 @@ from model_mommy import mommy
 
 from pythonpro import settings
 from pythonpro.cohorts import facade
-from pythonpro.cohorts.models import Cohort, LiveClass
+from pythonpro.cohorts.models import Cohort, LiveClass, Webinar
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains
 
 _img_path = path.join(settings.BASE_DIR, 'pythonpro', 'core', 'static', 'img', 'instructors', 'renzo-nuccitelli.png')
@@ -97,7 +97,6 @@ def live_classes(cohort):
 
 @pytest.fixture
 def resp_with_classes(live_classes, cohort, client):
-    assert len(live_classes) > 0
     return client.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
 
 
@@ -115,3 +114,33 @@ def test_live_classes_datetime(resp_with_classes, live_classes):
 def test_live_classes_vimeo(resp_with_classes, live_classes):
     for live_class in live_classes:
         dj_assert_contains(resp_with_classes, live_class.vimeo_id)
+
+
+@pytest.fixture
+def webinars(cohort):
+    now = datetime.now()
+    return [
+        mommy.make(Webinar, cohort=cohort, vimeo_id=str(i), start=now + timedelta(days=i)) for i in range(100, 105)
+    ]
+
+
+@pytest.fixture
+def resp_with_webinars(webinars, cohort, client):
+    return client.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
+
+
+def test_webinars_are_sorted(webinars: list, cohort):
+    webinars.sort(key=operator.attrgetter('start'))
+    db_cohort = facade.find_cohort(slug=cohort.slug)
+    assert webinars == db_cohort.webinars
+
+
+def test_webinars_datetime(resp_with_webinars, webinars):
+    for live_class in webinars:
+        dj_assert_contains(resp_with_webinars, date(live_class.start))
+
+
+@pytest.mark.parametrize('property_name', 'speaker speaker_title title vimeo_id'.split())
+def test_webinars_vimeo(resp_with_webinars, webinars, property_name):
+    for webnar in webinars:
+        dj_assert_contains(resp_with_webinars, getattr(webnar, property_name))
