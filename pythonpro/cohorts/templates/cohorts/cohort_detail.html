@@ -45,20 +45,54 @@
         </div>
         <div class="row">
             <div class="col">
-                <h2 class="mt-3">Aulas ao Vivo</h2>
+                <h2 class="mt-4 mb-3">Aulas ao Vivo</h2>
                 {% for class in cohort.classes %}
-                    <dt>{{ class.start }}</dt>
-                    <dd>
-                        {% if class.vimeo_id %}
-                            <div class="embed-container mb-3">
-                                <iframe src="https://player.vimeo.com/video/{{ class.vimeo_id }}" width="640"
-                                        height="360" frameborder="0"
-                                        webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                            </div>
-                        {% else %}
-                            Upload de Vídeo Pendente
-                        {% endif %}
-                    </dd>
+                    <div class="card mb-4">
+                        <div class="card-header bg-success">
+                            {{ class.start }}
+                        </div>
+                        <div class="card-body bg-light">
+                            {% if class.vimeo_id %}
+                                <div class="embed-container mb-3 mt-2 border rounded">
+                                    <iframe src="https://player.vimeo.com/video/{{ class.vimeo_id }}" width="640"
+                                            height="360" frameborder="0"
+                                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                                </div>
+                            {% else %}
+                                Vídeo Pendente
+                            {% endif %}
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2 class="mt-4 mb-3">Webinários</h2>
+                {% for webinar in cohort.webinars %}
+                    <div class="card mb-4">
+                        <div class="card-header bg-warning">
+                            {{ webinar.start }}
+                        </div>
+                        <div class="card-body bg-light">
+                            <blockquote class="blockquote mb-0">
+                                <p>{{ webinar.title }}</p>
+                                {% if webinar.vimeo_id %}
+                                    <div class="embed-container mb-3 mt-2 border rounded">
+                                        <iframe src="https://player.vimeo.com/video/{{ webinar.vimeo_id }}" width="640"
+                                                height="360" frameborder="0"
+                                                webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                                    </div>
+                                {% endif %}
+                                <footer class="blockquote-footer">{{ webinar.speaker }}
+                                    <cite title="Source Title">{{ webinar.speaker_title }}</cite>
+                                </footer>
+                            </blockquote>
+                            </footer>
+                            </blockquote>
+                        </div>
+                    </div>
                 {% endfor %}
             </div>
         </div>
