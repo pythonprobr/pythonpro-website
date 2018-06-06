@@ -16,6 +16,10 @@ def thanks(request):
     return render(request, 'core/lead_thanks.html', {})
 
 
+def teck_talks(request):
+    return render(request, 'core/tech_talks.html', {})
+
+
 @login_required
 def profile(request):
     return render(request, 'core/profile_detail.html', {})
