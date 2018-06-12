@@ -5,8 +5,8 @@ from pythonpro.django_assertions import dj_assert_contains
 
 
 @pytest.fixture
-def login_get_resp(client):
-    return client.get(reverse('login'))
+def login_get_resp(client, db):
+    return client.get(reverse('login'), secure=True)
 
 
 def test_page_status(login_get_resp):
