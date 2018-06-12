@@ -21,6 +21,7 @@ class Cohort(models.Model):
 
 
 class CohortStudent(models.Model):
+    added = models.DateTimeField(auto_now_add=True)
     cohort = models.ForeignKey(Cohort, on_delete=models.DO_NOTHING)
     user = models.ForeignKey(get_user_model(), on_delete=models.DO_NOTHING)
 
