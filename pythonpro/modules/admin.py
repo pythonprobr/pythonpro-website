@@ -7,6 +7,7 @@ from pythonpro.modules.models import Section, Module, Chapter, Topic
 
 class BaseAdmin(OrderedModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
+    view_on_site = True
 
     def page_link(self, content):
         return mark_safe(f'<a href="{content.get_absolute_url()}">See on Page</a>')
@@ -32,3 +33,4 @@ class ChapterAdmin(BaseAdmin):
 @admin.register(Topic)
 class TopicAdmin(BaseAdmin):
     list_display = 'title slug chapter order move_up_down_links page_link'.split()
+    list_filter = ('chapter',)
