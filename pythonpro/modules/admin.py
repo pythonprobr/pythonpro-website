@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.admin import StackedInline
 from django.utils.safestring import mark_safe
 from ordered_model.admin import OrderedModelAdmin
 
@@ -25,8 +26,16 @@ class SectionAdmin(BaseAdmin):
     list_display = 'title slug module order move_up_down_links page_link'.split()
 
 
+class TopicInline(StackedInline):
+    model = Topic
+    prepopulated_fields = {'slug': ('title',)}
+    extra = 1
+    ordering = ('order',)
+
+
 @admin.register(Chapter)
 class ChapterAdmin(BaseAdmin):
+    inlines = [TopicInline]
     list_display = 'title slug section order move_up_down_links page_link'.split()
 
 
