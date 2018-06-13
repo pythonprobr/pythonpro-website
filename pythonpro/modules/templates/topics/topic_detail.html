@@ -24,10 +24,10 @@
           <iframe src="https://player.vimeo.com/video/{{ topic.vimeo_id }}" width="640" height="360" frameborder="0"
                   webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
         </div>
-        {% if topic.next_topic %}
+        {% if topic.next_content %}
           <div class="mt-5 mb-5" style="float: right">
-            <a class="btn btn-success" href="{{ topic.next_topic.get_absolute_url }}">
-                Próximo Tópico: <strong>{{ topic.next_topic.title }}</strong> &raquo;
+            <a class="btn btn-success" href="{{ topic.next_content.get_absolute_url }}">
+                Próximo Conteúdo: <strong>{{ topic.next_content.title }}</strong> &raquo;
             </a>
           </div>
         {% endif %}
