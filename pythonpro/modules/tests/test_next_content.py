@@ -27,17 +27,17 @@ def topics(chapter):
 
 
 @pytest.fixture
-def resp(client, django_user_model, chapter, topics):
+def resp(client, django_user_model, topics):
     user = mommy.make(django_user_model)
     client.force_login(user)
-    return client.get(reverse('topics:detail', kwargs={'slug': topics[0].slug}))
+    return client.get(reverse('topics:detail', kwargs={'slug': topics[0].slug}), secure=True)
 
 
 @pytest.fixture
-def resp_last_topic(client, django_user_model, chapter, topics):
+def resp_last_topic(client, django_user_model, topics):
     user = mommy.make(django_user_model)
     client.force_login(user)
-    return client.get(reverse('topics:detail', kwargs={'slug': topics[1].slug}))
+    return client.get(reverse('topics:detail', kwargs={'slug': topics[1].slug}), secure=True)
 
 
 def test_topic_with_next_topic(resp, topics):
@@ -45,5 +45,45 @@ def test_topic_with_next_topic(resp, topics):
     dj_assert_contains(resp, next_topic.get_absolute_url())
 
 
-def test_last_topic(resp_last_topic, topics):
-    dj_assert_not_contains(resp_last_topic, 'Próximo Tópico')
+def test_last_topic(resp_last_topic):
+    dj_assert_not_contains(resp_last_topic, 'Próximo Conteúdo')
+
+
+def test_last_topic_next_chapter(section):
+    """Assert next Chapter as next content for the last Topic"""
+    first_chapter, next_chapter = [mommy.make(Chapter, section=section, order=order) for order in range(2)]
+    topic = mommy.make(Topic, chapter=first_chapter)
+    assert next_chapter == topic.next_content()
+
+
+def test_last_topic_next_section(module):
+    """Assert next Section as next content for the last Topic of last Chapter"""
+    first_section, next_section = [mommy.make(Section, module=module, order=order) for order in range(2)]
+    chapter = mommy.make(Chapter, section=first_section)
+    topic = mommy.make(Topic, chapter=chapter)
+    assert next_section == topic.next_content()
+
+
+@pytest.mark.django_db
+def test_last_topic_next_module():
+    """Assert next Module as next content for the last Topic of last Chapter of last Section"""
+    first_module, next_module = [mommy.make(Module, order=order) for order in range(2)]
+    section = mommy.make(Section, module=first_module)
+    chapter = mommy.make(Chapter, section=section)
+    topic = mommy.make(Topic, chapter=chapter)
+    assert next_module == topic.next_content()
+
+
+def test_last_topic_next_none(chapter):
+    """Assert None as next content for the last Topic of last Chapter of last Section of last Module"""
+    topic = mommy.make(Topic, chapter=chapter)
+    assert topic.next_content() is None
+
+
+def test_cache(chapter, mocker):
+    """Assert cache is used when calling next content multiple times"""
+    topic = mommy.make(Topic, chapter=chapter)
+    mocker.spy(topic, '_next_content_query_set')
+    for _ in range(3):
+        topic.next_content()
+    assert topic._next_content_query_set.call_count == 1
