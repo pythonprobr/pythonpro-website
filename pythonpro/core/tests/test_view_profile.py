@@ -45,3 +45,7 @@ def test_edit_name_link(resp_with_user):
 
 def test_edit_email_link(resp_with_user):
     dj_assert_contains(resp_with_user, reverse('core:profile_email'))
+
+
+def test_edit_password_link(resp_with_user):
+    dj_assert_contains(resp_with_user, reverse('core:profile_password'))
