@@ -17,7 +17,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import (
-    LoginView, LogoutView, PasswordResetCompleteView, PasswordResetConfirmView, PasswordResetDoneView,
+    LoginView, LogoutView, PasswordResetCompleteView, PasswordResetConfirmView,
+    PasswordResetDoneView,
     PasswordResetView
 )
 from django.urls import include, path
@@ -28,7 +29,8 @@ urlpatterns = [
     path('conta/logout/', LogoutView.as_view(), name='logout'),
     path('conta/reiniciar_senha', PasswordResetView.as_view(), name='password_reset'),
     path('conta/reiniciar_senha/ok', PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('conta/reiniciar/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('conta/reiniciar/<uidb64>/<token>/', PasswordResetConfirmView.as_view(),
+         name='password_reset_confirm'),
     path('conta/reiniciar/ok', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('aperitivo/', include('pythonpro.promos.urls')),
     path('discourse/', include('pythonpro.discourse.urls')),
@@ -44,3 +46,7 @@ urlpatterns = [
 
 if not settings.AWS_ACCESS_KEY_ID:
     urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns.append(path('__debug__/', include(debug_toolbar.urls)))
