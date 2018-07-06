@@ -1,4 +1,4 @@
-boto3==1.7.51
+boto3==1.7.52
 botocore==1.10.50
 Collectfast==0.6.2
 dj_database_url==0.5.0
