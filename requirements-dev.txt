@@ -12,5 +12,5 @@ pytest-cov==2.5.1
 pytest-django==3.3.2
 pytest-freezegun==0.2.0
 pytest-mock==1.10.0
-pytest==3.6.3
+pytest==3.7.0
 text_unidecode==1.2
