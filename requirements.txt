@@ -6,7 +6,7 @@ django-debug-toolbar==1.9.1
 django-ordered-model==2.0.0
 django-s3-folder-storage==0.5
 django-storages==1.6.6
-Django==2.0.7
+Django==2.1.1
 docutils==0.14
 gunicorn==19.8.1
 jmespath==0.9.3
