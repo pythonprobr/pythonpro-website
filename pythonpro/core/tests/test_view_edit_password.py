@@ -51,7 +51,7 @@ def test_edit_password(django_user_model, user: User, client: Client):
     user.set_password(old_password)
     user.save()
     client.force_login(user)
-    new_password = 'q1w2e3r4t5'
+    new_password = 'Q!W@E#R$T%'
     client.post(
         reverse('core:profile_password'),
         {
