@@ -1,6 +1,6 @@
 -r requirements.txt
 coverage==4.5.1
-Faker==0.8.17
+Faker==0.8.18
 flake8==3.5.0
 freezegun==0.3.10
 mccabe==0.6.1
