@@ -1,9 +1,3 @@
 [
-  "pythonpro/core/tests/test_view_profile.py::test_profile_not_logged_user",
-  "pythonpro/core/tests/test_view_profile.py::test_profile_status_code",
-  "pythonpro/core/tests/test_view_profile.py::test_profile_first_name",
-  "pythonpro/core/tests/test_view_profile.py::test_profile_email",
-  "pythonpro/core/tests/test_view_profile.py::test_edit_name_link",
-  "pythonpro/core/tests/test_view_profile.py::test_edit_email_link",
-  "pythonpro/core/tests/test_view_profile.py::test_edit_password_link"
+  "pythonpro/core/tests/test_view_edit_password.py::test_edit_password"
 ]

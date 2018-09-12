@@ -1,8 +1,1 @@
-{
-  "pythonpro/core/tests/test_view_profile.py::test_edit_email_link": true,
-  "pythonpro/core/tests/test_view_profile.py::test_edit_name_link": true,
-  "pythonpro/core/tests/test_view_profile.py::test_edit_password_link": true,
-  "pythonpro/core/tests/test_view_profile.py::test_profile_email": true,
-  "pythonpro/core/tests/test_view_profile.py::test_profile_first_name": true,
-  "pythonpro/core/tests/test_view_profile.py::test_profile_status_code": true
-}
+{}
