@@ -2,7 +2,7 @@
 coverage==4.5.1
 Faker==0.9.2
 flake8==3.5.0
-freezegun==0.3.10
+freezegun==0.3.11
 mccabe==0.6.1
 model-mommy==1.6.0
 py==1.7.0
