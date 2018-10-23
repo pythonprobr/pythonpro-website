@@ -6,7 +6,7 @@ freezegun==0.3.11
 mccabe==0.6.1
 model-mommy==1.6.0
 py==1.7.0
-pycodestyle==2.3.1
+pycodestyle==2.4.0
 pyflakes==2.0.0
 pytest-cov==2.6.0
 pytest-django==3.4.3
