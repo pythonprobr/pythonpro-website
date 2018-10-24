@@ -15,7 +15,7 @@ psycopg2-binary==2.7.5
 python-dateutil==2.7.3
 python-decouple==3.1
 python_box==3.2.1
-pytz==2018.5
+pytz==2018.6
 raven==6.9.0
 s3transfer==0.1.13
 six==1.11.0
