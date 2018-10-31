@@ -9,7 +9,7 @@ Source code of website www.python.pro.br
 [![Python 3](https://pyup.io/repos/github/pythonprobr/pythonpro-website/python-3-shield.svg)](https://pyup.io/repos/github/pythonprobr/pythonpro-website/)
 
 
-It is been migrated from App Engine using Tekton to Heroky using Django
+It has been migrated from App Engine using Tekton to Heroky using Django
 
 How to install in locally (supposing you have git and python >= 3.6 installed):
 
@@ -68,9 +68,9 @@ DATABASE_URL=postgres://postgres:pass@localhost:5432/postgres
 ```
 
 
-#License Details
+## License Details
 
-The AGPL license here cover everything relate to source code but Python Pro logo and Image.
+The AGPL license here cover everything related to source code but Python Pro logo and Image.
 So you need to change this data for you own trademark.
 
 
