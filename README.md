@@ -9,7 +9,7 @@ Source code of website www.python.pro.br
 [![Python 3](https://pyup.io/repos/github/pythonprobr/pythonpro-website/python-3-shield.svg)](https://pyup.io/repos/github/pythonprobr/pythonpro-website/)
 
 
-It is been migrated from App Engine using Tekton to Heroky using Django
+It is been migrated from App Engine using Tekton to Heroku using Django
 
 How to install in locally (supposing you have git and python >= 3.6 installed):
 
