@@ -11,7 +11,7 @@ docutils==0.14
 gunicorn==19.9.0
 jmespath==0.9.3
 pillow==5.3.0
-psycopg2-binary==2.7.5
+psycopg2-binary==2.7.6
 python-dateutil==2.7.5
 python-decouple==3.1
 python_box==3.2.2
