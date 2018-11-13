@@ -9,7 +9,7 @@ py==1.7.0
 pycodestyle==2.4.0
 pyflakes==2.0.0
 pytest-cov==2.6.0
-pytest-django==3.4.3
+pytest-django==3.4.4
 pytest-freezegun==0.2.0
 pytest-mock==1.10.0
 pytest==3.10.0
