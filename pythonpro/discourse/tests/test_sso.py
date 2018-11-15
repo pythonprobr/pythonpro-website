@@ -40,6 +40,10 @@ def client_with_user(client, logged_user):
 
 @pytest.fixture
 def response(client_with_user, payload, sig=None):
+    return _resp(client_with_user, payload, sig)
+
+
+def _resp(client_with_user, payload, sig=None):
     encoded_payload = base64.encodebytes(payload.encode('utf-8'))
     hmac_obj = hmac.new(settings.DISCOURSE_SSO_SECRET.encode('utf-8'), encoded_payload, digestmod=hashlib.sha256)
     sig = hmac_obj.hexdigest() if sig is None else sig
@@ -49,12 +53,12 @@ def response(client_with_user, payload, sig=None):
 
 @pytest.fixture
 def response_with_wrong_sig(client_with_user, payload):
-    return response(client_with_user, payload, 'wrong sinature')
+    return _resp(client_with_user, payload, 'wrong sinature')
 
 
 @pytest.fixture
 def response_without_nonce(client_with_user):
-    return response(client_with_user, '')
+    return _resp(client_with_user, '')
 
 
 def _extract_from_payload(response):

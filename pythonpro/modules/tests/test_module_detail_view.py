@@ -80,6 +80,11 @@ def python_birds(modules):
 
 @pytest.fixture
 def resp_with_sections(client_with_user, sections, python_birds):
+    return _resp_with_sections(client_with_user, sections, python_birds)
+
+
+def _resp_with_sections(client_with_user, sections, python_birds):
+    """Plain function to avoid _pytest.warning_types.RemovedInPytest4Warning: Fixture "resp" called directly."""
     return client_with_user.get(reverse('modules:detail', kwargs={'slug': python_birds.slug}))
 
 
@@ -103,7 +108,7 @@ def chapters(sections):
 
 @pytest.fixture
 def resp_with_chapters(client_with_user, python_birds, sections, chapters):
-    return resp_with_sections(client_with_user, sections, python_birds)
+    return _resp_with_sections(client_with_user, sections, python_birds)
 
 
 def test_chapter_titles(resp_with_chapters, chapters):
