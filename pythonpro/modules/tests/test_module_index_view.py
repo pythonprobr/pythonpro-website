@@ -18,11 +18,15 @@ def modules(transactional_db):
 def resp(client, django_user_model, modules):
     user = mommy.make(django_user_model)
     client.force_login(user)
-    return resp_not_logged(client, modules)
+    return _resp_not_logged(client, modules)
 
 
 @pytest.fixture
 def resp_not_logged(client, modules):
+    return _resp_not_logged(client, modules)
+
+
+def _resp_not_logged(client, modules):
     return client.get(reverse('modules:index'))
 
 

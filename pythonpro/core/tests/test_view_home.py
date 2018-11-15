@@ -11,6 +11,11 @@ from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contai
 
 @pytest.fixture
 def home_resp(client):
+    return _resp(client)
+
+
+def _resp(client):
+    """Plain function to avoid _pytest.warning_types.RemovedInPytest4Warning: Fixture "resp" called directly."""
     return client.get('/', secure=True)
 
 
@@ -18,7 +23,7 @@ def home_resp(client):
 def home_resp_with_user(django_user_model, client: Client):
     user = mommy.make(django_user_model)
     client.force_login(user)
-    return home_resp(client)
+    return _resp(client)
 
 
 def test_home_status_code(home_resp):
@@ -78,7 +83,7 @@ def test_forum_tab_is_present(home_resp_with_user):
 @pytest.fixture
 def home_resp_open_subscriptions(settings, client):
     settings.SUBSCRIPTIONS_OPEN = True
-    return home_resp(client)
+    return _resp(client)
 
 
 def test_payment_link_is_present(home_resp_open_subscriptions):
@@ -91,7 +96,7 @@ def test_payment_link_is_present(home_resp_open_subscriptions):
 @pytest.fixture
 def home_resp_closed_subscriptions(settings, client):
     settings.SUBSCRIPTIONS_OPEN = False
-    return home_resp(client)
+    return _resp(client)
 
 
 def test_payment_link_is_not_present(home_resp_closed_subscriptions):
