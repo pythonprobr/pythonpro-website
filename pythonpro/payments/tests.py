@@ -1,4 +1,5 @@
 import pytest
+from django.conf import settings
 from django.urls import reverse
 
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_template_used
@@ -57,7 +58,7 @@ def test_leads_form_when_subscription_closed(resp_closed_subscriptions):
     'content',
     [
         '<form action="https://pagseguro.uol.com.br/pre-approvals/request.html" method="post">',
-        '<input type="hidden" name="code" value="28B4C9D65353AD8554943F8ED0585371"/>',
+        f'<input type="hidden" name="code" value="{settings.PAGSEGURO_PAYMENT_PLAN}"/>',
         'name="submit"',
 
     ]

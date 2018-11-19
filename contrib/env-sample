@@ -4,6 +4,10 @@ ALLOWED_HOSTS=localhost, 127.0.0.1
 SENTRY_DSN=
 DATABASE_URL=Put your Database URL here
 
+# Control subscriptions ads and payment.
+SUBSCRIPTIONS_OPEN=False
+PAGSEGURO_PAYMENT_PLAN=YOUR PAYMENT PLAN ON pagseguro
+
 # Amazon S3 configuration
 DJANGO_AWS_ACCESS_KEY_ID=
 DJANGO_AWS_SECRET_ACCESS_KEY=
@@ -16,7 +20,6 @@ EMAIL_PORT=25
 EMAIL_USE_TLS=False
 EMAIL_HOST_USER=
 EMAIL_HOST_PASSWORD=
-
 
 # Discourse config
 DISCOURSE_SSO_SECRET='paste_your_secret_here'
