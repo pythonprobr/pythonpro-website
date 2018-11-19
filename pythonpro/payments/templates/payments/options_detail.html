@@ -8,10 +8,9 @@
     <div class="row">
       <div class="col">
         <h1 class="mt-4 mb-3">Inscrições Abertas</h1>
-        <p>Essa turma vai começar em junho e durar 8 semanas.</p>
-        <p>Em cada semana haverá encontro online para retiradas de dúvidas e também 4 webinários com profissionais da
-          área de TI.</p>
-        <p>Os inscritos viram membros vitalícios tendo acesso a todo novo conteúdo de turmas futuras. Além disso ganham
+        <p>Essa turma vai começar em março e durar 12 semanas.</p>
+        <p>Serão 8 encontros ao vivo para retiradas de dúvidas e 4 webinários exclusivos com profissionais para você turbinar sua carreira.</p>
+        <p>Os inscritos se tornam membros vitalícios tendo acesso a todo novo conteúdo de turmas passadas e futuras. Além disso ganham
           acesso a fórum exclusivo para retiradas de dúvidas.</p>
       </div>
     </div>
@@ -26,7 +25,7 @@
         <h3 class="mt-4 mb-3">Parcelada sem Juros</h3>
         <p>10x de R$ 180,00 sem juros pelo pagseguro</p>
         <form action="https://pagseguro.uol.com.br/pre-approvals/request.html" method="post">
-          <input type="hidden" name="code" value="28B4C9D65353AD8554943F8ED0585371"/>
+          <input type="hidden" name="code" value="{{ PAGSEGURO_PAYMENT_PLAN }}"/>
           <input type="hidden" name="iot" value="button"/>
           <input type="image" src="https://stc.pagseguro.uol.com.br/public/img/botoes/assinaturas/120x53-contratar.gif"
                  name="submit" alt="Pague com PagSeguro - É rápido, grátis e seguro!" width="120" height="53"/>

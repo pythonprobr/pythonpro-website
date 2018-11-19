@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-from decouple import config, Csv
+from decouple import Csv, config
 from dj_database_url import parse as dburl
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,7 +30,8 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
 # Control subscriptions ads and payment.
-SUBSCRIPTIONS_OPEN = False
+SUBSCRIPTIONS_OPEN = config('SUBSCRIPTIONS_OPEN', cast=bool)
+PAGSEGURO_PAYMENT_PLAN = config('PAGSEGURO_PAYMENT_PLAN')
 
 # Email Configuration
 
