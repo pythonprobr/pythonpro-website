@@ -1,6 +1,9 @@
 language: python
+dist: xenial
+sudo: true
+
 python:
-  - 3.6
+  - 3.7
 services:
   postgresql
 addons:
