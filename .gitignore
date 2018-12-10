@@ -108,4 +108,5 @@ ENV/
 # no including dumps
 *.dump
 
-.pytest_cache/
+pythonpro-website/.pytest_cache/
+mediafiles/

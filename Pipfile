@@ -1,0 +1,32 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+boto3 = "*"
+collectfast = "*"
+dj-database-url = "*"
+django = "*"
+django-debug-toolbar = "*"
+django-ordered-model = "*"
+"django-s3-folder-storage" = "*"
+django-storages = "*"
+gunicorn = "*"
+"psycopg2-binary" = "*"
+python-decouple = "*"
+raven = "*"
+Pillow = "*"
+
+[dev-packages]
+faker = "*"
+"flake8" = "*"
+freezegun = "*"
+model-mommy = "*"
+pytest-cov = "*"
+pytest-django = "*"
+pytest-freezegun = "*"
+pytest-mock = "*"
+
+[requires]
+python_version = "3.7"
