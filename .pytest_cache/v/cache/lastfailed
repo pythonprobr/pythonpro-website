@@ -1,1 +1,3 @@
-{}
+{
+  "pythonpro/core/tests/test_view_podcast.py::test_podcast_link": true
+}

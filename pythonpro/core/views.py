@@ -20,6 +20,10 @@ def teck_talks(request):
     return render(request, 'core/tech_talks.html', {})
 
 
+def podcast(request):
+    return render(request, 'core/podcast.html', {})
+
+
 @login_required
 def profile(request):
     return render(request, 'core/profile_detail.html', {})
