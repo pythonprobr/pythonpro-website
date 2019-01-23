@@ -110,3 +110,5 @@ ENV/
 
 pythonpro-website/.pytest_cache/
 mediafiles/
+
+.pytest_cache/
