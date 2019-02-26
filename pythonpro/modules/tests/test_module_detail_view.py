@@ -5,7 +5,7 @@ from model_mommy import mommy
 
 from pythonpro.django_assertions import dj_assert_contains
 from pythonpro.modules import facade
-from pythonpro.modules.models import Section, Module, Chapter
+from pythonpro.modules.models import Chapter, Module, Section
 
 
 def generate_resp(slug, client):

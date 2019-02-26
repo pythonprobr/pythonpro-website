@@ -21,3 +21,19 @@ def find_cohort(slug):
             to_attr='webinars'
         )
     ).get()
+
+
+def find_webinars():
+    """
+    Retrieve Webinars from database ordered by date desc
+    :return: List of webinars
+    """
+    return tuple(_Webinar.objects.order_by('-start'))
+
+
+def find_webinar(slug):
+    """
+    Retrieve Webinar by its slug
+    :return: Webinar
+    """
+    return _Webinar.objects.filter(slug=slug).get()

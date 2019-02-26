@@ -40,3 +40,9 @@ class Webinar(models.Model):
     slug = models.SlugField(unique=True)
     vimeo_id = models.CharField(max_length=11, db_index=False, blank=True)
     start = models.DateTimeField()
+    discourse_topic_id = models.CharField(max_length=11, db_index=False)
+    description = models.TextField()
+    image = models.ImageField(upload_to='webinars/', null=True, blank=True)
+
+    def get_absolute_url(self):
+        return reverse('cohorts:webinar', kwargs={'slug': self.slug})

@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ webinar.title }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="mt-4 mb-3">{{ webinar.title }}</h1>
+                <p>{{ webinar.description }}</p>
+                <div class="embed-container mb-3">
+                    <iframe src="https://player.vimeo.com/video/{{ webinar.vimeo_id }}" width="640" height="360"
+                            frameborder="0"
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                </div>
+                <blockquote class="blockquote mt-2 mb-3" >
+                    <p class="mb-0">{{ webinar.speaker }}</p>
+                    <footer class="blockquote-footer">{{ webinar.speaker_title }}
+                    </footer>
+                </blockquote>
+
+                <div id='discourse-comments'></div>
+                <script type="text/javascript">
+                    DiscourseEmbed = {
+                        discourseUrl: '{{ DISCOURSE_BASE_URL }}',
+                        webinarId: {{ webinar.discourse_topic_id }}
+                    };
+
+                    (function () {
+                        var d = document.createElement('script');
+                        d.type = 'text/javascript';
+                        d.async = true;
+                        d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+                    })();
+                </script>
+
+            </div>
+        </div>
+    </div>
+{% endblock body %}
