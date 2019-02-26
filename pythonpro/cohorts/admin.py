@@ -19,7 +19,7 @@ class StudentInline(admin.TabularInline):
 
 
 class WebinarInline(admin.StackedInline):
-    extra = 1
+    extra = 0
     model = Webinar
     ordering = ('start',)
     prepopulated_fields = {'slug': ('title',)}

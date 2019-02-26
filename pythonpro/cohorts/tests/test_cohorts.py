@@ -1,6 +1,5 @@
 import operator
 from datetime import datetime, timedelta
-from os import path
 
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -8,22 +7,10 @@ from django.template.defaultfilters import date
 from django.urls import reverse
 from model_mommy import mommy
 
-from pythonpro import settings
 from pythonpro.cohorts import facade
-from pythonpro.cohorts.models import Cohort, LiveClass, Webinar
+from pythonpro.cohorts.models import Cohort, LiveClass
+from pythonpro.cohorts.tests.conftest import img_path
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains
-
-_img_path = path.join(settings.BASE_DIR, 'pythonpro', 'core', 'static', 'img', 'instructors', 'renzo-nuccitelli.png')
-
-
-@pytest.fixture
-def cohort(client, django_user_model):
-    user = mommy.make(django_user_model)
-    client.force_login(user)
-    image = SimpleUploadedFile(name='renzo-nuccitelli.png', content=open(_img_path, 'rb').read(),
-                               content_type='image/png')
-    cohort = mommy.make(Cohort, slug='guido-van-rossum', students=[user], image=image)
-    return cohort
 
 
 @pytest.fixture
@@ -33,7 +20,7 @@ def resp(client, cohort):
 
 @pytest.fixture
 def resp_without_user(client, db):
-    image = SimpleUploadedFile(name='renzo-nuccitelli.png', content=open(_img_path, 'rb').read(),
+    image = SimpleUploadedFile(name='renzo-nuccitelli.png', content=open(img_path, 'rb').read(),
                                content_type='image/png')
     cohort = mommy.make(Cohort, slug='guido-van-rossum', image=image)
     resp = client.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
@@ -48,7 +35,7 @@ def test_no_access(resp_without_user):
 def test_cohort_links_for_logged_user(client, django_user_model):
     user = mommy.make(django_user_model)
     client.force_login(user)
-    image = SimpleUploadedFile(name='renzo-nuccitelli.png', content=open(_img_path, 'rb').read(),
+    image = SimpleUploadedFile(name='renzo-nuccitelli.png', content=open(img_path, 'rb').read(),
                                content_type='image/png')
     cohorts = mommy.make(Cohort, 4, image=image)
     resp = client.get('/', secure=True)
@@ -58,7 +45,7 @@ def test_cohort_links_for_logged_user(client, django_user_model):
 
 @pytest.mark.django_db
 def test_cohort_links_not_avaliable_for_no_user(client):
-    image = SimpleUploadedFile(name='renzo-nuccitelli.png', content=open(_img_path, 'rb').read(),
+    image = SimpleUploadedFile(name='renzo-nuccitelli.png', content=open(img_path, 'rb').read(),
                                content_type='image/png')
     cohorts = mommy.make(Cohort, 4, image=image)
     resp = client.get('/', secure=True)
@@ -117,14 +104,6 @@ def test_live_classes_vimeo(resp_with_classes, live_classes):
 
 
 @pytest.fixture
-def webinars(cohort):
-    now = datetime.utcnow()
-    return [
-        mommy.make(Webinar, cohort=cohort, vimeo_id=str(i), start=now + timedelta(days=i)) for i in range(100, 105)
-    ]
-
-
-@pytest.fixture
 def resp_with_webinars(webinars, cohort, client):
     return client.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
 
@@ -140,7 +119,7 @@ def test_webinars_datetime(resp_with_webinars, webinars):
         dj_assert_contains(resp_with_webinars, date(live_class.start))
 
 
-@pytest.mark.parametrize('property_name', 'speaker speaker_title title vimeo_id'.split())
+@pytest.mark.parametrize('property_name', 'speaker speaker_title title'.split())
 def test_webinars_vimeo(resp_with_webinars, webinars, property_name):
     for webnar in webinars:
         dj_assert_contains(resp_with_webinars, getattr(webnar, property_name))
