@@ -17,6 +17,7 @@ gunicorn = "*"
 python-decouple = "*"
 raven = "*"
 Pillow = "*"
+ipython = "*"
 
 [dev-packages]
 faker = "*"
