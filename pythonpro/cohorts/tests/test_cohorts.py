@@ -75,10 +75,16 @@ def test_cohort_end(cohort: Cohort, resp):
 
 
 @pytest.fixture
-def live_classes(cohort):
+def live_classes(cohort, fake):
     now = datetime.utcnow()
     return [
-        mommy.make(LiveClass, cohort=cohort, vimeo_id=str(i), start=now + timedelta(days=i)) for i in range(100, 105)
+        mommy.make(
+            LiveClass,
+            cohort=cohort,
+            vimeo_id=str(i),
+            start=now + timedelta(days=i),
+            description=fake.paragraph(nb_sentences=3, variable_nb_sentences=True, ext_word_list=None))
+        for i in range(100, 105)
     ]
 
 
@@ -98,9 +104,14 @@ def test_live_classes_datetime(resp_with_classes, live_classes):
         dj_assert_contains(resp_with_classes, date(live_class.start))
 
 
-def test_live_classes_vimeo(resp_with_classes, live_classes):
+def test_live_classes_descriptions(resp_with_classes, live_classes):
     for live_class in live_classes:
-        dj_assert_contains(resp_with_classes, live_class.vimeo_id)
+        dj_assert_contains(resp_with_classes, live_class.description)
+
+
+def test_live_classes_urls(resp_with_classes, live_classes):
+    for live_class in live_classes:
+        dj_assert_contains(resp_with_classes, live_class.get_absolute_url())
 
 
 @pytest.fixture

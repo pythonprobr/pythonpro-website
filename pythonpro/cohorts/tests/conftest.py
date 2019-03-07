@@ -17,7 +17,7 @@ def cohort(client, django_user_model):
     client.force_login(user)
     image = SimpleUploadedFile(name='renzo-nuccitelli.png', content=open(img_path, 'rb').read(),
                                content_type='image/png')
-    cohort = mommy.make(Cohort, slug='guido-van-rossum', students=[user], image=image)
+    cohort = mommy.make(Cohort, slug='guido-van-rossum', title='Guido van Rossum', students=[user], image=image)
     return cohort
 
 

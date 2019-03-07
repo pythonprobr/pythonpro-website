@@ -30,6 +30,11 @@ class LiveClass(models.Model):
     start = models.DateTimeField()
     vimeo_id = models.CharField(max_length=11, db_index=False, blank=True)
     cohort = models.ForeignKey(Cohort, models.CASCADE)
+    discourse_topic_id = models.CharField(max_length=11, db_index=False, null=True, default='726')
+    description = models.TextField(blank=True, default='Aula Pendente')
+
+    def get_absolute_url(self):
+        return reverse('cohorts:live_class', kwargs={'pk': self.id})
 
 
 class Webinar(models.Model):
