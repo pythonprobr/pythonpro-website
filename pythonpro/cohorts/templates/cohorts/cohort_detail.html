@@ -81,23 +81,14 @@
             <div class="col">
                 <h2 class="mt-5 mb-3">Aulas ao Vivo</h2>
                 {% for class in cohort.classes %}
-                    <div class="card mb-4">
-                        <div class="card-header bg-success">
-                            {{ class.start }}
-                        </div>
-                        <div class="card-body bg-light">
-                            {% if class.vimeo_id %}
-                                <div class="embed-container mb-3 mt-2 border rounded">
-                                    <iframe src="https://player.vimeo.com/video/{{ class.vimeo_id }}"
-                                            width="640"
-                                            height="360" frameborder="0"
-                                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                                </div>
-                            {% else %}
-                                Vídeo Pendente
-                            {% endif %}
-                        </div>
-                    </div>
+                    <h3 class="mt-4 mb-3"><a href="{{ class.get_absolute_url }}"
+                                             target="_blank">{{ class.start }}</a></h3>
+                    <dt>
+                        Descrição:
+                    </dt>
+                    <dd>
+                        {{ class.description }}
+                    </dd>
 
                 {% endfor %}
             </div>

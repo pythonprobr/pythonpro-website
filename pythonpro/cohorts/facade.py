@@ -37,3 +37,12 @@ def find_webinar(slug):
     :return: Webinar
     """
     return _Webinar.objects.filter(slug=slug).get()
+
+
+def find_live_class(pk):
+    """
+    Find Live Class by its PK, selecting related cohort
+    :param pk:
+    :return:
+    """
+    return _LiveClass.objects.select_related('cohort').get(pk=pk)

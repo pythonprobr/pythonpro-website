@@ -17,3 +17,8 @@ def webinars(request):
 @login_required
 def webinar(request, slug):
     return render(request, 'cohorts/webinar_detail.html', {'webinar': facade.find_webinar(slug=slug)})
+
+
+@login_required
+def live_class(request, pk):
+    return render(request, 'cohorts/live_class_detail.html', {'live_class': facade.find_live_class(pk=pk)})

@@ -3,7 +3,7 @@ from faker import Faker
 from model_mommy import mommy
 
 
-@pytest.fixture()
+@pytest.fixture
 def fake():
     return Faker('pt_BR')
 
