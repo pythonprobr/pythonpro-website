@@ -56,6 +56,10 @@ def test_video_lead_form(content, video_resp):
     dj_assert_contains(video_resp, content)
 
 
+def test_video_page_mailchimp_track(video_resp, video):
+    dj_assert_contains(video_resp, video.slug)
+
+
 @mail_chimp_content
 def test_video_lead_form_not_present(content, video_resp_subscriptions_open):
     dj_assert_not_contains(video_resp_subscriptions_open, content)
