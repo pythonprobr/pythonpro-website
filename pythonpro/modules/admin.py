@@ -19,11 +19,13 @@ class BaseAdmin(OrderedModelAdmin):
 @admin.register(Module)
 class ModuleAdmin(BaseAdmin):
     list_display = 'title slug order move_up_down_links page_link'.split()
+    prepopulated_fields = {'slug': ('title',)}
 
 
 @admin.register(Section)
 class SectionAdmin(BaseAdmin):
     list_display = 'title slug module order move_up_down_links page_link'.split()
+    prepopulated_fields = {'slug': ('title',)}
 
 
 class TopicInline(StackedInline):
@@ -37,9 +39,11 @@ class TopicInline(StackedInline):
 class ChapterAdmin(BaseAdmin):
     inlines = [TopicInline]
     list_display = 'title slug section order move_up_down_links page_link'.split()
+    prepopulated_fields = {'slug': ('title',)}
 
 
 @admin.register(Topic)
 class TopicAdmin(BaseAdmin):
     list_display = 'title slug chapter order move_up_down_links page_link'.split()
     list_filter = ('chapter',)
+    prepopulated_fields = {'slug': ('title',)}
