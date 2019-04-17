@@ -2,7 +2,7 @@ import pytest
 from django.conf import settings
 from django.urls import reverse
 
-from pythonpro.django_assertions import dj_assert_contains, dj_assert_template_used
+from pythonpro.django_assertions import dj_assert_contains
 
 
 def resp(client):
@@ -48,10 +48,6 @@ def test_content_subscription_open(content, resp_open_subscriptions):
 
 def test_content_subscription_closed(resp_closed_subscriptions):
     dj_assert_contains(resp_closed_subscriptions, 'Inscrições Encerradas')
-
-
-def test_leads_form_when_subscription_closed(resp_closed_subscriptions):
-    dj_assert_template_used(resp_closed_subscriptions, "core/leads_form.html")
 
 
 @pytest.mark.parametrize(
