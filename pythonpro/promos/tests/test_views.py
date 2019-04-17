@@ -41,7 +41,7 @@ def test_ty_status(client):
 mail_chimp_content = pytest.mark.parametrize(
     'content',
     [
-        '<form class="form-inline justify-content-center" '
+        '<form',
         'action="https://python.us17.list-manage.com/subscribe/post?u=ff7c56095f83f9c254edd749e&amp;id=a88d1dd555"',
         'method="post"',
         '<input type="text" name="FNAME"',
@@ -75,10 +75,6 @@ def test_video_subscription_link_present(video_resp_subscriptions_open):
 
 def test_video_title(video, video_resp):
     dj_assert_contains(video_resp, f'<title>{video.title}</title>')
-
-
-def test_video_h1(video, video_resp):
-    dj_assert_contains(video_resp, f'<h1>{video.title}</h1>')
 
 
 def test_video_iframe(video, video_resp):
