@@ -1,11 +1,14 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import UpdateView
+from django_sitemaps import Sitemap
 
 from pythonpro.core.forms import UserEmailForm
 from pythonpro.core.models import User
+from pythonpro.promos.facade import find_all_videos
 
 
 def index(request):
@@ -27,6 +30,22 @@ def podcast(request):
 @login_required
 def profile(request):
     return render(request, 'core/profile_detail.html', {})
+
+
+def sitemap(request):
+    map = Sitemap(
+        build_absolute_uri=request.build_absolute_uri,
+    )
+
+    for section in 'core:index core:podcast core:tech_talks modules:index'.split():
+        map.add(reverse(section), changefreq='weekly')
+
+    for video in find_all_videos():
+        map.add(video.get_absolute_url(), changefreq='monthly')
+
+    return map.response(
+        pretty_print=settings.DEBUG,
+    )
 
 
 class _ProfileUpdateName(UpdateView):
