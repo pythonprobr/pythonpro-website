@@ -1,6 +1,7 @@
 {% extends 'core/base.html' %}
 {% load static %}
-{% block title %}{{ video.title }}{% endblock %}
+{% block title %}Aula de Pyhton: {{ video.title }}{% endblock %}
+{% block description %}Aula Aperitivo Grátis de Python sobre: {{ video.title }}{% endblock %}
 {% block body %}
     <div class="container mt-5">
         {% if SUBSCRIPTIONS_OPEN %}
