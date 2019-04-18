@@ -18,6 +18,7 @@ python-decouple = "*"
 raven = "*"
 Pillow = "*"
 ipython = "*"
+django-sitemaps = "*"
 
 [dev-packages]
 faker = "*"
