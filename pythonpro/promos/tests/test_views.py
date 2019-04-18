@@ -74,7 +74,7 @@ def test_video_subscription_link_present(video_resp_subscriptions_open):
 
 
 def test_video_title(video, video_resp):
-    dj_assert_contains(video_resp, f'<title>{video.title}</title>')
+    dj_assert_contains(video_resp, video.title)
 
 
 def test_video_iframe(video, video_resp):
