@@ -15,4 +15,5 @@ urlpatterns = [
     path('perfil/nome', views.profile_name, name='profile_name'),
     path('perfil/email', views.profile_email, name='profile_email'),
     path('perfil/senha', views.profile_password, name='profile_password'),
+    path('lista-de-espera', views.waiting_list, name='waiting_list'),
 ]

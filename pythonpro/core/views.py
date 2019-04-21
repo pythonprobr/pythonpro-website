@@ -2,8 +2,8 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import render
-from django.urls import reverse_lazy, reverse
-from django.views.generic import UpdateView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import TemplateView, UpdateView
 from django_sitemaps import Sitemap
 
 from pythonpro.core.forms import UserEmailForm
@@ -84,3 +84,10 @@ class _ProfileChangePassword(PasswordChangeView):
 
 
 profile_password = _ProfileChangePassword.as_view()
+
+
+class _WaitingListView(TemplateView):
+    template_name = 'core/waiting_list.html'
+
+
+waiting_list = _WaitingListView.as_view()
