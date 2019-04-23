@@ -10,7 +10,7 @@
                 <h1 class="mt-4 mb-3">Aula da Turma <a
                         href="{{ live_class.cohort.get_absolute_url }}">{{ live_class.cohort.title }}</a></h1>
                 <p>Aula Gravada em {{ live_class.start }}</p>
-                <p>{{ live_class.description }}</p>
+                <p>{{ live_class.description|linebreaks }}</p>
                 <div class="embed-container mb-3">
                     <iframe src="https://player.vimeo.com/video/{{ live_class.vimeo_id }}" width="640" height="360"
                             frameborder="0"
