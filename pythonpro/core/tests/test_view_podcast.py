@@ -5,7 +5,7 @@ from pythonpro.django_assertions import dj_assert_contains
 
 
 @pytest.fixture
-def resp(client, db):
+def resp(client):
     return client.get(reverse('core:podcast'), secure=True)
 
 
