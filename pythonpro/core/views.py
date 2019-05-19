@@ -1,12 +1,10 @@
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 from django_sitemaps import Sitemap
-from rolepermissions.roles import assign_role
 
 from pythonpro.core.forms import UserEmailForm
 from pythonpro.core.models import User
@@ -26,9 +24,6 @@ def teck_talks(request):
 
 
 def podcast(request):
-    for user in get_user_model().objects.all():
-        assign_role(user, 'member')
-
     return render(request, 'core/podcast.html', {})
 
 
