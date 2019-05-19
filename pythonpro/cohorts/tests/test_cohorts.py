@@ -14,8 +14,8 @@ from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contai
 
 
 @pytest.fixture
-def resp(client, cohort):
-    return client.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
+def resp(client_with_member, cohort):
+    return client_with_member.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
 
 
 @pytest.fixture
@@ -89,8 +89,8 @@ def live_classes(cohort, fake):
 
 
 @pytest.fixture
-def resp_with_classes(live_classes, cohort, client):
-    return client.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
+def resp_with_classes(live_classes, cohort, client_with_member):
+    return client_with_member.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
 
 
 def test_live_classes_are_sorted(live_classes: list, cohort):
@@ -115,8 +115,8 @@ def test_live_classes_urls(resp_with_classes, live_classes):
 
 
 @pytest.fixture
-def resp_with_webinars(webinars, cohort, client):
-    return client.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
+def resp_with_webinars(webinars, cohort, client_with_member):
+    return client_with_member.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
 
 
 def test_webinars_are_sorted(webinars: list, cohort):

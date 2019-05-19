@@ -27,10 +27,8 @@ def topics(chapter):
 
 
 @pytest.fixture
-def resp(client, django_user_model, topics):
-    user = mommy.make(django_user_model)
-    client.force_login(user)
-    return client.get(reverse('topics:detail', kwargs={'slug': topics[0].slug}), secure=True)
+def resp(client_with_member, django_user_model, topics):
+    return client_with_member.get(reverse('topics:detail', kwargs={'slug': topics[0].slug}), secure=True)
 
 
 @pytest.fixture

@@ -14,7 +14,6 @@ img_path = path.join(settings.BASE_DIR, 'pythonpro', 'core', 'static', 'img', 'i
 @pytest.fixture
 def cohort(client, django_user_model):
     user = mommy.make(django_user_model)
-    client.force_login(user)
     image = SimpleUploadedFile(name='renzo-nuccitelli.png', content=open(img_path, 'rb').read(),
                                content_type='image/png')
     cohort = mommy.make(Cohort, slug='guido-van-rossum', title='Guido van Rossum', students=[user], image=image)

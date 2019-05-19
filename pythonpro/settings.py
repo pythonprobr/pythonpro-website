@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'pythonpro.promos',
     'pythonpro.payments',
     'pythonpro.cohorts',
+    'rolepermissions',
     'ordered_model',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -78,6 +79,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+ROLEPERMISSIONS_MODULE = 'pythonpro.core.roles'
+
+
 if DEBUG:
     INSTALLED_APPS.append('debug_toolbar')
     MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')

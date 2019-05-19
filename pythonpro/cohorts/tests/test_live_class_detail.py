@@ -4,8 +4,8 @@ import pytest
 from django.urls import reverse
 from model_mommy import mommy
 
-from pythonpro.cohorts.models import Cohort, LiveClass, Webinar
-from pythonpro.django_assertions import dj_assert_contains
+from pythonpro.cohorts.models import Cohort, LiveClass
+from pythonpro.django_assertions import dj_assert_contains, dj_assert_template_used
 
 
 @pytest.fixture
@@ -21,8 +21,8 @@ def live_class(db, cohort, fake) -> LiveClass:
 
 
 @pytest.fixture
-def resp(client_with_user, live_class: Webinar):
-    return client_with_user.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
+def resp(client_with_member, live_class: LiveClass):
+    return client_with_member.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
 
 
 def test_logged_user(resp):
@@ -41,6 +41,24 @@ def test_basic_contents(resp, live_class, property_name):
 
 def test_cohort_title(cohort, resp):
     dj_assert_contains(resp, cohort.title)
+
+
+@pytest.fixture
+def resp_client(client_with_client, live_class: LiveClass):
+    return client_with_client.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
+
+
+def test_live_class_landing_for_client(cohort, resp_client):
+    dj_assert_template_used(resp_client, 'cohorts/live_class_landing_page.html')
+
+
+@pytest.fixture
+def resp_lead(client_with_lead, live_class: LiveClass):
+    return client_with_lead.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
+
+
+def test_live_class_landing_for_lead(cohort, resp_lead):
+    dj_assert_template_used(resp_lead, 'cohorts/live_class_landing_page.html')
 
 
 def test_cohort_url(cohort: Cohort, resp):

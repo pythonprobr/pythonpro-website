@@ -55,10 +55,15 @@ class Content(OrderedModel):
         """Must provide a query set for next content"""
         raise NotImplementedError()
 
+    def module_slug(self):
+        if self.parent() is None:
+            return self.slug
+        return self.parent().module_slug()
+
 
 class ContentWithTitleMixin(Content):
     """
-    Mising implementing breadcrumb method for models which has a title
+    Missing implementing breadcrumb method for models which has a title
     """
 
     class Meta:
