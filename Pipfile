@@ -19,6 +19,7 @@ raven = "*"
 Pillow = "*"
 ipython = "*"
 django-sitemaps = "*"
+django-role-permissions = "*"
 
 [dev-packages]
 faker = "*"

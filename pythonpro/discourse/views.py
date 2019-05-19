@@ -8,7 +8,11 @@ from urllib import parse
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.views.defaults import bad_request
+from rolepermissions.checkers import has_permission
+
+from pythonpro.core.roles import access_forum
 
 logger = Logger(__file__)
 
@@ -27,6 +31,8 @@ def sso(request):
 
     Code based on https://meta.discourse.org/t/sso-example-for-django/14258
     """
+    if not has_permission(request.user, access_forum):
+        return render(request, 'discourse/landing_page.html')
     payload = request.GET.get('sso')
     signature = request.GET.get('sig')
     try:

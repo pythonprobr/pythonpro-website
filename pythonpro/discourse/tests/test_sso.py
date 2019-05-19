@@ -8,8 +8,10 @@ import pytest
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from rolepermissions.roles import assign_role
 
 from pythonpro.discourse.views import _decode_payload
+from pythonpro.django_assertions import dj_assert_template_used
 
 
 @pytest.fixture
@@ -29,36 +31,37 @@ def logged_user(django_user_model, fake):
     user.set_password('password')
     user.save()
     user.plain_password = 'password'
+    assign_role(user, 'member')
     return user
 
 
 @pytest.fixture
-def client_with_user(client, logged_user):
+def client_with_member(client, logged_user):
     client.login(username=logged_user.email, password=logged_user.plain_password)
     return client
 
 
 @pytest.fixture
-def response(client_with_user, payload, sig=None):
-    return _resp(client_with_user, payload, sig)
+def response(client_with_member, payload, sig=None):
+    return _resp(client_with_member, payload, sig)
 
 
-def _resp(client_with_user, payload, sig=None):
+def _resp(client_with_member, payload, sig=None):
     encoded_payload = base64.encodebytes(payload.encode('utf-8'))
     hmac_obj = hmac.new(settings.DISCOURSE_SSO_SECRET.encode('utf-8'), encoded_payload, digestmod=hashlib.sha256)
     sig = hmac_obj.hexdigest() if sig is None else sig
-    return client_with_user.get(reverse('discourse:sso'),
-                                data={'sso': encoded_payload, 'sig': sig})
+    return client_with_member.get(reverse('discourse:sso'),
+                                  data={'sso': encoded_payload, 'sig': sig}, secure=True)
 
 
 @pytest.fixture
-def response_with_wrong_sig(client_with_user, payload):
-    return _resp(client_with_user, payload, 'wrong sinature')
+def response_with_wrong_sig(client_with_member, payload):
+    return _resp(client_with_member, payload, 'wrong sinature')
 
 
 @pytest.fixture
-def response_without_nonce(client_with_user):
-    return _resp(client_with_user, '')
+def response_without_nonce(client_with_member):
+    return _resp(client_with_member, '')
 
 
 def _extract_from_payload(response):
@@ -102,8 +105,8 @@ def test_redirect_payload_user_data(logged_user, nonce, response: HttpResponseRe
         {'sig': 'invalid sig', 'sso': 'invalid sso'},
     ]
 )
-def test_status_invalid_data(client_with_user, invalid_data):
-    response = client_with_user.get(reverse('discourse:sso'), data=invalid_data)
+def test_status_invalid_data(client_with_member, invalid_data):
+    response = client_with_member.get(reverse('discourse:sso'), data=invalid_data)
     return response.status_code == 400
 
 
@@ -122,6 +125,16 @@ def test_user_not_logged_status_code(client):
 
 def test_user_not_logged(client):
     discourse_path = reverse('discourse:sso')
-    response = client.get(discourse_path)
+    response = client.get(discourse_path, secure=True)
     login_path = reverse('login')
     assert response.url == f'{login_path}?next={discourse_path}'
+
+
+def test_lead_not_able_to_access_forum(client_with_lead):
+    discourse_path = reverse('discourse:sso')
+    response = client_with_lead.get(discourse_path, secure=True)
+    dj_assert_template_used(response, 'discourse/landing_page.html')
+
+
+def test_client_not_able_to_access_forum(client_with_client):
+    test_lead_not_able_to_access_forum(client_with_client)

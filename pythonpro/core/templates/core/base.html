@@ -14,6 +14,7 @@
     <link href='//fonts.googleapis.com/css?family=Ubuntu:400,500' rel='stylesheet' type='text/css'/>
 </head>
 <body>
+{% block navbar %}
 <nav class="navbar navbar-dark bg-dark navbar-expand-md">
     <a class="navbar-brand" href="/">Python Pro</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -98,6 +99,7 @@
         {% endif %}
     </div>
 </nav>
+{% endblock navbar %}
 {% block body %}
 {% endblock body %}
 <footer class="main-footer mt-5 text-light">

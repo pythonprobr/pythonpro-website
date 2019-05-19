@@ -16,6 +16,7 @@ from django.utils.html import escape
 from django.utils.translation import gettext, gettext_lazy as _
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
+from rolepermissions.admin import RolePermissionsUserAdminMixin
 
 from pythonpro.core.models import User
 
@@ -24,13 +25,15 @@ sensitive_post_parameters_m = method_decorator(sensitive_post_parameters())
 
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(RolePermissionsUserAdminMixin, admin.ModelAdmin):
     add_form_template = 'admin/auth/user/add_form.html'
     change_user_password_template = None
     fieldsets = (
         (None, {'fields': ('first_name', 'email', 'password')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
-                                       'groups', 'user_permissions')}),
+        (_('Permissions'), {
+            'fields': ('is_active', 'is_staff', 'is_superuser',
+                       'groups', 'user_permissions')
+        }),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (

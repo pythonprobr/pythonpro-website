@@ -1,8 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-# Create your views here.
-from pythonpro.modules.facade import get_module_with_contents, get_all_modules
+from pythonpro.modules.facade import get_all_modules, get_module_with_contents
 
 
 @login_required

@@ -3,13 +3,13 @@ from django.core.management import call_command
 from django.urls import reverse
 from model_mommy import mommy
 
-from pythonpro.django_assertions import dj_assert_contains
+from pythonpro.django_assertions import dj_assert_contains, dj_assert_template_used
 from pythonpro.modules import facade
 from pythonpro.modules.models import Chapter, Module, Section
 
 
 def generate_resp(slug, client):
-    return client.get(reverse('modules:detail', kwargs={'slug': slug}))
+    return client.get(reverse('modules:detail', kwargs={'slug': slug}), secure=True)
 
 
 @pytest.fixture
@@ -19,15 +19,8 @@ def modules(transactional_db):
     return modules
 
 
-@pytest.fixture
-def client_with_user(client, django_user_model, modules):
-    user = mommy.make(django_user_model)
-    client.force_login(user)
-    return client
-
-
-def test_status_code(client_with_user):
-    resp = generate_resp('python-birds', client_with_user)
+def test_status_code(client_with_lead, modules):
+    resp = generate_resp('python-birds', client_with_lead)
     assert resp.status_code == 200
 
 
@@ -43,8 +36,8 @@ def test_status_code(client_with_user):
     ]
 
 )
-def test_page_content_without_pre_requisite(content, client_with_user):
-    resp = generate_resp('python-birds', client_with_user)
+def test_lead_content(content, client_with_lead, modules):
+    resp = generate_resp('python-birds', client_with_lead)
     dj_assert_contains(resp, content)
 
 
@@ -63,9 +56,19 @@ def test_page_content_without_pre_requisite(content, client_with_user):
     ]
 
 )
-def test_page_content_with_pre_requisite(content, client_with_user):
-    resp = generate_resp('objetos-pythonicos', client_with_user)
+def test_member_content(content, client_with_member, modules):
+    resp = generate_resp('objetos-pythonicos', client_with_member)
     dj_assert_contains(resp, content)
+
+
+def test_client_content(client_with_client, modules):
+    resp = generate_resp('pytools', client_with_client)
+    dj_assert_template_used(resp, 'modules/module_detail.html')
+
+
+def test_client_content_accesed_by_member(client_with_member, modules):
+    resp = generate_resp('pytools', client_with_member)
+    dj_assert_template_used(resp, 'modules/module_detail.html')
 
 
 @pytest.fixture
@@ -79,13 +82,13 @@ def python_birds(modules):
 
 
 @pytest.fixture
-def resp_with_sections(client_with_user, sections, python_birds):
-    return _resp_with_sections(client_with_user, sections, python_birds)
+def resp_with_sections(client_with_lead, sections, python_birds):
+    return _resp_with_sections(client_with_lead, sections, python_birds)
 
 
-def _resp_with_sections(client_with_user, sections, python_birds):
+def _resp_with_sections(client_with_lead, sections, python_birds):
     """Plain function to avoid _pytest.warning_types.RemovedInPytest4Warning: Fixture "resp" called directly."""
-    return client_with_user.get(reverse('modules:detail', kwargs={'slug': python_birds.slug}))
+    return client_with_lead.get(reverse('modules:detail', kwargs={'slug': python_birds.slug}), secure=True)
 
 
 def test_section_titles(resp_with_sections, sections):
@@ -107,8 +110,8 @@ def chapters(sections):
 
 
 @pytest.fixture
-def resp_with_chapters(client_with_user, python_birds, sections, chapters):
-    return _resp_with_sections(client_with_user, sections, python_birds)
+def resp_with_chapters(client_with_lead, python_birds, sections, chapters):
+    return _resp_with_sections(client_with_lead, sections, python_birds)
 
 
 def test_chapter_titles(resp_with_chapters, chapters):
