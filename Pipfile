@@ -20,6 +20,8 @@ Pillow = "*"
 ipython = "*"
 django-sitemaps = "*"
 django-role-permissions = "*"
+mailchimp3 = "*"
+responses = "*"
 
 [dev-packages]
 faker = "*"

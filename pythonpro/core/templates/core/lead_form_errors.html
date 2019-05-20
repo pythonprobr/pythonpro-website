@@ -1,0 +1,77 @@
+{% extends 'core/base_without_nav.html' %}
+{% load static %}
+{% block title %}Curso de Python Grátis{% endblock %}
+{% block description %}Curso de Básico de Python voltado para quem quer entrar no mercado de tecnologia.{% endblock %}
+{% block body %}
+    <div class="bg-info pt-5 pb-5 text-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md">
+                    <h1 class="mb-4">Cadastro com alguns erros</h1>
+                    <p>Corrija os campos com problemas abaixo</p>
+                    <form method="post" action="{% url 'core:lead_form' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label_tag }}</label>
+                            <input type="text" name="{{ form.first_name.html_name }}"
+                                   class="form-control{% if form.first_name.errors %} is-invalid{% endif %}"
+                                   value="{{ form.first_name.value }}" autofocus=""
+                                   maxlength="{{ form.first_name.max_length }}"
+                                   required="required" id="{{ form.first_name.id_for_label }}">
+                            {% if form.first_name.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.first_name.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}">{{ form.email.label_tag }}</label>
+                            <input type="email" name="{{ form.email.html_name }}"
+                                   class="form-control{% if form.email.errors %} is-invalid{% endif %}"
+                                   value="{{ form.email.value }}" autofocus="" maxlength="{{ form.email.max_length }}"
+                                   required="required" id="{{ form.email.id_for_label }}">
+                            {% if form.email.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.email.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.password1.id_for_label }}">{{ form.password1.label_tag }}</label>
+                            <input type="password" name="{{ form.password1.html_name }}"
+                                   class="form-control{% if form.password1.errors %} is-invalid{% endif %}"
+                                   autofocus="" maxlength="{{ form.password1.max_length }}"
+                                   required="required" id="{{ form.password1.id_for_label }}">
+                            {% if form.password1.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.password1.errors }}
+                                </div>
+                            {% endif %}
+                            <small>{{ form.password1.help_text }}</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.password2.id_for_label }}">{{ form.password2.label_tag }}</label>
+                            <input type="password" name="{{ form.password2.html_name }}"
+                                   class="form-control {% if form.password2.errors %} is-invalid{% endif %}"
+                                   autofocus="" maxlength="{{ form.password2.max_length }}"
+                                   required="required" id="{{ form.password2.id_for_label }}">
+                            {% if form.password2.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.password2.errors }}
+                                </div>
+                            {% endif %}
+                            <small>{{ form.password2.help_text }}</small>
+                        </div>
+                        <button class="btn btn-lg btn-success">Sim, quero me inscrever e receber o curso grátis
+                            &raquo;
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}
+
+
+

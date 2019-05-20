@@ -1,13 +1,15 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 from django_sitemaps import Sitemap
+from rolepermissions.roles import assign_role
 
-from pythonpro.core.forms import UserEmailForm
+from pythonpro.core.forms import UserEmailForm, UserSignupForm
 from pythonpro.core.models import User
+from pythonpro.mailchimp import facade
 from pythonpro.promos.facade import find_all_videos
 
 
@@ -91,3 +93,26 @@ class _WaitingListView(TemplateView):
 
 
 waiting_list = _WaitingListView.as_view()
+
+
+def lead_landing(request):
+    """
+    View with lead landing page
+    :param request:
+    :return:
+    """
+
+    if request.method == 'GET':
+        return render(request, 'core/lead_landing_page.html', context={'form': UserSignupForm()})
+
+
+def lead_form(request):
+    if request.method != 'POST':
+        return
+    form = UserSignupForm(request.POST)
+    if form.is_valid():
+        user = form.save()
+        assign_role(user, 'lead')
+        facade.create_or_update_lead(user.first_name, user.email)
+        return redirect(reverse('core:thanks'))
+    return render(request, 'core/lead_form_errors.html', context={'form': form})
