@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'pythonpro.promos',
     'pythonpro.payments',
     'pythonpro.cohorts',
+    'pythonpro.mailchimp',
     'rolepermissions',
     'ordered_model',
     'django.contrib.admin',
@@ -221,3 +222,8 @@ if SENTRY_DSN:  # pragma: no cover
         # If using Heroku use metadata: https://devcenter.heroku.com/articles/dyno-metadata
         'release': config('HEROKU_SLUG_COMMIT'),
     }
+
+# Mailchimp Configuration
+
+MAILCHIMP_API_KEY = config('MAILCHIMP_API_KEY')
+MAILCHIMP_LIST_ID = config('MAILCHIMP_LIST_ID')

@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from django.forms import CharField, ModelForm
 from django.utils.translation import gettext_lazy as _
@@ -21,3 +22,9 @@ class UserEmailForm(ModelForm):
         if not self.user.check_password(cleaned_data.get('current_password', '')):
             self.add_error('current_password', ValidationError('Senha Inválida', 'invalid_password'))
         return cleaned_data
+
+
+class UserSignupForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'email', 'password1', 'password2',)
