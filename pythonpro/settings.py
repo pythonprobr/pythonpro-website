@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from functools import partial
+
 from decouple import Csv, config
 from dj_database_url import parse as dburl
 
@@ -82,7 +83,6 @@ MIDDLEWARE = [
 
 ROLEPERMISSIONS_MODULE = 'pythonpro.core.roles'
 
-
 if DEBUG:
     INSTALLED_APPS.append('debug_toolbar')
     MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
@@ -119,6 +119,10 @@ WSGI_APPLICATION = 'pythonpro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+
+if 'localhost' not in ALLOWED_HOSTS:
+    dburl = partial(dburl, conn_max_age=600, ssl_require=True)
+
 DATABASES = {
     'default': config('DATABASE_URL', default=default_db_url, cast=dburl),
 }
