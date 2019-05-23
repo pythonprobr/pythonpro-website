@@ -14,7 +14,7 @@ from pythonpro.promos.facade import find_all_videos
 
 
 def index(request):
-    return render(request, 'core/index.html', {})
+    return render(request, 'core/index.html', {'form': UserSignupForm()})
 
 
 def thanks(request):
@@ -39,7 +39,7 @@ def sitemap(request):
         build_absolute_uri=request.build_absolute_uri,
     )
 
-    for section in 'core:index core:podcast core:tech_talks modules:index'.split():
+    for section in 'core:index core:lead_landing core:podcast core:tech_talks modules:index'.split():
         map.add(reverse(section), changefreq='weekly')
 
     for video in find_all_videos():

@@ -22,14 +22,11 @@ def create_lead_mock(mocker):
 
 @pytest.fixture
 def resp_lead_creation(client, db, fake: Faker, create_lead_mock):
-    password = 'lkhgasdlkfsf709609yknbsdfsd(&ˆˆ'
     client.post(
         reverse('core:lead_form'),
         data={
             'first_name': fake.name(),
             'email': fake.email(),
-            'password1': password,
-            'password2': password,
         },
         secure=True
     )

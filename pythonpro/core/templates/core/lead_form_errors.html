@@ -3,7 +3,7 @@
 {% block title %}Curso de Python Grátis{% endblock %}
 {% block description %}Curso de Básico de Python voltado para quem quer entrar no mercado de tecnologia.{% endblock %}
 {% block body %}
-    <div class="bg-info pt-5 pb-5 text-light">
+    <div class="bg-primary pt-5 pb-5 text-light">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md">
@@ -36,34 +36,8 @@
                                 </div>
                             {% endif %}
                         </div>
-                        <div class="form-group">
-                            <label for="{{ form.password1.id_for_label }}">{{ form.password1.label_tag }}</label>
-                            <input type="password" name="{{ form.password1.html_name }}"
-                                   class="form-control{% if form.password1.errors %} is-invalid{% endif %}"
-                                   autofocus="" maxlength="{{ form.password1.max_length }}"
-                                   required="required" id="{{ form.password1.id_for_label }}">
-                            {% if form.password1.errors %}
-                                <div class="invalid-feedback">
-                                    {{ form.password1.errors }}
-                                </div>
-                            {% endif %}
-                            <small>{{ form.password1.help_text }}</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="{{ form.password2.id_for_label }}">{{ form.password2.label_tag }}</label>
-                            <input type="password" name="{{ form.password2.html_name }}"
-                                   class="form-control {% if form.password2.errors %} is-invalid{% endif %}"
-                                   autofocus="" maxlength="{{ form.password2.max_length }}"
-                                   required="required" id="{{ form.password2.id_for_label }}">
-                            {% if form.password2.errors %}
-                                <div class="invalid-feedback">
-                                    {{ form.password2.errors }}
-                                </div>
-                            {% endif %}
-                            <small>{{ form.password2.help_text }}</small>
-                        </div>
-                        <button class="btn btn-lg btn-success">Sim, quero me inscrever e receber o curso grátis
-                            &raquo;
+
+                        <button class="btn btn-lg btn-warning">Sim, quero me inscrever e receber o curso grátis &raquo;
                         </button>
                     </form>
                 </div>

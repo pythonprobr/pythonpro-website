@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.conf import settings
 from mailchimp3 import MailChimp
 from mailchimp3.mailchimpclient import MailChimpError
@@ -50,6 +52,8 @@ def _update_member_role(email: str, role: str) -> dict:
         interests[roles_to_ids[_MEMBER]] = False
         interests[roles_to_ids[_CLIENT]] = False
         interests[roles_to_ids[_LEAD]] = True
+        member['timestamp_signup'] = datetime.now().isoformat()
+        member['status'] = 'subscribed'
 
     _members_client.update(_list_id, email, member)
     return member

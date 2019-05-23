@@ -1,12 +1,26 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% block body %}
-  <div class="container mt-5">
-    <div class="row">
-      <div class="col">
-        <h1>Obrigado por se Cadastrar</h1>
-        <p>Assim que houver disponibilidade em uma turma entraremos em contato pelo email que você cadastrou.</p>
-      </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col">
+                <h1 class="mb-4">Cadastro realizado com Sucesso!</h1>
+                <p>Você receberá 4 emails nas próximas 4 semanas. Seguiremos um cronograma para você aprender o básico de
+                    programação. É muito importante que você siga os passos para poder construir a carreira de seus
+                    sonhos.
+                </p>
+                <p>Mas se você está ansioso para começar os estudos, acesse o módulo
+                    <a href="{% url 'modules:detail' slug='python-birds' %}">Python Birds</a>. <br/>
+                    <b>Utilize o "Esqueceu sua Senha" com o email que acabou de cadastrar para criar uma senha para sua
+                        conta.</b>
+                </p>
+                <p>Será um prazer acompanhar você nessa incrível jornada. Muito obrigado pela confiança em nosso
+                    trabalho!
+                </p>
+                <p ">
+                    Luciano Ramalho e Renzo Nuccitelli
+                </p>
+            </div>
+        </div>
     </div>
-  </div>
 {% endblock body %}
