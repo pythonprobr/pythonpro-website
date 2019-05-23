@@ -107,6 +107,9 @@ def lead_landing(request):
 
 
 def lead_form(request):
+    if request.method == 'GET':
+        form = UserSignupForm()
+        return render(request, 'core/lead_form_errors.html', context={'form': form})
     form = UserSignupForm(request.POST)
     if form.is_valid():
         user = form.save()
