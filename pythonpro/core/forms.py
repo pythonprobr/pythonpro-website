@@ -47,7 +47,7 @@ class UserSignupForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_unusable_password()
+        user.set_password(User.objects.make_random_password(30))
         if commit:
             user.save()
         return user
