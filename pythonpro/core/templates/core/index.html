@@ -1,6 +1,7 @@
 {% extends 'core/base.html' %}
 {% load static %}
-{% block description %}Curso de programação presencial online na linguagem Python. Aulas práticas do básico ao avançado focadas na carreira de Tecnologia{% endblock %}
+{% block description %}Curso de programação presencial online na linguagem Python. Aulas práticas do básico ao avançado
+    focadas na carreira de Tecnologia{% endblock %}
 {% block body %}
     <div class="colors-pallet d-none d-md-block">
         <div class="color-1 pallet"></div>
@@ -11,79 +12,61 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1 class="pythonpro-title mt-3"><span class="python">Python</span> Pro</h1>
-                <h2 class="pythonpro-subtitle mb-4 mb-md-5">Python para Profissionais</h2>
+                <h1 class="pythonpro-title mt-5"><span class="python">Python</span> Pro</h1>
+                <h2 class="pythonpro-subtitle mb-4 mb-md-5">Curso Presencial Online Completo<br/> Focado 100%
+                    no mercado de Tecnologia!</h2>
             </div>
         </div>
-    <div class="row">
-            <div class="col">
-                <h4 class="mb-4 mb-md-5 text-center">Curso Presencial Online Completo, focado 100% no mercado de Tecnologia!</h4>
-            </div>
-        </div>
-
-
-        {% if SUBSCRIPTIONS_OPEN %}
-            <div class="row">
-                <div class="col">
-                    <div class="jumbotron">
-                        <h1 class="display-4">Inscrições Abertas!</h1>
-                        <p class="lead">Inscrições abertas para turma que começa em março. Vagas Limitadas.</p>
-                        <a class="btn btn-primary btn-lg text-light p-4" href="{% url 'payments:options' %}"
-                           role="button">QUERO ME
-                            MATRICULAR &raquo;</a>
+    </div>
+    {% if SUBSCRIPTIONS_OPEN %}
+        <div class="bg-light">
+            <div class="container pt-5 pb-5">
+                <div class="row">
+                    <div class="col text-center">
+                        <h1 class="pb-3">Inscrições Abertas!</h1>
+                        <p>Aulas da turma começam em outubro. Garanta sua matrícula, vagas Limitadas!</p>
+                        <a class="btn btn-warning p-4 font-weight-bold" href="{% url 'payments:options' %}"
+                           role="button">Sim, quero participar da próxima turma! &raquo;</a>
                     </div>
                 </div>
-            </div>
-        {% endif %}
-        <div class="row mt-8">
-            <div class="col-12 col-md mb-3">
-                <div class="embed-container">
-                    <iframe src="https://player.vimeo.com/video/258681672" width="640" height="360" frameborder="0"
-                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                </div>
-            </div>
-            <div class="col-12 col-md">
-                <h3 class="mb-3">Módulo Python Birds Grátis</h3>
-                <p>Cadastre seu email para aprender o básico de Python e Orientação a Objetos implementando o jogo Angry
-                    Birds</p>
 
-                <form action="https://python.us17.list-manage.com/subscribe/post?u=ff7c56095f83f9c254edd749e&amp;id=e3072e0df0"
-                      method="post" name="mc-embedded-subscribe-form"
-                      target="_blank">
-                    <div class="form-group row">
-                        <label for="email-input" class="col-sm-2 col-form-label">Email</label>
-                        <div class="col-sm-10">
-                            <input type="email" name="EMAIL" class="form-control" id="email-input" placeholder="Email"
-                                   required="required">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="name-input" class="col-sm-2 col-form-label">Nome</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="FNAME" class="form-control" id="name-input" placeholder="Nome">
-                        </div>
-                    </div>
-
-                    <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                        <input type="text"
-                               name="b_ff7c56095f83f9c254edd749e_e3072e0df0"
-                               tabindex="-1" value="">
-                    </div>
-
-                    <input type="hidden" name="SUBSCRIP[day]" value="{% now "d" %}">
-                    <input type="hidden" name="SUBSCRIP[month]" value="{% now "m" %}">
-                    <input type="hidden" name="SUBSCRIP[year]" value="{% now "Y" %}">
-                    <div class="form-group row">
-                        <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary">Cadastrar</button>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
-        <hr/>
+    {% endif %}
+    <div class="bg-primary">
+        <div class="container pt-5 pb-5">
+            <div class="row mt-8">
+                <div class="col-12 col-md mb-3">
+                    <div class="embed-container">
+                        <iframe src="https://player.vimeo.com/video/258681672" width="640" height="360" frameborder="0"
+                                webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="col-12 col-md text-light">
+                    <h3 class="mb-3">Curso Python Birds Grátis</h3>
+                    <p>Cadastre seu email para ganhar um curso básico de Programação!</p>
+                    {% include 'core/lead_form.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container pt-5">
         {% include 'core/instructors.html' %}
-        <hr/>
-        {% include 'core/social_proof.html' %}
+    </div>
+    <div class="bg-light">
+        <div class="container pt-5 pb-5">
+            {% include 'core/social_proof.html' %}
+        </div>
+    </div>
+    <div class="bg-primary pt-5 pb-5 text-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h3>Quer se transformar também?</h3>
+                    {% include 'core/lead_form.html' with form=form %}
+
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock body %}

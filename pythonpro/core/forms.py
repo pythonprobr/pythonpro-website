@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from django.forms import CharField, ModelForm
@@ -27,4 +28,26 @@ class UserEmailForm(ModelForm):
 class UserSignupForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('first_name', 'email', 'password1', 'password2',)
+        fields = ('first_name', 'email')
+
+    password1 = forms.CharField(
+        label=_("Password"),
+        strip=False,
+        required=False,
+        widget=forms.PasswordInput,
+
+    )
+    password2 = forms.CharField(
+        label=_("Password confirmation"),
+        widget=forms.PasswordInput,
+        strip=False,
+        required=False,
+        help_text=_("Enter the same password as before, for verification."),
+    )
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_unusable_password()
+        if commit:
+            user.save()
+        return user
