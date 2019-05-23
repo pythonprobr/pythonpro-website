@@ -107,8 +107,6 @@ def lead_landing(request):
 
 
 def lead_form(request):
-    if request.method != 'POST':
-        return
     form = UserSignupForm(request.POST)
     if form.is_valid():
         user = form.save()
