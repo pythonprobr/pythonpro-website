@@ -97,14 +97,6 @@ def test_breadcrumb_current(resp, topic):
     )
 
 
-def test_discourse_topic_id(resp, topic):
-    dj_assert_contains(resp, f"topicId: {topic.discourse_topic_id}")
-
-
-def test_discourse_url(resp, topic):
-    dj_assert_contains(resp, f"discourseUrl: '{settings.DISCOURSE_BASE_URL}'")
-
-
 @pytest.fixture
 def module_member(db):
     return mommy.make(Module, slug='objetos-pythonicos')
@@ -150,6 +142,19 @@ def resp_member_accessing_member_content(client_with_member, topic_member, djang
 
 def test_member_access_member_content(resp_member_accessing_member_content):
     dj_assert_template_used(resp_member_accessing_member_content, 'topics/topic_detail.html')
+
+
+@pytest.fixture
+def resp_member(client_with_member, topic, django_user_model):
+    return client_with_member.get(reverse('topics:detail', kwargs={'slug': topic.slug}), secure=True)
+
+
+def test_discourse_topic_id(resp_member, topic):
+    dj_assert_contains(resp_member, f"topicId: {topic.discourse_topic_id}")
+
+
+def test_discourse_url(resp_member, topic):
+    dj_assert_contains(resp_member, f"discourseUrl: '{settings.DISCOURSE_BASE_URL}'")
 
 
 @pytest.fixture
