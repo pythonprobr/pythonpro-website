@@ -1,24 +1,33 @@
 {% extends 'core/base_without_nav.html' %}
 {% load static %}
 {% block title %}Curso de Python Grátis{% endblock %}
-{% block description %}Curso Básico de Python voltado para quem quer entrar no mercado de tecnologia!{% endblock %}
+{% block description %}Curso Básico Gratuito de Python voltado para quem quer entrar no mercado de tecnologia!{% endblock %}
 {% block body %}
     <div class="bg-primary pt-5 pb-5 text-light">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-md">
-                    <h1 class="mb-4">Como seria não se preocupar com desemprego?</h1>
-                    <p>Já se imaginou sendo disputado por empresas? E ainda por cima ganhar um bom salário mesmo
-                        em tempo de crise? </p>
-                    <p>Pois essa área existe e tem muita gente faturando alto com programação e tecnologia. E diferente
-                        do senso comum, qualquer pessoa é capaz de aprender a programar.
+                <div class="col-12 col-lg-7">
+                    <h1 class="mb-4">Como seria <u>não se preocupar</u> com desemprego?
+                    </h1>
+                    <p>Já se imaginou ganhando um <span class="font-weight-bold"><u>BOM SALÁRIO</u></span>, mesmo em
+                        tempos de crise?</p>
+                    <p>Já imaginou você sendo <span class="font-weight-bold"><u>DISPUTADO</u></span> por empresas?
                     </p>
-                    <p>Por isso nós liberamos o curso introdutório gratuito, para você pode comprovar sem risco.
-                        Faça seu cadastro gratuito e aprenda o básico de programação em apenas 4 semanas!
+                    <p>Existe uma profissão que as pessoas estão <u>faturando alto</u>: <span
+                            class="font-weight-bold"><u>PROGRAMAÇÃO E TECNOLOGIA</u></span>.
                     </p>
+                    <p>E se você pensa que isso não é para você, nós garantimos: <span class="font-weight-bold"><u>QUALQUER PESSOA É CAPAZ DE PROGRAMAR.</u></span>
+                    </p>
+                    <p>Para te provar isso, nós liberamos temporiaramente o <span class="font-weight-bold">Curso Introdutório de Programação Python</span> totalmente
+                        <span class="font-weight-bold"><u>GRÁTIS!</u></span>
+                    </p>
+                    <p>Você vai aprender a programar em apenas <span class="font-weight-bold">4 semanas</span>!</p>
+                    <p>Para ter acesso, basta preencher o formulário com seu nome e email. Em seguida, você receberá o acesso ao curso.</p>
+                    <p><span class="font-weight-bold"><u>MAS SE INSCREVA AGORA PORQUE ISSO É POR TEMPO LIMITADO!</u></span></p>
+                    
                 </div>
-                <div class="col-12 col-md">
-                    <h3>Curso Python Birds Gratuito!</h3>
+                <div class="col-12 col-md-6 col-lg-5 mt-sm-4">
+                    <h3>Curso introdutório de Programação <span class="font-weight-bold"><u>GRATUITO</u></span>!</h3>
                     {% include 'core/lead_form.html' with form=form %}
                 </div>
             </div>
@@ -28,11 +37,11 @@
         <div class="container pt-4 pb-3">
             <div class="row">
                 <div class="col">
-                    <h3 class="mb-3">Esse curso básico vai te ajudar a:</h3>
+                    <h3 class="mb-3">Esse curso vai te ajudar a:</h3>
                     <dt>Desmistificar o Mundo da Programação</dt>
                     <dd>Você vai instalar os programas necessários e começar a programar em menos de 30 minutos.</dd>
                     <dt class="mt-2">Entender os Princípios Básicos</dt>
-                    <dd>Esse curso aborda os conceitos fundamentais de forma objetiva, é o primeiro passo rumo a sua
+                    <dd>Esse curso aborda os conceitos fundamentais de forma objetiva, é o primeiro passo rumo à sua
                         carreira em TI!
                     </dd>
                     <dt class="mt-2">Mostrar como a Tecnologia é divertida</dt>
@@ -54,7 +63,7 @@
     <div class="bg-primary pt-5 pb-5 text-light">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-md">
+                <div class="col-8">
                     <h3>Quer se transformar também?</h3>
                     {% include 'core/lead_form.html' with form=form %}
 
