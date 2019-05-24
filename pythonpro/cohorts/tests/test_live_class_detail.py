@@ -44,8 +44,10 @@ def test_cohort_title(cohort, resp):
 
 
 @pytest.fixture
-def resp_client(client_with_client, live_class: LiveClass):
-    return client_with_client.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
+def resp_client(client_with_client, live_class: LiveClass, mocker, logged_user):
+    tag_as = mocker.patch('pythonpro.cohorts.views.tag_as')
+    yield client_with_client.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
+    tag_as.assert_called_once_with(logged_user.email, 'potencial-member')
 
 
 def test_live_class_landing_for_client(cohort, resp_client):
@@ -53,8 +55,10 @@ def test_live_class_landing_for_client(cohort, resp_client):
 
 
 @pytest.fixture
-def resp_lead(client_with_lead, live_class: LiveClass):
-    return client_with_lead.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
+def resp_lead(client_with_lead, live_class: LiveClass, mocker, logged_user):
+    tag_as = mocker.patch('pythonpro.cohorts.views.tag_as')
+    yield client_with_lead.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
+    tag_as.assert_called_once_with(logged_user.email, 'potencial-member')
 
 
 def test_live_class_landing_for_lead(cohort, resp_lead):

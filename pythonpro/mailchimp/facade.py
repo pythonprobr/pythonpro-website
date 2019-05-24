@@ -5,6 +5,7 @@ from mailchimp3.mailchimpclient import MailChimpError
 _client = MailChimp(settings.MAILCHIMP_API_KEY)
 _list_id = settings.MAILCHIMP_LIST_ID
 _members_client = _client.lists.members
+_segments_client = _client.lists.segments
 _roles_cache = None
 _LEAD = 'lead'
 _CLIENT = 'client'
@@ -31,6 +32,10 @@ def create_or_update_lead(name: str, email: str):
                 }
             }
             return _members_client.create(_list_id, data)
+
+
+def tag_as(email: str, *tags):
+    return _members_client.tags.update(_list_id, email, {'tags': [{'name': tag, 'status': 'active'} for tag in tags]})
 
 
 def _update_member_role(email: str, role: str) -> dict:
