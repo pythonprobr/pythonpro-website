@@ -4,6 +4,7 @@ import pytest
 import responses
 
 from pythonpro.mailchimp import facade
+from pythonpro.mailchimp.facade import tag_as
 
 roles_to_ids = {facade._LEAD: 'lead_id', facade._CLIENT: 'client_id', facade._MEMBER: 'member_id'}
 
@@ -88,9 +89,87 @@ def test_update_no_member_downgrade(existing_lead, resps):
     assert_member_roles(expected_lead=False, expected_client=False, expected_member=True, interests=interests)
 
 
+def tests_tag_as_potencial_client(resps):
+    resps.add(resps.POST,
+              'https://us17.api.mailchimp.com/3.0/lists/list_id/members/f21127224363bab9ff7af3574549a203/tags', json='')
+    tag_as('host@python.pro.br', 'potencial_client', 'potencial-member')
+    assert json.loads(resps.calls[0].request.body) == {
+        'tags': [
+            {'name': 'potencial_client', 'status': 'active'},
+            {'name': 'potencial-member', 'status': 'active'}]
+    }
+
+
 def assert_member_roles(expected_lead, expected_client, expected_member, interests):
     assert (expected_lead, expected_client, expected_member) == tuple(interests[id_] for id_ in roles_to_ids.values())
 
+
+segments_response = {
+    'segments': [
+        {
+            'id': 37887,
+            'name': 'turma-luciano-ramalho',
+            'member_count': 0,
+            'type': 'static',
+            'created_at': '2019-05-20T11:16:27+00:00',
+            'updated_at': '2019-05-20T11:16:27+00:00',
+            'list_id': 'e3072e0df0',
+
+        },
+        {
+            'id': 37895,
+            'name': 'turma-guido-van-rossum',
+            'member_count': 0,
+            'type': 'static',
+            'created_at': '2019-05-20T11:17:03+00:00',
+            'updated_at': '2019-05-20T11:17:03+00:00',
+            'list_id': 'e3072e0df0',
+
+        },
+        {
+            'id': 37999,
+            'name': 'Unsubscribed',
+            'member_count': 0,
+            'type': 'saved',
+            'created_at': '2019-05-23T05:27:13+00:00',
+            'updated_at': '2019-05-23T05:27:13+00:00',
+            'options': {'match': 'all', 'conditions': []},
+            'list_id': 'e3072e0df0',
+
+        },
+        {
+            'id': 38003,
+            'name': 'Unsubscribed',
+            'member_count': 0,
+            'type': 'saved',
+            'created_at': '2019-05-23T05:31:00+00:00',
+            'updated_at': '2019-05-23T05:31:00+00:00',
+            'options': {'match': 'all', 'conditions': []},
+            'list_id': 'e3072e0df0',
+
+        },
+        {
+            'id': 38127,
+            'name': 'potencial-client',
+            'member_count': 0,
+            'type': 'static',
+            'created_at': '2019-05-24T19:12:45+00:00',
+            'updated_at': '2019-05-24T19:44:40+00:00',
+            'list_id': 'e3072e0df0',
+
+        },
+        {
+            'id': 38131,
+            'name': 'potencial-member',
+            'member_count': 0,
+            'type': 'static',
+            'created_at': '2019-05-24T19:12:57+00:00',
+            'updated_at': '2019-05-24T19:45:08+00:00',
+            'list_id': 'e3072e0df0',
+
+        }],
+
+}
 
 interests_response = {
     'interests': [{

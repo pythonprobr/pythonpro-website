@@ -3,7 +3,7 @@ from django.urls import reverse
 from model_mommy import mommy
 
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains
-from pythonpro.modules.models import Section, Module, Chapter, Topic
+from pythonpro.modules.models import Chapter, Module, Section, Topic
 
 
 @pytest.fixture
@@ -32,10 +32,9 @@ def resp(client_with_member, django_user_model, topics):
 
 
 @pytest.fixture
-def resp_last_topic(client, django_user_model, topics):
-    user = mommy.make(django_user_model)
-    client.force_login(user)
-    return client.get(reverse('topics:detail', kwargs={'slug': topics[1].slug}), secure=True)
+def resp_last_topic(client_with_member, topics, mocker, logged_user):
+    mocker.patch('pythonpro.modules.topics_views.tag_as')
+    yield client_with_member.get(reverse('topics:detail', kwargs={'slug': topics[1].slug}), secure=True)
 
 
 def test_topic_with_next_topic(resp, topics):

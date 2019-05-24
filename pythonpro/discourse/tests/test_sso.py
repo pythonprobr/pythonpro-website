@@ -25,7 +25,7 @@ def payload(nonce):
 
 
 @pytest.fixture
-def logged_user(django_user_model, fake):
+def discourse_logged_user(django_user_model, fake):
     profile = fake.profile()
     user = django_user_model(email=profile['mail'], first_name=profile['name'])
     user.set_password('password')
@@ -36,8 +36,8 @@ def logged_user(django_user_model, fake):
 
 
 @pytest.fixture
-def client_with_member(client, logged_user):
-    client.login(username=logged_user.email, password=logged_user.plain_password)
+def client_with_member(client, discourse_logged_user):
+    client.login(username=discourse_logged_user.email, password=discourse_logged_user.plain_password)
     return client
 
 
@@ -86,12 +86,12 @@ def test_redirect_payload_has_nonce(nonce, response: HttpResponseRedirect):
     assert nonce == dct['nonce']
 
 
-def test_redirect_payload_user_data(logged_user, nonce, response: HttpResponseRedirect):
+def test_redirect_payload_user_data(discourse_logged_user, nonce, response: HttpResponseRedirect):
     dct = _extract_from_payload(response)
     assert {
                'nonce': nonce,
-               'email': logged_user.email,
-               'external_id': str(logged_user.id),
+               'email': discourse_logged_user.email,
+               'external_id': str(discourse_logged_user.id),
                'require_activation': 'false'
            } == dct
 
@@ -130,11 +130,13 @@ def test_user_not_logged(client):
     assert response.url == f'{login_path}?next={discourse_path}'
 
 
-def test_lead_not_able_to_access_forum(client_with_lead):
+def test_lead_not_able_to_access_forum(client_with_lead,  mocker, logged_user):
+    tag_as = mocker.patch('pythonpro.discourse.views.tag_as')
     discourse_path = reverse('discourse:sso')
     response = client_with_lead.get(discourse_path, secure=True)
     dj_assert_template_used(response, 'discourse/landing_page.html')
+    tag_as.assert_called_once_with(logged_user.email, 'potencial-member')
 
 
-def test_client_not_able_to_access_forum(client_with_client):
-    test_lead_not_able_to_access_forum(client_with_client)
+def test_client_not_able_to_access_forum(client_with_client, mocker, logged_user):
+    test_lead_not_able_to_access_forum(client_with_client, mocker, logged_user)

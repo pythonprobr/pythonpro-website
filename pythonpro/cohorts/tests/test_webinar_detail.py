@@ -35,8 +35,10 @@ def test_basic_contents(resp, webinar, property_name):
 
 
 @pytest.fixture
-def resp_client(client_with_client, webinar: Webinar):
-    return client_with_client.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}), secure=True)
+def resp_client(client_with_client, webinar: Webinar, mocker, logged_user):
+    tag_as = mocker.patch('pythonpro.cohorts.views.tag_as')
+    yield client_with_client.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}), secure=True)
+    tag_as.assert_called_once_with(logged_user.email, 'potencial-member')
 
 
 def test_webinar_landing_for_client(cohort, resp_client):
@@ -44,8 +46,10 @@ def test_webinar_landing_for_client(cohort, resp_client):
 
 
 @pytest.fixture
-def resp_lead(client_with_lead, webinar: Webinar):
-    return client_with_lead.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}), secure=True)
+def resp_lead(client_with_lead, webinar: Webinar, mocker, logged_user):
+    tag_as = mocker.patch('pythonpro.cohorts.views.tag_as')
+    yield client_with_lead.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}), secure=True)
+    tag_as.assert_called_once_with(logged_user.email, 'potencial-member')
 
 
 def test_webinar_landing_for_lead(cohort, resp_lead):
