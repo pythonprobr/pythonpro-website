@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from pythonpro.modules.facade import get_all_modules
 
 
@@ -8,4 +10,5 @@ def global_settings(request):
 
     return {
         'ALL_MODULES': get_all_modules(),
+        'SENTRY_DSN': settings.SENTRY_DSN,
     }

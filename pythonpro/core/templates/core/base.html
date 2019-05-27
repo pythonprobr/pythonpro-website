@@ -11,7 +11,12 @@
     <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}" />
     <script type="application/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="https://browser.sentry-cdn.com/5.3.0/bundle.min.js" crossorigin="anonymous"></script>
     <link href='//fonts.googleapis.com/css?family=Ubuntu:400,500' rel='stylesheet' type='text/css'/>
+    <script type="application/javascript">
+        Sentry.init({ dsn: '{{ SENTRY_DSN }}' });
+    </script>
+    {% block head %}{% endblock %}
 </head>
 <body>
 {% block navbar %}

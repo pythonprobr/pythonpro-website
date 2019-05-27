@@ -14,8 +14,10 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from functools import partial
 
+import sentry_sdk
 from decouple import Csv, config
 from dj_database_url import parse as dburl
+from sentry_sdk.integrations.django import DjangoIntegration
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -32,6 +34,11 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
 # Control subscriptions ads and payment.
 SUBSCRIPTIONS_OPEN = config('SUBSCRIPTIONS_OPEN', cast=bool)
+
+PAGARME_CRYPTO_KEY = config('PAGARME_CRYPTO_KEY')
+PAGARME_API_KEY = config('PAGARME_API_KEY')
+
+
 PAGSEGURO_PAYMENT_PLAN = config('PAGSEGURO_PAYMENT_PLAN')
 
 # Email Configuration
@@ -214,14 +221,10 @@ if AWS_ACCESS_KEY_ID:  # pragma: no cover
 SENTRY_DSN = config('SENTRY_DSN', default=None)
 
 if SENTRY_DSN:  # pragma: no cover
-    INSTALLED_APPS.append('raven.contrib.django.raven_compat')
-    RAVEN_CONFIG = {
-        'dsn': SENTRY_DSN,
-        # If you are using git, you can also automatically configure the
-        # release based on the git info.
-        # If using Heroku use metadata: https://devcenter.heroku.com/articles/dyno-metadata
-        'release': config('HEROKU_SLUG_COMMIT'),
-    }
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[DjangoIntegration()]
+    )
 
 # Mailchimp Configuration
 

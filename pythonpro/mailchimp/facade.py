@@ -15,11 +15,19 @@ _ROLES = (_LEAD, _CLIENT, _MEMBER)
 
 
 def create_or_update_lead(name: str, email: str):
+    return _create_or_update(name, email, _LEAD)
+
+
+def create_or_update_client(name: str, email: str):
+    return _create_or_update(name, email, _CLIENT)
+
+
+def _create_or_update(name: str, email: str, role: str):
     try:
-        return _update_member_role(email, _LEAD)
+        return _update_member_role(email, role)
     except MailChimpError as e:
         if e.args[0]['status'] == 404:
-            role_id = _build_roles()[_LEAD]
+            role_id = _build_roles()[role]
             # https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/
             data = {
                 'email_address': email,

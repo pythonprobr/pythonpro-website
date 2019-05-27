@@ -4,6 +4,10 @@ ALLOWED_HOSTS=localhost, 127.0.0.1
 SENTRY_DSN=
 DATABASE_URL=Put your Database URL here
 
+# Pagarme credentials
+PAGARME_API_KEY=ak_test_6yd4kbaJrWzdn61m4De5yzn7jZuTt9
+PAGARME_CRYPTO_KEY=
+
 # Control subscriptions ads and payment.
 SUBSCRIPTIONS_OPEN=False
 PAGSEGURO_PAYMENT_PLAN=YOUR PAYMENT PLAN ON pagseguro
