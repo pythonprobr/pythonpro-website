@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from rolepermissions.checkers import has_object_permission
@@ -6,6 +7,7 @@ from pythonpro.mailchimp.facade import tag_as
 from pythonpro.modules import facade
 from pythonpro.modules.models import Content
 from pythonpro.modules.permissions import is_client_content
+from pythonpro.payments.facade import PYTOOLS_PRICE
 
 
 def content_landing_page(request, content: Content):
@@ -16,7 +18,11 @@ def content_landing_page(request, content: Content):
         tag = 'potencial-client'
 
     tag_as(request.user.email, tag)
-    return render(request, template, {'content': content})
+    return render(request, template, {
+        'content': content,
+        'PAGARME_CRYPTO_KEY': settings.PAGARME_CRYPTO_KEY,
+        'price': PYTOOLS_PRICE
+    })
 
 
 @login_required
