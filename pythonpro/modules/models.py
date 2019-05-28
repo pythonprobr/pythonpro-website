@@ -140,7 +140,7 @@ class Topic(Content):
         ordering = ['chapter', 'order']
 
     def get_absolute_url(self):
-        return reverse('topics:detail', kwargs={'slug': self.slug})
+        return reverse('modules:topic_detail', kwargs={'module_slug': self.module_slug(), 'topic_slug': self.slug})
 
     def parent(self):
         return self.chapter

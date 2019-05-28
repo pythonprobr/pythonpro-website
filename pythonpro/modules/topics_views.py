@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from rolepermissions.checkers import has_object_permission
 
 from pythonpro.mailchimp.facade import tag_as
@@ -26,8 +26,14 @@ def content_landing_page(request, content: Content):
 
 
 @login_required
-def detail(request, slug):
+def old_detail(request, slug):
     topic = facade.get_topic_with_contents(slug=slug)
+    return redirect(topic.get_absolute_url(), permanent=True)
+
+
+@login_required
+def detail(request, module_slug, topic_slug):  # noqa
+    topic = facade.get_topic_with_contents(slug=topic_slug)
     if has_object_permission('access_content', request.user, topic):
         return render(request, 'topics/topic_detail.html', {'topic': topic})
     return content_landing_page(request, topic)

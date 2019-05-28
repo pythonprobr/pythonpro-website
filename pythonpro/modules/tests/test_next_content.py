@@ -28,13 +28,23 @@ def topics(chapter):
 
 @pytest.fixture
 def resp(client_with_member, django_user_model, topics):
-    return client_with_member.get(reverse('topics:detail', kwargs={'slug': topics[0].slug}), secure=True)
+    first_topic = topics[0]
+    return client_with_member.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': first_topic.module_slug(), 'topic_slug': first_topic.slug}),
+        secure=True)
 
 
 @pytest.fixture
 def resp_last_topic(client_with_member, topics, mocker, logged_user):
     mocker.patch('pythonpro.modules.topics_views.tag_as')
-    yield client_with_member.get(reverse('topics:detail', kwargs={'slug': topics[1].slug}), secure=True)
+    last_topic = topics[1]
+    yield client_with_member.get(
+        reverse(
+            'modules:topic_detail', kwargs={'module_slug': last_topic.module_slug(), 'topic_slug': last_topic.slug}
+        ),
+        secure=True
+    )
 
 
 def test_topic_with_next_topic(resp, topics):
