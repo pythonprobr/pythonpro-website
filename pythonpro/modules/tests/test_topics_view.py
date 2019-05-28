@@ -49,7 +49,9 @@ def test_topic_url_on_section(resp_chapter, topics):
 
 @pytest.fixture
 def resp(client_with_lead, topic, django_user_model):
-    return client_with_lead.get(reverse('topics:detail', kwargs={'slug': topic.slug}), secure=True)
+    return client_with_lead.get(
+        reverse('modules:topic_detail', kwargs={'module_slug': topic.module_slug(), 'topic_slug': topic.slug}),
+        secure=True)
 
 
 def test_status_code(resp):
@@ -120,7 +122,10 @@ def topic_member(chapter_member):
 @pytest.fixture
 def resp_lead_accessing_member_content(client_with_lead, topic_member, django_user_model, mocker, logged_user):
     tag_as = mocker.patch('pythonpro.modules.topics_views.tag_as')
-    yield client_with_lead.get(reverse('topics:detail', kwargs={'slug': topic_member.slug}), secure=True)
+    yield client_with_lead.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_member.module_slug(), 'topic_slug': topic_member.slug}),
+        secure=True)
     tag_as.assert_called_once_with(logged_user.email, 'potencial-member')
 
 
@@ -131,7 +136,10 @@ def test_lead_hitting_member_landing_page(resp_lead_accessing_member_content):
 @pytest.fixture
 def resp_client_accessing_member_content(client_with_client, topic_member, django_user_model, mocker, logged_user):
     tag_as = mocker.patch('pythonpro.modules.topics_views.tag_as')
-    yield client_with_client.get(reverse('topics:detail', kwargs={'slug': topic_member.slug}), secure=True)
+    yield client_with_client.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_member.module_slug(), 'topic_slug': topic_member.slug}),
+        secure=True)
     tag_as.assert_called_once_with(logged_user.email, 'potencial-member')
 
 
@@ -141,7 +149,10 @@ def test_client_hitting_member_landing_page(resp_client_accessing_member_content
 
 @pytest.fixture
 def resp_member_accessing_member_content(client_with_member, topic_member, django_user_model):
-    return client_with_member.get(reverse('topics:detail', kwargs={'slug': topic_member.slug}), secure=True)
+    return client_with_member.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_member.module_slug(), 'topic_slug': topic_member.slug}),
+        secure=True)
 
 
 def test_member_access_member_content(resp_member_accessing_member_content):
@@ -150,7 +161,9 @@ def test_member_access_member_content(resp_member_accessing_member_content):
 
 @pytest.fixture
 def resp_member(client_with_member, topic, django_user_model):
-    return client_with_member.get(reverse('topics:detail', kwargs={'slug': topic.slug}), secure=True)
+    return client_with_member.get(
+        reverse('modules:topic_detail', kwargs={'module_slug': topic.module_slug(), 'topic_slug': topic.slug}),
+        secure=True)
 
 
 def test_discourse_topic_id(resp_member, topic):
@@ -184,7 +197,10 @@ def topic_client(chapter_client):
 @pytest.fixture
 def resp_lead_accesing_client_content(client_with_lead, topic_client, django_user_model, mocker, logged_user):
     tag_as = mocker.patch('pythonpro.modules.topics_views.tag_as')
-    yield client_with_lead.get(reverse('topics:detail', kwargs={'slug': topic_client.slug}), secure=True)
+    yield client_with_lead.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_client.module_slug(), 'topic_slug': topic_client.slug}),
+        secure=True)
     tag_as.assert_called_once_with(logged_user.email, 'potencial-client')
 
 
@@ -193,8 +209,11 @@ def test_lead_hitting_client_landing_page(resp_lead_accesing_client_content):
 
 
 @pytest.fixture
-def resp_client_accessing_client_content(client_with_client, topic_client, django_user_model):
-    return client_with_client.get(reverse('topics:detail', kwargs={'slug': topic_client.slug}), secure=True)
+def resp_client_accessing_client_content(client_with_client, topic_client, django_user_model, client_with_lead=None):
+    return client_with_client.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_client.module_slug(), 'topic_slug': topic_client.slug}),
+        secure=True)
 
 
 def test_client_access_client_content(resp_client_accessing_client_content):
@@ -203,7 +222,10 @@ def test_client_access_client_content(resp_client_accessing_client_content):
 
 @pytest.fixture
 def resp_member_accessing_client_content(client_with_member, topic_client, django_user_model):
-    return client_with_member.get(reverse('topics:detail', kwargs={'slug': topic_client.slug}), secure=True)
+    return client_with_member.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_client.module_slug(), 'topic_slug': topic_client.slug}),
+        secure=True)
 
 
 def test_member_access_client_content(resp_member_accessing_client_content):
