@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from rolepermissions.checkers import has_object_permission
 
 from pythonpro.mailchimp.facade import tag_as
@@ -21,7 +22,10 @@ def content_landing_page(request, content: Content):
     return render(request, template, {
         'content': content,
         'PAGARME_CRYPTO_KEY': settings.PAGARME_CRYPTO_KEY,
-        'price': PYTOOLS_PRICE
+        'price': PYTOOLS_PRICE,
+        'notification_url': request.build_absolute_uri(
+            reverse('payments:pagarme_notification', kwargs={'user_id': request.user.id})
+        )
     })
 
 

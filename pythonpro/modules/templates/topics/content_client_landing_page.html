@@ -4,7 +4,54 @@
 {% block description %}Curso Intermediário de Python voltado para quem quer entrar no mercado de
     tecnologia!{% endblock %}
 {% block head %}
-    <script src="https://assets.pagar.me/checkout/1.1.0/checkout.js"></script>{% endblock %}
+    <script src="https://assets.pagar.me/checkout/1.1.0/checkout.js"></script>
+    <script type="application/javascript">
+        $(document).ready(function () {
+
+            $('button').click(function () {
+                var $modal = $('#modal-waiting-capture');
+
+                var checkout = new PagarMeCheckout.Checkout({
+                    encryption_key: '{{ PAGARME_CRYPTO_KEY }}',
+                    success: function (data) {
+                        $modal.modal();
+                        $.post('{% url 'payments:pytools_capture' %}', data, function (resp) {
+                            window.location.href = resp.redirect_url;
+                        });
+                    },
+                    error: function (err) {
+                        Sentry.captureMessage(err.responseText);
+                    },
+                    close: function () {
+
+                    }
+                });
+
+                checkout.open({
+                    amount: {{ price }},
+                    buttonText: 'Pagar',
+                    buttonClass: 'botao-pagamento',
+                    customerData: 'true',
+                    createToken: 'true',
+                    paymentMethods: 'credit_card,boleto',
+                    maxInstallments: 2,
+                    defaultInstallment: 1,
+                    freeInstallments: 2,
+                    postback_url: '{{ notification_url }}',
+                    items: [
+                        {
+                            id: 'pytools-{{ user.id }}',
+                            title: 'Curso PyTools',
+                            unit_price: {{ price }},
+                            quantity: 1,
+                            tangible: false
+                        }
+                    ]
+                });
+            });
+        });
+    </script>
+{% endblock head %}
 {% block body %}
     <div class="bg-primary pt-5 pb-5 text-light">
         <div class="container">
@@ -30,12 +77,15 @@
 
                 </div>
                 <div class="col-12 col-md-6 col-lg-5">
-                    <h2 >Confira os Bônus</h2>
+                    <h2>Confira os Bônus</h2>
                     <ul>
                         <li><span
-                            class="font-weight-bold">Plantão de dúvidas</span> semanal ao vivo, online!</li>
+                                class="font-weight-bold">Plantão de dúvidas</span> semanal ao vivo, online!
+                        </li>
                         <li>1 Hora de <span
-                            class="font-weight-bold">mentoria exclusiva</span> para alinhar o plano de estudo com seus objetivos.</li>
+                                class="font-weight-bold">mentoria exclusiva</span> para alinhar o plano de estudo com
+                            seus objetivos.
+                        </li>
                     </ul>
                     <p>Só esses bônus custariam R$ 1000,00 por mês.</p>
                     <h2 class="mt-4">Curso de Python Intermediário</h2>
@@ -43,7 +93,8 @@
                     </p>
                     <p>Somado ao valor do bônus, o custo seria de R$ 1500,00.</span>.
                     </p>
-                    <p>Mas você pode se inscrever hoje por <span class="font-weight-bold">APENAS R$ 99,99</span> para aprender as 5
+                    <p>Mas você pode se inscrever hoje por <span class="font-weight-bold">APENAS R$ 99,99</span> para
+                        aprender as 5
                         ferramentas que todo programador profissional usa em seu dia a dia.
                     </p>
                     <button class="btn btn-lg btn-warning">SIM! Quero me inscrever por <span
@@ -59,12 +110,15 @@
                 <div class="col">
                     <h3 class="mb-3">Esse curso vai te ajudar a:</h3>
                     <dt>Conhecer a rede secreta de desenvolvedores</dt>
-                    <dd>Você vai aprender a navegar nos projetos e perfis da maior rede de desenvolvedores do mundo.</dd>
+                    <dd>Você vai aprender a navegar nos projetos e perfis da maior rede de desenvolvedores do mundo.
+                    </dd>
                     <dt class="mt-2">Criar o seu portfólio</dt>
-                    <dd>Você vai criar seu primeiro projeto de maneira profissional para poder comprovar sua habilidades nas entrevistas!
+                    <dd>Você vai criar seu primeiro projeto de maneira profissional para poder comprovar sua habilidades
+                        nas entrevistas!
                     </dd>
                     <dt class="mt-2">Estado da arte em engenharia de software</dt>
-                    <dd>Você vai conhecer as principais ferramentas que são pré-requisitos para todas vagas de tecnologia!
+                    <dd>Você vai conhecer as principais ferramentas que são pré-requisitos para todas vagas de
+                        tecnologia!
                     </dd>
                 </div>
             </div>
@@ -92,46 +146,16 @@
             </div>
         </div>
     </div>
-    <script>
-        $('button').click( function () {
-
-            var checkout = new PagarMeCheckout.Checkout({
-                encryption_key: '{{ PAGARME_CRYPTO_KEY }}',
-                success: function (data) {
-                    $.post('{% url 'payments:pytools_capture' %}', data, function (resp) {
-                        window.location.href = resp.redirect_url;
-                    });
-                },
-                error: function (err) {
-                    Sentry.captureMessage(err.responseText);
-                },
-                close: function () {
-
-                }
-            });
-
-            checkout.open({
-                amount: {{ price }},
-                buttonText: 'Pagar',
-                buttonClass: 'botao-pagamento',
-                customerData: 'true',
-                createToken: 'true',
-                paymentMethods: 'credit_card',
-                maxInstallments: 2,
-                defaultInstallment: 1,
-                freeInstallments: 2,
-                items: [
-                    {
-                        id: '{{ user.id }}',
-                        title: 'Curso PyTools',
-                        unit_price: {{ price }},
-                        quantity: 1,
-                        tangible: false
-                    }
-                ]
-
-            });
-        });
-    </script>
-
+    <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Calma que já está acabando ;)</h5>
+                </div>
+                <div class="modal-body">
+                    Aguarde enquanto finalizamos seu pagamento <img src="{% static 'img/ajax-loader.gif' %}" alt="Ajax Loader" />
+                </div>
+            </div>
+        </div>
 {% endblock body %}
