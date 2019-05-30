@@ -1,13 +1,7 @@
-from django.shortcuts import render
-
+from django.shortcuts import redirect
 # Create your views here.
-from pythonpro.promos.models import Video
+from django.urls import reverse
 
 
 def video(request, slug):
-    video = Video.objects.filter(slug__exact=slug).get()
-    return render(request, 'promos/video_detail.html', {'video': video})
-
-
-def thanks(request):
-    return render(request, 'promos/subscriptions_thanks.html', {})
+    return redirect(reverse('core:lead_landing'), permanent=True)
