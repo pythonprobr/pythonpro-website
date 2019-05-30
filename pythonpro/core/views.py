@@ -10,7 +10,6 @@ from rolepermissions.roles import assign_role
 from pythonpro.core.forms import UserEmailForm, UserSignupForm
 from pythonpro.core.models import User
 from pythonpro.mailchimp import facade
-from pythonpro.promos.facade import find_all_videos
 
 
 def index(request):
@@ -41,9 +40,6 @@ def sitemap(request):
 
     for section in 'core:index core:lead_landing core:podcast core:tech_talks modules:index'.split():
         map.add(reverse(section), changefreq='weekly')
-
-    for video in find_all_videos():
-        map.add(video.get_absolute_url(), changefreq='monthly')
 
     return map.response(
         pretty_print=settings.DEBUG,
