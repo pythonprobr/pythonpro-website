@@ -12,11 +12,11 @@ from pythonpro.payments.facade import PYTOOLS_PRICE
 
 
 def content_landing_page(request, content: Content):
+    if is_client_content(content):
+        tag_as(request.user.email, 'potencial-client')
+        return redirect(reverse('payments:client_landing_page'), permanent=False)
     template = 'topics/content_member_landing_page.html'
     tag = 'potencial-member'
-    if is_client_content(content):
-        template = 'topics/content_client_landing_page.html'
-        tag = 'potencial-client'
 
     tag_as(request.user.email, tag)
     return render(request, template, {

@@ -205,7 +205,8 @@ def resp_lead_accesing_client_content(client_with_lead, topic_client, django_use
 
 
 def test_lead_hitting_client_landing_page(resp_lead_accesing_client_content):
-    dj_assert_template_used(resp_lead_accesing_client_content, 'topics/content_client_landing_page.html')
+    assert resp_lead_accesing_client_content.status_code == 302
+    assert resp_lead_accesing_client_content.url == reverse('payments:client_landing_page')
 
 
 @pytest.fixture
