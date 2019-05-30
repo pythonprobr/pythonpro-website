@@ -18,7 +18,7 @@ git clone https://github.com/pythonprobr/pythonpro-website.git
 cd pythonpro-website
 cp contrib/env-sample .env
 python -m pip install pipenv
-pipenv install
+pipenv install -d
 ```
 
 If you want use SQLite on your dev environment, please remove DATABASE_URL from .env file.
