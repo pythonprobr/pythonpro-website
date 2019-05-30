@@ -13,6 +13,7 @@ from rolepermissions.roles import assign_role, remove_role
 
 from pythonpro.mailchimp import facade as mailchimp_facade
 from pythonpro.payments import facade as payment_facade
+from pythonpro.payments.facade import PYTOOLS_PRICE
 
 
 def options(request):
@@ -61,9 +62,23 @@ def _extract_boleto_params(dct):
     return {k: dct[k] for k in ['boleto_barcode', 'boleto_url']}
 
 
+@login_required
+def client_landing_page(request):
+    notification_url = reverse('payments:pagarme_notification', kwargs={'user_id': request.user.id})
+    return render(
+        request,
+        'payments/client_landing_page.html', {
+            'PAGARME_CRYPTO_KEY': settings.PAGARME_CRYPTO_KEY,
+            'price': PYTOOLS_PRICE,
+            'notification_url': request.build_absolute_uri(
+                notification_url
+            )
+        })
+
+
 def pagarme_notification(request, user_id: int):
     if request.method != 'POST':
-        return HttpResponseNotAllowed(['POST'])
+        return HttpResponseNotAllowed([request.method])
 
     paymento_ok = payment_facade.confirm_boleto_payment(
         user_id, request.POST, request.body.decode('utf8'), request.headers['X-Hub-Signature'])
@@ -78,7 +93,7 @@ def pagarme_notification(request, user_id: int):
             }
         )
         send_mail(
-            'Inscrição no curso Pytool realizad, confira o link com detalhes!',
+            'Inscrição no curso Pytool realizada! Confira o link com detalhes.',
             msg,
             settings.DEFAULT_FROM_EMAIL,
             [user.email]
