@@ -101,9 +101,7 @@ def lead_landing(request):
     :param request:
     :return:
     """
-
-    if request.method == 'GET':
-        return render(request, 'core/lead_landing_page.html', context={'form': UserSignupForm()})
+    return render(request, 'core/lead_landing_page.html', context={'form': UserSignupForm()})
 
 
 def lead_form(request):
