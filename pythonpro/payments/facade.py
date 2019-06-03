@@ -25,8 +25,7 @@ def confirm_boleto_payment(user_id, notification: dict, raw_post: str, expected_
         return False
     if notification['current_status'] != 'paid':
         return False
-    # _pagarme.transaction.find_by_id(notification['id'])
-    transaction = _pagarme.transaction.find_by_id('6416381')
+    transaction = _pagarme.transaction.find_by_id(notification['transaction[id]'])
     item_id = transaction['items'][0]['id']
     # id is generation concating Module slug and user's id. Check content_client_landing_page pagarme JS
     expected_id = f'pytools-{user_id}'

@@ -27,7 +27,7 @@ def create_or_update_client(client_with_lead, logged_user, mocker):
 def valid_resp(client, logged_user, valid_signature, transaction_response, create_or_update_client, mailoutbox):
     transaction_response['items'][0]['id'] = f'pytools-{logged_user.id}'
     with responses.RequestsMock(assert_all_requests_are_fired=True) as r:
-        r.add(r.GET, 'https://api.pagar.me/1/transactions/6416381', json=transaction_response, status=200)
+        r.add(r.GET, 'https://api.pagar.me/1/transactions/1396639', json=transaction_response, status=200)
         yield _generate_response(client, logged_user, valid_signature, valid_raw_post)
 
 
@@ -75,7 +75,7 @@ def assert_no_action_taken(create_or_update_client, logged_user, mailoutbox):
 def test_item_id(client, logged_user, valid_signature, transaction_response, create_or_update_client, mailoutbox):
     transaction_response['items'][0]['id'] = f'pytools-{logged_user.id + 1}'
     with pytest.raises(PagarmeValidationException), responses.RequestsMock(assert_all_requests_are_fired=True) as r:
-        r.add(r.GET, 'https://api.pagar.me/1/transactions/6416381', json=transaction_response, status=200)
+        r.add(r.GET, 'https://api.pagar.me/1/transactions/1396639', json=transaction_response, status=200)
         _generate_response(client, logged_user, valid_signature, valid_raw_post)
 
     assert_no_action_taken(create_or_update_client, logged_user, mailoutbox)
