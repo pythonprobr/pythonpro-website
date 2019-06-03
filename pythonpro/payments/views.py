@@ -76,6 +76,7 @@ def client_landing_page(request):
         })
 
 
+@csrf_exempt
 def pagarme_notification(request, user_id: int):
     if request.method != 'POST':
         return HttpResponseNotAllowed([request.method])
