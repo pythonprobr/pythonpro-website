@@ -120,31 +120,29 @@ def topic_member(chapter_member):
 
 
 @pytest.fixture
-def resp_lead_accessing_member_content(client_with_lead, topic_member, django_user_model, mocker, logged_user):
-    tag_as = mocker.patch('pythonpro.modules.topics_views.tag_as')
-    yield client_with_lead.get(
+def resp_lead_accessing_member_content(client_with_lead, topic_member, django_user_model, logged_user):
+    return client_with_lead.get(
         reverse('modules:topic_detail',
                 kwargs={'module_slug': topic_member.module_slug(), 'topic_slug': topic_member.slug}),
         secure=True)
-    tag_as.assert_called_once_with(logged_user.email, 'potencial-member')
 
 
 def test_lead_hitting_member_landing_page(resp_lead_accessing_member_content):
-    dj_assert_template_used(resp_lead_accessing_member_content, 'topics/content_member_landing_page.html')
+    assert resp_lead_accessing_member_content.status_code == 302
+    assert resp_lead_accessing_member_content.url == reverse('payments:member_landing_page')
 
 
 @pytest.fixture
 def resp_client_accessing_member_content(client_with_client, topic_member, django_user_model, mocker, logged_user):
-    tag_as = mocker.patch('pythonpro.modules.topics_views.tag_as')
-    yield client_with_client.get(
+    return client_with_client.get(
         reverse('modules:topic_detail',
                 kwargs={'module_slug': topic_member.module_slug(), 'topic_slug': topic_member.slug}),
         secure=True)
-    tag_as.assert_called_once_with(logged_user.email, 'potencial-member')
 
 
 def test_client_hitting_member_landing_page(resp_client_accessing_member_content):
-    dj_assert_template_used(resp_client_accessing_member_content, 'topics/content_member_landing_page.html')
+    assert resp_client_accessing_member_content.status_code == 302
+    assert resp_client_accessing_member_content.url == reverse('payments:member_landing_page')
 
 
 @pytest.fixture
@@ -196,12 +194,10 @@ def topic_client(chapter_client):
 
 @pytest.fixture
 def resp_lead_accesing_client_content(client_with_lead, topic_client, django_user_model, mocker, logged_user):
-    tag_as = mocker.patch('pythonpro.modules.topics_views.tag_as')
-    yield client_with_lead.get(
+    return client_with_lead.get(
         reverse('modules:topic_detail',
                 kwargs={'module_slug': topic_client.module_slug(), 'topic_slug': topic_client.slug}),
         secure=True)
-    tag_as.assert_called_once_with(logged_user.email, 'potencial-client')
 
 
 def test_lead_hitting_client_landing_page(resp_lead_accesing_client_content):

@@ -11,7 +11,6 @@ from django.urls import reverse
 from rolepermissions.roles import assign_role
 
 from pythonpro.discourse.views import _decode_payload
-from pythonpro.django_assertions import dj_assert_template_used
 
 
 @pytest.fixture
@@ -130,13 +129,12 @@ def test_user_not_logged(client):
     assert response.url == f'{login_path}?next={discourse_path}'
 
 
-def test_lead_not_able_to_access_forum(client_with_lead,  mocker, logged_user):
-    tag_as = mocker.patch('pythonpro.discourse.views.tag_as')
+def test_lead_not_able_to_access_forum(client_with_lead, logged_user):
     discourse_path = reverse('discourse:sso')
     response = client_with_lead.get(discourse_path, secure=True)
-    dj_assert_template_used(response, 'discourse/landing_page.html')
-    tag_as.assert_called_once_with(logged_user.email, 'potencial-member')
+    assert response.status_code == 302
+    assert response.url == reverse('payments:member_landing_page')
 
 
 def test_client_not_able_to_access_forum(client_with_client, mocker, logged_user):
-    test_lead_not_able_to_access_forum(client_with_client, mocker, logged_user)
+    test_lead_not_able_to_access_forum(client_with_client, logged_user)

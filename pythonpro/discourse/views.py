@@ -8,12 +8,12 @@ from urllib import parse
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.defaults import bad_request
 from rolepermissions.checkers import has_permission
 
 from pythonpro.core.roles import access_forum
-from pythonpro.mailchimp.facade import tag_as
 
 logger = Logger(__file__)
 
@@ -33,8 +33,7 @@ def sso(request):
     Code based on https://meta.discourse.org/t/sso-example-for-django/14258
     """
     if not has_permission(request.user, access_forum):
-        tag_as(request.user.email, 'potencial-member')
-        return render(request, 'discourse/landing_page.html')
+        return redirect(reverse('payments:member_landing_page'), permanent=False)
     payload = request.GET.get('sso')
     signature = request.GET.get('sig')
     try:
