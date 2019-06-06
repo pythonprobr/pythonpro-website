@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rolepermissions.roles import assign_role, remove_role
 
 from pythonpro.mailchimp import facade as mailchimp_facade
+from pythonpro.mailchimp.facade import tag_as
 from pythonpro.payments import facade as payment_facade
 from pythonpro.payments.facade import PYTOOLS_PRICE
 
@@ -64,6 +65,7 @@ def _extract_boleto_params(dct):
 
 @login_required
 def client_landing_page(request):
+    tag_as(request.user.email, 'potential-client')
     notification_url = reverse('payments:pagarme_notification', kwargs={'user_id': request.user.id})
     return render(
         request,
@@ -74,6 +76,19 @@ def client_landing_page(request):
                 notification_url
             )
         })
+
+
+@login_required
+def member_landing_page(request):
+    tag_as(request.user.email, 'potential-member')
+    return render(
+        request, 'payments/member_landing_page.html', {})
+
+
+@login_required
+def waiting_list_ty(request):
+    tag_as(request.user.email, 'lista-de-espera')
+    return render(request, 'payments/waiting_list_ty.html', {'email': request.user.email})
 
 
 @csrf_exempt

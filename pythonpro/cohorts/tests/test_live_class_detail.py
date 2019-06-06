@@ -5,7 +5,7 @@ from django.urls import reverse
 from model_mommy import mommy
 
 from pythonpro.cohorts.models import Cohort, LiveClass
-from pythonpro.django_assertions import dj_assert_contains, dj_assert_template_used
+from pythonpro.django_assertions import dj_assert_contains
 
 
 @pytest.fixture
@@ -45,24 +45,22 @@ def test_cohort_title(cohort, resp):
 
 @pytest.fixture
 def resp_client(client_with_client, live_class: LiveClass, mocker, logged_user):
-    tag_as = mocker.patch('pythonpro.cohorts.views.tag_as')
-    yield client_with_client.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
-    tag_as.assert_called_once_with(logged_user.email, 'potencial-member')
+    return client_with_client.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
 
 
 def test_live_class_landing_for_client(cohort, resp_client):
-    dj_assert_template_used(resp_client, 'cohorts/live_class_landing_page.html')
+    assert resp_client.status_code == 302
+    assert resp_client.url == reverse('payments:member_landing_page')
 
 
 @pytest.fixture
 def resp_lead(client_with_lead, live_class: LiveClass, mocker, logged_user):
-    tag_as = mocker.patch('pythonpro.cohorts.views.tag_as')
-    yield client_with_lead.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
-    tag_as.assert_called_once_with(logged_user.email, 'potencial-member')
+    return client_with_lead.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
 
 
 def test_live_class_landing_for_lead(cohort, resp_lead):
-    dj_assert_template_used(resp_lead, 'cohorts/live_class_landing_page.html')
+    assert resp_lead.status_code == 302
+    assert resp_lead.url == reverse('payments:member_landing_page')
 
 
 def test_cohort_url(cohort: Cohort, resp):

@@ -36,8 +36,7 @@ def resp(client_with_member, django_user_model, topics):
 
 
 @pytest.fixture
-def resp_last_topic(client_with_member, topics, mocker, logged_user):
-    mocker.patch('pythonpro.modules.topics_views.tag_as')
+def resp_last_topic(client_with_member, topics, logged_user):
     last_topic = topics[1]
     yield client_with_member.get(
         reverse(
