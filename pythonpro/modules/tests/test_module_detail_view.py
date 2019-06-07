@@ -122,3 +122,14 @@ def test_chapter_titles(resp_with_chapters, chapters):
 def test_chapter_urls(resp_with_chapters, chapters):
     for chapter in chapters:
         dj_assert_contains(resp_with_chapters, chapter.get_absolute_url())
+
+
+def test_python_birds_enrol_link(resp_with_sections, python_birds):
+    dj_assert_contains(resp_with_sections, reverse('modules:enrol', kwargs={'slug': python_birds.slug}))
+
+
+def test_enrol_user_tags(python_birds, client_with_lead, mocker, logged_user):
+    tag_as = mocker.patch('pythonpro.modules.modules_views.tag_as')
+    resp = client_with_lead.get(reverse('modules:enrol', kwargs={'slug': python_birds.slug}), secure=True)
+    tag_as.assert_called_once_with(logged_user.email, python_birds.slug)
+    assert resp.status_code == 200
