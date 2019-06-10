@@ -4,7 +4,75 @@
 
 {% block title %}{{ topic.title }}{% endblock %}
 {% block description %}{{ topic.description }}{% endblock %}
+{% block head %}
+    <script type="application/javascript" src="//player.vimeo.com/api/player.js"></script>
+    <script>
+        $(document).ready(function () {
+            var player = new Vimeo.Player(document.querySelector('#topic-iframe'));
 
+            var totalWatchedTime = 0;
+            var lastTimeCheck = 0;
+            var maxWatchedTime = 0;
+            var topicDuration = null;
+
+            function nowInSeconds() {
+                return Math.round(Date.now() / 1000);
+            }
+
+            function increaseWatchTime() {
+                var now = nowInSeconds();
+                totalWatchedTime += now - lastTimeCheck;
+                lastTimeCheck = now;
+                return totalWatchedTime;
+            }
+
+            function setMaxTimeWatched(currentTimeWatch) {
+                currentTimeWatch = Math.round(currentTimeWatch);
+                maxWatchedTime = Math.max(currentTimeWatch, maxWatchedTime);
+                return maxWatchedTime;
+            }
+
+            function storeStats() {
+                if (maxWatchedTime > 0) {
+                    $.post('{% url 'dashboard:topic_interaction' %}',
+                        {
+                            'topic': {{topic.id}},
+                            'topic_duration': topicDuration,
+                            'total_watched_time': totalWatchedTime,
+                            'max_watched_time': maxWatchedTime
+                        }
+                    );
+                {# Reset time #}
+                    maxWatchedTime=0;
+                    totalWatchedTime=0;
+
+                }
+            }
+
+            player.getDuration().then(function (d) {
+                topicDuration = Math.round(d);
+            });
+
+
+            player.on('play', function () {
+                lastTimeCheck = nowInSeconds();
+            });
+
+
+            player.on('timeupdate', function (e) {
+                setMaxTimeWatched(e.seconds);
+                increaseWatchTime();
+            });
+
+            $(window).on('beforeunload', storeStats);
+
+            player.on('ended', storeStats);
+
+
+        });
+    </script>
+
+{% endblock %}
 {% block body %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -23,7 +91,8 @@
                 <h1 class="mt-4 mb-3">{{ topic.title }}</h1>
                 <p>{{ topic.description|linebreaks }}</p>
                 <div class="embed-container mb-3">
-                    <iframe src="https://player.vimeo.com/video/{{ topic.vimeo_id }}" width="640" height="360"
+                    <iframe id="topic-iframe" src="https://player.vimeo.com/video/{{ topic.vimeo_id }}" width="640"
+                            height="360"
                             frameborder="0"
                             webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
