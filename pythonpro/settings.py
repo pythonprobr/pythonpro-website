@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'pythonpro.payments',
     'pythonpro.cohorts',
     'pythonpro.mailchimp',
+    'pythonpro.dashboard',
     'rolepermissions',
     'ordered_model',
     'django.contrib.admin',
