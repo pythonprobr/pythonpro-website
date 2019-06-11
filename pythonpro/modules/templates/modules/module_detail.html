@@ -1,6 +1,6 @@
 {% extends 'core/base.html' %}
 {% load static %}
-
+{% load permission_tags %}
 {% block title %}{{ module.title }}{% endblock %}
 {% block description %}{{ module.description }}{% endblock %}
 
@@ -15,7 +15,7 @@
                         <li>{{ module.objective }}</li>
                     </ul>
                 </dd>
-                {% if module.slug == 'python-birds' %}
+                {% if module.slug == 'python-birds' and user|has_role:'client,member' %}
                     <dt>Duração: 4 semanas</dt>
                     <dd>
                         <ul>
