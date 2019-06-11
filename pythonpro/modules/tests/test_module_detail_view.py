@@ -3,7 +3,7 @@ from django.core.management import call_command
 from django.urls import reverse
 from model_mommy import mommy
 
-from pythonpro.django_assertions import dj_assert_contains, dj_assert_template_used
+from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains, dj_assert_template_used
 from pythonpro.modules import facade
 from pythonpro.modules.models import Chapter, Module, Section
 
@@ -39,6 +39,21 @@ def test_status_code(client_with_lead, modules):
 def test_lead_content(content, client_with_lead, modules):
     resp = generate_resp('python-birds', client_with_lead)
     dj_assert_contains(resp, content)
+
+
+def test_lead_has_no_automation_button(client_with_lead, modules, python_birds):
+    resp = generate_resp('python-birds', client_with_lead)
+    dj_assert_not_contains(resp, reverse('modules:enrol', kwargs={'slug': python_birds.slug}))
+
+
+def test_client_has_no_automation_button(client_with_client, modules, python_birds):
+    resp = generate_resp('python-birds', client_with_client)
+    dj_assert_contains(resp, reverse('modules:enrol', kwargs={'slug': python_birds.slug}))
+
+
+def test_member_has_no_automation_button(client_with_member, modules, python_birds):
+    resp = generate_resp('python-birds', client_with_member)
+    dj_assert_contains(resp, reverse('modules:enrol', kwargs={'slug': python_birds.slug}))
 
 
 @pytest.mark.parametrize(
@@ -122,10 +137,6 @@ def test_chapter_titles(resp_with_chapters, chapters):
 def test_chapter_urls(resp_with_chapters, chapters):
     for chapter in chapters:
         dj_assert_contains(resp_with_chapters, chapter.get_absolute_url())
-
-
-def test_python_birds_enrol_link(resp_with_sections, python_birds):
-    dj_assert_contains(resp_with_sections, reverse('modules:enrol', kwargs={'slug': python_birds.slug}))
 
 
 def test_enrol_user_tags(python_birds, client_with_lead, mocker, logged_user):
