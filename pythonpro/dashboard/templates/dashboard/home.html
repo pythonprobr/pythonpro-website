@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load dashboard_tags %}
+{% block head %}
+    <script type="application/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+{% endblock head %}
+{% block body %}
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col">
+                <h1 class="mb-4">Dashboard</h1>
+                <p>Confira seus últimos acessos</p>
+                <table class="table table-striped text-center">
+                    <thead>
+                    <tr>
+                        <th scope="col">Data</th>
+                        <th scope="col">Tópico</th>
+                        <th scope="col" data-toggle="tooltip" data-placement="top"
+                            title="Tempo onde parou de ver o vídeo">Parada <span
+                                class="badge badge-pill badge-dark">?</span></th>
+                        <th scope="col" data-toggle="tooltip" data-placement="top"
+                            title="Tempo total que passou vendo o vídeo">Tempo <span
+                                class="badge badge-pill badge-dark">?</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for interaction in interactions %}
+                        <tr>
+                            <td>{{ interaction.creation|date:"d/m/Y" }} {{ interaction.creation|time:"H:i:s" }}</td>
+                            <td><a href="{{ interaction.get_topic_url }}">{{ interaction.get_topic_title }}</a></td>
+                            <td>{{ interaction.max_watched_time|duration }}</td>
+                            <td>{{ interaction.total_watched_time|duration }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4">Você ainda não assistiu nenhum tópico</td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
