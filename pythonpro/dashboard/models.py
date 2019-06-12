@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 
 from pythonpro.modules.facade import get_topic_model
 
@@ -17,3 +18,9 @@ class TopicInteraction(models.Model):
     topic_duration = models.IntegerField('Duração do Tópico')  # seconds
     total_watched_time = models.IntegerField('Tempo assistindo o Tópico')  # seconds
     max_watched_time = models.IntegerField('Tempo até onde assistiu')  # seconds
+
+    def get_topic_url(self):
+        return reverse('topics:detail', kwargs={'slug': self.topic.slug})
+
+    def get_topic_title(self):
+        return self.topic.title
