@@ -129,11 +129,10 @@
         },
         "django-sitemaps": {
             "hashes": [
-                "sha256:312f1a9f2c9fbce94f3e8fe08b8665b6506b746d05528c3e7d7fed19b3ad341c",
-                "sha256:6ba9b2f55697fd42cead7615fd41100b7d6829102d7f8cdb980ea4e807d8382d"
+                "sha256:21c571639200ca4504694d30741f2ac98d24090579243bd7197d8f52cfa09722",
+                "sha256:8989940cae0c3050166437400677964d62108766bfb482553eacb71a1a7be357"
             ],
-            "index": "pypi",
-            "version": "==1.1"
+            "version": "==1.1.1"
         },
         "django-storages": {
             "hashes": [
