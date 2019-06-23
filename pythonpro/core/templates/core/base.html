@@ -24,6 +24,7 @@
 
       gtag('config', 'UA-44718512-1');
     </script>
+    
     {% if FACEBOOK_PIXEL_ID %}
     <!-- Facebook Pixel Code -->
     <script>
@@ -46,9 +47,27 @@
         src="https://www.facebook.com/tr?id=462601617885706&ev=PageView&noscript=1" /></noscript>
     <!-- End Facebook Pixel Code -->
     {% endif %}
+    
+    {% if GOOGLE_TAG_MANAGER_ID %}
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','{{GOOGLE_TAG_MANAGER_ID}}');</script>
+    <!-- End Google Tag Manager -->
+    {% endif %}
+    
     {% block head %}{% endblock %}
 </head>
 <body>
+{% if GOOGLE_TAG_MANAGER_ID %}
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{GOOGLE_TAG_MANAGER_ID}}"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+{% endif %}
+
 {% block navbar %}
 <nav class="navbar navbar-dark bg-dark navbar-expand-md">
     <a class="navbar-brand" href="/">Python Pro</a>
