@@ -232,5 +232,8 @@ if SENTRY_DSN:  # pragma: no cover
 MAILCHIMP_API_KEY = config('MAILCHIMP_API_KEY')
 MAILCHIMP_LIST_ID = config('MAILCHIMP_LIST_ID')
 
-# Facebook Pixel ID
+# Facebook Pixel Configuration
 FACEBOOK_PIXEL_ID = config('FACEBOOK_PIXEL_ID', default=None)
+
+# Google Tag Manager Configuration
+GOOGLE_TAG_MANAGER_ID = config('GOOGLE_TAG_MANAGER_ID', default=None)

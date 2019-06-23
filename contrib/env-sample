@@ -34,4 +34,7 @@ MAILCHIMP_LIST_ID=list_id
 
 # Facebook config
 FACEBOOK_PIXEL_ID=123456789012345
+
+# Google Tag Manager Config
+GOOGLE_TAG_MANAGER_ID=GTM-ABC1234
                   
