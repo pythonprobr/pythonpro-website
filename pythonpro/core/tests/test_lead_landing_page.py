@@ -19,6 +19,7 @@ def test_status_code(resp):
 def create_lead_mock(mocker):
     return mocker.patch('pythonpro.core.views.facade.create_or_update_lead')
 
+
 @pytest.fixture
 def tag_as_mock(mocker):
     return mocker.patch('pythonpro.core.views.facade.tag_as')
@@ -34,6 +35,7 @@ def resp_lead_creation(client, db, fake: Faker, create_lead_mock, tag_as_mock):
         },
         secure=True
     )
+
 
 def test_lead_creation(resp_lead_creation, django_user_model):
     assert django_user_model.objects.exists()
