@@ -1,4 +1,4 @@
-<form method="post" action="{% url 'core:lead_form' %}">
+<form method="post" action="{% url 'core:lead_form' %}{% if request.GET.utm_source %}?utm_source={{ request.GET.utm_source }}{% endif %}">
     {% csrf_token %}
     <div class="form-group">
         <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label_tag }}</label>

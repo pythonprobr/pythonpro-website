@@ -45,9 +45,10 @@ class UserSignupForm(UserCreationForm):
         help_text=_("Enter the same password as before, for verification."),
     )
 
-    def save(self, commit=True):
+    def save(self, commit=True, source=None):
         user = super().save(commit=False)
         user.set_password(User.objects.make_random_password(30))
+        user.source = source
         if commit:
             user.save()
         return user
