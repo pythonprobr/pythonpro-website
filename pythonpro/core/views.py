@@ -106,11 +106,9 @@ def lead_form(request):
         return render(request, 'core/lead_form_errors.html', context={'form': form})
     form = UserSignupForm(request.POST)
     if form.is_valid():
-        user = form.save()
+        source = request.GET.get('utm_source')
+        user = form.save(source=source)
         assign_role(user, 'lead')
         facade.create_or_update_lead(user.first_name, user.email)
-        mc_source = request.GET.get('mc_source')
-        if mc_source:
-            facade.tag_as(user.email, "source:{}".format(mc_source))
         return redirect(reverse('core:thanks'))
     return render(request, 'core/lead_form_errors.html', context={'form': form})

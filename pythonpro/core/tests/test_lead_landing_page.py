@@ -1,4 +1,4 @@
-from unittest.mock import Mock, call
+from unittest.mock import Mock
 
 import pytest
 from django.urls import reverse
@@ -21,14 +21,9 @@ def create_lead_mock(mocker):
 
 
 @pytest.fixture
-def tag_as_mock(mocker):
-    return mocker.patch('pythonpro.core.views.facade.tag_as')
-
-
-@pytest.fixture
-def resp_lead_creation(client, db, fake: Faker, create_lead_mock, tag_as_mock):
+def resp_lead_creation(client, db, fake: Faker, create_lead_mock):
     client.post(
-        reverse('core:lead_form') + '?mc_source=facebook',
+        reverse('core:lead_form') + '?utm_source=facebook',
         data={
             'first_name': fake.name(),
             'email': fake.email(),
@@ -51,6 +46,6 @@ def test_user_created_as_lead_on_mailchimp(resp_lead_creation, django_user_model
     create_lead_mock.assert_called_once_with(user.first_name, user.email)
 
 
-def test_user_source_marked_on_mailchimp(resp_lead_creation, django_user_model, tag_as_mock: Mock):
+def test_user_source_was_saved_from_url(resp_lead_creation, django_user_model, create_lead_mock: Mock):
     user = django_user_model.objects.first()
-    assert call(user.email, 'source:facebook') == tag_as_mock.call_args
+    assert user.source == 'facebook'
