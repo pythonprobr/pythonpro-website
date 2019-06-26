@@ -11,6 +11,8 @@ class TopicInteraction(models.Model):
             models.Index(fields=['user', 'topic', '-creation']),
             models.Index(fields=['-creation', ]),
         ]
+        verbose_name = 'Interação'
+        verbose_name_plural = 'Interações'
 
     creation = models.DateTimeField(auto_now_add=True)
     topic = models.ForeignKey(get_topic_model(), on_delete=models.CASCADE)

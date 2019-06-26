@@ -46,8 +46,8 @@ class UserAdmin(RolePermissionsUserAdminMixin, admin.ModelAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
-    list_display = ('email', 'first_name', 'is_staff', 'date_joined')
-    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
+    list_display = ('email', 'first_name', 'source', 'date_joined', 'is_staff',)
+    list_filter = ('groups', 'source', 'is_staff', 'is_superuser', 'is_active',)
     search_fields = ('first_name', 'email')
     ordering = ('first_name',)
     filter_horizontal = ('groups', 'user_permissions',)
