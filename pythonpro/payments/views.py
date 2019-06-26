@@ -43,6 +43,20 @@ def pytools_capture(request):
     return JsonResponse(dct)
 
 
+@login_required
+@csrf_exempt
+def client_checkout(request):
+    """
+    Track user who clicked on client LP Checkout button
+    :param request:
+    :return:
+    """
+    if request.method != 'POST':
+        return
+    tag_as(request.user.email, 'client-checkout')
+    return JsonResponse({'client-checkout': 'ok'})
+
+
 def _promote_client(user):
     remove_role(user, 'lead')
     assign_role(user, 'client')

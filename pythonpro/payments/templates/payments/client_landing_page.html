@@ -10,6 +10,9 @@
             $('button').click(function () {
                 var $modal = $('#modal-waiting-capture');
 
+                $.post('{% url 'payments:client_checkout' %}', function () {
+                });
+
                 var checkout = new PagarMeCheckout.Checkout({
                     encryption_key: '{{ PAGARME_CRYPTO_KEY }}',
                     success: function (data) {
