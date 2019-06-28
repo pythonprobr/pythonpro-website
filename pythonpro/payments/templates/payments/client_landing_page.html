@@ -4,7 +4,7 @@
 {% block description %}Módulo Intermediário de Python voltado para quem quer entrar no mercado de
     tecnologia!{% endblock %}
 {% block head %}
-    <script src="https://assets.pagar.me/checkout/1.1.0/checkout.js"></script>
+    <script src="{% static 'js/pagarme-checkout-1.1.0.js' %}"></script>
     <script type="application/javascript">
         $(document).ready(function () {
             $('button').click(function () {
