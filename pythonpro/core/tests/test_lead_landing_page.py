@@ -32,6 +32,18 @@ def resp_lead_creation(client, db, fake: Faker, create_lead_mock):
     )
 
 
+@pytest.fixture
+def resp_lead_change_pasword(resp_lead_creation, client):
+    client.post(
+        reverse('core:lead_change_password'),
+        data={
+            'new_password1': 'senha-muito-d1f1c1l',
+            'new_password2': 'senha-muito-d1f1c1l',
+        },
+        secure=True
+    )
+
+
 def test_lead_creation(resp_lead_creation, django_user_model):
     assert django_user_model.objects.exists()
 
@@ -49,3 +61,13 @@ def test_user_created_as_lead_on_mailchimp(resp_lead_creation, django_user_model
 def test_user_source_was_saved_from_url(resp_lead_creation, django_user_model, create_lead_mock: Mock):
     user = django_user_model.objects.first()
     assert user.source == 'facebook'
+
+
+def test_user_was_logged_in(resp_lead_creation, django_user_model, client):
+    response = client.post(reverse('core:lead_change_password'), secure=True)
+    assert response.status_code == 200
+
+
+def test_user_change_password_should_run_ok(resp_lead_change_pasword, django_user_model):
+    user = django_user_model.objects.first()
+    assert user.check_password('senha-muito-d1f1c1l')

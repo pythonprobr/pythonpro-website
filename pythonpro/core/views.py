@@ -4,6 +4,9 @@ from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, UpdateView
+from django.contrib.auth import login
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import SetPasswordForm
 from django_sitemaps import Sitemap
 from rolepermissions.roles import assign_role
 
@@ -16,8 +19,24 @@ def index(request):
     return render(request, 'core/index.html', {'form': UserSignupForm()})
 
 
+@login_required
 def thanks(request):
     return render(request, 'core/lead_thanks.html', {})
+
+
+@login_required
+def lead_change_password(request):
+    if request.method == 'POST':
+        form = SetPasswordForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            return redirect(reverse('core:thanks'))
+    else:
+        form = SetPasswordForm(request.user)
+    return render(request, 'core/lead_change_password.html', {
+        'form': form
+    })
 
 
 def teck_talks(request):
@@ -110,5 +129,6 @@ def lead_form(request):
         user = form.save(source=source)
         assign_role(user, 'lead')
         facade.create_or_update_lead(user.first_name, user.email)
-        return redirect(reverse('core:thanks'))
+        login(request, user)
+        return redirect(reverse('core:lead_change_password'))
     return render(request, 'core/lead_form_errors.html', context={'form': form})
