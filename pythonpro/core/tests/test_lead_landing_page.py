@@ -4,6 +4,7 @@ import pytest
 from django.urls import reverse
 from faker import Faker
 from rolepermissions.checkers import has_role
+from rolepermissions.roles import assign_role, remove_role
 
 
 @pytest.fixture
@@ -64,10 +65,19 @@ def test_user_source_was_saved_from_url(resp_lead_creation, django_user_model, c
 
 
 def test_user_was_logged_in(resp_lead_creation, django_user_model, client):
-    response = client.post(reverse('core:lead_change_password'), secure=True)
+    response = client.get(reverse('core:lead_change_password'), secure=True)
     assert response.status_code == 200
 
 
 def test_user_change_password_should_run_ok(resp_lead_change_pasword, django_user_model):
     user = django_user_model.objects.first()
     assert user.check_password('senha-muito-d1f1c1l')
+
+
+def test_only_role_lead_can_change_password(resp_lead_change_pasword, django_user_model, client):
+    user = django_user_model.objects.first()
+    assign_role(user, 'member')
+    remove_role(user, 'lead')
+
+    response = client.get(reverse('core:lead_change_password'), secure=True)
+    assert response.status_code == 302
