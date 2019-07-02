@@ -9,6 +9,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import SetPasswordForm
 from django_sitemaps import Sitemap
 from rolepermissions.roles import assign_role
+from rolepermissions.checkers import has_role
 
 from pythonpro.core.forms import UserEmailForm, UserSignupForm
 from pythonpro.core.models import User
@@ -19,13 +20,15 @@ def index(request):
     return render(request, 'core/index.html', {'form': UserSignupForm()})
 
 
-@login_required
 def thanks(request):
     return render(request, 'core/lead_thanks.html', {})
 
 
 @login_required
 def lead_change_password(request):
+    if not has_role(request.user, 'lead'):
+        return redirect(reverse('core:index'))
+
     if request.method == 'POST':
         form = SetPasswordForm(request.user, request.POST)
         if form.is_valid():
