@@ -3,8 +3,10 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
+from pythonpro.dashboard.facade import has_watched_any_topic
 from pythonpro.dashboard.forms import TopicInteractionForm
 from pythonpro.dashboard.models import TopicInteraction
+from pythonpro.mailchimp.facade import remove_tags
 
 
 @login_required
@@ -15,10 +17,13 @@ def home(request):
 
 @login_required
 @csrf_exempt
-def topic_interation(request):
+def topic_interaction(request):
     data = dict(request.POST.items())
-    data['user'] = request.user.id
+    user = request.user
+    data['user'] = user.id
     form = TopicInteractionForm(data)
     if form.is_valid():
+        if not has_watched_any_topic(user):
+            remove_tags(user.email, 'never-watched-video')
         form.save()
         return JsonResponse({'msg': 'ok'})

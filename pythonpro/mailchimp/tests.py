@@ -44,7 +44,8 @@ def test_creation(existing_lead, resps):
         },
         'interests': {
             roles_to_ids[facade._LEAD]: True
-        }
+        },
+        'tags': ['never-watched-video']
     }
     facade.create_or_update_lead('Renzo', 'host@python.pro.br')
     assert json.loads(resps.calls[-1].request.body) == expected_on_request
