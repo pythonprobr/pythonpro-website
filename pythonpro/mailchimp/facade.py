@@ -37,13 +37,18 @@ def _create_or_update(name: str, email: str, role: str):
                 },
                 'interests': {
                     role_id: True
-                }
+                },
+                'tags': ['never-watched-video']
             }
             return _members_client.create(_list_id, data)
 
 
 def tag_as(email: str, *tags):
     return _members_client.tags.update(_list_id, email, {'tags': [{'name': tag, 'status': 'active'} for tag in tags]})
+
+
+def remove_tags(email: str, *tags):
+    return _members_client.tags.update(_list_id, email, {'tags': [{'name': tag, 'status': 'inactive'} for tag in tags]})
 
 
 def _update_member_role(email: str, role: str) -> dict:

@@ -40,3 +40,6 @@ def client_with_client(client, django_user_model, logged_user):
     assign_role(logged_user, 'client')
     client.force_login(logged_user)
     return client
+
+
+pytest_plugins = ['pythonpro.modules.tests.test_topics_view']

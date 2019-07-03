@@ -19,7 +19,7 @@ before_script:
 
 script:
   - flake8 .
-  - pytest --cov=pythonpro
+  - pytest pythonpro --cov=pythonpro
 after_success:
   - codecov
 notifications:
