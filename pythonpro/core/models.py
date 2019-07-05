@@ -33,7 +33,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ),
     )
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
-    source = models.CharField(_('source'), max_length=255, null=True, blank=True)
+    source = models.CharField(_('source'), max_length=255, default='unknown')
 
     objects = UserManager()
 
