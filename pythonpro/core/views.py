@@ -1,15 +1,14 @@
 from django.conf import settings
+from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, UpdateView
-from django.contrib.auth import login
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import SetPasswordForm
 from django_sitemaps import Sitemap
-from rolepermissions.roles import assign_role
 from rolepermissions.checkers import has_role
+from rolepermissions.roles import assign_role
 
 from pythonpro.core.forms import UserEmailForm, UserSignupForm
 from pythonpro.core.models import User
@@ -128,7 +127,7 @@ def lead_form(request):
         return render(request, 'core/lead_form_errors.html', context={'form': form})
     form = UserSignupForm(request.POST)
     if form.is_valid():
-        source = request.GET.get('utm_source')
+        source = request.GET.get('utm_source', default='unknown')
         user = form.save(source=source)
         assign_role(user, 'lead')
         facade.create_or_update_lead(user.first_name, user.email)
