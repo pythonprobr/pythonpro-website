@@ -49,6 +49,20 @@ def test_lead_creation(resp_lead_creation, django_user_model):
     assert django_user_model.objects.exists()
 
 
+def test_lead_from_unknow_source(resp_lead_creation, django_user_model, client, fake):
+    email = fake.email()
+    client.post(
+        reverse('core:lead_form'),
+        data={
+            'first_name': fake.name(),
+            'email': email,
+        },
+        secure=True
+    )
+    user = django_user_model.objects.filter(email=email).get()
+    assert user.source == 'unknown'
+
+
 def test_user_has_role(resp_lead_creation, django_user_model):
     user = django_user_model.objects.first()
     assert has_role(user, 'lead')
