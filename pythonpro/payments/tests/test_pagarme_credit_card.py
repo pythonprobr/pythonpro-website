@@ -6,6 +6,8 @@ from rolepermissions.checkers import has_role
 transaction_url = 'https://api.pagar.me/1/transactions/test_transaction_5ndnWcHEJQX1FPCbEpQpFng90gM5oM/capture'
 transaction_data = {'amount': 9999, 'api_key': 'ak_test_6yd4kbaJrWzdn61m4De5yzn7jZuTt9'}
 
+CUSTOMER_EMAIL = 'renzon@gmail.com'
+CUSTOMER_FIRST_NAME = 'Renzo'
 transaction_response = {
     'object': 'transaction',
     'status': 'paid',
@@ -48,13 +50,13 @@ transaction_response = {
     'customer': {
         'object': 'customer',
         'id': 2082255,
-        'external_id': 'renzon@gmail.com',
+        'external_id': CUSTOMER_EMAIL,
         'type': 'individual',
         'country': 'br',
         'document_number': None,
         'document_type': 'cpf',
-        'name': 'Renzo dos Santos Nuccitelli',
-        'email': 'renzon@gmail.com',
+        'name': f'{CUSTOMER_FIRST_NAME} dos Santos Nuccitelli',
+        'email': CUSTOMER_EMAIL,
         'phone_numbers': ['+5512997411854'],
         'born_at': None,
         'birthday': None,
@@ -138,8 +140,13 @@ transaction_response_error = {
 
 
 @pytest.fixture
-def create_or_update_client(client_with_lead, logged_user, mocker):
+def create_or_update_client(mocker):
     return mocker.patch('pythonpro.payments.views.mailchimp_facade.create_or_update_client')
+
+
+@pytest.fixture
+def create_or_update_lead(mocker):
+    return mocker.patch('pythonpro.payments.views.mailchimp_facade.create_or_update_lead')
 
 
 @pytest.fixture
@@ -147,6 +154,12 @@ def resps_success():
     with responses.RequestsMock(assert_all_requests_are_fired=False) as r:
         r.add(r.POST, transaction_url, json=transaction_response, status=200)
         yield r
+
+
+@pytest.fixture
+def resp_token_with_no_user(db, client, create_or_update_client, create_or_update_lead, resps_success):
+    data = {'token': 'test_transaction_5ndnWcHEJQX1FPCbEpQpFng90gM5oM', 'payment_method': 'credit_card'}
+    return client.post(reverse('payments:pytools_capture'), data, secure=True)
 
 
 @pytest.fixture
@@ -170,3 +183,22 @@ def test_redirect_url(resp_token):
 
 def test_ty_status_code(client):
     assert client.get(reverse('payments:pytools_thanks'), secure=True).status_code == 200
+
+
+def test_user_creation(resp_token_with_no_user, django_user_model):
+    user = django_user_model.objects.get(email=CUSTOMER_EMAIL)
+    assert has_role(user, 'client')
+    assert not has_role(user, 'lead')
+
+
+def test_user_name(resp_token_with_no_user, django_user_model):
+    user = django_user_model.objects.get(email=CUSTOMER_EMAIL)
+    assert user.first_name == CUSTOMER_FIRST_NAME
+
+
+def test_client_update_on_mail_chimp(resp_token_with_no_user, django_user_model, create_or_update_client):
+    create_or_update_client.assert_called_once_with(CUSTOMER_FIRST_NAME, CUSTOMER_EMAIL)
+
+
+def test_client_lead_not_created_on_mailchimp(resp_token_with_no_user, django_user_model, create_or_update_lead):
+    assert create_or_update_lead.call_count == 0

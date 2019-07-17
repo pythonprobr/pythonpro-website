@@ -7,6 +7,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 from django_sitemaps import Sitemap
+from mailchimp3.mailchimpclient import MailChimpError
 from rolepermissions.checkers import has_role
 from rolepermissions.roles import assign_role
 
@@ -126,11 +127,15 @@ def lead_form(request):
         form = UserSignupForm()
         return render(request, 'core/lead_form_errors.html', context={'form': form})
     form = UserSignupForm(request.POST)
+    source = request.GET.get('utm_source', default='unknown')
     if form.is_valid():
-        source = request.GET.get('utm_source', default='unknown')
+        try:
+            facade.create_or_update_lead(form.cleaned_data['first_name'], form.cleaned_data['email'])
+        except MailChimpError:
+            form.add_error('email', 'Email Inválido')
+            return render(request, 'core/lead_form_errors.html', context={'form': form})
         user = form.save(source=source)
         assign_role(user, 'lead')
-        facade.create_or_update_lead(user.first_name, user.email)
         login(request, user)
         return redirect(reverse('core:lead_change_password'))
     return render(request, 'core/lead_form_errors.html', context={'form': form})
