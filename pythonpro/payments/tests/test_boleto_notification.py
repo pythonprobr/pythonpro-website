@@ -6,6 +6,7 @@ import pytest
 import responses
 from django.conf import settings
 from django.urls import reverse
+from model_mommy import mommy
 from rolepermissions.checkers import has_role
 
 from pythonpro.payments.facade import PYTOOLS_PRICE, PagarmeValidationException
@@ -31,15 +32,42 @@ def valid_resp(client, logged_user, valid_signature, transaction_response, creat
         yield _generate_response(client, logged_user, valid_signature, valid_raw_post)
 
 
-def _generate_response(client, logged_user, valid_signature, raw_post):
+def _generate_response(client, user, valid_signature, raw_post):
     return client.generic(
         'POST',
-        reverse('payments:pagarme_notification', kwargs={'user_id': logged_user.id}),
+        reverse('payments:pagarme_notification', kwargs={'user_id': user.id}),
         raw_post,
         secure=True,
         content_type='application/x-www-form-urlencoded',
         HTTP_X_HUB_SIGNATURE=valid_signature
     )
+
+
+@pytest.fixture
+def anonymous_user(db, django_user_model):
+    return mommy.make(django_user_model, email=CUSTOMER_EMAIL)
+
+
+@pytest.fixture
+def valid_resp_anonymous(client, anonymous_user, valid_signature, transaction_response, create_or_update_client,
+                         mailoutbox):
+    transaction_response['items'][0]['id'] = 'pytools-'
+    with responses.RequestsMock(assert_all_requests_are_fired=True) as r:
+        r.add(r.GET, 'https://api.pagar.me/1/transactions/1396639', json=transaction_response, status=200)
+        yield client.generic(
+            'POST',
+            reverse('payments:pagarme_anonymous_notification'),
+            valid_raw_post,
+            secure=True,
+            content_type='application/x-www-form-urlencoded',
+            HTTP_X_HUB_SIGNATURE=valid_signature
+        )
+
+
+def test_anonymous_user_promoted_to_client(valid_resp_anonymous, anonymous_user):
+    assert has_role(anonymous_user, 'client')
+    assert not has_role(anonymous_user, 'lead')
+    assert not has_role(anonymous_user, 'member')
 
 
 def test_user_promoted_to_client(valid_resp, logged_user):
@@ -196,6 +224,8 @@ template = (  # See https://docs.pagar.me/docs/gerenciando-postbacks
 )
 valid_raw_post = template.format(price=PYTOOLS_PRICE, object='transaction', current_status='paid')
 
+CUSTOMER_EMAIL = 'foo@bar.com'
+
 
 @pytest.fixture
 def transaction_response():
@@ -212,8 +242,8 @@ def transaction_response():
         'boleto_barcode': '1234 5678', 'boleto_expiration_date': '2019-06-04T03:00:00.000Z',
         'referer': 'encryption_key', 'ip': '201.75.170.145', 'subscription_id': None, 'phone': None, 'address': None,
         'customer': {
-            'object': 'customer', 'id': 2088581, 'external_id': 'foo@bar.com', 'type': 'corporation', 'country': 'br',
-            'document_number': None, 'document_type': 'cpf', 'name': 'Daen', 'email': 'foo@bar.com',
+            'object': 'customer', 'id': 2088581, 'external_id': CUSTOMER_EMAIL, 'type': 'corporation', 'country': 'br',
+            'document_number': None, 'document_type': 'cpf', 'name': 'Daen', 'email': CUSTOMER_EMAIL,
             'phone_numbers': ['+5512997411854'], 'born_at': None, 'birthday': None, 'gender': None,
             'date_created': '2019-05-28T21:31:38.355Z', 'documents': [{
                 'object': 'document',
