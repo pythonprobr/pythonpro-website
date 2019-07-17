@@ -81,39 +81,25 @@ def test_item_id(client, logged_user, valid_signature, transaction_response, cre
     assert_no_action_taken(create_or_update_client, logged_user, mailoutbox)
 
 
-def test_tampered_price(client, logged_user, valid_signature, transaction_response, create_or_update_client, mailoutbox,
-                        mocker):
-    mocker.patch('pythonpro.payments.facade._pagarme.postback.validate').return_value = True
-    with pytest.raises(PagarmeValidationException):
-        _generate_response(
-            client,
-            logged_user,
-            valid_signature,
-            template.format(price=PYTOOLS_PRICE + 1, object='subscription', current_status='paid'))
-    assert_no_action_taken(create_or_update_client, logged_user, mailoutbox)
-
-
 def test_no_subscription_handling(client, logged_user, valid_signature, transaction_response, create_or_update_client,
                                   mailoutbox, mocker):
     mocker.patch('pythonpro.payments.facade._pagarme.postback.validate').return_value = True
-    with pytest.raises(PagarmeValidationException):
-        _generate_response(
-            client,
-            logged_user,
-            valid_signature,
-            template.format(price=PYTOOLS_PRICE + 1, object='subscription', current_status='paid'))
+    _generate_response(
+        client,
+        logged_user,
+        valid_signature,
+        template.format(price=PYTOOLS_PRICE, object='subscription', current_status='paid'))
     assert_no_action_taken(create_or_update_client, logged_user, mailoutbox)
 
 
 def test_no_handling_for_unpaid(client, logged_user, valid_signature, transaction_response, create_or_update_client,
                                 mailoutbox, mocker):
     mocker.patch('pythonpro.payments.facade._pagarme.postback.validate').return_value = True
-    with pytest.raises(PagarmeValidationException):
-        _generate_response(
-            client,
-            logged_user,
-            valid_signature,
-            template.format(price=PYTOOLS_PRICE + 1, object='subscription', current_status='waiting_paiment'))
+    _generate_response(
+        client,
+        logged_user,
+        valid_signature,
+        template.format(price=PYTOOLS_PRICE, object='subscription', current_status='waiting_paiment'))
     assert_no_action_taken(create_or_update_client, logged_user, mailoutbox)
 
 
