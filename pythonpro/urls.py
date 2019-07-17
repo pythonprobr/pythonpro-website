@@ -22,6 +22,7 @@ from django.contrib.auth.views import (
     PasswordResetView
 )
 from django.urls import include, path
+from pythonpro.payments import views as payments_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,6 +43,7 @@ urlpatterns = [
     path('turmas/', include('pythonpro.cohorts.urls')),
     path('dashboard/', include('pythonpro.dashboard.urls')),
     path('', include('pythonpro.core.urls')),
+    path('curso-de-python-intermediario', payments_views.client_landing_page, name='client_landing_page'),
 
 ]
 

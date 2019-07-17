@@ -9,8 +9,10 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
+from mailchimp3.mailchimpclient import MailChimpError
 from rolepermissions.roles import assign_role, remove_role
 
+from pythonpro.core.forms import UserSignupForm
 from pythonpro.mailchimp import facade as mailchimp_facade
 from pythonpro.mailchimp.facade import tag_as
 from pythonpro.payments import facade as payment_facade
@@ -26,14 +28,26 @@ def thanks(request):
     return render(request, 'payments/thanks.html')
 
 
-@login_required
 @csrf_exempt
 def pytools_capture(request):
     if request.method != 'POST':
         return
     pagarme_resp = payment_facade.pytools_capture(request.POST['token'])
+    user = request.user
+    if not user.is_authenticated:
+        customer = pagarme_resp['customer']
+        first_name = customer['name'].split()[0]
+        form = UserSignupForm({'first_name': first_name, 'email': customer['email']})
+        source = request.GET.get('utm_source', default='unknown')
+        user = form.save(source=source)
+        if not pagarme_resp['payment_method'] == 'credit_card':
+            assign_role(user, 'lead')
+            try:
+                mailchimp_facade.create_or_update_lead(form.first_name, form.email)
+            except MailChimpError:
+                pass
+
     if pagarme_resp['payment_method'] == 'credit_card':
-        user = request.user
         _promote_client(user)
         dct = {'redirect_url': reverse('payments:pytools_thanks')}
     elif pagarme_resp['payment_method'] == 'boleto':
@@ -60,7 +74,10 @@ def client_checkout(request):
 def _promote_client(user):
     remove_role(user, 'lead')
     assign_role(user, 'client')
-    mailchimp_facade.create_or_update_client(user.first_name, user.email)
+    try:
+        mailchimp_facade.create_or_update_client(user.first_name, user.email)
+    except MailChimpError:
+        pass
 
 
 def pytools_thanks(request):
@@ -77,10 +94,13 @@ def _extract_boleto_params(dct):
     return {k: dct[k] for k in ['boleto_barcode', 'boleto_url']}
 
 
-@login_required
 def client_landing_page(request):
-    tag_as(request.user.email, 'potential-client')
-    notification_url = reverse('payments:pagarme_notification', kwargs={'user_id': request.user.id})
+    user = request.user
+    if user.is_authenticated:
+        tag_as(user.email, 'potential-client')
+        notification_url = reverse('payments:pagarme_notification', kwargs={'user_id': user.id})
+    else:
+        notification_url = reverse('payments:pagarme_anonymous_notification')
     return render(
         request,
         'payments/client_landing_page.html', {
@@ -110,6 +130,32 @@ def pagarme_notification(request, user_id: int):
     if request.method != 'POST':
         return HttpResponseNotAllowed([request.method])
 
+    paymento_ok = payment_facade.confirm_boleto_payment(
+        user_id, request.POST, request.body.decode('utf8'), request.headers['X-Hub-Signature'])
+    if paymento_ok:
+        user = get_user_model().objects.get(id=user_id)
+        _promote_client(user)
+        msg = render_to_string(
+            'payments/pytools_email.txt',
+            {
+                'user': user,
+                'ty_url': request.build_absolute_uri(reverse('payments:pytools_thanks'))
+            }
+        )
+        send_mail(
+            'Inscrição no curso Pytool realizada! Confira o link com detalhes.',
+            msg,
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email]
+        )
+    return HttpResponse('')
+
+
+@csrf_exempt
+def pagarme_anonymous_notification(request):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed([request.method])
+    user_id = 0
     paymento_ok = payment_facade.confirm_boleto_payment(
         user_id, request.POST, request.body.decode('utf8'), request.headers['X-Hub-Signature'])
     if paymento_ok:
