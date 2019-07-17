@@ -8,6 +8,8 @@ from pythonpro.django_assertions import dj_assert_contains
 transaction_url = 'https://api.pagar.me/1/transactions/test_transaction_QtapRINw2wJdeBbQizns1G6XwIYgrt/capture'
 transaction_data = {'token': 'test_transaction_QtapRINw2wJdeBbQizns1G6XwIYgrt', 'payment_method': 'boleto'}
 
+CUSTOMER_EMAIL = 'daenerys.targaryen@gmail.com'
+CUSTOMER_FIRST_NAME = 'DAENERYS'
 transaction_response = {
     'object': 'transaction',
     'status': 'waiting_payment',
@@ -50,13 +52,13 @@ transaction_response = {
     'customer': {
         'object': 'customer',
         'id': 2085075,
-        'external_id': 'daenerys.targaryen@gmail.com',
+        'external_id': CUSTOMER_EMAIL,
         'type': 'corporation',
         'country': 'br',
         'document_number': None,
         'document_type': 'cpf',
-        'name': 'DAENERYS TARGARYEN',
-        'email': 'daenerys.targaryen@gmail.com',
+        'name': f'{CUSTOMER_FIRST_NAME} TARGARYEN',
+        'email': CUSTOMER_EMAIL,
         'phone_numbers': ['+5512121212121'],
         'born_at': None,
         'birthday': None,
@@ -127,8 +129,13 @@ transaction_response_error = {
 
 
 @pytest.fixture
-def create_or_update_client(client_with_lead, logged_user, mocker):
+def create_or_update_client(mocker):
     return mocker.patch('pythonpro.payments.views.mailchimp_facade.create_or_update_client')
+
+
+@pytest.fixture
+def create_or_update_lead(mocker):
+    return mocker.patch('pythonpro.payments.views.mailchimp_facade.create_or_update_lead')
 
 
 @pytest.fixture
@@ -141,6 +148,11 @@ def resps_success():
 @pytest.fixture
 def resp_token(client_with_lead, logged_user, create_or_update_client, resps_success):
     return client_with_lead.post(reverse('payments:pytools_capture'), transaction_data, secure=True)
+
+
+@pytest.fixture
+def resp_token_with_no_user(client, create_or_update_client, create_or_update_lead, resps_success, db):
+    return client.post(reverse('payments:pytools_capture'), transaction_data, secure=True)
 
 
 def test_mailchimp_update(resp_token, create_or_update_client, logged_user):
@@ -188,3 +200,22 @@ def test_show_boleto_status_code(resp_show_boleto):
 )
 def test_boleto_url(resp_show_boleto, content):
     dj_assert_contains(resp_show_boleto, content)
+
+
+def test_user_creation(resp_token_with_no_user, django_user_model):
+    user = django_user_model.objects.get(email=CUSTOMER_EMAIL)
+    assert has_role(user, 'lead')
+    assert not has_role(user, 'client')
+
+
+def test_user_name(resp_token_with_no_user, django_user_model):
+    user = django_user_model.objects.get(email=CUSTOMER_EMAIL)
+    assert user.first_name == CUSTOMER_FIRST_NAME
+
+
+def test_client_update_on_mail_chimp(resp_token_with_no_user, django_user_model, create_or_update_client):
+    assert create_or_update_client.call_count == 0
+
+
+def test_client_lead_not_created_on_mailchimp(resp_token_with_no_user, django_user_model, create_or_update_lead):
+    create_or_update_lead.assert_called_once_with(CUSTOMER_FIRST_NAME, CUSTOMER_EMAIL)

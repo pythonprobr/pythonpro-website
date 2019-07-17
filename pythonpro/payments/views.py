@@ -16,7 +16,7 @@ from pythonpro.core.forms import UserSignupForm
 from pythonpro.mailchimp import facade as mailchimp_facade
 from pythonpro.mailchimp.facade import tag_as
 from pythonpro.payments import facade as payment_facade
-from pythonpro.payments.facade import PYTOOLS_PRICE
+from pythonpro.payments.facade import PYTOOLS_PRICE, PagarmeNotPaidTransaction
 
 
 def options(request):
@@ -36,19 +36,20 @@ def pytools_capture(request):
     user = request.user
     if not user.is_authenticated:
         customer = pagarme_resp['customer']
-        first_name = customer['name'].split()[0]
-        form = UserSignupForm({'first_name': first_name, 'email': customer['email']})
+        customer_first_name = customer['name'].split()[0]
+        customer_email = customer['email']
+        form = UserSignupForm({'first_name': customer_first_name, 'email': customer_email})
         source = request.GET.get('utm_source', default='unknown')
         user = form.save(source=source)
         if not pagarme_resp['payment_method'] == 'credit_card':
             assign_role(user, 'lead')
             try:
-                mailchimp_facade.create_or_update_lead(form.first_name, form.email)
+                mailchimp_facade.create_or_update_lead(customer_first_name, customer_email)
             except MailChimpError:
                 pass
 
     if pagarme_resp['payment_method'] == 'credit_card':
-        _promote_client(user)
+        _promote_client(user, request)
         dct = {'redirect_url': reverse('payments:pytools_thanks')}
     elif pagarme_resp['payment_method'] == 'boleto':
         path = reverse('payments:pytools_boleto')
@@ -71,13 +72,26 @@ def client_checkout(request):
     return JsonResponse({'client-checkout': 'ok'})
 
 
-def _promote_client(user):
+def _promote_client(user, request):
     remove_role(user, 'lead')
     assign_role(user, 'client')
     try:
         mailchimp_facade.create_or_update_client(user.first_name, user.email)
     except MailChimpError:
         pass
+    msg = render_to_string(
+        'payments/pytools_email.txt',
+        {
+            'user': user,
+            'ty_url': request.build_absolute_uri(reverse('payments:pytools_thanks'))
+        }
+    )
+    send_mail(
+        'Inscrição no curso Pytool realizada! Confira o link com detalhes.',
+        msg,
+        settings.DEFAULT_FROM_EMAIL,
+        [user.email]
+    )
 
 
 def pytools_thanks(request):
@@ -129,25 +143,14 @@ def waiting_list_ty(request):
 def pagarme_notification(request, user_id: int):
     if request.method != 'POST':
         return HttpResponseNotAllowed([request.method])
-
-    paymento_ok = payment_facade.confirm_boleto_payment(
-        user_id, request.POST, request.body.decode('utf8'), request.headers['X-Hub-Signature'])
-    if paymento_ok:
+    try:
+        payment_facade.confirm_boleto_payment(
+            user_id, request.POST, request.body.decode('utf8'), request.headers['X-Hub-Signature'])
+    except PagarmeNotPaidTransaction:
+        pass  # No problem, we need to handle only paid transactions
+    else:
         user = get_user_model().objects.get(id=user_id)
-        _promote_client(user)
-        msg = render_to_string(
-            'payments/pytools_email.txt',
-            {
-                'user': user,
-                'ty_url': request.build_absolute_uri(reverse('payments:pytools_thanks'))
-            }
-        )
-        send_mail(
-            'Inscrição no curso Pytool realizada! Confira o link com detalhes.',
-            msg,
-            settings.DEFAULT_FROM_EMAIL,
-            [user.email]
-        )
+        _promote_client(user, request)
     return HttpResponse('')
 
 
@@ -155,23 +158,12 @@ def pagarme_notification(request, user_id: int):
 def pagarme_anonymous_notification(request):
     if request.method != 'POST':
         return HttpResponseNotAllowed([request.method])
-    user_id = 0
-    paymento_ok = payment_facade.confirm_boleto_payment(
-        user_id, request.POST, request.body.decode('utf8'), request.headers['X-Hub-Signature'])
-    if paymento_ok:
-        user = get_user_model().objects.get(id=user_id)
-        _promote_client(user)
-        msg = render_to_string(
-            'payments/pytools_email.txt',
-            {
-                'user': user,
-                'ty_url': request.build_absolute_uri(reverse('payments:pytools_thanks'))
-            }
-        )
-        send_mail(
-            'Inscrição no curso Pytool realizada! Confira o link com detalhes.',
-            msg,
-            settings.DEFAULT_FROM_EMAIL,
-            [user.email]
-        )
+    try:
+        transaction = payment_facade.extract_transaction(
+            request.POST, request.body.decode('utf8'), request.headers['X-Hub-Signature'])
+    except PagarmeNotPaidTransaction:
+        pass  # No problem, we need to handle only paid transactions
+    else:
+        user = get_user_model().objects.filter(email=transaction['customer']['email']).get()
+        _promote_client(user, request)
     return HttpResponse('')
