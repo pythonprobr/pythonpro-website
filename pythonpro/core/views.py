@@ -56,16 +56,17 @@ def profile(request):
 
 
 def sitemap(request):
-    map = Sitemap(
-        build_absolute_uri=request.build_absolute_uri,
-    )
+    map = Sitemap(build_absolute_uri=request.build_absolute_uri,)
 
-    for section in 'core:index core:lead_landing core:podcast core:tech_talks modules:index'.split():
+    named_views = [
+        'core:index', 'core:lead_landing', 'client_landing_page', 'core:podcast', 'core:tech_talks',
+        'modules:index'
+    ]
+    for section in named_views:
         map.add(reverse(section), changefreq='weekly')
 
     return map.response(
-        pretty_print=settings.DEBUG,
-    )
+        pretty_print=settings.DEBUG, )
 
 
 class _ProfileUpdateName(UpdateView):
