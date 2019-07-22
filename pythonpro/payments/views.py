@@ -36,17 +36,18 @@ def pytools_capture(request):
     user = request.user
     if not user.is_authenticated:
         customer = pagarme_resp['customer']
-        customer_first_name = customer['name'].split()[0]
         customer_email = customer['email']
-        form = UserSignupForm({'first_name': customer_first_name, 'email': customer_email})
-        source = request.GET.get('utm_source', default='unknown')
-        user = form.save(source=source)
-        if not pagarme_resp['payment_method'] == 'credit_card':
-            assign_role(user, 'lead')
-            try:
-                mailchimp_facade.create_or_update_lead(customer_first_name, customer_email)
-            except MailChimpError:
-                pass
+        if not get_user_model().objects.filter(email=customer_email).exists():
+            customer_first_name = customer['name'].split()[0]
+            form = UserSignupForm({'first_name': customer_first_name, 'email': customer_email})
+            source = request.GET.get('utm_source', default='unknown')
+            user = form.save(source=source)
+            if not pagarme_resp['payment_method'] == 'credit_card':
+                assign_role(user, 'lead')
+                try:
+                    mailchimp_facade.create_or_update_lead(customer_first_name, customer_email)
+                except MailChimpError:
+                    pass
 
     if pagarme_resp['payment_method'] == 'credit_card':
         _promote_client(user, request)

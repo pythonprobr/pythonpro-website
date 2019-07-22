@@ -1,6 +1,7 @@
 import pytest
 import responses
 from django.urls import reverse
+from model_mommy import mommy
 from rolepermissions.checkers import has_role
 
 from pythonpro.django_assertions import dj_assert_contains
@@ -219,3 +220,14 @@ def test_client_update_on_mail_chimp(resp_token_with_no_user, django_user_model,
 
 def test_client_lead_not_created_on_mailchimp(resp_token_with_no_user, django_user_model, create_or_update_lead):
     create_or_update_lead.assert_called_once_with(CUSTOMER_FIRST_NAME, CUSTOMER_EMAIL)
+
+
+@pytest.fixture
+def resp_existing_user_not_logged(db, client, create_or_update_client, create_or_update_lead, resps_success,
+                                  django_user_model):
+    mommy.make(django_user_model, email=CUSTOMER_EMAIL)
+    return client.post(reverse('payments:pytools_capture'), transaction_data, secure=True)
+
+
+def test_existing_user_not_created(resp_existing_user_not_logged, django_user_model):
+    assert 1 == django_user_model.objects.all().count()
