@@ -24,6 +24,7 @@ responses = "*"
 newrelic = "*"
 pagarme-python = {editable = true,git = "https://github.com/renzon/pagarme-python.git",ref = "master"}
 sentry-sdk = "*"
+python-dateutil = "*"
 
 [dev-packages]
 faker = "*"
