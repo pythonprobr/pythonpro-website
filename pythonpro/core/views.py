@@ -9,11 +9,11 @@ from django.views.generic import TemplateView, UpdateView
 from django_sitemaps import Sitemap
 from mailchimp3.mailchimpclient import MailChimpError
 from rolepermissions.checkers import has_role
-from rolepermissions.roles import assign_role
 
+from pythonpro import facade
 from pythonpro.core.forms import UserEmailForm, UserSignupForm
 from pythonpro.core.models import User
-from pythonpro.mailchimp import facade
+from pythonpro.mailchimp import facade as mailchimp_facade
 
 
 def index(request):
@@ -56,7 +56,7 @@ def profile(request):
 
 
 def sitemap(request):
-    map = Sitemap(build_absolute_uri=request.build_absolute_uri,)
+    map = Sitemap(build_absolute_uri=request.build_absolute_uri, )
 
     named_views = [
         'core:index', 'core:lead_landing', 'client_landing_page', 'core:podcast', 'core:tech_talks',
@@ -127,16 +127,18 @@ def lead_form(request):
     if request.method == 'GET':
         form = UserSignupForm()
         return render(request, 'core/lead_form_errors.html', context={'form': form})
-    form = UserSignupForm(request.POST)
     source = request.GET.get('utm_source', default='unknown')
-    if form.is_valid():
-        try:
-            facade.create_or_update_lead(form.cleaned_data['first_name'], form.cleaned_data['email'])
-        except MailChimpError:
-            form.add_error('email', 'Email Inválido')
-            return render(request, 'core/lead_form_errors.html', context={'form': form})
-        user = form.save(source=source)
-        assign_role(user, 'lead')
-        login(request, user)
-        return redirect(reverse('core:lead_change_password'))
-    return render(request, 'core/lead_form_errors.html', context={'form': form})
+    try:
+        first_name = request.POST.get('first_name')
+        email = request.POST.get('email')
+        user = facade.register_lead(first_name, email, source)
+    except facade.UserCreationException as e:
+        return render(request, 'core/lead_form_errors.html', context={'form': e.form})
+    form = UserSignupForm()
+    try:
+        mailchimp_facade.create_or_update_lead(first_name, email)
+    except MailChimpError:
+        form.add_error('email', 'Email Inválido')
+        return render(request, 'core/lead_form_errors.html', context={'form': form})
+    login(request, user)
+    return redirect(reverse('core:lead_change_password'))

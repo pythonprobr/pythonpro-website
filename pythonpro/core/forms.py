@@ -28,7 +28,21 @@ class UserEmailForm(ModelForm):
 class UserSignupForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('first_name', 'email')
+        fields = ('first_name', 'email', 'source')
+
+    def __init__(self, *args, **kwargs):
+        self.plain_password = User.objects.make_random_password(30)
+        data = kwargs.get('data', None)
+        if data is not None:
+            self._set_passwords(data)
+            kwargs['data'] = data
+        elif args:
+            self._set_passwords(args[0])
+        super().__init__(*args, **kwargs)
+
+    def _set_passwords(self, data):
+        if 'password1' not in data and 'password2' not in data:
+            data['password1'] = data['password2'] = self.plain_password
 
     password1 = forms.CharField(
         label=_("Password"),
@@ -44,11 +58,3 @@ class UserSignupForm(UserCreationForm):
         required=False,
         help_text=_("Enter the same password as before, for verification."),
     )
-
-    def save(self, commit=True, source='unknown'):
-        user = super().save(commit=False)
-        user.set_password(User.objects.make_random_password(30))
-        user.source = source
-        if commit:
-            user.save()
-        return user

@@ -18,12 +18,12 @@ def test_status_code(resp):
 
 @pytest.fixture
 def create_lead_mock(mocker):
-    return mocker.patch('pythonpro.core.views.facade.create_or_update_lead')
+    return mocker.patch('pythonpro.core.views.mailchimp_facade.create_or_update_lead')
 
 
 @pytest.fixture
 def resp_lead_creation(client, db, fake: Faker, create_lead_mock):
-    client.post(
+    return client.post(
         reverse('core:lead_form') + '?utm_source=facebook',
         data={
             'first_name': fake.name(),

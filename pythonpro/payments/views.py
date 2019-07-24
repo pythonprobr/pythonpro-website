@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from mailchimp3.mailchimpclient import MailChimpError
 from rolepermissions.roles import assign_role, remove_role
 
-from pythonpro.core.forms import UserSignupForm
+from pythonpro import facade
 from pythonpro.mailchimp import facade as mailchimp_facade
 from pythonpro.mailchimp.facade import tag_as
 from pythonpro.payments import facade as payment_facade
@@ -37,11 +37,10 @@ def pytools_capture(request):
     if not user.is_authenticated:
         customer = pagarme_resp['customer']
         customer_email = customer['email']
+        source = request.GET.get('utm_source', default='unknown')
         if not get_user_model().objects.filter(email=customer_email).exists():
             customer_first_name = customer['name'].split()[0]
-            form = UserSignupForm({'first_name': customer_first_name, 'email': customer_email})
-            source = request.GET.get('utm_source', default='unknown')
-            user = form.save(source=source)
+            user = facade.register_lead(customer_first_name, customer_email, source)
             if not pagarme_resp['payment_method'] == 'credit_card':
                 assign_role(user, 'lead')
                 try:
