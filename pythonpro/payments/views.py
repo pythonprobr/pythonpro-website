@@ -1,19 +1,14 @@
 from urllib.parse import urlencode
 
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from mailchimp3.mailchimpclient import MailChimpError
-from rolepermissions.roles import assign_role, remove_role
 
 from pythonpro import facade
-from pythonpro.mailchimp import facade as mailchimp_facade
 from pythonpro.mailchimp.facade import tag_as
 from pythonpro.payments import facade as payment_facade
 from pythonpro.payments.facade import PYTOOLS_PRICE, PagarmeNotPaidTransaction
@@ -33,28 +28,26 @@ def pytools_capture(request):
     if request.method != 'POST':
         return
     pagarme_resp = payment_facade.pytools_capture(request.POST['token'])
+    customer = pagarme_resp['customer']
+    customer_email = customer['email']
+    source = request.GET.get('utm_source', default='unknown')
+    customer_first_name = customer['name'].split()[0]
     user = request.user
-    if not user.is_authenticated:
-        customer = pagarme_resp['customer']
-        customer_email = customer['email']
-        source = request.GET.get('utm_source', default='unknown')
-        if not get_user_model().objects.filter(email=customer_email).exists():
-            customer_first_name = customer['name'].split()[0]
-            user = facade.register_lead(customer_first_name, customer_email, source)
-            if not pagarme_resp['payment_method'] == 'credit_card':
-                assign_role(user, 'lead')
-                try:
-                    mailchimp_facade.create_or_update_lead(customer_first_name, customer_email)
-                except MailChimpError:
-                    pass
-
-    if pagarme_resp['payment_method'] == 'credit_card':
-        _promote_client(user, request)
+    payment_method = pagarme_resp['payment_method']
+    if payment_method == 'credit_card':
+        if user.is_authenticated:
+            _promote_client(user, request)
+        else:
+            facade.force_register_client(customer_first_name, customer_email, source)
         dct = {'redirect_url': reverse('payments:pytools_thanks')}
-    elif pagarme_resp['payment_method'] == 'boleto':
+    elif payment_method == 'boleto':
+        if not user.is_authenticated:
+            facade.force_register_lead(customer_first_name, customer_email, source)
         path = reverse('payments:pytools_boleto')
         qs = urlencode(_extract_boleto_params(pagarme_resp))
         dct = {'redirect_url': f'{path}?{qs}'}
+    else:
+        raise ValueError(f'Invalid payment method {payment_method}')
     return JsonResponse(dct)
 
 
@@ -73,12 +66,6 @@ def client_checkout(request):
 
 
 def _promote_client(user, request):
-    remove_role(user, 'lead')
-    assign_role(user, 'client')
-    try:
-        mailchimp_facade.create_or_update_client(user.first_name, user.email)
-    except MailChimpError:
-        pass
     msg = render_to_string(
         'payments/pytools_email.txt',
         {
@@ -86,12 +73,7 @@ def _promote_client(user, request):
             'ty_url': request.build_absolute_uri(reverse('payments:pytools_thanks'))
         }
     )
-    send_mail(
-        'Inscrição no curso Pytool realizada! Confira o link com detalhes.',
-        msg,
-        settings.DEFAULT_FROM_EMAIL,
-        [user.email]
-    )
+    facade.promote_client(user, msg)
 
 
 def pytools_thanks(request):
@@ -149,7 +131,7 @@ def pagarme_notification(request, user_id: int):
     except PagarmeNotPaidTransaction:
         pass  # No problem, we need to handle only paid transactions
     else:
-        user = get_user_model().objects.get(id=user_id)
+        user = facade.find_user_by_id(user_id)
         _promote_client(user, request)
     return HttpResponse('')
 
@@ -164,6 +146,6 @@ def pagarme_anonymous_notification(request):
     except PagarmeNotPaidTransaction:
         pass  # No problem, we need to handle only paid transactions
     else:
-        user = get_user_model().objects.filter(email=transaction['customer']['email']).get()
+        user = facade.find_user_by_email(transaction['customer']['email'])
         _promote_client(user, request)
     return HttpResponse('')

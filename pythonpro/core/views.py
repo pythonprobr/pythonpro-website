@@ -7,13 +7,11 @@ from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 from django_sitemaps import Sitemap
-from mailchimp3.mailchimpclient import MailChimpError
 from rolepermissions.checkers import has_role
 
 from pythonpro import facade
 from pythonpro.core.forms import UserEmailForm, UserSignupForm
 from pythonpro.core.models import User
-from pythonpro.mailchimp import facade as mailchimp_facade
 
 
 def index(request):
@@ -128,17 +126,11 @@ def lead_form(request):
         form = UserSignupForm()
         return render(request, 'core/lead_form_errors.html', context={'form': form})
     source = request.GET.get('utm_source', default='unknown')
+    first_name = request.POST.get('first_name')
+    email = request.POST.get('email')
     try:
-        first_name = request.POST.get('first_name')
-        email = request.POST.get('email')
         user = facade.register_lead(first_name, email, source)
     except facade.UserCreationException as e:
         return render(request, 'core/lead_form_errors.html', context={'form': e.form})
-    form = UserSignupForm()
-    try:
-        mailchimp_facade.create_or_update_lead(first_name, email)
-    except MailChimpError:
-        form.add_error('email', 'Email Inválido')
-        return render(request, 'core/lead_form_errors.html', context={'form': form})
     login(request, user)
     return redirect(reverse('core:lead_change_password'))
