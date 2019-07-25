@@ -2,16 +2,18 @@ from datetime import datetime
 from typing import Tuple
 
 import pagarme as _pagarme
-from dateutil.relativedelta import MO, TH, relativedelta
+from dateutil.relativedelta import MO, relativedelta
 from django.conf import settings
 from django.utils.timezone import now
 
 _pagarme.authentication_key(settings.PAGARME_API_KEY)
 PYTOOLS_PRICE = 9999
+PYTOOLS_PROMOTION_PRICE = 4999
 
 
-def pytools_capture(token: str):
-    return _pagarme.transaction.capture(token, {'amount': PYTOOLS_PRICE})
+def pytools_capture(token: str, user_creation: datetime):
+    price = PYTOOLS_PROMOTION_PRICE if is_on_pytools_promotion_season(user_creation) else PYTOOLS_PRICE
+    return _pagarme.transaction.capture(token, {'amount': price})
 
 
 class PagarmeValidationException(Exception):
@@ -47,7 +49,7 @@ def calculate_pytools_promotion_interval() -> Tuple[datetime, datetime]:
     """
     now_dt = now()
     this_week_monday = now_dt + relativedelta(weekday=MO(-1), hour=0, minute=0, second=0)
-    this_week_thursday = this_week_monday + relativedelta(weekday=TH, hour=23, minute=59, second=59)
+    this_week_thursday = this_week_monday + relativedelta(days=5, hour=23, minute=59, second=59)
     return this_week_monday, this_week_thursday
 
 

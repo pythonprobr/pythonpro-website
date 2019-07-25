@@ -6,12 +6,13 @@ from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 
 from pythonpro import facade
 from pythonpro.mailchimp.facade import tag_as
 from pythonpro.payments import facade as payment_facade
-from pythonpro.payments.facade import PYTOOLS_PRICE, PagarmeNotPaidTransaction
+from pythonpro.payments.facade import PYTOOLS_PRICE, PYTOOLS_PROMOTION_PRICE, PagarmeNotPaidTransaction
 
 
 def options(request):
@@ -27,12 +28,13 @@ def thanks(request):
 def pytools_capture(request):
     if request.method != 'POST':
         return
-    pagarme_resp = payment_facade.pytools_capture(request.POST['token'])
+    user = request.user
+    user_creation = user.date_joined if user.is_authenticated else now()
+    pagarme_resp = payment_facade.pytools_capture(request.POST['token'], user_creation)
     customer = pagarme_resp['customer']
     customer_email = customer['email']
     source = request.GET.get('utm_source', default='unknown')
     customer_first_name = customer['name'].split()[0]
-    user = request.user
     payment_method = pagarme_resp['payment_method']
     if payment_method == 'credit_card':
         if user.is_authenticated:
@@ -97,11 +99,19 @@ def client_landing_page(request):
         notification_url = reverse('payments:pagarme_notification', kwargs={'user_id': user.id})
     else:
         notification_url = reverse('payments:pagarme_anonymous_notification')
+    user_creation = user.date_joined if user.is_authenticated else now()
+    is_promotion_season = payment_facade.is_on_pytools_promotion_season(user_creation)
+    price = PYTOOLS_PROMOTION_PRICE if is_promotion_season else PYTOOLS_PRICE
+    price_float = price / 100
+    _, promotion_end_date = payment_facade.calculate_pytools_promotion_interval()
     return render(
         request,
         'payments/client_landing_page.html', {
             'PAGARME_CRYPTO_KEY': settings.PAGARME_CRYPTO_KEY,
-            'price': PYTOOLS_PRICE,
+            'price': price,
+            'price_float': price_float,
+            'is_promotion_season': is_promotion_season,
+            'promotion_end_date': promotion_end_date,
             'notification_url': request.build_absolute_uri(
                 notification_url
             )
