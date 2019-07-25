@@ -12,7 +12,7 @@ from pythonpro.payments.facade import calculate_pytools_promotion_interval, is_o
 )
 def test_promotion_interval(now):
     with freeze_time(now):
-        begin, end = datetime(2019, 7, 22, 0, 0, 0, tzinfo=pytz.utc), datetime(2019, 7, 25, 23, 59, 59, tzinfo=pytz.utc)
+        begin, end = datetime(2019, 7, 22, 0, 0, 0, tzinfo=pytz.utc), datetime(2019, 7, 27, 23, 59, 59, tzinfo=pytz.utc)
         assert (begin, end) == calculate_pytools_promotion_interval()
 
 

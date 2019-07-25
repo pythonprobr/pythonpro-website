@@ -94,11 +94,14 @@
                     </p>
                     <p>Somado ao valor do bônus, o custo seria de R$ 1500,00.</span>.
                     </p>
-                    <p>Mas você pode se inscrever hoje por <span class="font-weight-bold">APENAS R$ 99,99</span> para
+                    <p>Mas você pode se inscrever hoje por <span class="font-weight-bold">APENAS R$ {{ price_float|floatformat:2 }}</span> para
                         aprender as 6 ferramentas que todo programador profissional usa em seu dia a dia.
                     </p>
+                    {% if is_promotion_season %}
+                        <p>Promoção valida apenas até {{ promotion_end_date }}</p>
+                    {% endif %}
                     <button class="btn btn-warning">SIM! Quero me inscrever por <span
-                            class="font-weight-bold"><u>R$ 99,99</u></span> &raquo;
+                            class="font-weight-bold"><u>R$ {{ price_float|floatformat:2 }}</u></span> &raquo;
                     </button>
                 </div>
             </div>
