@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from rolepermissions.checkers import has_role
 from rolepermissions.roles import assign_role, remove_role
 
@@ -77,6 +79,11 @@ def promote_to_client(user: User) -> None:
         raise UserRoleException('User is already a client')
     assign_role(user, 'client')
     remove_role(user, 'lead')
+
+
+def find_leads_by_date_joined_interval(begin: datetime, end: datetime):
+    return list(user for user in User.objects.filter(date_joined__gte=begin, date_joined__lte=end).all() if
+                not has_role(user, ['client', 'member']))
 
 
 def find_user_by_email(email: str):

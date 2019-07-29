@@ -59,7 +59,16 @@ def is_on_pytools_promotion_season(creation: datetime) -> bool:
     :param creation: datetime of creation
     :return: boolean indication if its os promotion period or not
     """
+    creation_begin, creation_end = calculate_7th_week_before_promotion()
+    return creation_begin <= creation <= creation_end
+
+
+def calculate_7th_week_before_promotion() -> Tuple[datetime, datetime]:
+    """
+    Calculate 7th week before promotion. Useful to know user created on that period
+    :return: Tuple where first item is the interval's begin and second is the interval's end
+    """
     promotion_begin, _ = calculate_pytools_promotion_interval()
     creation_begin = promotion_begin + relativedelta(weekday=MO(-8))
     creation_end = creation_begin + relativedelta(days=6, hour=23, minute=59, second=59)
-    return creation_begin <= creation <= creation_end
+    return creation_begin, creation_end

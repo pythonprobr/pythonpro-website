@@ -9,6 +9,7 @@ from mailchimp3.mailchimpclient import MailChimpError as _MailChimpError
 from pythonpro.core import facade as _core_facade
 from pythonpro.core.models import User as _User
 from pythonpro.mailchimp import facade as _mailchimp_facade
+from pythonpro.payments import facade as _payments_facade
 
 UserCreationException = _core_facade.UserCreationException  # exposing exception on Facade
 
@@ -110,3 +111,18 @@ def find_user_by_id(user_id: int) -> _User:
     :return:
     """
     return _core_facade.find_user_by_id(user_id)
+
+
+def run_pytools_promotion_campaign() -> int:
+    """
+    Run pytools campaign for users registered 7 weeks ago
+    :return: number of user's marked for promotion
+    """
+    begin, end = _payments_facade.calculate_7th_week_before_promotion()
+    promotion_users = _core_facade.find_leads_by_date_joined_interval(begin, end)
+    for user in promotion_users:
+        try:
+            _mailchimp_facade.tag_as(user.email, 'pytools-promotion')
+        except _MailChimpError:
+            pass
+    return len(promotion_users)
