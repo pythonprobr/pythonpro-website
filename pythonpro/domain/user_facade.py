@@ -60,7 +60,7 @@ def force_register_client(first_name: str, email: str, source: str = 'unknown') 
     """
     Create a new user on the system generation a random password or update existing one based on email.
     An Welcome email is sent to the user informing his password with the link to change it.
-    User is also registered on Mailchimp. But she will be registeres even if api call fails
+    User is also registered on Mailchimp. But she will be registered even if api call fails
     :param first_name: User's first name
     :param email: User's email
     :param source: source of User traffic
@@ -74,15 +74,16 @@ def force_register_client(first_name: str, email: str, source: str = 'unknown') 
     return user
 
 
-def promote_client(user: _User, email_msg: str) -> None:
+def promote_client(user: _User, email_msg: str, source=str) -> None:
     """
     Promote a user to Client role and change it's role on Mailchimp. Will not fail in case API call fails.
     Email welcome email is sent to user
+    :param source: source of traffic
     :param email_msg:
     :param user:
     :return:
     """
-    _core_facade.promote_to_client(user)
+    _core_facade.promote_to_client(user, source)
     try:
         _mailchimp_facade.create_or_update_client(user.first_name, user.email)
     except _MailChimpError:
@@ -113,6 +114,15 @@ def find_user_by_id(user_id: int) -> _User:
     return _core_facade.find_user_by_id(user_id)
 
 
+def find_user_interactions(user: _User):
+    """
+    Find all user interactions ordered by creation date desc
+    :param user:
+    :return: list of user interactions
+    """
+    return _core_facade.find_user_interactions(user)
+
+
 def run_pytools_promotion_campaign() -> int:
     """
     Run pytools campaign for users registered 7 weeks ago
@@ -126,3 +136,57 @@ def run_pytools_promotion_campaign() -> int:
         except _MailChimpError:
             pass
     return len(promotion_users)
+
+
+def visit_client_landing_page(user: _User, source: str) -> None:
+    """
+    Marke user as visited client landing page
+    :param source: string containing source of traffic
+    :param user:
+    :return:
+    """
+    _core_facade.visit_client_landing_page(user, source)
+    _mailchimp_facade.tag_as(user.email, 'potential-client')
+
+
+def visit_member_landing_page(user, source):
+    """
+    Marke user as visited member landing page
+    :param source: string containing source of traffic
+    :param user:
+    :return:
+    """
+    _core_facade.visit_member_landing_page(user, source)
+    _mailchimp_facade.tag_as(user.email, 'potential-member')
+
+
+def click_client_checkout(user: _User):
+    """
+        Marke user as visited member landing page
+        :param source: string containing source of traffic
+        :param user:
+        :return:
+        """
+    _core_facade.client_checkout(user, None)
+    _mailchimp_facade.tag_as(user.email, 'client-checkout')
+
+
+def client_generated_boleto(user):
+    """
+        Marke user as visited member landing page
+        :param source: string containing source of traffic
+        :param user:
+        :return:
+        """
+    _core_facade.client_generated_boleto(user, None)
+
+
+def subscribe_to_waiting_list(user: _User, source: str) -> None:
+    """
+        Subscribe user to waiting list
+        :param user:
+        :param source:
+        :return:
+        """
+    _core_facade.subscribe_to_waiting_list(user, source)
+    _mailchimp_facade.tag_as(user.email, 'lista-de-espera')

@@ -10,7 +10,6 @@ from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 
 from pythonpro.domain import user_facade
-from pythonpro.mailchimp.facade import tag_as
 from pythonpro.payments import facade as payment_facade
 from pythonpro.payments.facade import PYTOOLS_PRICE, PYTOOLS_PROMOTION_PRICE, PagarmeNotPaidTransaction
 
@@ -44,7 +43,8 @@ def pytools_capture(request):
         dct = {'redirect_url': reverse('payments:pytools_thanks')}
     elif payment_method == 'boleto':
         if not user.is_authenticated:
-            user_facade.force_register_lead(customer_first_name, customer_email, source)
+            user = user_facade.force_register_lead(customer_first_name, customer_email, source)
+        user_facade.client_generated_boleto(user)
         path = reverse('payments:pytools_boleto')
         qs = urlencode(_extract_boleto_params(pagarme_resp))
         dct = {'redirect_url': f'{path}?{qs}'}
@@ -63,7 +63,7 @@ def client_checkout(request):
     """
     if request.method != 'POST':
         return
-    tag_as(request.user.email, 'client-checkout')
+    user_facade.click_client_checkout(request.user)
     return JsonResponse({'client-checkout': 'ok'})
 
 
@@ -75,7 +75,7 @@ def _promote_client(user, request):
             'ty_url': request.build_absolute_uri(reverse('payments:pytools_thanks'))
         }
     )
-    user_facade.promote_client(user, msg)
+    user_facade.promote_client(user, msg, source=request.GET.get('utm_source', default='unknown'))
 
 
 def pytools_thanks(request):
@@ -95,7 +95,7 @@ def _extract_boleto_params(dct):
 def client_landing_page(request):
     user = request.user
     if user.is_authenticated:
-        tag_as(user.email, 'potential-client')
+        user_facade.visit_client_landing_page(user, source=request.GET.get('utm_source', default='unknown'))
         notification_url = reverse('payments:pagarme_notification', kwargs={'user_id': user.id})
     else:
         notification_url = reverse('payments:pagarme_anonymous_notification')
@@ -120,14 +120,14 @@ def client_landing_page(request):
 
 @login_required
 def member_landing_page(request):
-    tag_as(request.user.email, 'potential-member')
+    user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
     return render(
         request, 'payments/member_landing_page.html', {})
 
 
 @login_required
 def waiting_list_ty(request):
-    tag_as(request.user.email, 'lista-de-espera')
+    user_facade.subscribe_to_waiting_list(request.user, source=request.GET.get('utm_source', default='unknown'))
     return render(request, 'payments/waiting_list_ty.html', {'email': request.user.email})
 
 
