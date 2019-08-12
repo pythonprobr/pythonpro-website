@@ -183,10 +183,21 @@ def client_generated_boleto(user):
 
 def subscribe_to_waiting_list(user: _User, source: str) -> None:
     """
-        Subscribe user to waiting list
-        :param user:
-        :param source:
-        :return:
-        """
+    Subscribe user to waiting list
+    :param user:
+    :param source:
+    :return:
+    """
     _core_facade.subscribe_to_waiting_list(user, source)
     _mailchimp_facade.tag_as(user.email, 'lista-de-espera')
+
+
+def activate_user(user: _User, source: str) -> None:
+    """
+    Activate user
+    :param user:
+    :param source:
+    :return:
+    """
+    _core_facade.activate_user(user, source)
+    _mailchimp_facade.remove_tags(user.email, 'never-watched-video')
