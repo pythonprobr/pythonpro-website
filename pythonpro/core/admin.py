@@ -18,7 +18,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from rolepermissions.admin import RolePermissionsUserAdminMixin
 
-from pythonpro.core.models import User
+from pythonpro.core.models import User, UserInteraction
 
 csrf_protect_m = method_decorator(csrf_protect)
 sensitive_post_parameters_m = method_decorator(sensitive_post_parameters())
@@ -193,3 +193,10 @@ class UserAdmin(RolePermissionsUserAdminMixin, admin.ModelAdmin):
             request.POST = request.POST.copy()
             request.POST['_continue'] = 1
         return super().response_add(request, obj, post_url_continue)
+
+
+@admin.register(UserInteraction)
+class UserInteractionAdmin(admin.ModelAdmin):
+    list_display = 'creation user category'.split()
+    ordering = ('-creation',)
+    list_filter = ('category',)
