@@ -6,6 +6,8 @@ from faker import Faker
 from rolepermissions.checkers import has_role
 from rolepermissions.roles import assign_role, remove_role
 
+from pythonpro.core.models import UserInteraction
+
 
 @pytest.fixture
 def resp(client):
@@ -47,6 +49,12 @@ def resp_lead_change_pasword(resp_lead_creation, client):
 
 def test_lead_creation(resp_lead_creation, django_user_model):
     assert django_user_model.objects.exists()
+
+
+def test_lead_created_interaction(resp_lead_creation, django_user_model):
+    user = django_user_model.objects.get()
+    interaction = UserInteraction.objects.filter(category=UserInteraction.BECOME_LEAD, user=user).get()
+    assert interaction.source == 'facebook'
 
 
 def test_lead_from_unknow_source(resp_lead_creation, django_user_model, client, fake):

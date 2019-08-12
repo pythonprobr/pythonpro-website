@@ -5,6 +5,7 @@ from model_mommy import mommy
 from rolepermissions.checkers import has_role
 
 from pythonpro.django_assertions import dj_assert_contains
+from pythonpro.domain import user_facade
 
 transaction_url = 'https://api.pagar.me/1/transactions/test_transaction_QtapRINw2wJdeBbQizns1G6XwIYgrt/capture'
 transaction_data = {'token': 'test_transaction_QtapRINw2wJdeBbQizns1G6XwIYgrt', 'payment_method': 'boleto'}
@@ -163,6 +164,10 @@ def test_mailchimp_update(resp_token, create_or_update_client, logged_user):
 def test_user_stay_lead(resp_token, logged_user):
     assert not has_role(logged_user, 'client')
     assert has_role(logged_user, 'lead')
+
+
+def test_user_interaction_boleto(resp_token, logged_user):
+    assert 'CLIENT_BOLETO' == user_facade.find_user_interactions(logged_user)[0].category
 
 
 def test_redirect_url(resp_token):

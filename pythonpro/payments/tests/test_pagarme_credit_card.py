@@ -3,6 +3,8 @@ import responses
 from django.urls import reverse
 from rolepermissions.checkers import has_role
 
+from pythonpro.domain import user_facade
+
 transaction_url = 'https://api.pagar.me/1/transactions/test_transaction_5ndnWcHEJQX1FPCbEpQpFng90gM5oM/capture'
 transaction_data = {'amount': 9999, 'api_key': 'ak_test_6yd4kbaJrWzdn61m4De5yzn7jZuTt9'}
 
@@ -175,6 +177,10 @@ def test_mailchimp_update(resp_token, create_or_update_client, logged_user):
 def test_user_become_client(resp_token, logged_user):
     assert has_role(logged_user, 'client')
     assert not has_role(logged_user, 'lead')
+
+
+def test_user_become_client_interaction(resp_token, logged_user):
+    assert 'BECOME_CLIENT' == user_facade.find_user_interactions(logged_user)[0].category
 
 
 def test_redirect_url(resp_token):
