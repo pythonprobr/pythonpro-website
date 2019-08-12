@@ -113,6 +113,10 @@ def visit_member_landing_page(user: User, source: str):
     return UserInteraction(category=UserInteraction.MEMBER_LP, source=source, user=user).save()
 
 
+def activate_user(user: User, source: str):
+    return UserInteraction(category=UserInteraction.ACTIVATED, source=source, user=user).save()
+
+
 def client_checkout(user: User, source: str) -> None:
     return UserInteraction(category=UserInteraction.CLIENT_CHECKOUT, source=source, user=user).save()
 

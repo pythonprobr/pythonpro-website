@@ -3,11 +3,12 @@ from django.urls import reverse
 from model_mommy import mommy
 
 from pythonpro.dashboard.models import TopicInteraction
+from pythonpro.domain import user_facade
 
 
 @pytest.fixture
 def remove_tags_mock(mocker):
-    return mocker.patch('pythonpro.dashboard.views.remove_tags')
+    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.remove_tags')
 
 
 @pytest.fixture
@@ -39,8 +40,12 @@ def resp_with_interaction(client_with_lead, topic, logged_user, remove_tags_mock
     )
 
 
-def test_user_first_video(resp, remove_tags_mock, logged_user):
+def test_user_mark_on_mainchimp(resp, remove_tags_mock, logged_user):
     remove_tags_mock.assert_called_once_with(logged_user.email, 'never-watched-video')
+
+
+def test_user_activation(resp, remove_tags_mock, logged_user):
+    assert 'ACTIVATED' == user_facade.find_user_interactions(logged_user)[0].category
 
 
 def test_user_not_first_video(resp_with_interaction, remove_tags_mock):

@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from pythonpro.dashboard.facade import has_watched_any_topic
 from pythonpro.dashboard.forms import TopicInteractionForm
 from pythonpro.dashboard.models import TopicInteraction
-from pythonpro.mailchimp.facade import remove_tags
+from pythonpro.domain import user_facade
 
 
 @login_required
@@ -24,6 +24,7 @@ def topic_interaction(request):
     form = TopicInteractionForm(data)
     if form.is_valid():
         if not has_watched_any_topic(user):
-            remove_tags(user.email, 'never-watched-video')
+            user_facade.activate_user(user, None)
+
         form.save()
         return JsonResponse({'msg': 'ok'})
