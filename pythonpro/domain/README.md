@@ -1,0 +1,1 @@
+This package contains all facades containing entire application business rules (domain)

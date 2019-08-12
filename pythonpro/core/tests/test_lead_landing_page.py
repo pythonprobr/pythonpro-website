@@ -18,7 +18,7 @@ def test_status_code(resp):
 
 @pytest.fixture
 def create_lead_mock(mocker):
-    return mocker.patch('pythonpro.facade._mailchimp_facade.create_or_update_lead')
+    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.create_or_update_lead')
 
 
 @pytest.fixture

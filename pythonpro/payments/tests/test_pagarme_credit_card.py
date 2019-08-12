@@ -141,12 +141,12 @@ transaction_response_error = {
 
 @pytest.fixture
 def create_or_update_client(mocker):
-    return mocker.patch('pythonpro.facade._mailchimp_facade.create_or_update_client')
+    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.create_or_update_client')
 
 
 @pytest.fixture
 def create_or_update_lead(mocker):
-    return mocker.patch('pythonpro.facade._mailchimp_facade.create_or_update_lead')
+    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.create_or_update_lead')
 
 
 @pytest.fixture
