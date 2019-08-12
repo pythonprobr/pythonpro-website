@@ -6,9 +6,7 @@ from urllib import parse
 
 import pytest
 from django.conf import settings
-from django.http import HttpResponseRedirect
 from django.urls import reverse
-from rolepermissions.roles import assign_role
 
 from pythonpro.discourse.views import _decode_payload
 
@@ -24,33 +22,26 @@ def payload(nonce):
 
 
 @pytest.fixture
-def discourse_logged_user(django_user_model, fake):
-    profile = fake.profile()
-    user = django_user_model(email=profile['mail'], first_name=profile['name'])
-    user.set_password('password')
-    user.save()
-    user.plain_password = 'password'
-    assign_role(user, 'member')
-    return user
-
-
-@pytest.fixture
-def client_with_member(client, discourse_logged_user):
-    client.login(username=discourse_logged_user.email, password=discourse_logged_user.plain_password)
-    return client
-
-
-@pytest.fixture
-def response(client_with_member, payload, sig=None):
+def response_with_member(client_with_member, payload, sig=None):
     return _resp(client_with_member, payload, sig)
 
 
-def _resp(client_with_member, payload, sig=None):
+@pytest.fixture
+def response_with_lead(client_with_lead, payload, sig=None):
+    return _resp(client_with_lead, payload, sig)
+
+
+@pytest.fixture
+def response_with_client(client_with_client, payload, sig=None):
+    return _resp(client_with_client, payload, sig)
+
+
+def _resp(client, payload, sig=None):
     encoded_payload = base64.encodebytes(payload.encode('utf-8'))
     hmac_obj = hmac.new(settings.DISCOURSE_SSO_SECRET.encode('utf-8'), encoded_payload, digestmod=hashlib.sha256)
     sig = hmac_obj.hexdigest() if sig is None else sig
-    return client_with_member.get(reverse('discourse:sso'),
-                                  data={'sso': encoded_payload, 'sig': sig}, secure=True)
+    return client.get(reverse('discourse:sso'),
+                      data={'sso': encoded_payload, 'sig': sig}, secure=True)
 
 
 @pytest.fixture
@@ -72,26 +63,49 @@ def _extract_from_payload(response):
     return {key: value[0] for key, value in parsed_payload.items()}
 
 
-def test_status(response):
-    assert response.status_code == 302
+def test_status(response_with_member):
+    assert response_with_member.status_code == 302
 
 
-def test_redirect_base_url(response: HttpResponseRedirect):
-    assert response.url.startswith(settings.DISCOURSE_BASE_URL)
+def test_redirect_base_url(response_with_member):
+    assert response_with_member.url.startswith(settings.DISCOURSE_BASE_URL)
 
 
-def test_redirect_payload_has_nonce(nonce, response: HttpResponseRedirect):
-    dct = _extract_from_payload(response)
+def test_redirect_payload_has_nonce(nonce, response_with_member):
+    dct = _extract_from_payload(response_with_member)
     assert nonce == dct['nonce']
 
 
-def test_redirect_payload_user_data(discourse_logged_user, nonce, response: HttpResponseRedirect):
-    dct = _extract_from_payload(response)
+def test_redirect_payload_member_data(logged_user, nonce, response_with_member):
+    dct = _extract_from_payload(response_with_member)
     assert {
                'nonce': nonce,
-               'email': discourse_logged_user.email,
-               'external_id': str(discourse_logged_user.id),
-               'require_activation': 'false'
+               'email': logged_user.email,
+               'external_id': str(logged_user.id),
+               'require_activation': 'false',
+               'groups': 'member'
+           } == dct
+
+
+def test_redirect_payload_client_data(logged_user, nonce, response_with_client):
+    dct = _extract_from_payload(response_with_client)
+    assert {
+               'nonce': nonce,
+               'email': logged_user.email,
+               'external_id': str(logged_user.id),
+               'require_activation': 'false',
+               'groups': 'client'
+           } == dct
+
+
+def test_redirect_payload_lead_data(logged_user, nonce, response_with_lead):
+    dct = _extract_from_payload(response_with_lead)
+    assert {
+               'nonce': nonce,
+               'email': logged_user.email,
+               'external_id': str(logged_user.id),
+               'require_activation': 'false',
+               'groups': 'lead'
            } == dct
 
 
@@ -127,14 +141,3 @@ def test_user_not_logged(client):
     response = client.get(discourse_path, secure=True)
     login_path = reverse('login')
     assert response.url == f'{login_path}?next={discourse_path}'
-
-
-def test_lead_not_able_to_access_forum(client_with_lead, logged_user):
-    discourse_path = reverse('discourse:sso')
-    response = client_with_lead.get(discourse_path, secure=True)
-    assert response.status_code == 302
-    assert response.url == reverse('payments:member_landing_page')
-
-
-def test_client_not_able_to_access_forum(client_with_client, mocker, logged_user):
-    test_lead_not_able_to_access_forum(client_with_client, logged_user)
