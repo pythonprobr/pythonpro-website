@@ -9,7 +9,7 @@ from django.views.generic import TemplateView, UpdateView
 from django_sitemaps import Sitemap
 from rolepermissions.checkers import has_role
 
-from pythonpro import facade
+from pythonpro.domain import user_facade
 from pythonpro.core.forms import UserEmailForm, UserSignupForm
 from pythonpro.core.models import User
 
@@ -129,8 +129,8 @@ def lead_form(request):
     first_name = request.POST.get('first_name')
     email = request.POST.get('email')
     try:
-        user = facade.register_lead(first_name, email, source)
-    except facade.UserCreationException as e:
+        user = user_facade.register_lead(first_name, email, source)
+    except user_facade.UserCreationException as e:
         return render(request, 'core/lead_form_errors.html', context={'form': e.form})
     login(request, user)
     return redirect(reverse('core:lead_change_password'))

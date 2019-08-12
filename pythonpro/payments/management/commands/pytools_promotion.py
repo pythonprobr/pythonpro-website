@@ -1,6 +1,6 @@
 from django.core.management import BaseCommand
 
-from pythonpro import facade
+from pythonpro.domain import user_facade
 
 
 class Command(BaseCommand):
@@ -10,5 +10,5 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
-        promotion_users = facade.run_pytools_promotion_campaign()
+        promotion_users = user_facade.run_pytools_promotion_campaign()
         self.stdout.write(self.style.SUCCESS(f'Successfully marked {promotion_users} users for promotions'))

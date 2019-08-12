@@ -21,7 +21,7 @@ def valid_signature():
 
 @pytest.fixture
 def create_or_update_client(client_with_lead, logged_user, mocker):
-    return mocker.patch('pythonpro.facade._mailchimp_facade.create_or_update_client')
+    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.create_or_update_client')
 
 
 @pytest.fixture
