@@ -42,9 +42,9 @@
                             'max_watched_time': maxWatchedTime
                         }
                     );
-                {# Reset time #}
-                    maxWatchedTime=0;
-                    totalWatchedTime=0;
+                    {# Reset time #}
+                    maxWatchedTime = 0;
+                    totalWatchedTime = 0;
 
                 }
             }
@@ -103,23 +103,21 @@
                         </a>
                     </div>
                 {% endif %}
-                {% if user|can:'access_forum' %}
-                    <div id='discourse-comments'></div>
-                    <script type="text/javascript">
-                        DiscourseEmbed = {
-                            discourseUrl: '{{ DISCOURSE_BASE_URL }}',
-                            topicId: {{ topic.discourse_topic_id }}
-                        };
+                <div id='discourse-comments'></div>
+                <script type="text/javascript">
+                    DiscourseEmbed = {
+                        discourseUrl: '{{ DISCOURSE_BASE_URL }}',
+                        topicId: {{ topic.discourse_topic_id }}
+                    };
 
-                        (function () {
-                            var d = document.createElement('script');
-                            d.type = 'text/javascript';
-                            d.async = true;
-                            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
-                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
-                        })();
-                    </script>
-                {% endif %}
+                    (function () {
+                        var d = document.createElement('script');
+                        d.type = 'text/javascript';
+                        d.async = true;
+                        d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+                    })();
+                </script>
             </div>
         </div>
     </div>

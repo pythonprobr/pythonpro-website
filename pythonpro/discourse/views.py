@@ -27,8 +27,6 @@ def sso(request):
 
     Code based on https://meta.discourse.org/t/sso-example-for-django/14258
     """
-    # if not has_permission(request.user, access_forum):
-    #     return redirect(reverse('payments:member_landing_page'), permanent=False)
     payload = request.GET.get('sso')
     signature = request.GET.get('sig')
     try:
