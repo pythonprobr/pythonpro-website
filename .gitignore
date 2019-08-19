@@ -116,3 +116,6 @@ pythonpro-website/.pytest_cache/
 mediafiles/
 
 .pytest_cache/
+
+# local posgres files
+.pgdata
