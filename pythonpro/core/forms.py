@@ -1,3 +1,5 @@
+from collections import ChainMap
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
@@ -37,7 +39,10 @@ class UserSignupForm(UserCreationForm):
             self._set_passwords(data)
             kwargs['data'] = data
         elif args:
-            self._set_passwords(args[0])
+            query_dict = args[0]
+            dct = {}
+            self._set_passwords(dct)
+            args = (ChainMap(query_dict, dct), *args[1:])
         super().__init__(*args, **kwargs)
 
     def _set_passwords(self, data):

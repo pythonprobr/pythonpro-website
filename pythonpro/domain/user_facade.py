@@ -74,7 +74,7 @@ def force_register_client(first_name: str, email: str, source: str = 'unknown') 
     return user
 
 
-def promote_client(user: _User, email_msg: str, source=str) -> None:
+def promote_client(user: _User, email_msg: str, source: str) -> None:
     """
     Promote a user to Client role and change it's role on Mailchimp. Will not fail in case API call fails.
     Email welcome email is sent to user
