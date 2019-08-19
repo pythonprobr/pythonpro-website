@@ -4,11 +4,12 @@ from django.contrib.admin.options import IS_POPUP_VAR
 from django.contrib.admin.utils import unquote
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import (
-    AdminPasswordChangeForm, UserChangeForm, UserCreationForm,
+    AdminPasswordChangeForm, UserChangeForm,
 )
 from django.core.exceptions import PermissionDenied
 from django.db import router, transaction
 from django.http import Http404, HttpResponseRedirect
+from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
 from django.utils.decorators import method_decorator
@@ -18,6 +19,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from rolepermissions.admin import RolePermissionsUserAdminMixin
 
+from pythonpro.core.forms import UserSignupForm
 from pythonpro.core.models import User, UserInteraction
 
 csrf_protect_m = method_decorator(csrf_protect)
@@ -39,18 +41,32 @@ class UserAdmin(RolePermissionsUserAdminMixin, admin.ModelAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('first_name', 'email', 'password1', 'password2'),
+            'fields': ('first_name', 'email', 'source'),
         }),
     )
 
     form = UserChangeForm
-    add_form = UserCreationForm
+    add_form = UserSignupForm
     change_password_form = AdminPasswordChangeForm
     list_display = ('email', 'first_name', 'source', 'date_joined', 'is_staff',)
     list_filter = ('groups', 'source', 'is_staff', 'is_superuser', 'is_active',)
     search_fields = ('first_name', 'email')
     ordering = ('first_name',)
     filter_horizontal = ('groups', 'user_permissions',)
+    actions = ['make_client']
+
+    def make_client(self, request, queryset):
+        from pythonpro.domain import user_facade
+        ty_rul = request.build_absolute_uri(reverse('payments:pytools_thanks'))
+        for user in queryset:
+            msg = render_to_string(
+                'payments/pytools_email.txt',
+                {
+                    'user': user,
+                    'ty_url': ty_rul
+                }
+            )
+            user_facade.promote_client(user, msg, 'django_admin')
 
     def get_fieldsets(self, request, obj=None):
         if not obj:
@@ -194,9 +210,23 @@ class UserAdmin(RolePermissionsUserAdminMixin, admin.ModelAdmin):
             request.POST['_continue'] = 1
         return super().response_add(request, obj, post_url_continue)
 
+    def has_delete_permission(self, request, obj=None):
+        return False
+
 
 @admin.register(UserInteraction)
 class UserInteractionAdmin(admin.ModelAdmin):
     list_display = 'creation user category'.split()
     ordering = ('-creation',)
     list_filter = ('category',)
+    actions = None
+    search_fields = ('user__email',)
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
