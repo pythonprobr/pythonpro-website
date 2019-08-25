@@ -103,6 +103,7 @@ def client_landing_page(request):
     is_promotion_season = payment_facade.is_on_pytools_promotion_season(user_creation)
     price = PYTOOLS_PROMOTION_PRICE if is_promotion_season else PYTOOLS_PRICE
     price_float = price / 100
+    price_installment = (price // 10) / 100
     _, promotion_end_date = payment_facade.calculate_pytools_promotion_interval()
     return render(
         request,
@@ -110,6 +111,7 @@ def client_landing_page(request):
             'PAGARME_CRYPTO_KEY': settings.PAGARME_CRYPTO_KEY,
             'price': price,
             'price_float': price_float,
+            'price_installment': price_installment,
             'is_promotion_season': is_promotion_season,
             'promotion_end_date': promotion_end_date,
             'notification_url': request.build_absolute_uri(

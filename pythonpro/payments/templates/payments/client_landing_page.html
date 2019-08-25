@@ -36,9 +36,10 @@
                     customerData: 'true',
                     createToken: 'true',
                     paymentMethods: 'credit_card,boleto',
-                    maxInstallments: 2,
+                    maxInstallments: 12,
                     defaultInstallment: 1,
-                    freeInstallments: 2,
+                    freeInstallments: 1,
+                    interestRate: 1.66,
                     postback_url: '{{ notification_url }}',
                     items: [
                         {
@@ -94,7 +95,7 @@
                     </p>
                     <p>Somado ao valor do bônus, o custo seria de R$ 1500,00.</span>.
                     </p>
-                    <p>Mas você pode se inscrever hoje por <span class="font-weight-bold">APENAS R$ {{ price_float|floatformat:2 }}</span> para
+                    <p>Mas você pode se inscrever hoje por <span class="font-weight-bold">APENAS R$ {{ price_float|floatformat:2 }} ou 12 vezes de {{ price_installment|floatformat:2 }}</span> para
                         aprender as 6 ferramentas que todo programador profissional usa em seu dia a dia.
                     </p>
                     {% if is_promotion_season %}
