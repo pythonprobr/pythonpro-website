@@ -8,7 +8,11 @@ from pythonpro.django_assertions import dj_assert_contains
 from pythonpro.domain import user_facade
 
 transaction_url = 'https://api.pagar.me/1/transactions/test_transaction_QtapRINw2wJdeBbQizns1G6XwIYgrt/capture'
-transaction_data = {'token': 'test_transaction_QtapRINw2wJdeBbQizns1G6XwIYgrt', 'payment_method': 'boleto'}
+transaction_find_url = 'https://api.pagar.me/1/transactions/test_transaction_QtapRINw2wJdeBbQizns1G6XwIYgrt'
+transaction_data = {
+    'token': 'test_transaction_QtapRINw2wJdeBbQizns1G6XwIYgrt',
+    'payment_method': 'boleto'
+}
 
 CUSTOMER_EMAIL = 'daenerys.targaryen@gmail.com'
 CUSTOMER_FIRST_NAME = 'DAENERYS'
@@ -144,6 +148,7 @@ def create_or_update_lead(mocker):
 def resps_success():
     with responses.RequestsMock(assert_all_requests_are_fired=False) as r:
         r.add(r.POST, transaction_url, json=transaction_response, status=200)
+        r.add(r.GET, transaction_find_url, json=transaction_response, status=200)
         yield r
 
 

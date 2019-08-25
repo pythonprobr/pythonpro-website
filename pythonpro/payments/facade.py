@@ -13,7 +13,10 @@ PYTOOLS_PROMOTION_PRICE = 4999
 
 def pytools_capture(token: str, user_creation: datetime):
     price = PYTOOLS_PROMOTION_PRICE if is_on_pytools_promotion_season(user_creation) else PYTOOLS_PRICE
-    return _pagarme.transaction.capture(token, {'amount': price})
+    amount = _pagarme.transaction.find_by_id(token)['amount']
+    if amount < price:
+        raise PagarmeValidationException(f'Payment done ({amount}) is less then price ({price}) for token: {token}')
+    return _pagarme.transaction.capture(token, {'amount': amount})
 
 
 class PagarmeValidationException(Exception):

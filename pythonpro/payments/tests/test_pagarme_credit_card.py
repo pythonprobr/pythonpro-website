@@ -6,6 +6,7 @@ from rolepermissions.checkers import has_role
 from pythonpro.domain import user_facade
 
 transaction_url = 'https://api.pagar.me/1/transactions/test_transaction_5ndnWcHEJQX1FPCbEpQpFng90gM5oM/capture'
+transaction_find_url = 'https://api.pagar.me/1/transactions/test_transaction_5ndnWcHEJQX1FPCbEpQpFng90gM5oM'
 transaction_data = {'amount': 9999, 'api_key': 'ak_test_6yd4kbaJrWzdn61m4De5yzn7jZuTt9'}
 
 CUSTOMER_EMAIL = 'renzon@gmail.com'
@@ -155,6 +156,7 @@ def create_or_update_lead(mocker):
 def resps_success():
     with responses.RequestsMock(assert_all_requests_are_fired=False) as r:
         r.add(r.POST, transaction_url, json=transaction_response, status=200)
+        r.add(r.GET, transaction_find_url, json=transaction_response, status=200)
         yield r
 
 
