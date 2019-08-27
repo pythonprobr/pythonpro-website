@@ -6,6 +6,10 @@
     background-color: #9FD260 !important; 
 }
 
+.bg-gray {
+    background-color: #f0f0f0 !important; 
+}
+
 a, div, p, span {
     text-decoration: none;
     font-family: Gilroy-Regular;
@@ -78,7 +82,7 @@ h3 .ec, h4 .ec {
 
 .real {
     padding-left: 10px; 
-    letter-spacing: -2px;
+    letter-spacing: -1px;
 }
 
 .centavos {
