@@ -1,9 +1,48 @@
 {% extends 'core/base_without_nav.html' %}
 {% load static %}
-{% block title %}Módulo de Python Intermediário{% endblock %}
-{% block description %}Módulo Intermediário de Python voltado para quem quer entrar no mercado de
-    tecnologia!{% endblock %}
+{% block title %}Inscrições abertas: PyTools{% endblock %}
+{% block description %}Curso intermediário de Python. Chegou a hora de ir além do básico!{% endblock %}
 {% block head %}
+    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+
+    <style>
+        @font-face {
+            font-family: 'Gilroy-Bold';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Bold ☞'), url('{% static "fonts/Gilroy-Bold.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Heavy';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Heavy ☞'), url('{% static "fonts/Gilroy-Heavy.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Light';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Light ☞'), url('{% static "fonts/Gilroy-Light.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Medium';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Medium ☞'), url('{% static "fonts/Gilroy-Medium.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Regular';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Regular ☞'), url('{% static "fonts/Gilroy-Regular.woff" %}') format('woff');
+        }
+
+    </style>
+    <link rel="stylesheet" href="{% static 'css/client.css' %}"/>
     <script src="{% static 'js/pagarme-checkout-1.1.0.js' %}"></script>
     <script type="application/javascript">
         $(document).ready(function () {
@@ -55,112 +94,768 @@
         });
     </script>
 {% endblock head %}
+
 {% block body %}
-    <div class="bg-primary pt-5 pb-5 text-light">
+    <div class='bg-primary'>
         <div class="container">
             <div class="row">
-                <div class="col-12 col-lg-7 mb-4">
-                    <h1 class="mb-4">Chegou a hora de ir <u>além do básico!</u>
-                    </h1>
-                    <p>Agora chegou a hora de focar nas ferramentas que o <span class="font-weight-bold"><u>MERCADO PROCURA.</u></span>
+                <div class="col-sm-9 hero">
+                    <h1 class='text-light font-weight-bold'>Chegou a hora de ir além do básico!</h1>
+                    <p class='text-light mb-5 mt-3'>
+                        Com o PyTools você vai <b><u>aprender as ferramentas que o mercado procura</u></b>.
+                        Além disso, vai <u>criar seu primeiro projeto</u> de maneira profissional.
                     </p>
-                    <p>Você precisa aprender como <span class="font-weight-bold"><u>EQUIPES DE PROGRAMADORES</u></span>
-                        colaboram para poder ser um deles.
-                    </p>
-                    <p>Por isso preparamos o curso PyTools com todos tópicos fundamentais <u>compilados</u>.
-                    </p>
-                    <p>O módulo vai durar 6 semanas com <span class="font-weight-bold">GARANTIA TOTAL!</span></p>
-                    <p>Se você ficar insatisfeito durante esse período, <span class="font-weight-bold">DEVOLVEMOS TODO SEU DINHEIRO!</span>
-                    </p>
-                    <p>Oferecemos essa garantia pela confiança em nosso trabalho formando profissinais há <span
-                            class="font-weight-bold">9 ANOS!</span></p>
-                    <p><span
-                            class="font-weight-bold">MAS SE INSCREVA AGORA PORQUE ISSO É POR TEMPO LIMITADO!</span>
-                    </p>
-                </div>
-                <div class="col-12 col-md-6 col-lg-5">
-                    <h2>Confira os Bônus</h2>
-                    <ul>
-                        <li><span
-                                class="font-weight-bold">Plantão de dúvidas</span> quinzenal ao vivo, online!
-                        </li>
-                        <li>1 Hora de <span
-                                class="font-weight-bold">mentoria exclusiva</span> para alinhar o plano de estudo com
-                            seus objetivos.
-                        </li>
-                    </ul>
-                    <p>Só esses bônus custariam R$ 1000,00 por mês.</p>
-                    <h2 class="mt-4">Módulo de Python Intermediário</h2>
-                    <p>Apenas as aulas desse módulo custam R$ 500,00</span>.
-                    </p>
-                    <p>Somado ao valor do bônus, o custo seria de R$ 1500,00.</span>.
-                    </p>
-                    <p>Mas você pode se inscrever hoje por <span class="font-weight-bold">APENAS R$ {{ price_float|floatformat:2 }} ou 12 vezes de {{ price_installment|floatformat:2 }}</span> para
-                        aprender as 6 ferramentas que todo programador profissional usa em seu dia a dia.
-                    </p>
-                    {% if is_promotion_season %}
-                        <p>Promoção valida apenas até {{ promotion_end_date }}</p>
-                    {% endif %}
-                    <button class="btn btn-warning">SIM! Quero me inscrever por <span
-                            class="font-weight-bold"><u>R$ {{ price_float|floatformat:2 }}</u></span> &raquo;
+
+                    <button class="cta btn btn-warning mt-10">
+                        SIM! Eu quero <u><b>ir além do básico!</b></u>
                     </button>
                 </div>
+
             </div>
         </div>
     </div>
-    <div class="bg-light">
-        <div class="container pt-4 pb-3">
-            <div class="row">
-                <div class="col">
-                    <h3 class="mb-3">Esse módulo vai te ajudar a:</h3>
-                    <dt>Conhecer a rede secreta de desenvolvedores</dt>
-                    <dd>Você vai aprender a navegar nos projetos e perfis da maior rede de desenvolvedores do mundo.
-                    </dd>
-                    <dt class="mt-2">Criar o seu portfólio</dt>
-                    <dd>Você vai criar seu primeiro projeto de maneira profissional para poder comprovar sua habilidades
-                        nas entrevistas!
-                    </dd>
-                    <dt class="mt-2">Estado da arte em engenharia de software</dt>
-                    <dd>Você vai conhecer as principais ferramentas que são pré-requisitos para todas vagas de
-                        tecnologia!
-                    </dd>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container  pt-5 pb-5">
-        {% include 'core/instructors.html' %}
-    </div>
-    <div class="bg-light">
-        <div class="container pt-5 pb-5">
-            {% include 'core/social_proof.html' %}
-        </div>
-    </div>
-    <div class="bg-primary pt-5 pb-5 text-light">
+
+    <div>
         <div class="container">
             <div class="row">
-                <div class="col-8">
-                    <h3>Quer se transformar também?</h3>
-                    <p>Inscreva-se agora e dê mais um passo rumo à uma carreira de sucesso!</p>
-                    <button class="btn btn-warning">SIM! Quero me inscrever por <span
-                            class="font-weight-bold"><u>R$ 99,99</u></span> &raquo;
+                <div class="col mb-5 mt-5">
+                    <h2 class='font-weight-bold mb-5'>Olá, eu me chamo Renzo Nuccitelli,</h2>
+                    <img src='{% static "img/profile.jpeg" %}' class="img-fuild float-right ml-3 mb-3" width="300px">
+                    <p>
+                    <span>
+                    Sou programador há 13 anos. Já fui diretor de tecnologia em duas empresas e também trabalhei na maior compania de Sofware Aberto do mundo, a Red Hat. Já prestei consultoria em diversas outras empresas, como o Hotel Urbano.
+                        Também já palestrei em diversos enventos de tecnologia, como Python Brasil, GDG, Agile Vale e muitos outros.
+                        Meu sonho sempre foi que as pessoas tivessem as mesmas oportunidades que construi...
+                    </span>
+                    </p>
+                    <p>
+                        Por isso estou aqui para te fazer uma proposta que tenho certeza que vai te deixar
+                        muito interessado, mas antes eu preciso te contar uma história.
+                    </p>
+
+                    <h3 class='mb-5 mt-5'>
+                        Vamos voltar alguns anos no tempo…
+                    </h3>
+
+                    <p>
+                        O ano era 2008... Eu era um jovem que estava terminando a faculdade e estava
+                        procurando meu primeiro emprego como programador.
+                    </p>
+
+                    <p>
+                        Eu estava no quinto ano do curso de Engenharia da Computação, no ITA,
+                        Instituto Tecnológico da Aeronáutica. Pensa em um curso difícil...
+                        <b>Eu ralei pra conseguir sair formado de lá.</b>
+                    </p>
+
+                    <p>
+                        Mas estava no fim. Eu estava quase conseguindo.
+                        E o melhor, eu sabia que eu era muito bom programador, afinal eu havia
+                        aprendido com os melhores, <u>em uma das mais prestigiadas faculdades do Brasil.</u>
+                    </p>
+
+                    <p>
+                        Na minha cabeça a conta era simples: eu só precisava conseguir meu primeiro
+                        emprego para começar a ganhar dinheiro. Eu já tinha passado no vestibular
+                        do ITA e estava terminando o curso.
+                        O desafio que viesse pela frente seria moleza perto do que já havia conquistado.
+                    </p>
+
+                    <p>
+                        Então, depois de algumas entrevistas, eu finalmente consegui meu primeiro emprego.
+                        Mais uma conquista! Estava ansioso para finalmente colocar tudo o que tinha
+                        aprendido na prática.
+                    </p>
+
+                    <p>
+                        <b class='highlight'>Mas as coisas aconteceram muito diferente do que eu podia imaginar...</b>
+                    </p>
+
+                    <p>
+                        Eu me deparei com conceitos que eu não conhecia.
+                        Eu já conhecia tudo sobre lógica de programação, tipos, iterações,
+                        orientação a objetos, herança, composição.
+                    </p>
+
+                    <p>
+                        Mas os programadores mais experientes sabiam coisas que eu nunca
+                        tinha ouvido falar. Falavam sobre versionamento de código,
+                        configuração de ambiente, testes automatizados...
+                    </p>
+                    <p>
+                        <u>Eu não tinha aprendido nada disso na faculdade. </u>
+                    </p>
+
+                    <h3 class='mb-5 mt-5 font-weight-bold'>
+                        E agora?
+                    </h3>
+
+                    <p>
+                        Acabou que, depois de <b><u>penar muito</b></u>, consegui aprender isso
+                        procurando em livros, na internet e contando com a ajuda (quando dava)
+                        dos meus colegas de trabalho.
+                    </p>
+
+                    <p>
+                        Mas… por que estou te contando tudo isso?
+                    </p>
+
+                    <p>
+                        Hoje eu tenho mais de 10 anos de mercado. Já sou um programador experiente.
+                        Como Diretor de Tecnologia, além de programar, eu também contrato e
+                        gerencio novos programadores.
+
+                    </p>
+
+                    <p>
+                        E, acredite, 10 anos depois <b><u>este cenário não mudou.</b></u>
+                    </p>
+
+                    <p>
+                        <b class='highlight'>
+                            Eu contrato programadores de ótimas faculdades e quase sempre acontece
+                            o mesmo: a pessoa vem com uma boa base conceitual, mas sem nenhum preparo
+                            pro mundo real.
+                        </b>
+                    </p>
+
+                    <p>
+                        Para começar a desenvolver sistemas você precisa de conhecimentos
+                        além de conceitos de lógica de programação.
+                    </p>
+
+                    <p>
+                        Você precisa saber como trabalhar em equipe, como garantir que seu código
+                        vai funcionar, como garantir que o seu software rode na sua máquina e
+                        no servidor de produção, entre outros conceitos básicos que não são
+                        necessariamente sobre lógica em si.
+                    </p>
+
+                    <p>
+                        E sabe o que é pior?
+                        Se você tiver alguém pra te explicar isso de forma simples e didática,
+                        <b>você aprende muito rápido!</b>
+                    </p>
+
+                    <h3 class='mt-5 mb-5'>
+                        <b>"<u>Se é simples e tão importante, por que
+                            eu não aprendi isso na faculdade?</u>"</b>
+                        <span class="ec ec-thinking"></span>
+                    </h3>
+
+                    <p class='mt-5'>
+                        Provavelmente você está se perguntando isso.
+
+                    </p>
+                    <p>
+                        Eu te respondo: infelizmente, no Brasil,
+                        <b class='highlight'>a faculdade não consegue preparar um
+                            profissional para o mercado.</b>
+                    </p>
+
+                    <p>
+                        A burocracia do ensino superior brasileiro é gigante.
+                    </p>
+
+                    <p>
+                        Pra você ter uma noção de como esse processo funciona, para um professor conseguir inserir uma
+                        nova matéria na grade curricular, ele precisa:
+                    <ol class='mb-5'>
+                        <li><span class="ec ec-hourglass-flowing-sand"></span> Submeter essa idéia para o Ministério da
+                            Educação;
+                        </li>
+                        <li><span class="ec ec-hourglass-flowing-sand"></span> Então, eles vão analisar;</li>
+                        <li><span class="ec ec-hourglass-flowing-sand"></span> Se aprovarem, eles vão adequar e
+                            atualizar o currículo oficial;
+                        </li>
+                        <li><span class="ec ec-hourglass-flowing-sand"></span> Só depois de tudo isso, vão permitir que
+                            este professor lecione sobre esta nova matéria.
+                        </li>
+                    </ol>
+                    </p>
+                    <p class='mt-5'>
+                        Imagina quanto tempo todo esse processo burocrático isso demora.
+                    </p>
+                    <p>
+                        <b class='highlight'>Quando o currículo realmente muda, a tecnologia já está defasada...</b>
+                    </p>
+                    <p>
+                        Eu sei disso porque já estive lá dentro.
+                    </p>
+
+                    <p>
+                        Eu dei aula na FATEC de São José dos Campos durante 4 anos.
+                    </p>
+
+                    <p>
+                        Lá eu ensinava programação básica. O jeito era eu ir tentando
+                        ensinar também conceitos que o mercado procura.
+                    </p>
+
+                    <p>
+                        O fato é que, por causa dessa deficiência da faculdade, <b>os novos profissionais
+                        continuam chegando nas empresas sem esse tipo de conhecimento.</b>
+                        Eu sentia essa dor quando eu ia contratar novos programadores na empresa que eu trabalhava.
+                    </p>
+
+                    <p>
+                        Para contornar este problema, eu mesmo passei a ensinar para os novos
+                        programadores contratados os conceitos e práticas para que conseguissem
+                        atuar nos projetos da empresa.
+                    </p>
+
+                    <p><u class='font-weight-bold'>
+                        Enfim eu consegui resolver este problema...</u>
+
+                    </p>
+
+                    <p>
+                        <i>...pelo menos na minha empresa</i>.
+                    </p>
+
+                    <p>
+                        Só que surgiu outra dificuldade: esses treinamentos tomavam bastante parte meu tempo.
+                        A agenda começou a ficar apertada.
+                    </p>
+
+                    <p>
+                        Eu <u>programava</u>, <u>comandava a equipe</u>, atuava como <u>diretor de tecnologia</u> e
+                        também <u>lecionava</u>.
+                    </p>
+
+                    <p>
+                        Foi então que eu resolvi gravar este treinamento. Eu relutava pois tinha medo da qualidade não
+                        ficar tão boa quanto era quando eu lecionava presencialmente.
+                    </p>
+
+                    <p>
+                        <b class='highlight'>Mas... tudo deu certo!</b>
+                        <span class="ec ec-raised-hands"></span>
+                    </p>
+
+                    <p>
+                        A qualidade ficou ótima, o nível de satisfação até aumentou porque com as gravações, cada um
+                        podia repetir as aulas quantas vezes quisesse!
+                    </p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row text-light">
+                <div class="col mt-5 mb-5">
+                    <h2 class=''>E foi assim que nasceu o <b>Curso Intermediário de Python!</b></h2>
+                    <h4 class='mb-5'>
+                        (ou <b>PyTools</b> para os mais íntimos
+                        <span class="ec ec-sunglasses"></span>)
+                    </h4>
+
+                    <p>
+                        <b>Com o PyTools você vai focar nas ferramentas que o mercado procura!</b>
+                    </p>
+                    <p>
+                        Eu te digo isso com propriedade pois eu o criei pra resolver esse
+                        problema na empresa em que eu trabalhava.
+                    </p>
+
+                    <p>
+                        <b>Você vai aprender como equipes de programadores trabalham e
+                            colaboram entre si. </b>
+                    </p>
+
+                    <p>
+                        Assim, você vai poder finalmente ter a capacidade
+                        de ser um deles.
+                    </p>
+
+                    <p class='mb-5 mt-5'>
+                        Com o PyTools, você vai:
+                    </p>
+
+                    <h3 class='font-weight-bold mt-5'>
+                        <span class="ec ec-male-detective"></span>
+                        Conhecer a rede secreta de desenvolvedores...
+                    </h3>
+
+                    <p>
+                        Você vai aprender a trabalhar com a ferramenta que todo mundo usa para
+                        versionar código e contribuir com projetos de desenvolvimento de software:
+                        <b>o Git.</b>
+                    </p>
+
+                    <p>
+                        Você também vai aprender a navegar nos projetos e perfis da maior
+                        rede de desenvolvedores do mundo, <b>o Github!</b>
+                    </p>
+
+                    <p class='mb-5'>
+                        Além disso, você vai aprender como <b>contribuir com estes projetos!</b>
+                    </p>
+
+                    <h3 class='font-weight-bold mt-5'>
+                        <span class="ec ec-dvd"></span>
+                        Criar o seu portfólio...
+                    </h3>
+
+                    <p class='mb-5'>
+                        Você vai criar seu primeiro projeto de maneira profissional para poder
+                        comprovar sua habilidades nas entrevistas.
+                    </p>
+
+                    <h3 class='font-weight-bold mt-5'>
+                        <span class="ec ec-computer"></span>
+                        Conhecer o estado da arte em engenharia de software...
+                    </h3>
+
+                    <p>
+                        Você vai conhecer as principais ferramentas que são pré-requisitos para
+                        todas vagas de tecnologia.
+                    </p>
+
+                    <p>
+                        Você também vai aprender como desenvolver da forma correta,
+                        <b>utilizando testes automatizados.</b>
+                    </p>
+
+                    <p>
+                        Você vai aprender a explorar todo o poder da principal ferramenta de
+                        criação de testes em Python, <b>o Pytest!</b>
+                    </p>
+
+                    <p class='mb-5'>
+                        Por fim, você vai aprender a utilizar o <b>Pipenv</b> para manter seu
+                        projeto completamente organizado e replicável.
+                        Seu software vai funcionar na sua máquina e também no servidor de produção!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=''>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <h2 class='font-weight-bold'>Veja como será o processo de aprendizado:</h2>
+
+                    <div class='row'>
+                        <div class='col-md learning-box text-center'>
+                            <p><span class="icon ec ec-satellite"></span></p>
+                            <h4 class='font-weight-bold'>CURSO 100% ONLINE</h4>
+                            <p>
+                                Assista de qualquer lugar que quiser. Do seu computador, do seu
+                                tablet ou mesmo do seu celular. Basta ter acesso a Internet.
+                            </p>
+                        </div>
+
+                        <div class='col-md learning-box text-center'>
+                            <p><span class="ec ec-desktop-computer"></span></p>
+                            <h4 class='font-weight-bold'>58 VÍDEO AULAS</h4>
+                            <p>
+                                Aulas práticas, objetivas, direto ao ponto e sem enrolação.
+                                Seu tempo é valioso!
+                            </p>
+                        </div>
+
+                        <div class='col-md learning-box text-center'>
+                            <p><span class="ec ec-older-man"></span></p>
+                            <h4 class='font-weight-bold'>ACESSO VITALÍCIO</h4>
+                            <p>
+                                Você terá acesso ao curso para sempre, inclusive a todas as
+                                atualizações! Poderá assistir todas as aulas quantas vezes quiser.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class='bg-secondary'>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <h2 class='mb-5'><b>E tem mais... </b>Além do curso PyTools, eu preparei mais três bônus pra você!
+                    </h2>
+
+                    <h4 class='font-weight-bold mt-5'>
+                        <span class="ec ec-calendar"></span>
+                        Você vai ter acesso ao nosso plantão de dúvidas quinzenal!
+                    </h4>
+
+                    <p>
+                        A cada quinze dias eu faço um plantão para tirar as dúvidas dos meus alunos
+                        do PyTools e do Python Pro (meu outro curso, em que eu só abro turma às vezes).
+                    </p>
+
+                    <p class='mb-5'>
+                        Ao adquirir o PyTools <b>você vai ter total preferência para enviar suas
+                        dúvidas e até entrar ao vivo comigo!</b>
+                    </p>
+
+                    <h4 class='font-weight-bold mt-5'>
+                        <span class="ec ec-moneybag"></span>
+                        Condição especial e acesso ao pré-lançamento do Python Pro!
+                    </h4>
+
+
+                    <p>
+                        O Python Pro é um curso completo onde eu <b>vou te levar do 0 a 100 em programação.</b>
+                    </p>
+                    <p>
+                        Neste curso eu vou te preparar 100% para o mercado de trabalho.
+                        Neste curso nós desenvolvemos, juntos, um projeto ao longo de toda a turma.
+                        Além disso, eu interajo intensamente com a galera durante esse período.
+                        <b>É o meu curso mais completo.</b>
+                    </p>
+
+                    <p>
+                        Por ele ser tão completo, demanda bastante energia.
+                        Por isso, eu só abro uma turma nova de vez em quando.
+                    </p>
+
+                    <p>
+                        Por isso, as matrículas são bem concorridas.
+                    </p>
+
+                    <p>
+                        Mas relaxa, ao comprar o PyTools você vai ter dois benefícios incríveis.
+                    </p>
+
+                    <p>
+                        <span class="ec ec-white-check-mark"></span>
+                        <b>Primeiro, você vai ter acesso ao período de pré-lançamento do curso. </b>
+                    </p>
+
+                    <p>
+                        Você vai poder comprar o Python Pro antes de todo mundo!
+                        <i>(Lembra: as vagas são concorridas!)</i>
+                    </p>
+
+                    <p>
+                        <span class="ec ec-white-check-mark"></span>
+                        <b>E o segundo e melhor benefício: eu vou te dar um cupom de desconto de
+                            R$ 99,99.</b>
+
+                    </p>
+
+                    <p>
+                        Isso mesmo, quando você decidir se inscrever em uma turma,
+                        eu praticamente te devolvo o valor do PyTools.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col mb-5 mt-5">
+                    <h2 class='font-weight-bold mb-5'>Quanto custa tudo isso?</h2>
+
+                    <p>
+                        A minha missão é educar! O meu objetivo é formar profissionais!
+                        Antes de ser diretor de tecnologia, antes de ser programador, eu sou um professor.
+                    </p>
+
+                    <p>
+                        Como vi que o PyTools estava trazendo grandes resultados para os programadores
+                        da empresa, eu pensei:
+                    </p>
+
+                    <h3 class='mt-5 mb-5'>
+                        <b>"<u>Por que não disponibilizar este curso pra todo mundo?</u>"</b>
+                    </h3>
+
+                    <p>
+                        De início, pensei em disponibilizar grátis, no Youtube.
+                    </p>
+
+                    <p>
+                        Só que eu lembrei de quando eu disponibilizava aulas sobre
+                        Google App Engine por lá.
+                    </p>
+
+                    <p>
+                        Os comentários, emails e mensagens que eu recebia eram com perguntas
+                        que eram respondidas no próprio vídeo.
+                    </p>
+
+                    <p>
+                        Foi quando eu percebi que as pessoas não estavam prestando atenção nas aulas...
+                        elas não estavam comprometidas.
+                    </p>
+
+                    <p>
+                        Então decidi que iria cobrar por esse curso. Mas quanto?
+                    </p>
+
+                    <p>
+                        Comecei a pesquisar e vi outras pessoas cobrando uma boa grana.
+                        <b>Cheguei a ver cursos que entregavam muito menos conhecimento e
+                            que custavam mais de mil reais!</b>
+                    </p>
+
+                    <p>
+                        Depois de refletir muito, eu resolvi cobrar R$ 500,00. Parecia um preço justo...
+                    </p>
+
+                    <p>
+                        Mas esse valor ainda me incomodava...
+                    </p>
+
+                    <p>
+                        Foi então que eu decidi de vez! Já que minha missão é educar,
+                        <b class='highlight'>eu decidi que iria baixar para um preço que fosse acessível
+                            para grande maioria das pessoas.</b>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row text-center text-light">
+
+                <div class='col mb-5 mt-5'>
+                    <h2 class='font-weight-bold'>HOJE, VOCÊ TERÁ ACESSO AO CURSO POR APENAS:</h2>
+                    <p class='price'>
+                        <b>12x </b>
+                        <b class='real'> {{ price_installment|floatformat:2 }}</b>
+                        <br>
+                        <span class='a-vista'>(ou R$ {{ price_float|floatformat:2 }} à vista)</span>
+                    </p>
+                    <button class="cta-2x btn btn-warning">
+                        <b>SIM! Eu quero ir além do básico!</b>
                     </button>
+                    <div class="mt-3">
+                        <img src='{% static "img/compra-segura-1.png" %}' width="330px" alt="Imagem Compra Segura"/>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Calma que já está acabando ;)</h5>
-                </div>
-                <div class="modal-body">
-                    Aguarde enquanto finalizamos seu pagamento <img src="{% static 'img/ajax-loader.gif' %}"
-                                                                    alt="Ajax Loader"/>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col mb-5 mt-5">
+                    <h2 class='font-weight-bold mb-5'>"Mas e se eu não gostar do curso?"</h2>
+                    <p>
+                        Como falei antes, <b>o meu objetivo é formar profissionais.</b>
+                    </p>
+
+                    <p>
+                        Não quero simplesmente ensinar, eu quero fazer você aprender.
+                    </p>
+
+                    <p>
+                        Por isso, em todos os meus cursos eu tenho uma cláusula que se chama
+                        <b>CLÁUSULA DA FELICIDADE GARANTIDA.</b>
+                    </p>
+
+                    <p>
+                        Funciona basicamente assim:
+                    </p>
+
+                    <p>
+                        Se, por qualquer motivo, você não gostar do curso,
+                        <b class='highlight'>eu vou devolver seu dinheiro sem nenhum tipo de questionamento!</b>
+                    </p>
+
+                    <p>
+                        Se você não gostar da minha didática,
+                        se você não conseguir colocar em prática o que eu vou te ensinar
+                        (por qualquer motivo), até se você não gostar da cor da minha camiseta,
+                        eu devolvo seu dinheiro na hora.
+                    </p>
+
+                    <p>
+                        É só você me enviar um email.
+                    </p>
+
+                    <p>
+                        <i>Só não esquece de fazer isso nos primeiros 30 dias depois da compra, ok?</i>
+                    </p>
+
+
                 </div>
             </div>
         </div>
     </div>
+
+    <div class='bg-secondary'>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <h3 class='mb-5'><b>
+                        <span class="ec ec-heart-eyes"></span>
+                        Já são vários alunos transformados!
+                    </h3>
+                    <div class='social-proof'>
+                        {% include 'core/social_proof.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class=''>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <h2 class='mb-5 font-weight-bold'>
+                        Saiba quem serão seus instrutores:
+                    </h2>
+
+                    <div class='instructors'>
+                        {% include 'core/instructors.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=''>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <h2 class='mb-5 font-weight-bold'>
+                        Ficou com alguma dúvida?? Então dá uma olhadinha aqui embaixo...
+                    </h2>
+
+                    <h4 class='mt-5'>
+                        <span class="ec ec-speech-balloon"></span>
+                        É possível parcelar o valor no boleto?
+                    </h4>
+
+                    <p class='mb-5'>
+                        Infelizmente não. Só é possível pagar o valor parcelado através
+                        de cartão de crédito.
+                    </p>
+
+                    <h4 class='mt-5'>
+                        <span class="ec ec-speech-balloon"></span>
+                        Vou receber alguma coisa na minha casa?
+                    </h4>
+
+                    <p class='mb-5'>
+                        Não. Você não receberá nada na sua casa. O conteúdo das aulas são
+                        100% online e podem ser acessados do computador, tablet ou celular.
+                    </p>
+
+                    <h4 class='mt-5'>
+                        <span class="ec ec-speech-balloon"></span>
+                        Os meus dados pessoais e os dados do meu cartão de crédito estão seguros?
+                    </h4>
+
+                    <p class='mb-5'>
+                        Sim. Toda a transação é realizada pela plataforma 100% segura do Pagarme.
+                        Todos os seus dados são confidenciais e criptografados, impedindo qualquer
+                        tipo de fraude ou roubo de dados.
+                    </p>
+
+                    <h4 class='mt-5'>
+                        <span class="ec ec-speech-balloon"></span>
+                        Preciso de ajuda, com quem eu falo?
+                    </h4>
+
+                    <p class='mb-5'>
+                        Qualquer dúvida pode entrar em contato diretamente comigo através do email
+                        renzo@python.pro.br.
+                    </p>
+
+                    <h4 class='mt-5'>
+                        <span class="ec ec-speech-balloon"></span>
+                        Como eu receberei meu acesso as vídeo-aulas?
+                    </h4>
+
+                    <p>
+                        Se você pagar por boleto, o pagamento vai demorar até 3 dias úteis para
+                        cair em nosso sistema, depois que vc realizar o pagamento.
+
+                        Depois do pagamento confirmado, você receberá um e-mail
+                        automático para poder acessar todo conteúdo.
+                    </p>
+
+                    <p class='mb-5'>
+                        Caso você pague no cartão, o sistema já contabilizará a venda e
+                        você receberá esse e-mail em questão de minutos.
+                    </p>
+
+                    <h4 class='mt-5'>
+                        <span class="ec ec-speech-balloon"></span>
+                        O que acontece caso eu não me adapte às aulas ou não goste do curso?
+                    </h4>
+
+                    <p>
+                        Eu devolvo 100% do seu dinheiro. Eu resolvi colocar uma garantia
+                        incondicional de 30 dias a sua disposição.
+                    </p>
+
+                    <p class='mb-5'>
+                        Isso significa que você poderá comprar o curso agora mesmo, consumir todas as
+                        aulas e se em até 30 dias você desistir, basta mandar um e-mail para mim que
+                        eu devolvo 100% do seu investimento.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row text-center text-light">
+
+                <div class='col mb-5 mt-5'>
+                    <h2 class='font-weight-bold'>ADQUIRA O PYTOOLS POR APENAS:</h2>
+                    <p class='price'>
+                        <b>12x </b>
+                        <b class='real'>R$ {{ price_installment|floatformat:2 }}</b>
+                        <br>
+                        <span class='a-vista'>(ou R$ {{ price_float|floatformat:2 }} à vista)</span>
+                    </p>
+
+                    <button class="cta-2x btn btn-warning">
+                        <b>SIM! Eu quero ir além do básico!</b>
+                    </button>
+
+                    <div class="mt-3">
+                        <img src='{% static "img/compra-segura-1.png" %}' width="330px" alt="Imagem Compra Segura"/>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=''>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5 text-center">
+                    <i>
+                        2019 Python Pro. Todos os direitos reservados. <br>
+                        CNPJ: 31.080.715/0001-25<br>
+                        +55 12 99741-1854 - renzo@python.pro.br
+                    </i>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock body %}
+
+{% block footer %}{% endblock footer %}

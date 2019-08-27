@@ -1,0 +1,91 @@
+.bg-primary {
+    background-color: #45A5F1 !important; 
+}
+
+.bg-secondary {
+    background-color: #9FD260 !important; 
+}
+
+a, div, p, span {
+    text-decoration: none;
+    font-family: Gilroy-Regular;
+}
+
+.paragraph, p {
+    line-height: 1.7;
+    font-size: 1.18rem;
+    letter-spacing: .5px;
+    margin: 25px 0;
+}
+
+b, .font-weight-bold {
+    font-family: Gilroy-Bold;
+}
+
+.hero {
+    margin: 50px 0;
+}
+
+.cta {
+    font-size: 150%;
+    padding: 10px 40px;
+}
+
+.cta-2x {
+    font-size: 150%;
+    padding: 10px 60px;
+}
+
+.highlight {
+    background-color: #fff2ac;
+    padding: 1px 3px 3px 3px;
+    /* background-image:  #ffe359; */
+}
+
+ol {
+    list-style: none;
+}
+
+li {
+    margin-left: -25px;
+    padding: 8px 0;
+    font-size: 120%;
+}
+
+h3 .ec, h4 .ec {
+    font-size: 150%;
+}
+
+.learning-box .ec {
+    font-size: 500%;
+}
+
+.price {
+    line-height: 170%;
+    letter-spacing: 0px;
+    padding: 40px 10px 30px 10px;
+}
+
+.a-vista {
+    letter-spacing: 1px;
+}
+
+.real, .centavos {
+    font-size: 500%;
+    color: #ffcc29;
+
+}
+
+.real {
+    padding-left: 10px; 
+    letter-spacing: -2px;
+}
+
+.centavos {
+    font-size: 400%;
+    margin-left: -5px; 
+}
+
+.social-proof .title, .instructors .title {
+    display: none;
+}
