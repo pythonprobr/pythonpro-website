@@ -225,11 +225,10 @@
         },
         "mailchimp3": {
             "hashes": [
-                "sha256:8ba4fd1c913a71ee895a4087cd3a8e25721547fa0b7e637f87dee82c3b3e9848",
-                "sha256:d1fc0de0e4e1f0b5a00b567a8b99385e38280d16f942c29d4e8fe3b920da7a20"
+                "sha256:3b16ef4b2db020019672dd06c76e2f3392978b134e98399cf246871b5ba30755",
+                "sha256:65ff8b7d662fd437c8d0578cfef6b4d6775256005161dce4c4d852cf09903e20"
             ],
-            "index": "pypi",
-            "version": "==3.0.7"
+            "version": "==3.0.9"
         },
         "newrelic": {
             "hashes": [
