@@ -52,6 +52,23 @@ def register_lead(first_name: str, email: str, source: str) -> User:
     return user
 
 
+def register_member(first_name, email, source):
+    """
+    Create a new user on the system generation a random password or update existing on based on email.
+    :param first_name: User's first name
+    :param email: User's email
+    :param source: source of User traffic
+    :return: User
+        """
+    try:
+        user = User.objects.filter(email=email).get()
+    except User.DoesNotExist:
+        form = validate_user(first_name, email, source)
+        user = form.save()
+    promote_to_member(user, source)
+    return user
+
+
 def register_client(first_name: str, email: str, source: str) -> User:
     """
     Create a new user on the system generation a random password or update existing on based on email.
@@ -67,6 +84,19 @@ def register_client(first_name: str, email: str, source: str) -> User:
         user = form.save()
     promote_to_client(user, source)
     return user
+
+
+def promote_to_member(user: User, source: str) -> None:
+    """
+    Promote a user do member. Raises exception in case user is a member
+    :param user:
+    """
+    if has_role(user, 'member'):
+        raise UserRoleException('User is already a member')
+    UserInteraction(category=UserInteraction.BECOME_MEMBER, source=source, user=user).save()
+    assign_role(user, 'member')
+    remove_role(user, 'lead')
+    remove_role(user, 'client')
 
 
 def promote_to_client(user: User, source: str) -> None:
@@ -121,9 +151,21 @@ def client_checkout(user: User, source: str) -> None:
     return UserInteraction(category=UserInteraction.CLIENT_CHECKOUT, source=source, user=user).save()
 
 
+def member_checkout(user: User, source='unknown'):
+    return UserInteraction(category=UserInteraction.MEMBER_CHECKOUT, source=source, user=user).save()
+
+
 def client_generated_boleto(user: User, source: str):
     return UserInteraction(category=UserInteraction.CLIENT_BOLETO, source=source, user=user).save()
 
 
+def member_generated_boleto(user, source='unknow'):
+    return UserInteraction(category=UserInteraction.MEMBER_BOLETO, source=source, user=user).save()
+
+
 def subscribe_to_waiting_list(user: User, source: str):
     return UserInteraction(category=UserInteraction.WAITING_LIST, source=source, user=user).save()
+
+
+def is_client(user: User):
+    return has_role(user, 'client')

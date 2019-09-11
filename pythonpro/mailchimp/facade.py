@@ -22,6 +22,10 @@ def create_or_update_client(name: str, email: str):
     return _create_or_update(name, email, _CLIENT)
 
 
+def create_or_update_member(name: str, email: str):
+    return _create_or_update(name, email, _MEMBER)
+
+
 def _create_or_update(name: str, email: str, role: str):
     try:
         return _update_member_role(email, role)

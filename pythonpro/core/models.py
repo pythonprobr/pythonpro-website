@@ -94,17 +94,17 @@ class UserInteraction(models.Model):
         max_length=32,
         choices=(
             (
-                (BECOME_LEAD, 'User become lead'),
+                (BECOME_LEAD, 'User become Lead'),
                 (ACTIVATED, 'User Watched first video class'),
                 (CLIENT_LP, 'User visited Client Landing Page'),
-                (CLIENT_CHECKOUT, 'User clicked on client checkout button'),
+                (CLIENT_CHECKOUT, 'User clicked on Client checkout button'),
                 (CLIENT_BOLETO, 'User generated a Client Boleto'),
-                (BECOME_CLIENT, 'User become client'),
+                (BECOME_CLIENT, 'User become Client'),
                 (MEMBER_LP, 'User visited Member Landing Page'),
                 (MEMBER_CHECKOUT, 'User clicked on Member checkout Button'),
                 (MEMBER_BOLETO, 'User generate Member Boleto'),
                 (WAITING_LIST, 'User subscribed to Waiting List'),
-                (BECOME_MEMBER, 'User Become Client')
+                (BECOME_MEMBER, 'User Become Member')
             )
         )
     )

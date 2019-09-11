@@ -4,23 +4,32 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
 from django.shortcuts import render
-from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 
-from pythonpro.domain import user_facade
+from pythonpro.cohorts import facade as cohorts_facade
+from pythonpro.domain import membership_facade, user_facade
 from pythonpro.payments import facade as payment_facade
 from pythonpro.payments.facade import PYTOOLS_PRICE, PYTOOLS_PROMOTION_PRICE, PagarmeNotPaidTransaction
 
 
-def options(request):
-    template = 'payments/options_detail.html' if settings.SUBSCRIPTIONS_OPEN else 'payments/closed_subscriptions.html'
-    return render(request, template, {})
-
-
 def thanks(request):
     return render(request, 'payments/thanks.html')
+
+
+def membership_thanks(request):
+    return render(request, 'payments/membership_thanks.html', {'cohort': cohorts_facade.find_most_recente_cohort()})
+
+
+@csrf_exempt
+def member_capture(request):
+    if request.method != 'POST':
+        return
+    user = request.user
+    token = request.POST['token']
+    dct = membership_facade.capture_payment(token, user, request.GET.get('utm_source', default='unknown'))
+    return JsonResponse(dct)
 
 
 @csrf_exempt
@@ -55,6 +64,20 @@ def pytools_capture(request):
 
 @login_required
 @csrf_exempt
+def member_checkout(request):
+    """
+   Track user who clicked on client LP Checkout button
+   :param request:
+   :return:
+   """
+    if request.method != 'POST':
+        return
+    user_facade.click_member_checkout(request.user)
+    return JsonResponse({'client-checkout': 'ok'})
+
+
+@login_required
+@csrf_exempt
 def client_checkout(request):
     """
     Track user who clicked on client LP Checkout button
@@ -68,14 +91,7 @@ def client_checkout(request):
 
 
 def _promote_client(user, request):
-    msg = render_to_string(
-        'payments/pytools_email.txt',
-        {
-            'user': user,
-            'ty_url': request.build_absolute_uri(reverse('payments:pytools_thanks'))
-        }
-    )
-    user_facade.promote_client(user, msg, source=request.GET.get('utm_source', default='unknown'))
+    user_facade.promote_client(user, source=request.GET.get('utm_source', default='unknown'))
 
 
 def pytools_thanks(request):
@@ -88,8 +104,44 @@ def pytools_boleto(request):
     return render(request, 'payments/pytools_boleto.html', context=context)
 
 
+def membership_boleto(request):
+    dct = request.GET
+    context = _extract_boleto_params(dct)
+    return render(request, 'payments/membership_boleto.html', context=context)
+
+
 def _extract_boleto_params(dct):
     return {k: dct[k] for k in ['boleto_barcode', 'boleto_url']}
+
+
+def member_landing_page(request):
+    user = request.user
+    if user.is_authenticated:
+        user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
+        notification_url = reverse('payments:membership_notification', kwargs={'user_id': user.id})
+    else:
+        notification_url = reverse('payments:membership_anonymous_notification')
+
+    if settings.SUBSCRIPTIONS_OPEN:
+        template = 'payments/member_landing_page_subscription_open.html'
+        price = membership_facade.calculate_membership_price(user)
+        price_float = price / 100
+        price_installment = (price // 10) / 100
+        return render(
+            request,
+            template,
+            {
+                'PAGARME_CRYPTO_KEY': settings.PAGARME_CRYPTO_KEY,
+                'price': price,
+                'price_float': price_float,
+                'price_installment': price_installment,
+                'notification_url': request.build_absolute_uri(notification_url),
+                'cohort': cohorts_facade.find_most_recente_cohort()
+            }
+        )
+    else:
+        template = 'payments/member_landing_page_subscription_closed.html'
+        return render(request, template, {})
 
 
 def client_landing_page(request):
@@ -114,23 +166,28 @@ def client_landing_page(request):
             'price_installment': price_installment,
             'is_promotion_season': is_promotion_season,
             'promotion_end_date': promotion_end_date,
-            'notification_url': request.build_absolute_uri(
-                notification_url
-            )
+            'notification_url': request.build_absolute_uri(notification_url)
         })
-
-
-@login_required
-def member_landing_page(request):
-    user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
-    return render(
-        request, 'payments/member_landing_page.html', {})
 
 
 @login_required
 def waiting_list_ty(request):
     user_facade.subscribe_to_waiting_list(request.user, source=request.GET.get('utm_source', default='unknown'))
     return render(request, 'payments/waiting_list_ty.html', {'email': request.user.email})
+
+
+@csrf_exempt
+def membership_notification(request, user_id: int):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed([request.method])
+    membership_facade.subscribe_member_who_paid_boleto(
+        user_id,
+        request.POST,
+        request.body.decode('utf8'),
+        request.headers['X-Hub-Signature'],
+        request.GET.get('utm_source', default='unknown')
+    )
+    return HttpResponse('')
 
 
 @csrf_exempt
@@ -141,7 +198,7 @@ def pagarme_notification(request, user_id: int):
         payment_facade.confirm_boleto_payment(
             user_id, request.POST, request.body.decode('utf8'), request.headers['X-Hub-Signature'])
     except PagarmeNotPaidTransaction:
-        pass  # No problem, we need to handle only paid transactions
+        pass
     else:
         user = user_facade.find_user_by_id(user_id)
         _promote_client(user, request)
@@ -160,4 +217,17 @@ def pagarme_anonymous_notification(request):
     else:
         user = user_facade.find_user_by_email(transaction['customer']['email'])
         _promote_client(user, request)
+    return HttpResponse('')
+
+
+@csrf_exempt
+def membership_anonymous_notification(request):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed([request.method])
+    membership_facade.subscribe_anonymous_member_who_paid_boleto(
+        request.POST,
+        request.body.decode('utf8'),
+        request.headers['X-Hub-Signature'],
+        request.GET.get('utm_source', default='unknown')
+    )
     return HttpResponse('')

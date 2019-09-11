@@ -233,8 +233,9 @@ def transaction_response():
         'object': 'transaction', 'status': 'waiting_payment', 'refuse_reason': None, 'status_reason': 'acquirer',
         'acquirer_response_code': None, 'acquirer_name': 'pagarme', 'acquirer_id': '5cdec7071458b442125d940b',
         'authorization_code': None, 'soft_descriptor': None, 'tid': 6416381, 'nsu': 6416381,
-        'date_created': '2019-05-28T21:31:38.391Z', 'date_updated': '2019-05-28T21:31:40.601Z', 'amount': 9999,
-        'authorized_amount': 9999, 'paid_amount': 0, 'refunded_amount': 0, 'installments': 1, 'id': 1396639, 'cost': 0,
+        'date_created': '2019-05-28T21:31:38.391Z', 'date_updated': '2019-05-28T21:31:40.601Z', 'amount': PYTOOLS_PRICE,
+        'authorized_amount': PYTOOLS_PRICE, 'paid_amount': 0, 'refunded_amount': 0, 'installments': 1, 'id': 1396639,
+        'cost': 0,
         'card_holder_name': None, 'card_last_digits': None, 'card_first_digits': None, 'card_brand': None,
         'card_pin_mode': None, 'card_magstripe_fallback': False,
         'postback_url': 'http://localhost:8000/pagamento/pargarme/notificacao/6', 'payment_method': 'boleto',
@@ -258,7 +259,7 @@ def transaction_response():
             }
         }, 'shipping': None, 'items': [{
             'object': 'item', 'id': 'pytools-2', 'title': 'Curso PyTools',
-            'unit_price': 9999, 'quantity': 1, 'category': None, 'tangible': False,
+            'unit_price': PYTOOLS_PRICE, 'quantity': 1, 'category': None, 'tangible': False,
             'venue': None, 'date': None
         }], 'card': None, 'split_rules': None, 'metadata': {}, 'antifraud_metadata': {},
         'reference_key': None, 'device': None, 'local_transaction_id': None, 'local_time': None, 'fraud_covered': False,

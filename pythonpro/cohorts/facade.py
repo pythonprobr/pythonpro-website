@@ -1,6 +1,7 @@
 from django.db.models import Prefetch as _Prefetch
+from django.urls import reverse
 
-from pythonpro.cohorts.models import Cohort as _Cohort, LiveClass as _LiveClass, Webinar as _Webinar
+from pythonpro.cohorts.models import Cohort as _Cohort, CohortStudent, LiveClass as _LiveClass, Webinar as _Webinar
 
 
 def get_all_cohorts_desc():
@@ -21,6 +22,15 @@ def find_cohort(slug):
             to_attr='webinars'
         )
     ).get()
+
+
+def find_most_recente_cohort():
+    return _Cohort.objects.order_by('-start').first()
+
+
+def calculate_most_recent_cohort_path() -> str:
+    slug_dct = _Cohort.objects.order_by('-start').values('slug').first()
+    return reverse('modules:detail', kwargs=slug_dct)
 
 
 def find_webinars():
@@ -46,3 +56,9 @@ def find_live_class(pk):
     :return:
     """
     return _LiveClass.objects.select_related('cohort').get(pk=pk)
+
+
+def subscribe_to_last_cohort(user):
+    ch = CohortStudent(user=user, cohort=find_most_recente_cohort())
+    ch.save()
+    return ch
