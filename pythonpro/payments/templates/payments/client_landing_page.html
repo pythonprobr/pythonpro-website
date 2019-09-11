@@ -663,11 +663,13 @@
                     <h2 class='font-weight-bold'>HOJE, VOCÊ TERÁ ACESSO AO CURSO POR APENAS:</h2>
                     <p class='price'>
                         <b>12x </b>
-                        <b class='real'> <span>R$</span> {{ price_installment|floatformat:2 }}</b>
-                        <br>
-                        <i class='a-vista'>(ou apenas <b>R$ {{ price_float|floatformat:2 }}</b> se você comprar à vista)</i>
+                        <b class='real'><span>R$</span> {{ price_installment|floatformat:2 }}</b>
                     </p>
                     
+                    <p class='a-vista'>
+                        <i class=''>(ou apenas <b>R$ {{ price_float|floatformat:2 }}</b> se você comprar à vista)</i>
+                    </p>
+
                     <div class='text-center d-none d-sm-block d-md-block'>
                         <button class="cta btn btn-warning mt-10">
                             SIM! Eu quero <b><b>ir além do básico!</b></b>
@@ -865,9 +867,11 @@
                     <h2 class='font-weight-bold'>ADQUIRA O PYTOOLS POR APENAS:</h2>
                     <p class='price'>
                         <b>12x </b>
-                        <b class='real'> <span>R$</span> {{ price_installment|floatformat:2 }}</b>
-                        <br>
-                        <i class='a-vista'>(ou apenas <b>R$ {{ price_float|floatformat:2 }}</b> se você comprar à vista)</i>
+                        <b class='real'><span>R$</span> {{ price_installment|floatformat:2 }}</b>
+                    </p>
+
+                    <p class='a-vista'>
+                        <i class=''>(ou apenas <b>R$ {{ price_float|floatformat:2 }}</b> se você comprar à vista)</i>
                     </p>
 
                     <div class='text-center d-none d-sm-block d-md-block'>

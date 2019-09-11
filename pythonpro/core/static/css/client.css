@@ -65,19 +65,23 @@ h3 .ec, h4 .ec {
 }
 
 .price {
-    line-height: 170%;
+    line-height: 350%;
     letter-spacing: 0px;
     padding: 40px 10px 30px 10px;
+    margin-right: -10px;
 }
 
 .a-vista {
     letter-spacing: 1px;
+    margin-top: -10px;
 }
 
 .real, .centavos {
     font-size: 500%;
     color: #ffcc29;
 
+.a-prazo {
+    line-height: 350%;
 }
 
 .real {
