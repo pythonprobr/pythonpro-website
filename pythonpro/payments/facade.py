@@ -10,6 +10,8 @@ _pagarme.authentication_key(settings.PAGARME_API_KEY)
 
 PYTOOLS_PRICE = 4999
 PYTOOLS_PROMOTION_PRICE = 4999
+MEMBERSHIP_PRICE = 159999
+MEMBERSHIP_DISCOUNT_FOR_CLIENTS = PYTOOLS_PRICE
 
 
 def pytools_capture(token: str, user_creation: datetime):
@@ -28,11 +30,28 @@ class PagarmeNotPaidTransaction(Exception):
     pass
 
 
-def confirm_boleto_payment(user_id, notification: dict, raw_post: str, expected_signature):
+def membership_capture(price: int, token: str):
+    amount = _pagarme.transaction.find_by_id(token)['amount']
+    if amount < price:
+        raise PagarmeValidationException(f'Payment done ({amount}) is less then price ({price}) for token: {token}')
+    return _pagarme.transaction.capture(token, {'amount': amount})
+
+
+def confirm_boleto_payment(user_id: int, notification: dict, raw_post: str, expected_signature):
     transaction = extract_transaction(notification, raw_post, expected_signature)
     item_id = transaction['items'][0]['id']
     # id is generated concatenating Module slug and user's id. Check content_client_landing_page pagarme JS
     expected_id = f'pytools-{user_id}'
+    if item_id != expected_id:
+        raise PagarmeValidationException(f"Expected item's id {expected_id} differs from {item_id}", notification)
+    return transaction
+
+
+def confirm_membership_boleto_payment(user_id: int, notification: dict, raw_post: str, expected_signature: str) -> dict:
+    transaction = extract_transaction(notification, raw_post, expected_signature)
+    item_id = transaction['items'][0]['id']
+    # id is generated concatenating Module slug and user's id. Check content_membership_landing_page pagarme JS
+    expected_id = f'membership-{user_id}'
     if item_id != expected_id:
         raise PagarmeValidationException(f"Expected item's id {expected_id} differs from {item_id}", notification)
     return transaction

@@ -9,7 +9,6 @@ from django.contrib.auth.forms import (
 from django.core.exceptions import PermissionDenied
 from django.db import router, transaction
 from django.http import Http404, HttpResponseRedirect
-from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
 from django.utils.decorators import method_decorator
@@ -57,16 +56,8 @@ class UserAdmin(RolePermissionsUserAdminMixin, admin.ModelAdmin):
 
     def make_client(self, request, queryset):
         from pythonpro.domain import user_facade
-        ty_rul = request.build_absolute_uri(reverse('payments:pytools_thanks'))
         for user in queryset:
-            msg = render_to_string(
-                'payments/pytools_email.txt',
-                {
-                    'user': user,
-                    'ty_url': ty_rul
-                }
-            )
-            user_facade.promote_client(user, msg, 'django_admin')
+            user_facade.promote_client(user, 'django_admin')
 
     def get_fieldsets(self, request, obj=None):
         if not obj:

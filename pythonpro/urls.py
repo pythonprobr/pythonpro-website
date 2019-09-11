@@ -44,6 +44,7 @@ urlpatterns = [
     path('dashboard/', include('pythonpro.dashboard.urls')),
     path('', include('pythonpro.core.urls')),
     path('curso-de-python-intermediario', payments_views.client_landing_page, name='client_landing_page'),
+    path('curso-de-python-completo', payments_views.member_landing_page, name='member_landing_page'),
 
 ]
 

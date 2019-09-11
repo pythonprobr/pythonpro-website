@@ -3,6 +3,8 @@ from faker import Faker
 from model_mommy import mommy
 from rolepermissions.roles import assign_role
 
+from pythonpro.cohorts.models import Cohort
+
 
 @pytest.fixture
 def fake():
@@ -19,6 +21,11 @@ def client_with_user(client, django_user_model, logged_user):
 def logged_user(django_user_model):
     logged_user = mommy.make(django_user_model)
     return logged_user
+
+
+@pytest.fixture
+def cohort(db):
+    return mommy.make(Cohort)
 
 
 @pytest.fixture

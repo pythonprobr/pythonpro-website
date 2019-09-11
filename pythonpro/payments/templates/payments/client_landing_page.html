@@ -105,7 +105,7 @@
                         Com o PyTools você vai <b><b>aprender as ferramentas que o mercado procura</b></b>.
                         Além disso, vai <b>criar seu primeiro projeto</b> de maneira profissional.
                     </p>
-                
+
                     <div class='d-none d-sm-block d-md-block'>
                         <button class="cta btn btn-warning mt-10">
                             SIM! Eu quero <b><b>ir além do básico!</b></b>
@@ -128,20 +128,21 @@
             <div class="row">
                 <div class="col mb-5 mt-5">
                     <h2 class='font-weight-bold mb-5'>Olá! Eu me chamo Renzo Nuccitelli,</h2>
-                    
+
                     <div class='text-center d-block d-lg-none d-xl-none'>
                         <img src='{% static "img/profile.jpeg" %}' class="img-fluid" width="300px">
                     </div>
-                    
-                    <img src='{% static "img/profile.jpeg" %}' class="img-fluid float-right ml-3 mb-3 d-none d-sm-block d-md-block" width="300px">
-                    
+
+                    <img src='{% static "img/profile.jpeg" %}'
+                         class="img-fluid float-right ml-3 mb-3 d-none d-sm-block d-md-block" width="300px">
+
                     <p>
-                        Sou programador há 13 anos. Já fui diretor de tecnologia em duas empresas 
-                        e também trabalhei na maior empresa de sofware aberto do mundo, <b>a 
+                        Sou programador há 13 anos. Já fui diretor de tecnologia em duas empresas
+                        e também trabalhei na maior empresa de sofware aberto do mundo, <b>a
                         Red Hat</b>. Também já fui consultor de diversas outras empresas, como o Hotel Urbano.
                     </p>
                     <p>
-                        Já palestrei em diversos enventos de tecnologia, como <b>Python Brasil, 
+                        Já palestrei em diversos enventos de tecnologia, como <b>Python Brasil,
                         GDG, Agile Vale</b> e muitos outros.
                     </p>
                     <p><b class='highlight'>
@@ -149,9 +150,9 @@
                     </b></p>
                     <p>
                         Por isso estou aqui para te fazer uma proposta que tenho certeza que vai te deixar
-                        muito interessado. 
+                        muito interessado.
                     </p>
-                        
+
                     <h3 class='mb-5 mt-5'>
                         Mas antes, vamos voltar alguns anos no tempo…
                     </h3>
@@ -378,7 +379,7 @@
             </div>
         </div>
     </div>
-    
+
     <div>
         <div class="container">
             <div class="row">
@@ -511,10 +512,10 @@
             <div class="row">
                 <div class="col mt-5 mb-5">
                     <h3><b>E tem mais... </b></h3>
-                    
+
                     <h2 class='mb-5'>
-                    Além do curso <b>PyTools</b>, eu preparei mais 
-                    <b><u>três bônus pra você!</b></u>
+                        Além do curso <b>PyTools</b>, eu preparei mais
+                        <b><u>três bônus pra você!</u></b>
                     </h2>
 
                     <h4 class='font-weight-bold mt-5'>
@@ -665,7 +666,7 @@
                         <b>12x </b>
                         <b class='real'><span>R$</span> {{ price_installment|floatformat:2 }}</b>
                     </p>
-                    
+
                     <p class='a-vista'>
                         <i class=''>(ou apenas <b>R$ {{ price_float|floatformat:2 }}</b> se você comprar à vista)</i>
                     </p>
@@ -681,7 +682,7 @@
                             SIM! Eu quero <b><b>ir além do básico!</b></b>
                         </button>
                     </div>
-                    
+
                     <div class="mt-3">
                         <img src='{% static "img/compra-segura-1.png" %}' width='250px' alt="Imagem Compra Segura"/>
                     </div>
@@ -745,6 +746,7 @@
                         Já são vários alunos transformados!
                         <span class="ec ec-heart-eyes"></span>
                         <span class="ec ec-heart-eyes"></span>
+                    </b>
                     </h3>
                     <div class='social-proof'>
                         {% include 'core/social_proof.html' %}
@@ -891,6 +893,20 @@
                     </div>
 
 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Calma que já está acabando ;)</h5>
+                </div>
+                <div class="modal-body">
+                    Aguarde enquanto finalizamos seu pagamento <img src="{% static 'img/ajax-loader.gif' %}"
+                                                                    alt="Ajax Loader"/>
                 </div>
             </div>
         </div>

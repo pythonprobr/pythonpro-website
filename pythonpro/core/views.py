@@ -9,9 +9,9 @@ from django.views.generic import TemplateView, UpdateView
 from django_sitemaps import Sitemap
 from rolepermissions.checkers import has_role
 
-from pythonpro.domain import user_facade
 from pythonpro.core.forms import UserEmailForm, UserSignupForm
 from pythonpro.core.models import User
+from pythonpro.domain import user_facade
 
 
 def index(request):
@@ -57,7 +57,12 @@ def sitemap(request):
     map = Sitemap(build_absolute_uri=request.build_absolute_uri, )
 
     named_views = [
-        'core:index', 'core:lead_landing', 'client_landing_page', 'core:podcast', 'core:tech_talks',
+        'core:index',
+        'core:lead_landing',
+        'client_landing_page',
+        'member_landing_page',
+        'core:podcast',
+        'core:tech_talks',
         'modules:index'
     ]
     for section in named_views:

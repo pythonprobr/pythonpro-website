@@ -57,7 +57,7 @@ pytest pythonpro
 If you want run your amb dev using postgres, you can install docker and run:
 
 ```console
-docker run -p 5432:5432 --env POSTGRES_PASSWORD=pass --name pythonpro-postgres -d postgres:9
+docker-compose docker-compose.yml up 
 ```
 
 and add to your .env
