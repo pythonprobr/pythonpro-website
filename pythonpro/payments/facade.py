@@ -7,7 +7,8 @@ from django.conf import settings
 from django.utils.timezone import now
 
 _pagarme.authentication_key(settings.PAGARME_API_KEY)
-PYTOOLS_PRICE = 9999
+
+PYTOOLS_PRICE = 4999
 PYTOOLS_PROMOTION_PRICE = 4999
 
 
