@@ -22,7 +22,7 @@ django-role-permissions = "*"
 mailchimp3 = "*"
 responses = "*"
 newrelic = "*"
-pagarme-python = {editable = true,git = "https://github.com/pagarme/pagarme-python.git",ref = "master"}
+pagarme-python = {editable = true,git = "https://github.com/renzon/pagarme-python.git",ref = "master"}
 sentry-sdk = "*"
 python-dateutil = "*"
 
