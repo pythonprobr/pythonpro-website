@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "453adbb9c49a4549e054c51ba0c6c1562109d3c96ff872565ddeab0847c71edf"
+            "sha256": "8443ce5943fd031c6d935fc82b970a93e4c2683f19705342a976f1e90221160e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -240,8 +240,8 @@
         },
         "pagarme-python": {
             "editable": true,
-            "git": "https://github.com/pagarme/pagarme-python.git",
-            "ref": "4bf67659c9d8fe46a6031431fe7cb1bd3c71bbd8"
+            "git": "https://github.com/renzon/pagarme-python.git",
+            "ref": "b9dcbfd449764ca6e6caa83d3cfe3839d5d2a660"
         },
         "parso": {
             "hashes": [
