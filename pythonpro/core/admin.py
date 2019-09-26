@@ -52,12 +52,17 @@ class UserAdmin(RolePermissionsUserAdminMixin, admin.ModelAdmin):
     search_fields = ('first_name', 'email')
     ordering = ('first_name',)
     filter_horizontal = ('groups', 'user_permissions',)
-    actions = ['make_client']
+    actions = ['make_client', 'make_member']
 
     def make_client(self, request, queryset):
         from pythonpro.domain import user_facade
         for user in queryset:
             user_facade.promote_client(user, 'django_admin')
+
+    def make_member(self, request, queryset):
+        from pythonpro.domain import user_facade
+        for user in queryset:
+            user_facade.promote_member(user, 'django_admin')
 
     def get_fieldsets(self, request, obj=None):
         if not obj:

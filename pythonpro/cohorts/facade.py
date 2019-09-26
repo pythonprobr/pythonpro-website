@@ -24,7 +24,7 @@ def find_cohort(slug):
     ).get()
 
 
-def find_most_recente_cohort():
+def find_most_recent_cohort():
     return _Cohort.objects.order_by('-start').first()
 
 
@@ -59,6 +59,6 @@ def find_live_class(pk):
 
 
 def subscribe_to_last_cohort(user):
-    ch = CohortStudent(user=user, cohort=find_most_recente_cohort())
+    ch = CohortStudent(user=user, cohort=find_most_recent_cohort())
     ch.save()
     return ch

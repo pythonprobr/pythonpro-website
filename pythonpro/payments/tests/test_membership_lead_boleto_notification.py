@@ -9,7 +9,6 @@ from django.urls import reverse
 from model_mommy import mommy
 from rolepermissions.checkers import has_role
 
-from pythonpro.cohorts.facade import calculate_most_recent_cohort_path
 from pythonpro.payments.facade import MEMBERSHIP_PRICE, PagarmeValidationException
 
 
@@ -95,10 +94,10 @@ def test_user_tagged_with_cohort_slug(cohort, valid_resp, logged_user, tag_as_mo
     tag_as_mock.assert_called_once_with(logged_user.email, f'turma-{cohort.slug}')
 
 
-def test_email_sent(valid_resp, mailoutbox, logged_user):
+def test_email_sent(cohort, valid_resp, mailoutbox, logged_user):
     sent_email = mailoutbox[0]
     assert logged_user.email in sent_email.to
-    assert calculate_most_recent_cohort_path() in sent_email.body
+    assert cohort.get_absolute_url() in sent_email.body
 
 
 def test_tampered_post(client, logged_user, valid_signature, transaction_response, create_or_update_member, mailoutbox):

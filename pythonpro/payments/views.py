@@ -19,7 +19,7 @@ def thanks(request):
 
 
 def membership_thanks(request):
-    return render(request, 'payments/membership_thanks.html', {'cohort': cohorts_facade.find_most_recente_cohort()})
+    return render(request, 'payments/membership_thanks.html', {'cohort': cohorts_facade.find_most_recent_cohort()})
 
 
 @csrf_exempt
@@ -136,7 +136,7 @@ def member_landing_page(request):
                 'price_float': price_float,
                 'price_installment': price_installment,
                 'notification_url': request.build_absolute_uri(notification_url),
-                'cohort': cohorts_facade.find_most_recente_cohort()
+                'cohort': cohorts_facade.find_most_recent_cohort()
             }
         )
     else:
