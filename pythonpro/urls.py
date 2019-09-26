@@ -19,9 +19,10 @@ from django.contrib import admin
 from django.contrib.auth.views import (
     LoginView, LogoutView, PasswordResetCompleteView, PasswordResetConfirmView,
     PasswordResetDoneView,
-    PasswordResetView
+    PasswordResetView,
 )
 from django.urls import include, path
+
 from pythonpro.payments import views as payments_views
 
 urlpatterns = [

@@ -97,7 +97,7 @@ def force_register_member(first_name, email, source='unknown'):
     """
     user = _core_facade.register_member(first_name, email, source)
     _cohorts_facade.subscribe_to_last_cohort(user)
-    cohort = _cohorts_facade.find_most_recente_cohort()
+    cohort = _cohorts_facade.find_most_recent_cohort()
     try:
         _mailchimp_facade.create_or_update_member(first_name, email)
         _mailchimp_facade.tag_as(email, f'turma-{cohort.slug}')
@@ -116,7 +116,7 @@ def promote_member(user: _User, source: str) -> _User:
     """
     _core_facade.promote_to_member(user, source)
     _cohorts_facade.subscribe_to_last_cohort(user)
-    cohort = _cohorts_facade.find_most_recente_cohort()
+    cohort = _cohorts_facade.find_most_recent_cohort()
     try:
         _mailchimp_facade.create_or_update_member(user.first_name, user.email)
         _mailchimp_facade.tag_as(user.email, f'turma-{cohort.slug}')
@@ -126,11 +126,11 @@ def promote_member(user: _User, source: str) -> _User:
         'payments/membership_email.txt',
         {
             'user': user,
-            'cohort_detail_url': build_absolute_uri(_cohorts_facade.calculate_most_recent_cohort_path())
+            'cohort_detail_url': build_absolute_uri(cohort.get_absolute_url())
         }
     )
     _send_mail(
-        'Inscrição na Turma Bruno Rocha realizada! Confira o link com detalhes.',
+        f'Inscrição na Turma {cohort.title} realizada! Confira o link com detalhes.',
         email_msg,
         _settings.DEFAULT_FROM_EMAIL,
         [user.email]
