@@ -10,7 +10,7 @@ from pythonpro.django_assertions import dj_assert_contains
 
 @pytest.fixture
 def webinar(cohort) -> Webinar:
-    image = SimpleUploadedFile(name='renzo-nuccitelli.png', content=open(img_path, 'rb').read(),
+    image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
                                content_type='image/png')
     return mommy.make(Webinar, cohort=cohort, image=image)
 
