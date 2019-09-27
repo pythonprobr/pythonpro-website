@@ -20,7 +20,7 @@ def resp(client_with_member, cohort):
 
 @pytest.fixture
 def resp_without_user(client, db):
-    image = SimpleUploadedFile(name='renzo-nuccitelli.png', content=open(img_path, 'rb').read(),
+    image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
                                content_type='image/png')
     cohort = mommy.make(Cohort, slug='guido-van-rossum', image=image)
     resp = client.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
@@ -35,7 +35,7 @@ def test_no_access(resp_without_user):
 def test_cohort_links_for_logged_user(client, django_user_model):
     user = mommy.make(django_user_model)
     client.force_login(user)
-    image = SimpleUploadedFile(name='renzo-nuccitelli.png', content=open(img_path, 'rb').read(),
+    image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
                                content_type='image/png')
     cohorts = mommy.make(Cohort, 4, image=image)
     resp = client.get('/', secure=True)
@@ -45,7 +45,7 @@ def test_cohort_links_for_logged_user(client, django_user_model):
 
 @pytest.mark.django_db
 def test_cohort_links_not_avaliable_for_no_user(client):
-    image = SimpleUploadedFile(name='renzo-nuccitelli.png', content=open(img_path, 'rb').read(),
+    image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
                                content_type='image/png')
     cohorts = mommy.make(Cohort, 4, image=image)
     resp = client.get('/', secure=True)
