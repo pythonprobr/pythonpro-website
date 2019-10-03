@@ -38,7 +38,6 @@ SUBSCRIPTIONS_OPEN = config('SUBSCRIPTIONS_OPEN', cast=bool)
 PAGARME_CRYPTO_KEY = config('PAGARME_CRYPTO_KEY')
 PAGARME_API_KEY = config('PAGARME_API_KEY')
 
-
 PAGSEGURO_PAYMENT_PLAN = config('PAGSEGURO_PAYMENT_PLAN')
 
 # Email Configuration
@@ -77,6 +76,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'collectfast',
     'django.contrib.staticfiles',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

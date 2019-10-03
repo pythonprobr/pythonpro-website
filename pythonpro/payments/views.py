@@ -230,4 +230,5 @@ def membership_anonymous_notification(request):
         request.headers['X-Hub-Signature'],
         request.GET.get('utm_source', default='unknown')
     )
+
     return HttpResponse('')
