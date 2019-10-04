@@ -183,6 +183,8 @@ COLLECTFAST_ENABLED = False
 AWS_ACCESS_KEY_ID = config('DJANGO_AWS_ACCESS_KEY_ID', default=False)
 if AWS_ACCESS_KEY_ID:  # pragma: no cover
     COLLECTFAST_ENABLED = True
+    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
     INSTALLED_APPS.append('s3_folder_storage')
     INSTALLED_APPS.append('storages')
     AWS_SECRET_ACCESS_KEY = config('DJANGO_AWS_SECRET_ACCESS_KEY')
