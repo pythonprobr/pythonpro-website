@@ -88,6 +88,9 @@ class UserInteraction(models.Model):
     MEMBER_BOLETO = 'MEMBER_BOLETO'
     WAITING_LIST = 'WAITING_LIST'
     BECOME_MEMBER = 'BECOME_MEMBER'
+    LAUNCH_LP = 'LAUNCH_LP'
+    LAUNCH_SUBSCRIPTION = 'LAUNCH_SUBSCRIPTION'
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     creation = models.DateTimeField(auto_now_add=True)
     category = models.CharField(
@@ -104,7 +107,9 @@ class UserInteraction(models.Model):
                 (MEMBER_CHECKOUT, 'User clicked on Member checkout Button'),
                 (MEMBER_BOLETO, 'User generate Member Boleto'),
                 (WAITING_LIST, 'User subscribed to Waiting List'),
-                (BECOME_MEMBER, 'User Become Member')
+                (BECOME_MEMBER, 'User Become Member'),
+                (LAUNCH_LP, 'User visited Launch Landing Page'),
+                (LAUNCH_SUBSCRIPTION, 'User subscribed to launch'),
             )
         )
     )

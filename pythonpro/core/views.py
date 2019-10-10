@@ -126,6 +126,15 @@ def lead_landing(request):
     return render(request, 'core/lead_landing_page.html', context={'form': UserSignupForm()})
 
 
+def programmer_week_ty(request):
+    """
+    View with lead landing page
+    :param request:
+    :return:
+    """
+    return render(request, 'core/lead_landing_page.html', context={'form': UserSignupForm()})
+
+
 def lead_form(request):
     if request.method == 'GET':
         form = UserSignupForm()

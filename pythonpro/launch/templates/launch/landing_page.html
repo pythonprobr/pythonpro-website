@@ -1,0 +1,113 @@
+{% extends 'core/base_without_nav.html' %}
+{% load static %}
+{% block title %}Semana do Programador Profissional: Inscrições{% endblock %}
+{% block description %}Formulário de Inscrição para Semana do Programdor Profissional{% endblock %}
+{% block head %}
+    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+
+    <style>
+        @font-face {
+            font-family: 'Gilroy-Bold';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Bold ☞'), url('{% static "fonts/Gilroy-Bold.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Heavy';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Heavy ☞'), url('{% static "fonts/Gilroy-Heavy.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Light';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Light ☞'), url('{% static "fonts/Gilroy-Light.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Medium';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Medium ☞'), url('{% static "fonts/Gilroy-Medium.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Regular';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Regular ☞'), url('{% static "fonts/Gilroy-Regular.woff" %}') format('woff');
+        }
+
+    </style>
+    <link rel="stylesheet" href="{% static 'css/client.css' %}"/>
+{% endblock head %}
+
+{% block body %}
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col hero">
+                    <h1 class='text-light font-weight-bold'>Semana do Programador Profissional!</h1>
+                    <p class='text-light mb-5 mt-2'>
+                        Aprenda como entrar para o mercado de tecnologia em pouco tempo
+                    </p>
+                    {% block form %}
+                        <form method="post" action="{% url 'launch:lead_form' %}">
+                            {% csrf_token %}
+                            <div class="form-group form-row justify-content-md-center">
+                                <div class="col-md-4 col-md text-left">
+                                    <label class="text-white"
+                                           for="{{ form.email.id_for_label }}">{{ form.email.label_tag }}</label>
+                                    <input type="email" name="{{ form.email.html_name }}"
+                                           {%  if user.is_authenticated %} value="{{ form.email.value }}"{% endif %}
+                                           class="form-control form-control-lg"
+                                           autofocus="" maxlength="{{ form.email.max_length }}"
+                                           required="required" id="{{ form.email.id_for_label }}"
+                                           placeholder="Digite seu Email">
+                                    <br/>
+                                    <button type="submit" class="btn btn-lg btn-warning btn-block">Sim, quero programar
+                                        &raquo;
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    {% endblock form %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col mb-5 mt-5">
+                <h2 class='font-weight-bold mb-5'>Olá! Eu me chamo Renzo Nuccitelli,</h2>
+
+                <div class='text-center d-block d-lg-none d-xl-none'>
+                    <img src='{% static 'img/instructors/renzo-nuccitelli-300.jpeg' %}' class="img-fluid"
+                         width="300px" alt="Foto de Renzo Nuccitelli"/>
+                </div>
+
+                <img src='{% static 'img/instructors/renzo-nuccitelli-300.jpeg' %}'
+                     class="img-fluid float-right ml-3 mb-3 d-none d-sm-none d-md-block" width="300px"
+                     alt="Foto de Renzo Nuccitelli"/>
+
+                <p>
+                    Sou programador há 13 anos. Já fui diretor de tecnologia em duas empresas
+                    e também trabalhei na maior empresa de software aberto do mundo, <b>a
+                    Red Hat</b>. Também já fui consultor de diversas outras empresas, como o Hotel Urbano.
+                </p>
+                <p>
+                    Já palestrei em diversos enventos de tecnologia, como <b>Python Brasil,
+                    GDG, Agile Vale</b> e muitos outros.
+                </p>
+                <p><b class='highlight'>
+                    Meu sonho sempre foi que as pessoas pudessem construir as mesmas oportunidades que construí...
+                </b></p>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

@@ -117,6 +117,14 @@ def visit_client_landing_page(user: User, source: str):
     return UserInteraction(category=UserInteraction.CLIENT_LP, source=source, user=user).save()
 
 
+def visit_launch_landing_page(user: User, source: str):
+    return UserInteraction(category=UserInteraction.LAUNCH_LP, source=source, user=user).save()
+
+
+def subscribe_to_launch(user: User, source: str):
+    return UserInteraction(category=UserInteraction.LAUNCH_SUBSCRIPTION, source=source, user=user).save()
+
+
 def find_leads_by_date_joined_interval(begin: datetime, end: datetime):
     return list(user for user in User.objects.filter(date_joined__gte=begin, date_joined__lte=end).all() if
                 not has_role(user, ['client', 'member']))

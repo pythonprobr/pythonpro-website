@@ -221,7 +221,7 @@ def visit_client_landing_page(user: _User, source: str) -> None:
 
 def visit_member_landing_page(user, source):
     """
-    Marke user as visited member landing page
+    Mark user as visited member landing page
     :param source: string containing source of traffic
     :param user:
     :return:
@@ -231,6 +231,26 @@ def visit_member_landing_page(user, source):
         _mailchimp_facade.tag_as(user.email, 'potential-member')
     except _MailChimpError:
         pass  # Ok not handling, probably invalid email
+
+
+def visit_launch_landing_page(user, source):
+    """
+    Mark user as visited launch landing page
+    :param source: string containing source of traffic
+    :param user:
+    :return:
+    """
+    _core_facade.visit_launch_landing_page(user, source)
+
+
+def subscribe_launch_landing_page(user, source):
+    """
+    Mark user as subscribed to launch
+    :param source: string containing source of traffic
+    :param user:
+    :return:
+    """
+    _core_facade.subscribe_to_launch(user, source)
 
 
 def click_member_checkout(user):
