@@ -14,24 +14,30 @@ _MEMBER = 'member'
 _ROLES = (_LEAD, _CLIENT, _MEMBER)
 
 
-def create_or_update_lead(name: str, email: str):
-    return _create_or_update(name, email, _LEAD)
+def create_or_update_with_no_role(name: str, email: str, *tags):
+    return _create_or_update(name, email, '', *tags)
 
 
-def create_or_update_client(name: str, email: str):
-    return _create_or_update(name, email, _CLIENT)
+def create_or_update_lead(name: str, email: str, *tags):
+    return _create_or_update(name, email, _LEAD, *tags)
 
 
-def create_or_update_member(name: str, email: str):
-    return _create_or_update(name, email, _MEMBER)
+def create_or_update_client(name: str, email: str, *tags):
+    return _create_or_update(name, email, _CLIENT, *tags)
 
 
-def _create_or_update(name: str, email: str, role: str):
+def create_or_update_member(name: str, email: str, *tags):
+    return _create_or_update(name, email, _MEMBER, *tags)
+
+
+def _create_or_update(name: str, email: str, role: str, *tags):
     try:
-        return _update_member_role(email, role)
+        return _update_member(name, email, role, *tags)
     except MailChimpError as e:
         if e.args[0]['status'] == 404:
-            role_id = _build_roles()[role]
+            tags_with_never_watched = ['never-watched-video']
+            tags_with_never_watched.extend(tags)
+
             # https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/
             data = {
                 'email_address': email,
@@ -39,11 +45,12 @@ def _create_or_update(name: str, email: str, role: str):
                 'merge_fields': {
                     "FNAME": name,
                 },
-                'interests': {
-                    role_id: True
-                },
-                'tags': ['never-watched-video']
+                'tags': tags_with_never_watched
             }
+            roles_dct = _build_roles()
+            if role in roles_dct:
+                role_id = roles_dct[role]
+                data['interests'] = {role_id: True}
             return _members_client.create(_list_id, data)
 
 
@@ -55,9 +62,10 @@ def remove_tags(email: str, *tags):
     return _members_client.tags.update(_list_id, email, {'tags': [{'name': tag, 'status': 'inactive'} for tag in tags]})
 
 
-def _update_member_role(email: str, role: str) -> dict:
+def _update_member(name: str, email: str, role: str = '', *tags) -> dict:
     member = _members_client.get(_list_id, email)
     interests = member['interests']
+    member['merge_fields']['FNAME'] = name
     roles_to_ids = _build_roles()
     # Assure the is now downgrade on user role
     if role == _MEMBER:
@@ -72,8 +80,9 @@ def _update_member_role(email: str, role: str) -> dict:
         interests[roles_to_ids[_MEMBER]] = False
         interests[roles_to_ids[_CLIENT]] = False
         interests[roles_to_ids[_LEAD]] = True
-        member['status'] = 'subscribed'
-
+    if tags:
+        tag_as(email, *tags)
+    member['status'] = 'subscribed'
     _members_client.update(_list_id, email, member)
     return member
 
@@ -93,3 +102,7 @@ def _build_roles() -> dict:
     for c in _client.lists.interest_categories.interests.all(_list_id, role_category_id)['interests']:
         _roles_cache[c['name'].lower()] = c['id']
     return _roles_cache
+
+
+if __name__ == '__main__':
+    create_or_update_with_no_role('Renzo S', 'renzo+1@python.pro.br', 'turma-bruno-rocha-semana-do-programador')

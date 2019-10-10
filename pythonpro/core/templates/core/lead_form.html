@@ -1,16 +1,20 @@
-<form method="post" action="{% url 'core:lead_form' %}{% if request.GET.utm_source %}?utm_source={{ request.GET.utm_source }}{% endif %}">
+<form method="post" action="
+        {% url 'core:lead_form' %}{% if request.GET.utm_source %}?utm_source={{ request.GET.utm_source }}{% endif %}">
     {% csrf_token %}
     <div class="form-group">
         <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label_tag }}</label>
         <input type="text" name="{{ form.first_name.html_name }}" class="form-control"
-               autofocus="" maxlength="{{ form.first_name.max_length }}"
+               maxlength="{{ form.first_name.max_length }}"
                required="required" id="{{ form.first_name.id_for_label }}">
     </div>
     <div class="form-group">
         <label for="{{ form.email.id_for_label }}">{{ form.email.label_tag }}</label>
         <input type="email" name="{{ form.email.html_name }}" class="form-control"
+               value="{{ form.email.value }}"
                maxlength="{{ form.email.max_length }}"
                required="required" id="{{ form.email.id_for_label }}">
     </div>
-    <button class="btn btn-warning">SIM! Quero Receber o <span class="font-weight-bold"><u>CURSO GRÁTIS</u></span> &raquo;</button>
+    <button class="btn btn-warning">SIM! Quero Receber o <span class="font-weight-bold"><u>CURSO GRÁTIS</u></span>
+        &raquo;
+    </button>
 </form>
