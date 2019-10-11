@@ -1,10 +1,11 @@
 import operator
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.template.defaultfilters import date
 from django.urls import reverse
+from django.utils import timezone
 from model_mommy import mommy
 
 from pythonpro.cohorts import facade
@@ -76,7 +77,7 @@ def test_cohort_end(cohort: Cohort, resp):
 
 @pytest.fixture
 def live_classes(cohort, fake):
-    now = datetime.utcnow()
+    now = timezone.now()
     return [
         mommy.make(
             LiveClass,

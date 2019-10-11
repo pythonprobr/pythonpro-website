@@ -1,7 +1,8 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 import pytest
 from django.urls import reverse
+from django.utils import timezone
 from model_mommy import mommy
 
 from pythonpro.cohorts.models import Cohort, LiveClass
@@ -10,7 +11,7 @@ from pythonpro.django_assertions import dj_assert_contains
 
 @pytest.fixture
 def live_class(db, cohort, fake) -> LiveClass:
-    now = datetime.utcnow()
+    now = timezone.now()
     return mommy.make(
         LiveClass,
         cohort=cohort,
