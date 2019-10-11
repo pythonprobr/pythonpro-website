@@ -1,8 +1,9 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from os import path
 
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.utils import timezone
 from model_mommy import mommy
 
 from pythonpro import settings
@@ -22,7 +23,7 @@ def cohort(client, django_user_model):
 
 @pytest.fixture
 def webinars(cohort):
-    now = datetime.utcnow()
+    now = timezone.now()
     image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
                                content_type='image/png')
     return [
