@@ -1,8 +1,9 @@
 {% extends 'core/base_without_nav.html' %}
 {% load static %}
-{% block title %}Semana do Programador Profissional: Inscrição feita!{% endblock %}
+{% block title %}Inscrição realizada! Semana do Programador Profissional{% endblock %}
 {% block description %}Inscrição na Semana do Programador Feita com Sucesso{% endblock %}
 {% block head %}
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css'>
     <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
 
     <style>
@@ -50,13 +51,10 @@
         <div class="container">
             <div class="row text-center">
                 <div class="col hero">
-                    <h1 class='text-light font-weight-bold'>Semana do Programador Profissional!</h1>
-                    <p class='text-light mb-4 mt-2'>
-                        Corre lá no seu email e dá uma olhada que eu te enviei as instruções detalhadas de como o
-                        workshop vai funcionar.
-                    </p>
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/ZCuxX4vyFTo" frameborder="0"
-                            allowfullscreen></iframe>
+                    <h1 class='font-weight-bold text-light'>
+                        MUITO OBRIGADO POR SE INSCREVER!
+                    </h1>
+                    
                 </div>
 
             </div>
@@ -65,46 +63,53 @@
 
     <div class="container">
         <div class="row">
-            <div class="col mb-5 mt-5">
-                <h2 class='font-weight-bold mb-5'>Muito obrigado por se inscrever!
-                </h2>
+            <div class="col-md-10 offset-md-1 col-md mb-5 mt-5">
+                <h2 class='mb-5 mt-2 font-weight-bold'>
+                        Corre lá no seu email! Eu te enviei todas as instruções 
+                        detalhadas de como o workshop vai funcionar.
+                    </h2>
 
+                <p>Aproveitando que você está aqui, eu quero te fazer <b>dois convites.</b></p>
 
-                <img src='{% static 'img/instructors/renzo-nuccitelli-300.jpeg' %}'
-                     class="img-fluid float-right ml-3 mb-3 d-none d-sm-none  d-md-block" width="300px"
-                     alt="Foto de Renzo Nuccitelli"/>
+                <p>
+                    <span class='highlight font-weight-bold'>Primeiro de tudo, quero te convidar para entrar no 
+                    nosso canal lá no Telegram.</span> 
+                </p>
+                <p>
+                    Vai ser por lá que eu vou te informar sobre tudo o que você precisa 
+                    saber sobre a semana do programador profissional. 
+                </p>
+                
+                <p>
+                    Além disso, quem estiver por lá vai ter uma <b>vantagem super especial.</b>
+                </p>
+                
+                <p>
+                    Para se inscrever, basta clicar no botão aqui embaixo.
+                </p>
 
+                <a class='btn btn-lg btn-primary font-weight-bold text-light mb-5' href='https://t.me/ProgramadorProfissional' target='_blank'>
+                    <i class="fa fa-telegram" aria-hidden="true"></i> Entrar para o canal no Telegram!
+                </a>
 
-                <p>Aproveitando que você está aqui, eu quero te fazer dois convites.</p>
-
-                <p>Primeiro de tudo, quero te convidar para conhecer o meu curso grátis de introdução à programação em
-                    Python.</p>
-
-                <p>Esse curso vai te ajudar a desmistificar o Mundo da Programação. Você vai instalar os programas
-                    necessários e começar a programar em menos de 30 minutos. Além disso, você vai entender os
-                    princípios básicos da programação em Python de forma objetiva.</p>
-
-                <p>Com o Python Birds você vai poder avaliar sua aptidão construindo um projeto prático. Eu vou te
-                    ensinar a programar construindo uma versão do jogo Angry Birds!</p>
-
-                <p>Para se inscrever, basta clicar no botão aqui embaixo:</p>
-
-                <p><a href="{{python_birds_path}}">Quero me inscrever gratuitamente no Python Birds</a></p>
-
-                <p>E quero aproveitar também pra te convidar a me seguir nas redes sociais. Por elas eu falo quase que
+                <p class='mt-4'>
+                E quero aproveitar também pra te convidar a me seguir nas redes sociais. Por elas eu falo quase que
                     diariamente sobre tecnologia e sobre o mercado de programação.</p>
 
                 <p class="mb-0">Os links também estão aqui embaixo: </p>
                 <ul class="mt-0 ml-5">
-                    <li><a href="https://twitter.com/renzoprobr"> Seguir o @renzoprobr no twitter</a></li>
-                    <li><a href="https://www.youtube.com/user/renzonuccitelli"> Inscrever-se no canal Dev Profissional no Youtube</a></li>
-                    <li><a href="https://instagram.com/renzoprobr"> Seguir o @renzoprobr no instagram</a></li>
+                    <li><a class='btn btn-success' target='_blank' href="https://twitter.com/renzoprobr"> 
+                        Seguir o <b>@renzoprobr</b> no Twitter</a></li>
+                    <li><a class='btn btn-success' target='_blank' href="https://www.youtube.com/user/renzonuccitelli">
+                        Inscrever-se no canal <b>Dev Profissional</b> no Youtube</a></li>
+                    <li><a class='btn btn-success' target='_blank' href="https://instagram.com/renzoprobr"> 
+                        Seguir o <b>@renzoprobr</b> no Instagram</a></li>
                 </ul>
                 <p>Muito obrigado pela sua atenção e nos vemos na semana do programador profissional!</p>
 
                 <p>
                     Abraços, <br/>
-                    Renzo Nuccitelli
+                    Renzo
                 </p>
 
                 <div class='text-center d-block d-lg-none d-xl-none d'>

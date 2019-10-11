@@ -20,16 +20,11 @@ def test_status_code(resp):
         'https://twitter.com/renzoprobr',
         'https://www.youtube.com/user/renzonuccitelli',
         'https://instagram.com/renzoprobr',
-        'src="https://www.youtube.com/embed/',
     ]
 
 )
 def test_email_field_is_present(resp, media_link):
     dj_assert_contains(resp, media_link)
-
-
-def test_python_birds_path(resp, cohort):
-    dj_assert_contains(resp, reverse('core:lead_landing') + f'?utm_source=lancamento-{cohort.slug}')
 
 
 @pytest.fixture
