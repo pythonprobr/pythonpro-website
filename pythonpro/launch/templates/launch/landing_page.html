@@ -68,6 +68,9 @@
         .mobile h2 {
             font-size: 1.5rem;
         }
+        .mobile.hero {
+            margin: 20px 0;
+        }
     </style>
 {% endblock head %}
 
@@ -75,32 +78,29 @@
     <div class=''>
         <div class="container">
             <div class="row text-center">
-                <div class="col-md-12 hero">
-                    <!-- desktop -->
-                    <div class='desktop d-none d-sm-block d-md-block'>
-                        <h1 class='font-weight-bold' style='color: #44A5F1'>
-                            SEMANA DO PROGRAMADOR PROFISSIONAL
-                        </h1>
-                        <h2 class='col-md-8 offset-md-2'>
-                            Uma semana de vídeos e aulas que vão te ensinar como se 
-                            <b>tornar um programador profissional</b> em pouco tempo!
-                            
-                        </h2>
-                    </div>
-                    
-                    <!-- mobile -->
-                    <div class='mobile d-block d-lg-none d-xl-none'>
-                        <h1 class='font-weight-bold' style='color: #44A5F1'>
-                            SEMANA DO PROGRAMADOR PROFISSIONAL
-                        </h1>
-                        <h2 class='col-md-8 offset-md-2'>
-                            Uma semana de vídeos e aulas que vão te ensinar como se 
-                            <b>tornar um programador profissional</b> em pouco tempo!
-                            
-                        </h2>
-                    </div>
+                <!-- desktop -->
+                <div class="col-md-12 hero desktop d-none d-sm-block d-md-block">
+                    <h1 class='font-weight-bold' style='color: #44A5F1'>
+                        SEMANA DO PROGRAMADOR PROFISSIONAL
+                    </h1>
+                    <h2 class='col-md-8 offset-md-2'>
+                        Uma semana de vídeos e aulas que vão te ensinar como se 
+                        <b>tornar um programador profissional</b> em pouco tempo!    
+                    </h2>
+                    <h3 class='font-weight-bold col-md-8 offset-md-2 mt-4'>28/10 á 01/11</h3>
                 </div>
-
+                    
+                <!-- mobile -->
+                <div class="col-md-12 hero mobile d-block d-lg-none d-xl-none">
+                    <h1 class='font-weight-bold' style='color: #44A5F1'>
+                        SEMANA DO PROGRAMADOR PROFISSIONAL
+                    </h1>
+                    <h2 class='col-md-8 offset-md-2'>
+                        Uma semana de vídeos e aulas que vão te ensinar como se 
+                        <b>tornar um programador profissional</b> em pouco tempo!    
+                    </h2>
+                    <h3 class='font-weight-bold col-md-8 offset-md-2 mt-4'>28/10 á 01/11</h3>
+                </div>
             </div>
         </div>
     </div>
@@ -170,14 +170,18 @@
                     Meu sonho sempre foi que as pessoas pudessem construir as mesmas oportunidades que construí...
                 </b></p>
                 <p>
-                    Por isso eu decidi criar o workshop <b>Semana do Programador Profissional</b>, 
+                    Por isso eu decidi criar a <b>Semana do Programador Profissional</b>, 
                     um workshop onde eu vou te mostrar como uma pessoa completamente leiga em 
-                    programação pode se tornar um programador profissional em questão de meses, 
+                    programação pode <b>se tornar um programador profissional em questão de meses</b>, 
                     desde que faça isso da maneira certa.
                 </p>
                 <p>
-                    Deixe seu email e venha aprender como se tornar um programador profissional
-                    em <b>pouco tempo</b>!
+                    Esse workshop vai acontecer entre os dias <b>28 de Outubro e 01 de Novembro</b>, 
+                    online e de forma gratuita.
+                </p>
+                <p>
+                    Preencha o formulário abaixo com o seu email e venha aprender como se 
+                    tornar um programador profissional em <b>pouco tempo</b>!
                 </p>
             </div>
         </div>
@@ -194,7 +198,7 @@
                                 <input type="email" name="{{ form.email.html_name }}"
                                         {%  if user.is_authenticated %} value="{{ form.email.value }}"{% endif %}
                                         class="form-control form-control-lg"
-                                        autofocus="" maxlength="{{ form.email.max_length }}"
+                                        maxlength="{{ form.email.max_length }}"
                                         required="required" id="{{ form.email.id_for_label }}"
                                         placeholder="Insira o seu MELHOR EMAIL!">
                                 
