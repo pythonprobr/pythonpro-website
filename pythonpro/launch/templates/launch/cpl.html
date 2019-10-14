@@ -72,6 +72,12 @@
         .mobile.hero {
             margin: 20px 0;
         }
+
+        .fb_iframe_widget_fluid_desktop, .fb_iframe_widget_fluid_desktop span, .fb_iframe_widget_fluid_desktop iframe {
+            max-width: 100% !important;
+            width: 100% !important;
+        }
+
     </style>
 {% endblock head %}
 
@@ -85,10 +91,8 @@
                         SEMANA DO PROGRAMADOR PROFISSIONAL
                     </h1>
                     <h2 class='col-md-8 offset-md-2'>
-                        Uma semana de vídeos e aulas que vão te ensinar como se
-                        <b>tornar um programador profissional</b> em pouco tempo!
+                        {{ title }}
                     </h2>
-                    <h3 class='font-weight-bold col-md-8 offset-md-2 mt-4'>28/10 á 01/11</h3>
                 </div>
 
                 <!-- mobile -->
@@ -97,42 +101,43 @@
                         SEMANA DO PROGRAMADOR PROFISSIONAL
                     </h1>
                     <h2 class='col-md-8 offset-md-2'>
-                        Uma semana de vídeos e aulas que vão te ensinar como se
-                        <b>tornar um programador profissional</b> em pouco tempo!
+                        {{ title }}
                     </h2>
-                    <h3 class='font-weight-bold col-md-8 offset-md-2 mt-4'>28/10 á 01/11</h3>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class='bg-primary'>
+    <div class='bg-primary pt-4 pb-2'>
         <div class="container">
-            <div class="row text-center">
-                <div class="col hero">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video_id }}" frameborder="0"
-                            allowfullscreen></iframe>
+            <div class="row justify-content-center text-center">
+                <div class="col-12">
+                    <div class="embed-container">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video_id }}"
+                                frameborder="0"
+                                webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        <div id="fb-root"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="container">
-        <div class="row">
-            <div class="col mb-5 mt-5">
-                <div id="fb-root"></div>
+        <div class="row justify-content-center">
+            <div class="col">
                 <script async defer crossorigin="anonymous"
-                        src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v4.0&appId=1432926893644944&autoLogAppEvents=1"></script>
-                <div class="fb-comment-embed" data-href="{{ data_href }}" data-width="560" data-include-parent="false"></div>
-
+                        src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v4.0&appId=828510970515986&autoLogAppEvents=1"></script>
+                <div class="mb-5">
+                    <div class="fb-comments"
+                         data-href="https://www.facebook.com/pythonprobr/posts/{{ facebook_post_id }}" data-width="100%">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class='bg-primary  pt-5 pb-5'>
-        <div class="container text-white">
+    <div class="bg-primary text-white">
+        <div class="container pt-5 pb-5">
             {% include 'core/social_proof.html' %}
         </div>
     </div>
-
 {% endblock body %}
