@@ -306,3 +306,36 @@ def activate_user(user: _User, source: str) -> None:
     """
     _core_facade.activate_user(user, source)
     _mailchimp_facade.remove_tags(user.email, 'never-watched-video')
+
+
+def visit_cpl1(user: _User, source: str) -> None:
+    """
+    User visit CPL1
+    :param user:
+    :param source:
+    :return:
+    """
+    _core_facade.visit_cpl1(user, source)
+    _mailchimp_facade.tag_as(user.email, 'cpl1')
+
+
+def visit_cpl2(user: _User, source: str) -> None:
+    """
+    User visit CPL2
+    :param user:
+    :param source:
+    :return:
+    """
+    _core_facade.visit_cpl2(user, source)
+    _mailchimp_facade.tag_as(user.email, 'cpl2')
+
+
+def visit_cpl3(user: _User, source: str) -> None:
+    """
+    User visit CPL2
+    :param user:
+    :param source:
+    :return:
+    """
+    _core_facade.visit_cpl3(user, source)
+    _mailchimp_facade.tag_as(user.email, 'cpl3')

@@ -90,6 +90,9 @@ class UserInteraction(models.Model):
     BECOME_MEMBER = 'BECOME_MEMBER'
     LAUNCH_LP = 'LAUNCH_LP'
     LAUNCH_SUBSCRIPTION = 'LAUNCH_SUBSCRIPTION'
+    CPL1 = 'CPL1'
+    CPL2 = 'CPL2'
+    CPL3 = 'CPL3'
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     creation = models.DateTimeField(auto_now_add=True)
@@ -110,6 +113,9 @@ class UserInteraction(models.Model):
                 (BECOME_MEMBER, 'User Become Member'),
                 (LAUNCH_LP, 'User visited Launch Landing Page'),
                 (LAUNCH_SUBSCRIPTION, 'User subscribed to launch'),
+                (CPL1, 'User Visited CPL1'),
+                (CPL2, 'User Visited CPL2'),
+                (CPL3, 'User Visited CPL3'),
             )
         )
     )

@@ -125,6 +125,18 @@ def subscribe_to_launch(user: User, source: str):
     return UserInteraction(category=UserInteraction.LAUNCH_SUBSCRIPTION, source=source, user=user).save()
 
 
+def visit_cpl1(user: User, source: str):
+    return UserInteraction(category=UserInteraction.CPL1, source=source, user=user).save()
+
+
+def visit_cpl2(user: User, source: str):
+    return UserInteraction(category=UserInteraction.CPL2, source=source, user=user).save()
+
+
+def visit_cpl3(user: User, source: str):
+    return UserInteraction(category=UserInteraction.CPL3, source=source, user=user).save()
+
+
 def find_leads_by_date_joined_interval(begin: datetime, end: datetime):
     return list(user for user in User.objects.filter(date_joined__gte=begin, date_joined__lte=end).all() if
                 not has_role(user, ['client', 'member']))

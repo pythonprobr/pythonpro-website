@@ -7,4 +7,5 @@ urlpatterns = [
     path('semana-do-programador-profissional/inscricao', views.landing_page, name='landing_page'),
     path('semana-do-programador-profissional/form', views.lead_form, name='lead_form'),
     path('semana-do-programador-profissional/obrigado', views.ty, name='ty'),
+    path('semana-do-programador-profissional/faculdade-nao-prepara-para-o-mercado', views.cpl1, name='cpl1'),
 ]

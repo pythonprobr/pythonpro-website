@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 # Create your views here.
 from django.urls import reverse
 
+from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.cohorts.facade import find_most_recent_cohort
 from pythonpro.domain import user_facade
 from pythonpro.launch.forms import LeadForm
@@ -37,8 +38,20 @@ def lead_form(request):
 
 def ty(request):
     user = request.user
-    cohort_slug = find_most_recent_cohort().slug
-    python_birds_path = reverse('core:lead_landing') + f'?utm_source=lancamento-{cohort_slug}'
     if user.is_authenticated:
         user_facade.subscribe_launch_landing_page(user, request.GET.get('utm_source', 'unknown'))
-    return render(request, 'launch/ty.html', {'python_birds_path': python_birds_path})
+    return render(request, 'launch/ty.html')
+
+
+def cpl1(request):
+    user = request.user
+    if user.is_authenticated:
+        user_facade.visit_cpl1(user, request.GET.get('utm_source', 'unknown'))
+
+    ctx = {
+        'data_href': f'https://{build_absolute_uri(request.path)}',
+        'video_id': 'ZCuxX4vyFTo',
+        'title': 'A Faculdade não te prepara para o mercado!',
+        'description': 'Primeira Aula da Semana do Programador Profissional: A Faculdade não te prepara para o mercado!'
+    }
+    return render(request, 'launch/cpl1.html', ctx)
