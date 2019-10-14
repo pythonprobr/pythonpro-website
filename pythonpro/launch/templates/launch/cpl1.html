@@ -1,0 +1,138 @@
+{% extends 'core/base_without_nav.html' %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+{% block description %}{{ description }}{% endblock %}
+{% block head %}
+    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+
+    <style>
+        @font-face {
+            font-family: 'Gilroy-Bold';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Bold ☞'), url('{% static "fonts/Gilroy-Bold.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Heavy';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Heavy ☞'), url('{% static "fonts/Gilroy-Heavy.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Light';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Light ☞'), url('{% static "fonts/Gilroy-Light.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Medium';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Medium ☞'), url('{% static "fonts/Gilroy-Medium.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Regular';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Regular ☞'), url('{% static "fonts/Gilroy-Regular.woff" %}') format('woff');
+        }
+
+    </style>
+    <link rel="stylesheet" href="{% static 'css/client.css' %}"/>
+
+    <style>
+        h1 {
+            font-size: 3.2rem;
+        }
+
+        input.form-control, button.btn {
+            border-radius: 0px;
+            margin: 5px 0;
+            font-family: 'ubuntu';
+        }
+
+        button.btn {
+            border-width: 1px;
+            font-family: 'Gilroy-Bold';
+        }
+
+        .mobile h1 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .mobile h2 {
+            font-size: 1.5rem;
+        }
+
+        .mobile.hero {
+            margin: 20px 0;
+        }
+    </style>
+{% endblock head %}
+
+{% block body %}
+    <div class=''>
+        <div class="container">
+            <div class="row text-center">
+                <!-- desktop -->
+                <div class="col-md-12 hero desktop d-none d-sm-block d-md-block">
+                    <h1 class='font-weight-bold' style='color: #44A5F1'>
+                        SEMANA DO PROGRAMADOR PROFISSIONAL
+                    </h1>
+                    <h2 class='col-md-8 offset-md-2'>
+                        Uma semana de vídeos e aulas que vão te ensinar como se
+                        <b>tornar um programador profissional</b> em pouco tempo!
+                    </h2>
+                    <h3 class='font-weight-bold col-md-8 offset-md-2 mt-4'>28/10 á 01/11</h3>
+                </div>
+
+                <!-- mobile -->
+                <div class="col-md-12 hero mobile d-block d-lg-none d-xl-none">
+                    <h1 class='font-weight-bold' style='color: #44A5F1'>
+                        SEMANA DO PROGRAMADOR PROFISSIONAL
+                    </h1>
+                    <h2 class='col-md-8 offset-md-2'>
+                        Uma semana de vídeos e aulas que vão te ensinar como se
+                        <b>tornar um programador profissional</b> em pouco tempo!
+                    </h2>
+                    <h3 class='font-weight-bold col-md-8 offset-md-2 mt-4'>28/10 á 01/11</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col hero">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video_id }}" frameborder="0"
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col mb-5 mt-5">
+                <div id="fb-root"></div>
+                <script async defer crossorigin="anonymous"
+                        src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v4.0&appId=1432926893644944&autoLogAppEvents=1"></script>
+                <div class="fb-comment-embed" data-href="{{ data_href }}" data-width="560" data-include-parent="false"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-primary  pt-5 pb-5'>
+        <div class="container text-white">
+            {% include 'core/social_proof.html' %}
+        </div>
+    </div>
+
+{% endblock body %}
