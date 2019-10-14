@@ -47,33 +47,27 @@ def cpl1(request):
     user = request.user
     visit_function = user_facade.visit_cpl1
     video_id = ''
-    title = 'A Faculdade não te prepara para o mercado!'
-    description = 'Primeira Aula da Semana do Programador Profissional: A Faculdade não te prepara para o Mercado!'
-    facebook_id = '1551469281659534'
-    return _render_cpl(description, facebook_id, request, title, user, video_id, visit_function)
+    description = 'Primeira Aula da Semana do Programador Profissional'
+    return _render_cpl(description, request, 'Primeira Aula', user, video_id, visit_function)
 
 
 def cpl2(request):
     user = request.user
     visit_function = user_facade.visit_cpl2
     video_id = ''
-    title = 'Como Aprender a Programar e Entrar no Mercado!'
-    description = 'Segunda Aula da Semana do Programador Profissional: Como Aprender a Programar e Entrar no Mercado!'
-    facebook_id = '1551569364982859'
-    return _render_cpl(description, facebook_id, request, title, user, video_id, visit_function)
+    description = 'Segunda Aula da Semana do Programador Profissional'
+    return _render_cpl(description, request, 'Segunda Aula', user, video_id, visit_function)
 
 
 def cpl3(request):
     user = request.user
     visit_function = user_facade.visit_cpl3
     video_id = ''
-    title = 'Aula Exemplo!'
-    description = 'Terceira Aula da Semana do Programador Profissional: Aula Exemplo!'
-    facebook_id = '1551575021648960'
-    return _render_cpl(description, facebook_id, request, title, user, video_id, visit_function)
+    description = 'Terceira Aula da Semana do Programador Profissional'
+    return _render_cpl(description, request, 'Terceira Aula', user, video_id, visit_function)
 
 
-def _render_cpl(description, facebook_id, request, title, user, video_id, visit_function):
+def _render_cpl(description, request, title, user, video_id, visit_function):
     if user.is_authenticated:
         visit_function(user, request.GET.get('utm_source', 'unknown'))
     ctx = {
@@ -81,7 +75,5 @@ def _render_cpl(description, facebook_id, request, title, user, video_id, visit_
         'video_id': video_id,
         'title': title,
         'description': description,
-        'facebook_post_id': facebook_id
-
     }
     return render(request, 'launch/cpl.html', ctx)

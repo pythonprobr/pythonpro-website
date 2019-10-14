@@ -63,7 +63,11 @@ def sitemap(request):
         'member_landing_page',
         'core:podcast',
         'core:tech_talks',
-        'modules:index'
+        'modules:index',
+        'launch:landing_page',
+        'launch:cpl1',
+        'launch:cpl2',
+        'launch:cpl3',
     ]
     for section in named_views:
         map.add(reverse(section), changefreq='weekly')
