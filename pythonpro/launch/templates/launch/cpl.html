@@ -3,6 +3,7 @@
 {% block title %}{{ title }}{% endblock %}
 {% block description %}{{ description }}{% endblock %}
 {% block head %}
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css'>
     <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
 
     <style>
@@ -107,24 +108,33 @@
             </div>
         </div>
     </div>
-    <div class='bg-primary pt-4 pb-2'>
+    <div class='bg-primary pt-4 pb-4'>
         <div class="container">
             <div class="row justify-content-center text-center">
-                <div class="col-12">
-                    <div class="embed-container">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video_id }}"
-                                frameborder="0"
-                                webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                        <div id="fb-root"></div>
+                <div class="col col-lg-8 offset-lg-2">
+                    <div style="max-width: 560px; max-height: 315px">
+                        <div class="embed-container">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video_id }}"
+                                    frameborder="0"
+                                    webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            <div id="fb-root"></div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
-
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col">
+        <div class="row text-center">
+            <div class="col justify-content-center col-lg-8 offset-lg-2">
+                <div class="mt-5">
+                    <a class='btn btn-lg btn-warning font-weight-bold text-light mb-5'
+                       href='https://t.me/ProgramadorProfissional' target='_blank'>
+                        <i class="fa fa-telegram" aria-hidden="true"></i> Entrar para o canal no Telegram!
+                    </a>
+                </div>
+                <h2>Deixe seu Comentário!</h2>
                 <script async defer crossorigin="anonymous"
                         src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v4.0&appId=828510970515986&autoLogAppEvents=1"></script>
                 <div class="mb-5">
