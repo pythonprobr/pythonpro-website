@@ -71,7 +71,7 @@ def cpl2(request):
 def cpl3(request):
     user = request.user
     visit_function = user_facade.visit_cpl3
-    video_id = ''
+    video_id = 'v8boGknyB1E'
     description = 'Terceira Aula da Semana do Programador Profissional'
     return _render_cpl(description, request, 'Terceira Aula', user, video_id, visit_function)
 
