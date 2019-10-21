@@ -1,3 +1,6 @@
+from datetime import datetime
+
+from django.utils import timezone
 from django.shortcuts import redirect, render
 # Create your views here.
 from django.urls import reverse
@@ -7,6 +10,12 @@ from pythonpro.cohorts.facade import find_most_recent_cohort
 from pythonpro.domain import user_facade
 from pythonpro.launch.forms import LeadForm
 from pythonpro.mailchimp import facade as mailchimp_facade
+
+LAUNCH_STATUS_PPL = 0
+LAUNCH_STATUS_CPL1 = 1
+LAUNCH_STATUS_CPL2 = 2
+LAUNCH_STATUS_CPL3 = 3
+LAUNCH_STATUS_OPEN_CART = 4
 
 
 def landing_page(request):
@@ -46,7 +55,7 @@ def ty(request):
 def cpl1(request):
     user = request.user
     visit_function = user_facade.visit_cpl1
-    video_id = ''
+    video_id = 'efkB0VR2XYs'
     description = 'Primeira Aula da Semana do Programador Profissional'
     return _render_cpl(description, request, 'Primeira Aula', user, video_id, visit_function)
 
@@ -54,7 +63,7 @@ def cpl1(request):
 def cpl2(request):
     user = request.user
     visit_function = user_facade.visit_cpl2
-    video_id = ''
+    video_id = 'wQG1dQgw78Q'
     description = 'Segunda Aula da Semana do Programador Profissional'
     return _render_cpl(description, request, 'Segunda Aula', user, video_id, visit_function)
 
@@ -70,10 +79,32 @@ def cpl3(request):
 def _render_cpl(description, request, title, user, video_id, visit_function):
     if user.is_authenticated:
         visit_function(user, request.GET.get('utm_source', 'unknown'))
+
+    launch_status = _get_launch_status()
+    if launch_status == 0 and not request.GET.get('debug'):
+        return redirect(reverse('launch:landing_page'))
+
     ctx = {
         'data_href': f'https://{build_absolute_uri(request.path)}',
         'video_id': video_id,
         'title': title,
         'description': description,
+        'launch_status': launch_status,
     }
     return render(request, 'launch/cpl.html', ctx)
+
+
+def _get_launch_status():
+    if timezone.now() < timezone.make_aware(datetime(2019, 10, 28)):
+        return LAUNCH_STATUS_PPL
+
+    if timezone.now() < timezone.make_aware(datetime(2019, 10, 30)):
+        return LAUNCH_STATUS_CPL1
+
+    if timezone.now() < timezone.make_aware(datetime(2019, 11, 1)):
+        return LAUNCH_STATUS_CPL2
+
+    if timezone.now() < timezone.make_aware(datetime(2019, 11, 4)):
+        return LAUNCH_STATUS_CPL3
+
+    return LAUNCH_STATUS_OPEN_CART

@@ -70,14 +70,27 @@
             font-size: 1.5rem;
         }
 
-        .mobile.hero {
-            margin: 20px 0;
+        .hero {
+            margin-bottom: 5px;
         }
 
-        .fb_iframe_widget_fluid_desktop, .fb_iframe_widget_fluid_desktop span, .fb_iframe_widget_fluid_desktop iframe {
-            max-width: 100% !important;
-            width: 100% !important;
+        .mobile.hero {
+            margin: 20px 0;
+            margin-bottom: 5px;
         }
+
+        .thumbs-aulas {
+            margin: 20px;
+        }
+        
+        {% comment %} .thumbs-aulas img {
+            margin: 0px 50px;
+        } {% endcomment %}
+
+        .video {
+            margin: 5px;
+        }
+        
 
     </style>
 {% endblock head %}
@@ -91,9 +104,6 @@
                     <h1 class='font-weight-bold' style='color: #44A5F1'>
                         SEMANA DO PROGRAMADOR PROFISSIONAL
                     </h1>
-                    <h2 class='col-md-8 offset-md-2'>
-                        {{ title }}
-                    </h2>
                 </div>
 
                 <!-- mobile -->
@@ -101,20 +111,64 @@
                     <h1 class='font-weight-bold' style='color: #44A5F1'>
                         SEMANA DO PROGRAMADOR PROFISSIONAL
                     </h1>
-                    <h2 class='col-md-8 offset-md-2'>
-                        {{ title }}
-                    </h2>
                 </div>
+            </div>
+        
+            <div class='row thumbs-aulas justify-content-center text-center'>
+
+                    
+                    <!-- AULA 1 -->
+                    <div class="col-4">
+                        {% if launch_status >= 1 %}
+                        <a href='{% url "launch:cpl1" %}' title='Assistir a Aula 1'>
+                            <img src='{% static 'img/launch/video1-available.png' %}' class="img-fluid"
+                                width="130px" alt="Aula 1 já está disponível!"/>
+                        </a>
+                        {% else %}
+                        <img src='{% static 'img/launch/video1-unavailable.png' %}' class="img-fluid"
+                            width="130px" alt="Aula 2 já está disponível!"/>
+                        {% endif %}
+                    </div>
+
+                    <!-- AULA 2 -->
+                    <div class="col-4">
+                        {% if launch_status >= 2 %}
+                        <a href='{% url "launch:cpl1" %}' title='Assistir a Aula 2'>
+                            <img src='{% static 'img/launch/video2-available.png' %}' class="img-fluid"
+                                width="130px" alt="Aula 2 já está disponível!"/>
+                        </a>
+                        {% else %}
+                        <img src='{% static 'img/launch/video2-unavailable.png' %}' class="img-fluid"
+                            width="130px" alt="Aula 2 já está disponível!"/>
+                        {% endif %}
+                    </div>
+                
+                    <!-- AULA 3 -->
+                    <div class="col-4">
+                        {% if launch_status >= 3 %}
+                        <a href='{% url "launch:cpl1" %}' title='Assistir a Aula 3'>
+                            <img src='{% static 'img/launch/video3-available.png' %}' class="img-fluid"
+                                width="130px" alt="Aula 3 já está disponível!"/>
+                        </a>
+                        {% else %}
+                        <img src='{% static 'img/launch/video3-unavailable.png' %}' class="img-fluid"
+                            width="130px" alt="Aula 3 já está disponível!"/>
+                        {% endif %}
+                    </div>
+
             </div>
         </div>
     </div>
-    <div class='bg-primary pt-4 pb-4'>
+
+    
+    
+    <div class='bg-primary'>
         <div class="container">
             <div class="row justify-content-center text-center">
-                <div class="col col-lg-8 offset-lg-2">
-                    <div style="max-width: 560px; max-height: 315px">
+                <div class="col video" style="max-width: 800px">
+                    <div>
                         <div class="embed-container">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video_id }}"
+                            <iframe  src="https://www.youtube.com/embed/{{ video_id }}?autoplay=0&showinfo=0&controls=0&modestbranding=1&autohide=1"
                                     frameborder="0"
                                     webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                             <div id="fb-root"></div>
@@ -128,13 +182,20 @@
     <div class="container">
         <div class="row text-center">
             <div class="col justify-content-center col-lg-8 offset-lg-2">
+                <div class="mt-5 font-weight-bold">
+                    <h2>
+                        <span class="ec ec-arrow-down-small"></span>
+                        Deixe seu Comentário! 
+                        <span class="ec ec-arrow-down-small"></span>
+                    </h2>
+                </div>
+                
                 <div class="mt-5">
-                    <a class='btn btn-lg btn-success font-weight-bold text-light mb-5'
+                    <a class='btn btn-lg btn-primary font-weight-bold text-light mb-5'
                        href='https://t.me/ProgramadorProfissional' target='_blank'>
                         <i class="fa fa-telegram" aria-hidden="true"></i> Entrar para o canal no Telegram!
                     </a>
                 </div>
-                <h2>Deixe seu Comentário!</h2>
                 <script async defer crossorigin="anonymous"
                         src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v4.0&appId=828510970515986&autoLogAppEvents=1"></script>
                 <div class="mb-5">
