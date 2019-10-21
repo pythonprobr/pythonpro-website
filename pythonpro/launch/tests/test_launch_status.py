@@ -95,8 +95,6 @@ def test_should_not_redirect_to_landing_page_when_param_debug_was_setted(client,
     assert response.status_code == 200
 
 
-
-
 @pytest.fixture
 def status_cpl1(mocker):
     return mocker.patch('pythonpro.launch.views._get_launch_status', return_value=1)
