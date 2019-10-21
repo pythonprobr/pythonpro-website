@@ -10,7 +10,12 @@ def tag_as_mock(mocker):
 
 
 @pytest.fixture
-def resp(client, tag_as_mock):
+def launch_status_as_mock(mocker):
+    return mocker.patch('pythonpro.launch.views._get_launch_status', return_value=4)
+
+
+@pytest.fixture
+def resp(client, tag_as_mock, launch_status_as_mock):
     return client.get(reverse('launch:cpl2'), secure=True)
 
 
