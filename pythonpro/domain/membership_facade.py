@@ -17,9 +17,19 @@ def calculate_membership_price(user: _User) -> int:
     :param user:
     :return: integer representing price in BRL cents
     """
-    discount = _payment_facade.MEMBERSHIP_DISCOUNT_FOR_CLIENTS if _core_facade.is_client(user) else 0
+    discount = calculate_discount(user)
 
     return _payment_facade.MEMBERSHIP_PRICE - discount
+
+
+def calculate_discount(user):
+    """
+    Calculate user's discount. Clients have the Pytool's price discounted from total value
+    :param user:
+    :return:
+    """
+    discount = _payment_facade.MEMBERSHIP_DISCOUNT_FOR_CLIENTS if _core_facade.is_client(user) else 0
+    return discount
 
 
 def subscribe_member_who_paid_boleto(user_id: int, notification_data: dict, raw_post: str, signature: str,

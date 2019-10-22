@@ -4,7 +4,7 @@
 {% block description %}Curso Completo de Python voltado para quem quer entrar no mercado de
     tecnologia!{% endblock %}
 {% block head %}
-       <script src="{% static 'js/pagarme-checkout-1.1.0.js' %}"></script>
+    <script src="{% static 'js/pagarme-checkout-1.1.0.js' %}"></script>
     <script type="application/javascript">
         $(document).ready(function () {
             $('button').click(function () {
@@ -54,13 +54,13 @@
             });
         });
     </script>
-{%  endblock head %}
+{% endblock head %}
 {% block body %}
     <div class="bg-primary pt-5 pb-5 text-light">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-lg-7 mb-4">
-                    <h1 class="mb-4">Conteúdo exclusivo para Membros!
+                    <h1 class="mb-4">Inscrições para próxima turma Python Pro Abertas!
                     </h1>
                     <p>Esse conteúdo é exclusivo para membros, aqueles que escolhem entrar de cabeça para a área de
                         programação e faturar alto!
@@ -100,17 +100,27 @@
                         </li>
                     </ol>
                     <p>Só esses bônus custariam R$ 3000,00 por mês.</p>
-                    <h2 class="mt-4">Lista de Espera</h2>
-                    <p>Ainda estamos planejando a abertura da próxima turma.
-                    </p>
-                    <p>12 x de R$ {{ price_installment|floatformat:2 }} ou a vista no valor de R$ {{ price_float|floatformat:2 }}.
-                    </p>
-                    <button class="btn btn-lg btn-warning" >SIM! Quero <span
-                                class="font-weight-bold"><u>me inscrever</u></span> &raquo;
+                    <h2 class="mt-4">Preço</h2>
+                    {% if has_discount %}
+                        <p>
+                            O preço cheio do curso é:<br/>
+                            12 x de R$ {{ full_price_installment|floatformat:2 }} ou a vista no valor de
+                            R$ {{ full_price_float|floatformat:2 }}.
+                        </p>
+                        <p>Mas como você comprou o curso Pytools, vc ganha o valor dele como desconto:
+                            R$ {{ discount_float|floatformat:2 }}. <br/>
+                            Portanto, o preço fica sendo: <br/>
+                            12 x de R$ {{ price_installment|floatformat:2 }} ou a vista no valor de
+                            R$ {{ price_float|floatformat:2 }}.</p>
+                    {% else %}
+                        <p> O preço do curso é 12 x de R$ {{ price_installment|floatformat:2 }} ou a vista no valor de
+                            R$ {{ price_float|floatformat:2 }}.
+                        </p>
+                    {% endif %}
+
+                    <button class="btn btn-lg btn-warning">SIM! Quero <span
+                            class="font-weight-bold"><u>me inscrever</u></span> &raquo;
                     </button>
-                    <p>* Não enviamos SPAM, apenas abrimos matrícula primeiro nessa lista, com desconto.</p>
-                    <p>Na última turma as vagas acabaram em uma semana. Todos que estavam na lista de espera
-                        entraram!</p>
                 </div>
             </div>
         </div>
@@ -151,17 +161,18 @@
             <div class="row">
                 <div class="col-8">
                     <h3>Quer se transformar também?</h3>
-                    <p>12 x de R$ span>R$ {{ price_installment|floatformat:2 }} ou a vista no valor de R$ {{ price_float|floatformat:2 }}.
+                    <p>12 x de R$ span>R$ {{ price_installment|floatformat:2 }} ou a vista no valor de
+                        R$ {{ price_float|floatformat:2 }}.
                     </p>
-                    <button class="btn btn-lg btn-warning" >SIM! Quero <span
-                                class="font-weight-bold"><u>me inscrever</u></span> &raquo;
+                    <button class="btn btn-lg btn-warning">SIM! Quero <span
+                            class="font-weight-bold"><u>me inscrever</u></span> &raquo;
                     </button>
 
                 </div>
             </div>
         </div>
     </div>
-      <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
+    <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">

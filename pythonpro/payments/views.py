@@ -124,9 +124,14 @@ def member_landing_page(request):
 
     if settings.SUBSCRIPTIONS_OPEN:
         template = 'payments/member_landing_page_subscription_open.html'
+        discount = membership_facade.calculate_discount(user)
+        discount_float = discount / 100
+
         price = membership_facade.calculate_membership_price(user)
         price_float = price / 100
+        full_price_float = price_float + discount_float
         price_installment = (price // 10) / 100
+        full_price_installment = full_price_float // 10
         return render(
             request,
             template,
@@ -136,7 +141,11 @@ def member_landing_page(request):
                 'price_float': price_float,
                 'price_installment': price_installment,
                 'notification_url': request.build_absolute_uri(notification_url),
-                'cohort': cohorts_facade.find_most_recent_cohort()
+                'cohort': cohorts_facade.find_most_recent_cohort(),
+                'has_discount': discount_float > 0,
+                'discount_float': discount_float,
+                'full_price_installment': full_price_installment,
+                'full_price_float': full_price_float,
             }
         )
     else:
