@@ -1,12 +1,12 @@
-from urllib.parse import urlencode
-
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.http import urlencode
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import RedirectView
 
 from pythonpro.cohorts import facade as cohorts_facade
 from pythonpro.domain import membership_facade, user_facade
@@ -117,18 +117,23 @@ def _extract_boleto_params(dct):
 def member_landing_page(request):
     template_open_launch = 'payments/member_landing_page_subscription_open.html'
     template_closed_launch = 'payments/member_landing_page_subscription_closed.html'
-    is_launch_open = settings.SUBSCRIPTIONS_OPEN
-    return _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch)
+    is_launch_open = settings.SUBSCRIPTIONS_OPEN or request.GET.get('debug')
+    return _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch,
+                               'member_landing_page')
+
+
+old_member_landing_page = RedirectView.as_view(pattern_name='member_landing_page', permanent=True)
 
 
 def meteoric_landing_page(request):
     template_open_launch = 'payments/meteoric_landing_page_open.html'
     template_closed_launch = 'payments/meteoric_landing_page_closed.html'
     is_launch_open = settings.METEORIC_LAUNCH_OPEN or request.GET.get('debug')
-    return _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch)
+    return _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch,
+                               'meteoric_landing_page')
 
 
-def _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch):
+def _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch, redirect_path_name: str):
     user = request.user
     if user.is_authenticated:
         user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
@@ -145,6 +150,12 @@ def _render_launch_page(is_launch_open, request, template_closed_launch, templat
         full_price_float = price_float + discount_float
         price_installment = (price // 10) / 100
         full_price_installment = full_price_float // 10
+        login_url = reverse('login')
+        redirect_path = reverse(redirect_path_name)
+        qs = urlencode({'utm_source': request.GET.get('utm_source', 'unknown')})
+        redirect_url = f'{redirect_path}?{qs}'
+        qs = urlencode({'next': redirect_url})
+        login_url = f'{login_url}?{qs}'
         return render(
             request,
             template,
@@ -159,6 +170,7 @@ def _render_launch_page(is_launch_open, request, template_closed_launch, templat
                 'discount_float': discount_float,
                 'full_price_installment': full_price_installment,
                 'full_price_float': full_price_float,
+                'login_url': login_url,
             }
         )
     else:
