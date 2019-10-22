@@ -115,15 +115,28 @@ def _extract_boleto_params(dct):
 
 
 def member_landing_page(request):
+    template_open_launch = 'payments/member_landing_page_subscription_open.html'
+    template_closed_launch = 'payments/member_landing_page_subscription_closed.html'
+    is_launch_open = settings.SUBSCRIPTIONS_OPEN
+    return _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch)
+
+
+def meteoric_landing_page(request):
+    template_open_launch = 'payments/meteoric_landing_page_open.html'
+    template_closed_launch = 'payments/meteoric_landing_page_closed.html'
+    is_launch_open = settings.METEORIC_LAUNCH_OPEN or request.GET.get('debug')
+    return _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch)
+
+
+def _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch):
     user = request.user
     if user.is_authenticated:
         user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
         notification_url = reverse('payments:membership_notification', kwargs={'user_id': user.id})
     else:
         notification_url = reverse('payments:membership_anonymous_notification')
-
-    if settings.SUBSCRIPTIONS_OPEN:
-        template = 'payments/member_landing_page_subscription_open.html'
+    if is_launch_open:
+        template = template_open_launch
         discount = membership_facade.calculate_discount(user)
         discount_float = discount / 100
 
@@ -149,7 +162,7 @@ def member_landing_page(request):
             }
         )
     else:
-        template = 'payments/member_landing_page_subscription_closed.html'
+        template = template_closed_launch
         return render(request, template, {})
 
 

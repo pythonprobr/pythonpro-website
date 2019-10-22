@@ -8,6 +8,7 @@ urlpatterns = [
     path('obrigado', views.thanks, name='thanks'),
     path('curso-de-python-completo/obrigado', views.membership_thanks, name='membership_thanks'),
     path('curso-de-python-completo', login_required(views.member_landing_page), name='member_landing_page'),
+    path('pre-inscricao', login_required(views.meteoric_landing_page), name='meteoric_landing_page'),
     path('client-checkout', views.client_checkout, name='client_checkout'),
     path('membro-checkout', views.member_checkout, name='member_checkout'),
     path('lista-de-espera', views.waiting_list_ty, name='waiting_list_ty'),

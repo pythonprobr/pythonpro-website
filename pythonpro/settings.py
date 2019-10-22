@@ -35,6 +35,8 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 # Control subscriptions ads and payment.
 SUBSCRIPTIONS_OPEN = config('SUBSCRIPTIONS_OPEN', cast=bool)
 
+METEORIC_LAUNCH_OPEN = config('METEORIC_LAUNCH_OPEN', cast=bool)
+
 PAGARME_CRYPTO_KEY = config('PAGARME_CRYPTO_KEY')
 PAGARME_API_KEY = config('PAGARME_API_KEY')
 
