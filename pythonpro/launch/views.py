@@ -55,7 +55,7 @@ def ty(request):
 def cpl1(request):
     user = request.user
     visit_function = user_facade.visit_cpl1
-    video_id = 'efkB0VR2XYs'
+    video_id = 'oPsK7uEq-gU'
     description = 'Primeira Aula da Semana do Programador Profissional'
     return _render_cpl(description, request, 'Primeira Aula', user, video_id, visit_function)
 
