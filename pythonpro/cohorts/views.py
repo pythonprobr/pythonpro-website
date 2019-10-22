@@ -20,12 +20,12 @@ def webinars(request):
 @login_required
 def webinar(request, slug):
     if not has_permission(request.user, access_cohorts):
-        return redirect(reverse('payments:member_landing_page'), permanent=False)
+        return redirect(reverse('member_landing_page'), permanent=False)
     return render(request, 'cohorts/webinar_detail.html', {'webinar': facade.find_webinar(slug=slug)})
 
 
 @login_required
 def live_class(request, pk):
     if not has_permission(request.user, access_cohorts):
-        return redirect(reverse('payments:member_landing_page'), permanent=False)
+        return redirect(reverse('member_landing_page'), permanent=False)
     return render(request, 'cohorts/live_class_detail.html', {'live_class': facade.find_live_class(pk=pk)})

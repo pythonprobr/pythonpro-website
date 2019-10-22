@@ -12,7 +12,7 @@ def content_landing_page(request, content: Content):
     if is_client_content(content):
         redirect_path = reverse('client_landing_page')
     else:
-        redirect_path = reverse('payments:member_landing_page')
+        redirect_path = reverse('member_landing_page')
     return redirect(redirect_path, permanent=False)
 
 

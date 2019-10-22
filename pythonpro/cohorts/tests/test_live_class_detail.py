@@ -51,7 +51,7 @@ def resp_client(client_with_client, live_class: LiveClass, mocker, logged_user):
 
 def test_live_class_landing_for_client(cohort, resp_client):
     assert resp_client.status_code == 302
-    assert resp_client.url == reverse('payments:member_landing_page')
+    assert resp_client.url == reverse('member_landing_page')
 
 
 @pytest.fixture
@@ -61,7 +61,7 @@ def resp_lead(client_with_lead, live_class: LiveClass, mocker, logged_user):
 
 def test_live_class_landing_for_lead(cohort, resp_lead):
     assert resp_lead.status_code == 302
-    assert resp_lead.url == reverse('payments:member_landing_page')
+    assert resp_lead.url == reverse('member_landing_page')
 
 
 def test_cohort_url(cohort: Cohort, resp):

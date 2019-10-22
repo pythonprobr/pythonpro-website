@@ -101,6 +101,10 @@
                     </ol>
                     <p>Só esses bônus custariam R$ 3000,00 por mês.</p>
                     <h2 class="mt-4">Preço</h2>
+                    {% if not user.is_authenticated %}
+                        <p>Caso você tenha comprado o módulo Pytools, <a href="{{ login_url }}" class="btn btn-warning">Acesse sua
+                            conta &raquo;</a> para ganhar o valor dele como desconto.</p>
+                    {% endif %}
                     {% if has_discount %}
                         <p>
                             O preço cheio do curso é:<br/>

@@ -129,7 +129,7 @@ def resp_lead_accessing_member_content(client_with_lead, topic_member, django_us
 
 def test_lead_hitting_member_landing_page(resp_lead_accessing_member_content):
     assert resp_lead_accessing_member_content.status_code == 302
-    assert resp_lead_accessing_member_content.url == reverse('payments:member_landing_page')
+    assert resp_lead_accessing_member_content.url == reverse('member_landing_page')
 
 
 @pytest.fixture
@@ -142,7 +142,7 @@ def resp_client_accessing_member_content(client_with_client, topic_member, djang
 
 def test_client_hitting_member_landing_page(resp_client_accessing_member_content):
     assert resp_client_accessing_member_content.status_code == 302
-    assert resp_client_accessing_member_content.url == reverse('payments:member_landing_page')
+    assert resp_client_accessing_member_content.url == reverse('member_landing_page')
 
 
 @pytest.fixture
