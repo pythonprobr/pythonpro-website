@@ -100,6 +100,7 @@ def test_live_classes_are_sorted(live_classes: list, cohort):
     assert live_classes == db_cohort.classes
 
 
+@pytest.mark.freeze_time('2019-01-01 18:00:00')
 def test_live_classes_datetime(resp_with_classes, live_classes):
     for live_class in live_classes:
         dj_assert_contains(resp_with_classes, date(live_class.start))
@@ -126,6 +127,7 @@ def test_webinars_are_sorted(webinars: list, cohort):
     assert webinars == db_cohort.webinars
 
 
+@pytest.mark.freeze_time('2019-01-01 18:00:00')
 def test_webinars_datetime(resp_with_webinars, webinars):
     for live_class in webinars:
         dj_assert_contains(resp_with_webinars, date(live_class.start))
