@@ -35,4 +35,4 @@ def test_notification_link_is_present(resp, logged_user):
 
 
 def test_full_price(resp):
-    dj_assert_contains(resp, '1599,99')
+    dj_assert_contains(resp, '1599,90')
