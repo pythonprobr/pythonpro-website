@@ -58,7 +58,7 @@ def test_status_code(resp):
     assert 200 == resp.status_code
 
 
-@pytest.mark.parametrize('property_name', 'title mail_list forum_post'.split())
+@pytest.mark.parametrize('property_name', 'title forum_post'.split())
 def test_cohort_propeties(cohort, resp, property_name):
     dj_assert_contains(resp, getattr(cohort, property_name))
 
