@@ -4,6 +4,72 @@
 {% block description %}Curso Completo de Python voltado para quem quer entrar no mercado de
     tecnologia!{% endblock %}
 {% block head %}
+    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+
+    <style>
+        @font-face {
+            font-family: 'Gilroy-Bold';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Bold ☞'), url('{% static "fonts/Gilroy-Bold.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Heavy';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Heavy ☞'), url('{% static "fonts/Gilroy-Heavy.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Light';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Light ☞'), url('{% static "fonts/Gilroy-Light.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Medium';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Medium ☞'), url('{% static "fonts/Gilroy-Medium.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Regular';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Regular ☞'), url('{% static "fonts/Gilroy-Regular.woff" %}') format('woff');
+        }
+
+        .embed-container { 
+            position: relative; 
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+        } 
+        
+        .embed-container iframe, .embed-container object, .embed-container embed { 
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .topic {
+            margin-left: 20px;
+        }
+
+        h2.countdown {
+            font-size: 50pt !important;
+            color: #AF1B3F !important;
+        }
+
+    </style>
+    <link rel="stylesheet" href="{% static 'css/client.css' %}"/>
+    
     <script src="{% static 'js/pagarme-checkout-1.1.0.js' %}"></script>
     <script type="application/javascript">
         $(document).ready(function () {
@@ -56,147 +122,828 @@
     </script>
 {% endblock head %}
 {% block body %}
-    <div class="bg-primary pt-5 pb-5 text-light">
+    <div class='bg-primary'>
         <div class="container">
             <div class="row">
-                <div class="col-12 col-lg-7 mb-4">
-                    <h1 class="mb-4">Pré Inscrição para Fila de espera!
+                <div class="col hero text-center">
+                    <h1 class='text-light'>
+                        Matrículas Abertas para o <br>
+                        <b>Curso PYTHON PRO!</b>
                     </h1>
-                    <p>Essa página é para pré inscrição na turma e já garante a você:
-
-                    </p>
-                    <ul>
-                        <li>Inscrição antecipada na turma, garantindo sua vaga</li>
-                        <li>Acesso a todo conteúdo gravado antecipadamente</li>
-                        <li>Entrada gratuita no próximo envento "Testando o Mercado", onde vc entrará em contato com
-                            empresas de TI
-                        </li>
-                    </ul>
-                    <p>A inscrição se encerra às 19:00:00 horário de São Paulo.</p>
-                    <p>Confira o vídeo abaixo para entender como o curso completo funciona:
-                    </p>
-                    <div class="embed-container">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/ZCuxX4vyFTo" frameborder="0"
-                                allowfullscreen></iframe>
+                    
+                    <div class='row'>
+                        <div class='col-sm-8 offset-sm-2'>
+                            <p class='text-light mb-5 mt-3'>
+                                Assista o vídeo abaixo e descubra como <b>ir de 0 a 100 com Python</b> e se 
+                                tornar um <b>programador profissional em questão de meses!</b>
+                            </p>
+                        </div>
                     </div>
-                    <p class="mt-3">Além disso tudo, fazemos o evento "Testando o Mercado" ao fim de cada turma com
-                        empresas de TI interessadas em contratar alunos do curso.</p>
-                </div>
-                <div class="col-12 col-md-6 col-lg-5">
-                    <h2>Confira os Bônus</h2>
-                    <ol>
-                        <li>Acesso ao <span
-                                class="font-weight-bold">Fórum exclusivo</span> para retirada de dúvidas!
-                        </li>
+                    
+                    <div class="embed-container mt-2">
+                    <iframe id="topic-iframe" src="https://player.vimeo.com/video/369973567" width="640"
+                            height="360"
+                            frameborder="0"
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
-                        <li>Gravações de <span
-                                class="font-weight-bold">Aulas de TODAS</span> turmas anteriores.
-                        </li>
-                        <li>Acesso ao <span
-                                class="font-weight-bold">Grupo de Telegram exclusivo</span> para retirada de dúvidas
-                            pelo celular!
-                        </li>
-                        <li>Gravações de <span
-                                class="font-weight-bold">Webinários com PROFISSIONAIS</span>.
-                        </li>
-                        <li>Módulo extra de preparação para <span
-                                class="font-weight-bold">Entrevistas Técnicas</span> visando empresas gringas, para quem
-                            ganhar em dólar ou euro.
-                        </li>
-                        <li>Participação garantida no evento "Testando o Mercado", onde você encontrará empresas que
-                            querem contratar.
-                        </li>
-                    </ol>
-                    <p>Só esses bônus custariam R$ 3000,00 por mês.</p>
-                    <h2 class="mt-4">Preço</h2>
-                    {% if not user.is_authenticated %}
+                    <div class='d-none d-sm-block d-md-block'>
+                        <button class="cta btn btn-warning mt-3">
+                            SIM! Eu quero ser um <b><b>PROGRAMADOR PROFISSIONAL!</b></b>
+                        </button>
+                    </div>
+
+                    <div class='text-center d-block d-lg-none d-xl-none'>
+                        <button class="cta-mobile btn btn-warning mt-3">
+                            SIM! Eu quero ser um <br><b><b>PROGRAMADOR PROFISSIONAL!</b></b>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col mb-5 mt-5">
+                    <h2 class='font-weight-bold mb-5'>Olá! Eu me chamo Renzo Nuccitelli,</h2>
+
+                    <div class='text-center d-block d-lg-none d-xl-none'>
+                        <img src='{% static 'img/instructors/renzo-nuccitelli-300.jpeg' %}' class="img-fluid" width="300px" alt="Foto de Renzo Nuccitelli" />
+                    </div>
+
+                    <img src='{% static 'img/instructors/renzo-nuccitelli-300.jpeg' %}'
+                         class="img-fluid float-right ml-3 mb-3 d-none d-sm-none d-md-block" width="300px" alt="Foto de Renzo Nuccitelli" />
+
+                    <p>
+                        Aqui é o Renzo Nuccitelli, e hoje é o dia que eu vou te mostrar como
+                        você vai fazer para <b>se tornar um programador profissional em pouco tempo!</b>
+                    </p>
+
+                    <p>
+
+                        Sim, eu sei que isso pode parecer bom demais para ser verdade. 
+                        <b>Mas eu te garanto que isso é totalmente possível!</b>
+                    </p>
+
+                    <p class='topic'>
+                        <span class="ec ec-white-check-mark"></span>
+                        Foi com o método que eu vou te apresentar que eu consegui ganhar um bom
+                        salário logo nos meus primeiros anos como profissional. 
+                    </p>
+                    <p class='topic'>
+                        <span class="ec ec-white-check-mark"></span>
+                        <b class='highlight'>
+                        Foi com esse método que eu consegui ganhar mais de R$ 10 mil reais por mês
+                        com menos de 5 anos de profissão. 
+                        </b>
+                    </p>
+                    <p class='topic'>
+                        <span class="ec ec-white-check-mark"></span>
+                        Foi com esse método que eu consegui um emprego na maior empresa de software
+                        aberto do mundo, a Red Hat.
+                    </p>
+                
+                    <p>
+                        E, depois que eu comecei a ensinar este método, 
+                        <b>muitos dos meus alunos também tiveram sucesso.</b>
+                    </p>
+
+                    <p>
+                        Na semana passada eu realizei um evento online chamado <b>"A semana do programador Profissional"</b>. 
+                    </p>
+                    
+                    <p>
+                        Neste evento eu publiquei uma série de vídeos e aulas onde eu mostrei o método que eu uso com meus alunos para que eles aprendam como programar de maneira profissional de uma forma rápida e efetiva.
+                    </p>
+
+                    <p>
+                        No final da Semana do Programador eu anunciei que iria <b>abrir as vagas para o curso Python Pro</b>.
+                    </p>
+                    <p>
+                        É lá que eu ensino, com todos os detalhes, o caminho para você <b>ir de 0 a 100 com a linguagem Python e se tornar um programador profissional em pouco tempo.</b> 
+                    </p>
+                        
+                    <p>
+                        Tudo isso, claro, com o meu acompanhamento pessoal e da minha equipe.
+                    </p>
+                    
+                    <p>
+                        Mas agora você deve estar pensando...
+                    </p>
+
+                    <p>
+                        <b class='mb-3 mt-3 highlight'>
+                            Renzo, como funciona esse método?
+                        </b>
+                    </p>
+
+                    <p>
+                        Conforme eu falei no vídeo, o método é baseado em três pilares:
+                    </p>
+
+                    <h3 class='mb-5 mt-5 font-weight-bold'>
+                        Pilar 1: Um problema real para ser resolvido
+                    </h3>
+
+                    <p>
+                        Eu vou te apresentar um problema real para que você resolva. 
+                    </p>
+                    
+                    <p> 
+                        Nesta turma eu vou te ensinar como fazer uma integração de um sistema já construído com um meio de pagamento online.
+                    </p>
+
+                    <h3 class='mb-5 mt-5 font-weight-bold'>
+                        Pilar 2: Começar a programar para resolver esse problema
+                    </h3>
+
+                    <p>
+                        Eu vou abrir meu notebook, compartilhar minha tela com você e ir te mostrando, passo a passo, como vamos fazer para construir, juntos, essa integração. 
+                    </p>
+                    
+                    <p>    
+                        Além disso, você vai colocar a mão na massa e repetir tudo o que eu te ensinei.
+                    </p>
+
+                    <h3 class='mb-5 mt-5 font-weight-bold'>
+                        Pilar 3: Interação com colegas programadores para ajudar nas dúvidas que vão surgir
+                    </h3>
+
+                    <p>
+                        Conforme você for programando, as dúvidas vão surgir. Aqui você vai aprender a como sanar essas dúvidas. 
+                    </p>
+                    
+                    <p>
+                        Você vai procurar na internet por pessoas que já tiveram a mesma dúvida que você, vai também procurar no nosso fórum e, caso não ache, vai colocar sua dúvida por lá e eu, minha equipe e antigos alunos vamos te ajudar!
+                    </p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row text-light">
+                <div class="col mt-5 mb-5">
+                    <u><h2 class='text-center text-uppercase font-weight-bold'>
+                        Este é o Python Pro! 
+                        
+                    </h2></u>
+                    <h4 class='text-center'>
+                        O curso que vai te ajudar a se um programador profissional em pouco tempo!
+                        <span class="ec ec-sunglasses"></span>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col mb-5 mt-5">
+                    <h2 class=''>
+                        <b>8 aulas ao vivo em três meses de curso!</b>
+                    </h2>
+                    <p>
+                        Paralelo às nossas aulas ao vivo, você terá acesso aos 6 cursos que 
+                        compõem a formação Python Pro. 
+                    </p>
+                        
+                    <p>
+                        <b>Juntos, eles somam mais de 250 aulas gravadas.</b>
+                    </p>
+                    
+                    <h3 class='font-weight-bold mt-5'>
+                        <span class="ec ec-snake"></span>
+                        Python Birds
+                    </h3>
+                    
+                    <p>
+                        No curso Python Birds você vai aprender como o Python é maravilhoso. 
+                    </p>
+                    
+                    <p>
+                        Você irá aprender os conceitos básicos da programação e entender como é 
+                        fácil e rápido programar com essa linguagem. 
+                    </p>
+                    
+                    <p>
+                        E o melhor de tudo, tudo isso dentro de um cenário real: <b>Você vai aprender Python
+                        criando uma versão simplificada do jogo Angry Birds!</b>
+                    </p>
+
+                    <h3 class='font-weight-bold mt-5'>
+                        <span class="ec ec-snake"></span>
+                        PyTools
+                    </h3>
+
+                    <p>
+                    No curso PyTools você vai aprender como equipes de programadores trabalham e 
+                    colaboram entre si. 
+                    <b>Assim, você vai poder finalmente ter a capacidade de ser um deles!</b>
+                    </p>
+                    
+                    <p>
+                        Você vai aprender a trabalhar com a ferramenta que todo mundo usa para 
+                        versionar código e contribuir com projetos de desenvolvimento de software: o Git.
+                    </p>
+                    
+                    <p>
+                        Você também vai aprender como desenvolver utilizando testes automatizados. 
+                        Assim você terá um <b>software que não tenha bugs</b> e que seja simples 
+                        de adicionar novas funcionalidades.
+                    </p>
+
+                    <p>
+                        Você vai aprender como manter o ambiente do seu projeto totalmente 
+                        organizado e replicado. Assim, seu software vai funcionar na sua máquina 
+                        <b>e também no servidor de produção!</b>
+                    </p>
+
+                    <h3 class='font-weight-bold mt-5'>
+                        <span class="ec ec-snake"></span>
+                        Django
+                    </h3>
+
+                    <p>
+                        No curso de Django, você vai aprender a utilizar o 
+                        <b>framework mais utilizado da linguagem Python, o Django!</b>
+                    </p>
+                    <p>
+                        O Django é um framework que vai te ajudar a construir sistemas web de 
+                        uma forma simples, rápida, segura e escalável.
+                    </p>
+                    <p>
+                        O Django é um dos pioneiros do conceito "Don't Repeat Yourself", que, 
+                        em português significa "Não se repita". 
+                        Você vai construir sistemas poderosos com poucas linhas, 
+                        pois o Django se responsabiliza para <b>você não precisar repetir código!</b>
+                    </p>
+
+                    <h3 class='font-weight-bold mt-5'>
+                        <span class="ec ec-snake"></span>
+                        Objetos Pythônicos
+                    </h3>
+                    
+                    <p>
+                        No curso Objetos Pythônicos você vai se aprofundar nas características que 
+                        tornam <b>o Python a melhor linguagem de programação para quem quer ser produtivo com qualidade.</b>
+                    </p>
+
+                    <p>
+                        Você vai aprender mais sobre com o Python lida com conceitos de 
+                        programação orientada a objeto e programação funcional. 
+                    </p>
+
+                    <h3 class='font-weight-bold mt-5'>
+                        <span class="ec ec-snake"></span>
+                        Python para Pythonistas
+                    </h3>
+
+                    <p>
+                        No curso Python para Pythonistas, você vai desvendar módulos avançados da linguagem.
+                    </p>
+                    <p>
+                        São conceitos que, em geral, são utilizados em diversos frameworks. 
+                        Você vai entender como o Python funciona de verdade e poder utilizar 
+                        <b>todo o seu poder para construir aplicações simples e poderosas.</b>
+                    </p>
+
+                    <h3 class='font-weight-bold mt-5'>
+                        <span class="ec ec-snake"></span>
+                        Python Patterns
+                    </h3>
+                    
+                    <p class='mb-5'>
+                        Com o curso Python Patterns você vai desvendar módulos avançados da 
+                        linguagem, em geral utilizados em diversos frameworks.
+                    </p>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class='bg-secondary'>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <h3><b>E tem mais... </b></h3>
+
+                    <h2 class='mt-5 mb-5'>
+                        Nesta turma do Python Pro teremos <b>4 webinários com profissionais 
+                        renomados do mercado de programação</b>.
+                    </h2>
+
+                    <img src="{% static 'img/fabricio_avatar.jpg' %}" class="rounded float-left mr-3" alt="Foto de Fabricio Aguiar" width="200px" height="200px">
+                    
+                    <h4 class='font-weight-bold mt-5'>
+                        De 0 a Engenheiro na Red Hat em 22 meses!
+                    </h4>
+                    <p>
+                        <span class="ec ec-bust-in-silhouette"></span>
+                        <b>Fabrício Aguiar</b>
+                    </p>
+                    
+                    <p>
+                        Ele vai contar como ele saiu do zero e conseguiu se tornar um engenheiro de 
+                        software na maior empresa Open Source do mundo, a Red Hat. 
+                        <b>Detalhe: tudo isso em apenas 22 meses.</b>
+                    </p>
+
+                    <div class="clearfix mb-5"></div>
+
+                    <img src="{% static 'img/moacir.jpg' %}" class="rounded float-left mr-3" alt="Foto de Moacir Moda" width="200px" height="200px">
+
+                    <h4 class='font-weight-bold mt-5'>
+                        Os cuidados não-técnicos para você se tornar um programador profissional
+                    </h4>
+                    <p>
+                        <span class="ec ec-bust-in-silhouette"></span>
+                        <b>Moacir Moda</b>
+                    </p>
+                    
+                    <p>
+                        Ele vai falar sobre os desafios não técnicos de ser um programador freelancer.
+                    </p>
+
+                    <div class="clearfix mb-5"></div>
+
+                    <img src="{% static 'img/FabioTelles.jpeg' %}" class="rounded float-left mr-3" alt="Foto de Fabio Telles" width="200px" height="200px">
+
+                    <h4 class='font-weight-bold mt-5'>
+                        5 coisas que deveríamos saber sobre PostreSQL
+                    </h4>
+                    <p>
+                        <span class="ec ec-bust-in-silhouette"></span>
+                        <b>Fábio Telles</b>
+                    </p>
+
+                    <p>
+                        Ele vai nos contar sobre 5 coisas importantíssimas que devemos saber sobre 
+                        o banco de dados open-source mais importante da atualidade, o PostgreSQL.
+                    </p>
+
+                    <div class="clearfix mb-5"></div>
+
+                    <img src="{% static 'img/Bruno_Rocha.jpg' %}" class="rounded float-left mr-3" alt="Foto de Bruno Rocha" width="200px" height="200px">
+
+                    <h4 class='font-weight-bold mt-5'>
+                        O que é Qualidade de Software?
+                    </h4>
+                    <p>
+                        <span class="ec ec-bust-in-silhouette"></span>
+                        <b>Bruno Rocha</b>
+                    </p>
+
+                    <p>
+                        Finalizando com chave de ouro, teremos o webinário do patrono desta 
+                        turma do Python Pro. Bruno Rocha, engenheiro de qualidade na Red Hat, 
+                        com mais de 15 anos de experiência, vai contar pra gente os 3 principais 
+                        tipos de qualidade em um projeto de Software.
+                    </p>
+
+                    <div class="clearfix mb-5"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-gray'>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <h2 class='font-weight-bold'>Veja como será o processo de aprendizado:</h2>
+
+                    <div class='row'>
+                        <div class='col-md learning-box text-center'>
+                            <p><span class="icon ec ec-satellite"></span></p>
+                            <h4 class='font-weight-bold'>CURSO 100% ONLINE</h4>
+                            <p>
+                                Assista de qualquer lugar que quiser. Do seu computador, do seu
+                                tablet ou mesmo do seu celular. Basta ter acesso a Internet.
+                            </p>
+                        </div>
+
+                        <div class='col-md learning-box text-center'>
+                            <p><span class="ec ec-desktop-computer"></span></p>
+                            <h4 class='font-weight-bold'>250 VÍDEO AULAS</h4>
+                            <p>
+                                Aulas práticas, objetivas, direto ao ponto e sem enrolação.
+                                Seu tempo é valioso!
+                            </p>
+                        </div>
+
+                        <div class='col-md learning-box text-center'>
+                            <p><span class="ec ec-older-man"></span></p>
+                            <h4 class='font-weight-bold'>ACESSO VITALÍCIO</h4>
+                            <p>
+                                Você terá acesso ao curso para sempre, inclusive a todas as
+                                atualizações! Poderá assistir todas as aulas quantas vezes quiser.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class='bg-secondary'>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <h3><b>E tem mais... </b></h3>
+
+                    <h2 class='mb-5'>
+                        Além dos 6 cursos da formação Python Pro, do curso de entrevista técnica, 
+                        das 8 aulas ao vivo e dos 4 webinários, eu preparei mais
+                        <b><u>três bônus pra você!</u></b>
+                    </h2>
+
+                    <h4 class='font-weight-bold mt-5'>
+                        <span class="ec ec-desktop-computer"></span>
+                        Eu vou liberar o acesso a todos os webinários das turmas passadas. 
+                    </h4>
+
+                    <p>
+                        Tem material muito bom ali no meio que vai te ajudar bastante a acelerar 
+                        seu processo de se tornar um programador profissional.  
+                        
+                        Foi por isso que eu decidi liberar esse bônus.
+                    </p>
+
+                    <p class='mb-5'>
+                        Eu poderia cobrar, tranquilamente, R$ 99 reais por cada webinário desses. 
+                        Mas, nessa turma, você terá os 9 webinários <b>de <strike>R$ 891,00</strike> por R$ 0,00, de graça!</b>
+                    </p>
+
+                    <h4 class='font-weight-bold mt-5'>
+                        <span class="ec ec-mega"></span>
+                        Eu vou liberar um acesso vitalício ao grupo de discussão no Telegram. 
+                    </h4>
+
+                    <p>
+                        Hoje temos centenas de programadores dos mais variados níveis discutindo 
+                        diariamente sobre tecnologia naquele grupo. Vai ser a sua oportunidade de ficar amigo de uma turma muito fera. 
+                    </p>
+                        
+                    <p>
+                        Eu já pensei em cobrar por essa participação. 
+                        O preço que tinha decidido era de R$ 29,90/mês. 
+                        Mas eu decidi liberar como bônus. 
+                        Ou seja, você terá um bônus de, pelo menos, <b><strike>R$ 358,00/ano</strike>, totalmente de graça.</b>
+                    </p>
+                    
+                    <h4 class='font-weight-bold mt-5'>
+                        <span class="ec ec-desktop-computer"></span>
+                        Eu vou liberar o acesso a todas as aulas das turmas passadas para você. 
+                    </h4>
+
+                    <p>
+                        Você terá acesso a todo o conteúdo que foi passado em todas as turmas do Python Pro. 
+                        Isso inclui as aulas e os arquivos dos projetos!
+                    </p>
+                    
+                    <p>
+                        Eu poderia cobrar, tranquilamente, R$ 1.500,00 só por este acesso. 
+                        Mas resolvi te dar como bônus para te provar como eu estou comprometido com o seu sucesso!
+                        Somente estes bônus já valem quase muito mais que o curso!
+                        <b>De <strike>R$ 1500</strike> por R$ 0,00!</b>
+                    </p>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row text-center text-light">
+
+                <div class='col mb-5 mt-5'>
+                    <h2 class='font-weight-bold'>HOJE, VOCÊ TERÁ ACESSO AO CURSO POR APENAS:</h2>
+                    <p class='price'>
+                        <b>12x </b>
+                        <b class='real'><span>R$</span> {{ price_installment|floatformat:2 }}</b>
+                    </p>
+
+                    <p class='a-vista'>
+                        <i class=''>(ou apenas <b>R$ {{ price_float|floatformat:2 }}</b> se você comprar à vista)</i>
+                    </p>
+
+                    {% if has_discount %}
+                        <p class='a-vista'>
+                            <b>Lembre-se, você está tendo R$ {{discount_float|floatformat:2 }} de desconto porque já é aluno
+                            do curso PyTools.</b>
+                        </p>
+                    {% else %}
                         <p>Caso você tenha comprado o módulo Pytools, <a href="{{ login_url }}" class="btn btn-warning">Acesse
                             sua
-                            conta &raquo;</a> para ganhar o valor dele como desconto.</p>
-                    {% endif %}
-                    {% if has_discount %}
-                        <p>
-                            O preço cheio do curso é:<br/>
-                            12 x de R$ {{ full_price_installment|floatformat:2 }} ou a vista no valor de
-                            R$ {{ full_price_float|floatformat:2 }}.
-                        </p>
-                        <p>Mas como você comprou o curso Pytools, vc ganha o valor dele como desconto:
-                            R$ {{ discount_float|floatformat:2 }}. <br/>
-                            Portanto, o preço fica sendo: <br/>
-                            12 x de R$ {{ price_installment|floatformat:2 }} ou a vista no valor de
-                            R$ {{ price_float|floatformat:2 }}.</p>
-                    {% else %}
-                        <p> O preço do curso é 12 x de R$ {{ price_installment|floatformat:2 }} ou a vista no valor de
-                            R$ {{ price_float|floatformat:2 }}.
-                        </p>
+                        conta &raquo;</a> para ganhar o valor dele como desconto.</p>
                     {% endif %}
 
-                    <button class="btn btn-lg btn-warning">SIM! Quero <span
-                            class="font-weight-bold"><u>me inscrever</u></span> &raquo;
-                    </button>
+                    <div class='text-center d-none d-sm-block d-md-block'>
+                        <button class="cta btn btn-warning mt-10">
+                            SIM! Eu quero ser um <b><b>PROGRAMADOR PROFISSIONAL!</b></b>
+                        </button>
+                    </div>
+
+                    <div class='text-center d-block d-lg-none d-xl-none'>
+                        <button class="cta-mobile btn btn-warning mt-10">
+                            SIM! Eu quero ser um <br><b><b>PROGRAMADOR PROFISSIONAL!</b></b>
+                        </button>
+                    </div>
+
+                    <div class="mt-3">
+                        <img src='{% static "img/compra-segura-1.png" %}' width='250px' alt="Imagem Compra Segura"/>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="bg-light">
-        <div class="container pt-4 pb-3">
-            <div class="row">
-                <div class="col">
-                    <h3 class="mb-3">Esse curso vai te ajudar a:</h3>
-                    <dt>Se conectar com profissionaid de TI</dt>
-                    <dd>Você conhecerá toda rede alunos, muitos já atuando no mercado, para te ajudar.
-                    </dd>
-                    <dt class="mt-2">Conhecer empresas de interessadas em contratar</dt>
-                    <dd>Você vai participar do evento "Testando o Mercado" com empresas interessadas em contratar! Já
-                        participaram Magazine Luiza, Geru, Necto e Brasil317!
-                    </dd>
-                    <dt class="mt-2">Produzir e Entregar um Aplicativo Web</dt>
-                    <dd>Você aprender como fazer um sistema web com todas boas práticas e publicá-lo em um servidor!
-                    </dd>
-                    <dt class="mt-2">Aprender a se inserir no mercado e negociar salário!</dt>
-                    <dd>Além da tecnologia, você vai conferir téncnicas de negociação salarial e de precessos seletivos
-                        para entrar no mercado e faturar alto!
-                    </dd>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container  pt-5 pb-5">
-        {% include 'core/instructors.html' %}
-    </div>
-    <div class="bg-light">
-        <div class="container pt-5 pb-5">
-            {% include 'core/social_proof.html' %}
-        </div>
-    </div>
-    <div class="bg-primary pt-5 pb-5 text-light">
+    
+    <div class='bg-black'>
         <div class="container">
             <div class="row">
-                <div class="col-8">
-                    <h3>Quer se transformar também?</h3>
-                    <p>12 x de R$ span>R$ {{ price_installment|floatformat:2 }} ou a vista no valor de
-                        R$ {{ price_float|floatformat:2 }}.
+                <div class="col mb-5 mt-5">
+                    <h2 class='text-light font-weight-bold mb-5 text-center'>
+                        Aproveite! Essa promoção vai expirar em breve!
+                    </h2>
+                    
+                    <h2 class='demo countdown text-light font-weight-bold text-center'></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col mb-5 mt-5">
+                    <h2 class='font-weight-bold mb-5'>"Mas e se eu não gostar do curso?"</h2>
+                    <p>
+                        Como falei antes, <b>o meu objetivo é formar profissionais.</b>
                     </p>
-                    <button class="btn btn-lg btn-warning">SIM! Quero <span
-                            class="font-weight-bold"><u>me inscrever</u></span> &raquo;
-                    </button>
+
+                    <p>
+                        Não quero simplesmente ensinar, eu quero fazer você aprender.
+                    </p>
+
+                    <p>
+                        Por isso, em todos os meus cursos eu tenho uma cláusula que se chama
+                        <b>CLÁUSULA DA FELICIDADE GARANTIDA.</b>
+                    </p>
+
+                    <p>
+                        Funciona basicamente assim:
+                    </p>
+
+                    <p>
+                        Se, por qualquer motivo, você não gostar do curso,
+                        <b class='highlight'>eu vou devolver seu dinheiro sem nenhum tipo de questionamento!</b>
+                    </p>
+
+                    <p>
+                        Se você não gostar da minha didática,
+                        se você não conseguir colocar em prática o que eu vou te ensinar
+                        (por qualquer motivo), até se você não gostar da cor da minha camiseta,
+                        eu devolvo seu dinheiro na hora.
+                    </p>
+
+                    <p>
+                        É só você me enviar um email.
+                    </p>
+
+                    <p>
+                        <i>Só não esquece de fazer isso nos primeiros 30 dias depois da compra, ok?</i>
+                    </p>
+
 
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Calma que já está acabando ;)</h5>
-                </div>
-                <div class="modal-body">
-                    Aguarde enquanto finalizamos seu pagamento <img src="{% static 'img/ajax-loader.gif' %}"
-                                                                    alt="Ajax Loader"/>
+
+    <div class='bg-secondary'>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <h3 class='mb-5'><b>
+                        Já são vários alunos transformados!
+                        <span class="ec ec-heart-eyes"></span>
+                        <span class="ec ec-heart-eyes"></span>
+                    </b>
+                    </h3>
+                    <div class='social-proof'>
+                        {% include 'core/social_proof.html' %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <div class=''>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <h2 class='mb-5 font-weight-bold'>
+                        Saiba quem serão seus instrutores:
+                    </h2>
+
+                    <div class='instructors'>
+                        {% include 'core/instructors.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=''>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <h2 class='mb-5 font-weight-bold'>
+                        Ficou com alguma dúvida?? Então dá uma olhadinha aqui embaixo...
+                    </h2>
+
+                    <h4 class='mt-5'>
+                        <span class="ec ec-speech-balloon"></span>
+                        É possível parcelar o valor no boleto?
+                    </h4>
+
+                    <p class='mb-5'>
+                        Infelizmente não. Só é possível pagar o valor parcelado através
+                        de cartão de crédito.
+                    </p>
+
+                    <h4 class='mt-5'>
+                        <span class="ec ec-speech-balloon"></span>
+                        Vou receber alguma coisa na minha casa?
+                    </h4>
+
+                    <p class='mb-5'>
+                        Não. Você não receberá nada na sua casa. O conteúdo das aulas são
+                        100% online e podem ser acessados do computador, tablet ou celular.
+                    </p>
+
+                    <h4 class='mt-5'>
+                        <span class="ec ec-speech-balloon"></span>
+                        Os meus dados pessoais e os dados do meu cartão de crédito estão seguros?
+                    </h4>
+
+                    <p class='mb-5'>
+                        Sim. Toda a transação é realizada pela plataforma 100% segura do Pagarme.
+                        Todos os seus dados são confidenciais e criptografados, impedindo qualquer
+                        tipo de fraude ou roubo de dados.
+                    </p>
+
+                    <h4 class='mt-5'>
+                        <span class="ec ec-speech-balloon"></span>
+                        Preciso de ajuda, com quem eu falo?
+                    </h4>
+
+                    <p class='mb-5'>
+                        Qualquer dúvida pode entrar em contato diretamente comigo através do email
+                        renzo@python.pro.br.
+                    </p>
+
+                    <h4 class='mt-5'>
+                        <span class="ec ec-speech-balloon"></span>
+                        Como eu receberei meu acesso as vídeo-aulas?
+                    </h4>
+
+                    <p>
+                        Se você pagar por boleto, o pagamento vai demorar até 3 dias úteis para
+                        cair em nosso sistema, depois que vc realizar o pagamento.
+
+                        Depois do pagamento confirmado, você receberá um e-mail
+                        automático para poder acessar todo conteúdo.
+                    </p>
+
+                    <p class='mb-5'>
+                        Caso você pague no cartão, o sistema já contabilizará a venda e
+                        você receberá esse e-mail em questão de minutos.
+                    </p>
+
+                    <h4 class='mt-5'>
+                        <span class="ec ec-speech-balloon"></span>
+                        O que acontece caso eu não me adapte às aulas ou não goste do curso?
+                    </h4>
+
+                    <p>
+                        Eu devolvo 100% do seu dinheiro. Eu resolvi colocar uma garantia
+                        incondicional de 30 dias a sua disposição.
+                    </p>
+
+                    <p class='mb-5'>
+                        Isso significa que você poderá comprar o curso agora mesmo, consumir todas as
+                        aulas e se em até 30 dias você desistir, basta mandar um e-mail para mim que
+                        eu devolvo 100% do seu investimento.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row text-center text-light">
+
+                                <div class='col mb-5 mt-5'>
+                    <h2 class='font-weight-bold'>HOJE, VOCÊ TERÁ ACESSO AO CURSO POR APENAS:</h2>
+                    <p class='price'>
+                        <b>12x </b>
+                        <b class='real'><span>R$</span> {{ price_installment|floatformat:2 }}</b>
+                    </p>
+
+                    <p class='a-vista'>
+                        <i class=''>(ou apenas <b>R$ {{ price_float|floatformat:2 }}</b> se você comprar à vista)</i>
+                    </p>
+
+                    {% if has_discount %}
+                        <p class='a-vista'>
+                            <b>Lembre-se, você está tendo R$ {{discount_float|floatformat:2 }} de desconto porque já é aluno
+                            do curso PyTools.</b>
+                        </p>
+                    {% else %}
+                        <p>Caso você tenha comprado o módulo Pytools, <a href="{{ login_url }}" class="btn btn-warning">Acesse
+                            sua
+                        conta &raquo;</a> para ganhar o valor dele como desconto.</p>
+                    {% endif %}
+
+                    <div class='text-center d-none d-sm-block d-md-block'>
+                        <button class="cta btn btn-warning mt-10">
+                            SIM! Eu quero ser um <b><b>PROGRAMADOR PROFISSIONAL!</b></b>
+                        </button>
+                    </div>
+
+                    <div class='text-center d-block d-lg-none d-xl-none'>
+                        <button class="cta-mobile btn btn-warning mt-10">
+                            SIM! Eu quero ser um <br><b><b>PROGRAMADOR PROFISSIONAL!</b></b>
+                        </button>
+                    </div>
+
+                    <div class="mt-3">
+                        <img src='{% static "img/compra-segura-1.png" %}' width='250px' alt="Imagem Compra Segura"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-black'>
+        <div class="container">
+            <div class="row">
+                <div class="col mb-5 mt-5">
+                    <h2 class='text-light font-weight-bold mb-5 text-center'>
+                        Aproveite! Essa promoção vai expirar em breve!
+                    </h2>
+                    
+                    <h2 class='demo countdown text-light font-weight-bold text-center'></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set the date we're counting down to
+        var countDownDate = new Date("Oct 31, 2019 19:00:00").getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result in the element with id="demo"
+        $(".countdown").html(hours + "H " + minutes + "M " + seconds + "S ");
+
+        // If the count down is finished, write some text
+        if (distance < 0) {
+            clearInterval(x);
+            $(".countdown").html("ACABOU!!!");
+        }
+        }, 1000);
+    </script>
 {% endblock body %}

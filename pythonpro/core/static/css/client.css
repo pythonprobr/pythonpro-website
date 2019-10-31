@@ -10,6 +10,10 @@
     background-color: #f0f0f0 !important; 
 }
 
+.bg-black {
+    background-color: #1E1E1E !important; 
+}
+
 a, div, p, span {
     text-decoration: none;
     font-family: Gilroy-Regular;
@@ -69,6 +73,7 @@ h3 .ec, h4 .ec {
     letter-spacing: 0px;
     padding: 40px 10px 30px 10px;
     margin-right: -10px;
+    font-size: 10pt;
 }
 
 .a-vista {
@@ -83,7 +88,7 @@ h3 .ec, h4 .ec {
 .a-prazo {
     line-height: 350%;
 }
-
+    
 .real {
     padding-left: 10px; 
     letter-spacing: -1px;
