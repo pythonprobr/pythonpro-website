@@ -115,7 +115,7 @@ def _extract_boleto_params(dct):
 
 
 def member_landing_page(request):
-    template_open_launch = 'payments/member_landing_page_subscription_open.html'
+    template_open_launch = 'payments/meteoric_landing_page_open.html'
     template_closed_launch = 'payments/member_landing_page_subscription_closed.html'
     is_launch_open = settings.SUBSCRIPTIONS_OPEN or request.GET.get('debug')
     return _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch,
