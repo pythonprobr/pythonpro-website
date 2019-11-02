@@ -122,12 +122,15 @@
     </script>
 {% endblock head %}
 {% block body %}
+
+    {% include 'payments/_whatsapp_widget.html' %}
+    
     <div class='bg-primary'>
         <div class="container">
             <div class="row">
                 <div class="col hero text-center">
                     <h1 class='text-light'>
-                        Matrículas Abertas para o <br>
+                        Matrículas Abertas para o <br />
                         <b>Curso PYTHON PRO!</b>
                     </h1>
 
@@ -155,7 +158,7 @@
 
                     <div class='text-center d-block d-lg-none d-xl-none'>
                         <button class="cta-mobile btn btn-warning mt-3">
-                            SIM! Eu quero ser um <br><b><b>PROGRAMADOR PROFISSIONAL!</b></b>
+                            SIM! Eu quero ser um <br /><b><b>PROGRAMADOR PROFISSIONAL!</b></b>
                         </button>
                     </div>
                 </div>
@@ -682,7 +685,7 @@
 
                     <div class='text-center d-block d-lg-none d-xl-none'>
                         <button class="cta-mobile btn btn-warning mt-10">
-                            SIM! Eu quero ser um <br><b><b>PROGRAMADOR PROFISSIONAL!</b></b>
+                            SIM! Eu quero ser um <br /><b><b>PROGRAMADOR PROFISSIONAL!</b></b>
                         </button>
                     </div>
 
@@ -914,7 +917,7 @@
 
                     <div class='text-center d-block d-lg-none d-xl-none'>
                         <button class="cta-mobile btn btn-warning mt-10">
-                            SIM! Eu quero ser um <br><b><b>PROGRAMADOR PROFISSIONAL!</b></b>
+                            SIM! Eu quero ser um <br /><b><b>PROGRAMADOR PROFISSIONAL!</b></b>
                         </button>
                     </div>
 
@@ -942,7 +945,7 @@
 
     <script>
         // Set the date we're counting down to
-        var countDownDate = new Date("Oct 31, 2019 19:00:00").getTime();
+        var countDownDate = new Date("Nov 8, 2019 23:59:59").getTime();
 
         // Update the count down every 1 second
         var x = setInterval(function () {
@@ -960,7 +963,7 @@
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             // Display the result in the element with id="demo"
-            $(".countdown").html(hours + "H " + minutes + "M " + seconds + "S ");
+            $(".countdown").html(days + "D " + hours + "H " + minutes + "M " + seconds + "S ");
 
             // If the count down is finished, write some text
             if (distance < 0) {
