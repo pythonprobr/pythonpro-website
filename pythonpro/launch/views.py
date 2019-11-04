@@ -81,8 +81,11 @@ def _render_cpl(description, request, title, user, video_id, visit_function):
         visit_function(user, request.GET.get('utm_source', 'unknown'))
 
     launch_status = _get_launch_status()
-    if launch_status == 0 and not request.GET.get('debug'):
+    if launch_status == LAUNCH_STATUS_PPL and not request.GET.get('debug'):
         return redirect(reverse('launch:landing_page'))
+
+    if launch_status > LAUNCH_STATUS_CPL3 and not request.GET.get('debug'):
+        return redirect(reverse('member_landing_page'))
 
     ctx = {
         'data_href': f'https://{build_absolute_uri(request.path)}',
