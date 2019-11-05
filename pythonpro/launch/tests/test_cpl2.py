@@ -15,12 +15,12 @@ def launch_status_as_mock(mocker):
 
 
 @pytest.fixture
-def resp(client, tag_as_mock, launch_status_as_mock):
+def resp(client, tag_as_mock):
     return client.get(reverse('launch:cpl2'), secure=True)
 
 
 def test_status_code(resp):
-    assert 200 == resp.status_code
+    assert 302 == resp.status_code
 
 
 def test_mailchimp_tag_not_called(resp, tag_as_mock):
