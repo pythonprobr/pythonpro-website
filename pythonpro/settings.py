@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'pythonpro.mailchimp',
     'pythonpro.dashboard',
     'pythonpro.launch',
+    'pythonpro.analytics',
     'rolepermissions',
     'ordered_model',
     'django.contrib.admin',
@@ -91,6 +92,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pythonpro.analytics.middleware.AnalyticsMiddleware',
 ]
 
 ROLEPERMISSIONS_MODULE = 'pythonpro.core.roles'
@@ -144,16 +146,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -192,7 +198,9 @@ if AWS_ACCESS_KEY_ID:  # pragma: no cover
     INSTALLED_APPS.append('storages')
     AWS_SECRET_ACCESS_KEY = config('DJANGO_AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = config('DJANGO_AWS_STORAGE_BUCKET_NAME')
-    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400', }
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
     AWS_PRELOAD_METADATA = True
     AWS_AUTO_CREATE_BUCKET = False
     AWS_QUERYSTRING_AUTH = True
@@ -227,10 +235,7 @@ if AWS_ACCESS_KEY_ID:  # pragma: no cover
 SENTRY_DSN = config('SENTRY_DSN', default=None)
 
 if SENTRY_DSN:  # pragma: no cover
-    sentry_sdk.init(
-        dsn=SENTRY_DSN,
-        integrations=[DjangoIntegration()]
-    )
+    sentry_sdk.init(dsn=SENTRY_DSN, integrations=[DjangoIntegration()])
 
 # Mailchimp Configuration
 MAILCHIMP_API_KEY = config('MAILCHIMP_API_KEY')
