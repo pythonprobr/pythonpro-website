@@ -4,6 +4,8 @@ from django.utils import timezone
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 
+from pythonpro.core.models import User
+
 
 class BaseModel(models.Model):
     class Meta:
@@ -19,6 +21,10 @@ class UserSession(BaseModel):
         verbose_name_plural = 'sessões'
 
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User,
+                             on_delete=models.SET_NULL,
+                             null=True,
+                             blank=True)
 
     def __str__(self):
         return str(self.uuid)
