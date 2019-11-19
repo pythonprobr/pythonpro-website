@@ -1,12 +1,11 @@
 import pytest
 
-from django.test import Client
-
 from pythonpro.analytics.models import UserSession
 
 
 def test_should_exists_method():
-    from pythonpro.analytics.facade import get_or_create_session
+    from pythonpro.analytics import facade
+    assert facade.get_or_create_session
 
 
 @pytest.fixture

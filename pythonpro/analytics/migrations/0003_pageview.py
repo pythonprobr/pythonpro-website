@@ -16,11 +16,24 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PageView',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Criado em')),
-                ('updated', models.DateTimeField(auto_now=True, verbose_name='Alterado em')),
+                ('id',
+                 models.AutoField(auto_created=True,
+                                  primary_key=True,
+                                  serialize=False,
+                                  verbose_name='ID')),
+                ('created',
+                 models.DateTimeField(default=django.utils.timezone.now,
+                                      verbose_name='Criado em')),
+                ('updated',
+                 models.DateTimeField(auto_now=True,
+                                      verbose_name='Alterado em')),
                 ('meta', django.contrib.postgres.fields.jsonb.JSONField()),
-                ('session', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='analytics.UserSession', verbose_name='sessão')),
+                ('session',
+                 models.ForeignKey(
+                     null=True,
+                     on_delete=django.db.models.deletion.SET_NULL,
+                     to='analytics.UserSession',
+                     verbose_name='sessão')),
             ],
             options={
                 'verbose_name': 'page view',

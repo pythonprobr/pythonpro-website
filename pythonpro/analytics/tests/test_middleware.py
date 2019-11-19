@@ -2,7 +2,8 @@ import pytest
 
 
 def test_should_assert_that_middleware_exists():
-    from pythonpro.analytics.middleware import AnalyticsMiddleware
+    from pythonpro.analytics import middleware
+    assert middleware.AnalyticsMiddleware
 
 
 @pytest.fixture

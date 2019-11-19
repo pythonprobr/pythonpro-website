@@ -1,11 +1,11 @@
 import pytest
-from model_mommy import mommy
 
 from pythonpro.analytics.models import PageView
 
 
 def test_should_facade_exists():
-    from pythonpro.analytics.facade import create_pageview
+    from pythonpro.analytics import facade
+    assert facade.create_pageview
 
 
 @pytest.fixture
@@ -47,7 +47,8 @@ def test_should_ignore_all_urls_that_starts_with_admin():
 
 
 @pytest.mark.django_db
-def test_should_call_is_to_save_this_pageview_function(mocked_request_with_analytics, mocker):
+def test_should_call_is_to_save_this_pageview_function(
+        mocked_request_with_analytics, mocker):
     from pythonpro.analytics.facade import create_pageview
 
     mocked = mocker.patch(
