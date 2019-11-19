@@ -3,17 +3,40 @@ import json
 from pythonpro.analytics.models import UserSession, PageView
 
 
-def get_or_create_session(request):
-    if 'analytics_session' in request.session:
+def _create_session(request):
+    user = request.user if not request.user.is_anonymous else None
+    session = UserSession.objects.create(user=user)
+    return session
+
+
+def _associate_logged_user_to_session(session, request):
+    if not request.user.is_anonymous and not session.user:
+        session.user = request.user
+        session.save()
+
+
+def _is_session_setted(request):
+    if 'analytics' in request.session:
         try:
             session = UserSession.objects.get(
-                uuid=request.session['analytics_session'])
-            return request
-        except UserSession.DoesNotExists:
+                id=request.session['analytics']['id'])
+            _associate_logged_user_to_session(session, request)
+            return True
+        except Exception:
             pass
 
-    session = UserSession.objects.create()
-    request.session['analytics_session'] = str(session.uuid)
+    return False
+
+
+def get_or_create_session(request):
+    if _is_session_setted(request):
+        return request
+
+    session = _create_session(request)
+    request.session['analytics'] = {
+        'id': session.id,
+        'uuid': str(session.uuid)
+    }
     return request
 
 
@@ -28,6 +51,15 @@ def _get_serialized_meta(meta):
     return json.loads(json.dumps(meta, cls=ComplexEncoder))
 
 
-def create_pageview(user_session, request):
-    PageView.objects.create(session=user_session,
-                            meta=_get_serialized_meta(request.META))
+def _is_to_save_this_pageview(url):
+    if url.startswith('/admin'):
+        return False
+    return True
+
+
+def create_pageview(request):
+    url = request.META.get('PATH_INFO') or ''
+    if _is_to_save_this_pageview(url):
+        user_session_id = request.session['analytics']['id']
+        PageView.objects.create(session_id=user_session_id,
+                                meta=_get_serialized_meta(request.META))

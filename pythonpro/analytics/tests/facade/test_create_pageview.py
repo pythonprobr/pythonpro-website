@@ -9,22 +9,17 @@ def test_should_facade_exists():
 
 
 @pytest.fixture
-def user_session():
-    return mommy.make('UserSession')
+def create_pageview(mocked_request_with_analytics):
+    from pythonpro.analytics.facade import create_pageview
+
+    return create_pageview(mocked_request_with_analytics)
 
 
 @pytest.fixture
-def create_pageview(user_session, mocked_request):
+def create_pageview_2(mocked_request_with_analytics):
     from pythonpro.analytics.facade import create_pageview
 
-    return create_pageview(user_session, mocked_request)
-
-
-@pytest.fixture
-def create_pageview_2(user_session, mocked_request):
-    from pythonpro.analytics.facade import create_pageview
-
-    return create_pageview(user_session, mocked_request)
+    return create_pageview(mocked_request_with_analytics)
 
 
 @pytest.mark.django_db
@@ -41,3 +36,23 @@ def test_should_create_meta_field_as_dict(create_pageview):
 def test_should_create_pageview_for_each_request(create_pageview,
                                                  create_pageview_2):
     assert PageView.objects.all().count() == 2
+
+
+def test_should_ignore_all_urls_that_starts_with_admin():
+    from pythonpro.analytics.facade import _is_to_save_this_pageview
+
+    assert _is_to_save_this_pageview('/curso-gratis-de-python') is True
+    assert _is_to_save_this_pageview('/admin/analytics/pageview') is False
+    assert _is_to_save_this_pageview('/admin') is False
+
+
+@pytest.mark.django_db
+def test_should_call_is_to_save_this_pageview_function(mocked_request_with_analytics, mocker):
+    from pythonpro.analytics.facade import create_pageview
+
+    mocked = mocker.patch(
+        'pythonpro.analytics.facade._is_to_save_this_pageview',
+        return_value=True)
+
+    create_pageview(mocked_request_with_analytics)
+    assert mocked.called
