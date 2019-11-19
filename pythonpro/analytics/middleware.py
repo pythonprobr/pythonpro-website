@@ -1,6 +1,6 @@
 from django.utils.deprecation import MiddlewareMixin
 
-from pythonpro.analytics.facade import get_or_create_session
+from pythonpro.analytics.facade import get_or_create_session, create_pageview
 
 
 class AnalyticsMiddleware(MiddlewareMixin):
@@ -9,4 +9,5 @@ class AnalyticsMiddleware(MiddlewareMixin):
 
     def __call__(self, request):
         request = get_or_create_session(request)
+        create_pageview(request)
         return self.get_response(request)
