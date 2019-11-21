@@ -15,21 +15,21 @@ def pre_request():
     return request
 
 
-@pytest.fixture
-def mocked_request(pre_request):
+def _get_request_with_session_setted(pre_request):
     middleware = SessionMiddleware()
     middleware.process_request(pre_request)
     pre_request.session.save()
     return pre_request
+
+
+@pytest.fixture
+def mocked_request(pre_request):
+    return _get_request_with_session_setted(pre_request)
 
 
 @pytest.fixture
 def mocked_request_2(pre_request):
-    middleware = SessionMiddleware()
-    middleware.process_request(pre_request)
-    pre_request.session.save()
-
-    return pre_request
+    return _get_request_with_session_setted(pre_request)
 
 
 @pytest.fixture
