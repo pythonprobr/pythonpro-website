@@ -5,38 +5,32 @@ from pythonpro.analytics.models import UserSession, PageView
 
 def _create_session(request):
     user = request.user if not request.user.is_anonymous else None
-    session = UserSession.objects.create(user=user)
-    return session
+    return UserSession.objects.create(user=user)
 
 
-def _associate_logged_user_to_session(session, request):
-    if not request.user.is_anonymous and not session.user:
-        session.user = request.user
+def _mount_session_dict(session):
+    return {'id': session.id, 'uuid': str(session.uuid)}
+
+
+def _associate_logged_user_to_session(session_id, user):
+    session = UserSession.objects.get(id=session_id)
+    if not user.is_anonymous and session.user is None:
+        session.user = user
         session.save()
 
 
-def _is_session_setted(request):
-    if 'analytics' in request.session:
-        try:
-            session = UserSession.objects.get(
-                id=request.session['analytics']['id'])
-            _associate_logged_user_to_session(session, request)
-            return True
-        except Exception:
-            pass
+def _setup_analytics_object(request):
+    analytics = request.session.get('analytics')
+    if analytics is None:
+        session = _create_session(request)
+        analytics = _mount_session_dict(session)
 
-    return False
+    _associate_logged_user_to_session(analytics['id'], request.user)
+    return analytics
 
 
 def get_or_create_session(request):
-    if _is_session_setted(request):
-        return request
-
-    session = _create_session(request)
-    request.session['analytics'] = {
-        'id': session.id,
-        'uuid': str(session.uuid)
-    }
+    request.session['analytics'] = _setup_analytics_object(request)
     return request
 
 
