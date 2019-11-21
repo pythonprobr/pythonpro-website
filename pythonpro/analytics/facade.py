@@ -45,15 +45,13 @@ def _get_serialized_meta(meta):
     return json.loads(json.dumps(meta, cls=ComplexEncoder))
 
 
-def _is_to_save_this_pageview(url):
-    if url.startswith('/admin'):
-        return False
-    return True
+def _should_create_pageview(url):
+    return url.startswith('/admin') is False
 
 
 def create_pageview(request):
     url = request.META.get('PATH_INFO') or ''
-    if _is_to_save_this_pageview(url):
+    if _should_create_pageview(url):
         user_session_id = request.session['analytics']['id']
         PageView.objects.create(session_id=user_session_id,
                                 meta=_get_serialized_meta(request.META))
