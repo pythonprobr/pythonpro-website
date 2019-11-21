@@ -26,7 +26,7 @@ def test_should_create_an_usersession_on_database(request_created_in_fixture):
 @pytest.mark.django_db
 def test_should_not_assert_any_user_when_has_no_logged_in(
         request_created_in_fixture):
-    assert not UserSession.objects.get().user
+    assert UserSession.objects.get().user is None
 
 
 @pytest.mark.django_db
