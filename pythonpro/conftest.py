@@ -49,4 +49,9 @@ def client_with_client(client, django_user_model, logged_user):
     return client
 
 
+@pytest.fixture(autouse=True)
+def use_db_always(db):
+    pass
+
+
 pytest_plugins = ['pythonpro.modules.tests.test_topics_view']
