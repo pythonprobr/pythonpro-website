@@ -39,21 +39,20 @@ def test_should_create_pageview_for_each_request(create_pageview,
 
 
 def test_should_ignore_all_urls_that_starts_with_admin():
-    from pythonpro.analytics.facade import _is_to_save_this_pageview
+    from pythonpro.analytics.facade import _should_create_pageview
 
-    assert _is_to_save_this_pageview('/curso-gratis-de-python') is True
-    assert _is_to_save_this_pageview('/admin/analytics/pageview') is False
-    assert _is_to_save_this_pageview('/admin') is False
+    assert _should_create_pageview('/curso-gratis-de-python') is True
+    assert _should_create_pageview('/admin/analytics/pageview') is False
+    assert _should_create_pageview('/admin') is False
 
 
 @pytest.mark.django_db
-def test_should_call_is_to_save_this_pageview_function(
+def test_should_call_should_create_pageview_function(
         mocked_request_with_analytics, mocker):
     from pythonpro.analytics.facade import create_pageview
 
-    mocked = mocker.patch(
-        'pythonpro.analytics.facade._is_to_save_this_pageview',
-        return_value=True)
+    mocked = mocker.patch('pythonpro.analytics.facade._should_create_pageview',
+                          return_value=True)
 
     create_pageview(mocked_request_with_analytics)
     assert mocked.called
