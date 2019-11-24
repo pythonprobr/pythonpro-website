@@ -162,11 +162,10 @@
         },
         "gunicorn": {
             "hashes": [
-                "sha256:aa8e0b40b4157b36a5df5e599f45c9c76d6af43845ba3b3b0efe2c70473c2471",
-                "sha256:fa2662097c66f920f53f70621c6c58ca4a3c4d3434205e608e121b5b3b71f4f3"
+                "sha256:5a3bf56a1d44c2ed15dae2f9d2a9e7c87acc3517f7225e27e4ece3098a2b5efc",
+                "sha256:fe457b7093b353cefcb2ebc40d192fc7c8a62bba49da648c9e1fa0671fa654d1"
             ],
-            "index": "pypi",
-            "version": "==19.9.0"
+            "version": "==20.0.2"
         },
         "idna": {
             "hashes": [
