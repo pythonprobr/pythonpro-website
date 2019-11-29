@@ -95,6 +95,13 @@
                             frameborder="0"
                             webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
+                {% if topic.previous_content %}
+                    <div class="mt-5 mb-5" style="float: left">
+                        <a class="btn btn-success" href="{{ topic.previous_content.get_absolute_url }}">
+                            Conteúdo Anterior: <strong>{{ topic.previous_content.title }}</strong> &raquo;
+                        </a>
+                    </div>
+                {% endif %}
                 {% if topic.next_content %}
                     <div class="mt-5 mb-5" style="float: right">
                         <a class="btn btn-success" href="{{ topic.next_content.get_absolute_url }}">
