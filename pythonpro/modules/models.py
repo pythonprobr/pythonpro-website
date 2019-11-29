@@ -14,6 +14,7 @@ class Content(OrderedModel):
     description = models.TextField()
     slug = models.SlugField(unique=True)
     _next_content_cache = _NoneCache
+    _previous_content_cache = _NoneCache
 
     class Meta:
         abstract = True
@@ -53,6 +54,24 @@ class Content(OrderedModel):
 
     def _next_content_query_set(self):
         """Must provide a query set for next content"""
+        raise NotImplementedError()
+
+    def previous_content(self):
+        if self._previous_content_cache is not _NoneCache:
+            return self._previous_content_cache
+        previous = self
+        while previous is not None:
+            try:
+                self._previous_content_cache = previous._previous_content_query_set().get()
+                break
+            except ObjectDoesNotExist:
+                previous = previous.parent()
+        else:
+            self._previous_content_cache = None
+        return self._previous_content_cache
+
+    def _previous_content_query_set(self):
+        """Must provide a query set for previous content"""
         raise NotImplementedError()
 
     def module_slug(self):
@@ -95,6 +114,9 @@ class Module(Content):
     def _next_content_query_set(self):
         return Module.objects.filter(order=self.order + 1)
 
+    def _previous_content_query_set(self):
+        return Module.objects.filter(order=self.order - 1)
+
 
 class Section(Content):
     module = models.ForeignKey('Module', on_delete=models.CASCADE)
@@ -112,6 +134,9 @@ class Section(Content):
     def _next_content_query_set(self):
         return Section.objects.filter(module=self.module, order=self.order + 1)
 
+    def _previous_content_query_set(self):
+        return Section.objects.filter(module=self.module, order=self.order - 1)
+
 
 class Chapter(Content):
     section = models.ForeignKey('Section', on_delete=models.CASCADE)
@@ -128,6 +153,9 @@ class Chapter(Content):
 
     def _next_content_query_set(self):
         return Chapter.objects.filter(section=self.section, order=self.order + 1)
+
+    def _previous_content_query_set(self):
+        return Chapter.objects.filter(section=self.section, order=self.order - 1)
 
 
 class Topic(Content):
@@ -147,3 +175,6 @@ class Topic(Content):
 
     def _next_content_query_set(self):
         return Topic.objects.filter(chapter=self.chapter, order=self.order + 1)
+
+    def _previous_content_query_set(self):
+        return Topic.objects.filter(chapter=self.chapter, order=self.order - 1)
