@@ -10,16 +10,24 @@ class ClassInline(admin.TabularInline):
     ordering = ('start',)
 
 
-class WebinarInline(admin.StackedInline):
+class StudentInline(admin.TabularInline):
+    readonly_fields = ('added',)
     extra = 1
+    autocomplete_fields = ['user']
+    model = Cohort.students.through
+    ordering = ('added',)
+
+
+class WebinarInline(admin.StackedInline):
+    extra = 0
     model = Webinar
     ordering = ('start',)
     prepopulated_fields = {'slug': ('title',)}
 
 
 @admin.register(Cohort)
-class ModuleAdmin(admin.ModelAdmin):
-    inlines = [ClassInline, WebinarInline]
+class CohortAdmin(admin.ModelAdmin):
+    inlines = [ClassInline, WebinarInline, StudentInline]
     prepopulated_fields = {'slug': ('title',)}
     list_display = 'title start end page_link'.split()
     ordering = ('-start',)

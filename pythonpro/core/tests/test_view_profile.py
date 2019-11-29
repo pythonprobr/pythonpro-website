@@ -8,6 +8,11 @@ from pythonpro.django_assertions import dj_assert_contains
 
 @pytest.fixture
 def resp(client: Client):
+    return _resp(client)
+
+
+def _resp(client):
+    """Plain function to avoid _pytest.warning_types.RemovedInPytest4Warning: Fixture "resp" called directly."""
     return client.get(reverse('core:profile'), secure=True)
 
 
@@ -20,7 +25,7 @@ def user(django_user_model):
 @pytest.fixture
 def resp_with_user(user, client: Client):
     client.force_login(user)
-    return resp(client)
+    return _resp(client)
 
 
 def test_profile_not_logged_user(resp):
@@ -45,3 +50,7 @@ def test_edit_name_link(resp_with_user):
 
 def test_edit_email_link(resp_with_user):
     dj_assert_contains(resp_with_user, reverse('core:profile_email'))
+
+
+def test_edit_password_link(resp_with_user):
+    dj_assert_contains(resp_with_user, reverse('core:profile_password'))

@@ -2,7 +2,16 @@ DEBUG=True
 SECRET_KEY=Change for a secret here
 ALLOWED_HOSTS=localhost, 127.0.0.1
 SENTRY_DSN=
-DATABASE_URL=Put your Database URL here
+DATABASE_URL=postgres://pythonpro:pythonpro@localhost:5433/pythonpro
+
+# Pagarme credentials
+PAGARME_API_KEY=ak_test_6yd4kbaJrWzdn61m4De5yzn7jZuTt9
+PAGARME_CRYPTO_KEY=
+
+# Control subscriptions ads and payment.
+SUBSCRIPTIONS_OPEN=False
+METEORIC_LAUNCH_OPEN=False
+PAGSEGURO_PAYMENT_PLAN=YOUR PAYMENT PLAN ON pagseguro
 
 # Amazon S3 configuration
 DJANGO_AWS_ACCESS_KEY_ID=
@@ -17,6 +26,13 @@ EMAIL_USE_TLS=False
 EMAIL_HOST_USER=
 EMAIL_HOST_PASSWORD=
 
-
 # Discourse config
-DISCOURSE_SSO_SECRET='paste_your_secret_here'
+DISCOURSE_SSO_SECRET=
+
+# Mailchimp config
+MAILCHIMP_API_KEY=00000000000000000000000000000000-us17
+MAILCHIMP_LIST_ID=list_id
+
+# Google Tag Manager Config
+GOOGLE_TAG_MANAGER_ID=GTM-ABC1234
+                  

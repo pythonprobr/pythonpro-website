@@ -3,6 +3,10 @@ from django.db.models import Prefetch
 from pythonpro.modules.models import (Section as _Section, Module as _Module, Chapter as _Chapter, Topic as _Topic)
 
 
+def get_topic_model():
+    return _Topic
+
+
 def get_all_modules():
     """
     Search all modules on database sorted by order

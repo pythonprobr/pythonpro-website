@@ -1,0 +1,214 @@
+{% extends 'core/base_without_nav.html' %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+{% block description %}{{ description }}{% endblock %}
+{% block head %}
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css'>
+    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+
+    <style>
+        @font-face {
+            font-family: 'Gilroy-Bold';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Bold ☞'), url('{% static "fonts/Gilroy-Bold.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Heavy';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Heavy ☞'), url('{% static "fonts/Gilroy-Heavy.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Light';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Light ☞'), url('{% static "fonts/Gilroy-Light.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Medium';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Medium ☞'), url('{% static "fonts/Gilroy-Medium.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Regular';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Regular ☞'), url('{% static "fonts/Gilroy-Regular.woff" %}') format('woff');
+        }
+
+    </style>
+    <link rel="stylesheet" href="{% static 'css/client.css' %}"/>
+
+    <style>
+        h1 {
+            font-size: 3.2rem;
+        }
+
+        input.form-control, button.btn {
+            border-radius: 0px;
+            margin: 5px 0;
+            font-family: 'ubuntu';
+        }
+
+        button.btn {
+            border-width: 1px;
+            font-family: 'Gilroy-Bold';
+        }
+
+        .mobile h1 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .mobile h2 {
+            font-size: 1.5rem;
+        }
+
+        .hero {
+            margin-bottom: 5px;
+        }
+
+        .mobile.hero {
+            margin: 20px 0;
+            margin-bottom: 5px;
+        }
+
+        .thumbs-aulas {
+            margin: 20px;
+        }
+        
+        {% comment %} .thumbs-aulas img {
+            margin: 0px 50px;
+        } {% endcomment %}
+
+        .video {
+            margin: 5px;
+        }
+        
+
+    </style>
+{% endblock head %}
+
+{% block body %}
+    <div class=''>
+        <div class="container">
+            <div class="row text-center">
+                <!-- desktop -->
+                <div class="col-md-12 hero desktop d-none d-sm-block d-md-block">
+                    <h1 class='font-weight-bold' style='color: #44A5F1'>
+                        SEMANA DO PROGRAMADOR PROFISSIONAL
+                    </h1>
+                </div>
+
+                <!-- mobile -->
+                <div class="col-md-12 hero mobile d-block d-lg-none d-xl-none">
+                    <h1 class='font-weight-bold' style='color: #44A5F1'>
+                        SEMANA DO PROGRAMADOR PROFISSIONAL
+                    </h1>
+                </div>
+            </div>
+        
+            <div class='row thumbs-aulas justify-content-center text-center'>
+
+                    
+                    <!-- AULA 1 -->
+                    <div class="col-4">
+                        {% if launch_status >= 1 %}
+                        <a href='{% url "launch:cpl1" %}' title='Assistir a Aula 1'>
+                            <img src='{% static 'img/launch/video1-available.png' %}' class="img-fluid"
+                                width="130px" alt="Aula 1 já está disponível!"/>
+                        </a>
+                        {% else %}
+                        <img src='{% static 'img/launch/video1-unavailable.png' %}' class="img-fluid"
+                            width="130px" alt="Aula 2 já está disponível!"/>
+                        {% endif %}
+                    </div>
+
+                    <!-- AULA 2 -->
+                    <div class="col-4">
+                        {% if launch_status >= 2 %}
+                        <a href='{% url "launch:cpl2" %}' title='Assistir a Aula 2'>
+                            <img src='{% static 'img/launch/video2-available.png' %}' class="img-fluid"
+                                width="130px" alt="Aula 2 já está disponível!"/>
+                        </a>
+                        {% else %}
+                        <img src='{% static 'img/launch/video2-unavailable.png' %}' class="img-fluid"
+                            width="130px" alt="Aula 2 já está disponível!"/>
+                        {% endif %}
+                    </div>
+                
+                    <!-- AULA 3 -->
+                    <div class="col-4">
+                        {% if launch_status >= 3 %}
+                        <a href='{% url "launch:cpl3" %}' title='Assistir a Aula 3'>
+                            <img src='{% static 'img/launch/video3-available.png' %}' class="img-fluid"
+                                width="130px" alt="Aula 3 já está disponível!"/>
+                        </a>
+                        {% else %}
+                        <img src='{% static 'img/launch/video3-unavailable.png' %}' class="img-fluid"
+                            width="130px" alt="Aula 3 já está disponível!"/>
+                        {% endif %}
+                    </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+    
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col video" style="max-width: 800px">
+                    <div>
+                        <div class="embed-container">
+                            <iframe  src="https://www.youtube.com/embed/{{ video_id }}?autoplay=0&showinfo=0&controls=0&modestbranding=1&autohide=1"
+                                    frameborder="0"
+                                    webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            <div id="fb-root"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row text-center">
+            <div class="col justify-content-center col-lg-8 offset-lg-2">
+                <div class="mt-5 font-weight-bold">
+                    <h2>
+                        <span class="ec ec-arrow-down-small"></span>
+                        Deixe seu Comentário! 
+                        <span class="ec ec-arrow-down-small"></span>
+                    </h2>
+                </div>
+                
+                <div class="mt-5">
+                    <a class='btn btn-lg btn-primary font-weight-bold text-light mb-5'
+                       href='https://t.me/ProgramadorProfissional' target='_blank'>
+                        <i class="fa fa-telegram" aria-hidden="true"></i> Entrar para o canal no Telegram!
+                    </a>
+                </div>
+                <script async defer crossorigin="anonymous"
+                        src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v4.0&appId=828510970515986&autoLogAppEvents=1"></script>
+                <div class="mb-5">
+                    <div class="fb-comments"
+                         data-href="https://www.facebook.com/pythonprobr/posts/1551609431645519" data-width="100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-primary text-white">
+        <div class="container pt-5 pb-5">
+            {% include 'core/social_proof.html' %}
+        </div>
+    </div>
+{% endblock body %}

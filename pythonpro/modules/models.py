@@ -1,6 +1,11 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.urls import reverse
 from ordered_model.models import OrderedModel
+
+
+class _NoneCache:
+    pass
 
 
 class Content(OrderedModel):
@@ -8,10 +13,15 @@ class Content(OrderedModel):
     title = models.CharField(max_length=50)
     description = models.TextField()
     slug = models.SlugField(unique=True)
+    _next_content_cache = _NoneCache
+    _previous_content_cache = _NoneCache
 
     class Meta:
         abstract = True
         ordering = ('order',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def parent(self):
         """Must return the parent of current content, which must be also implement Content or None"""
@@ -23,15 +33,56 @@ class Content(OrderedModel):
 
     def get_absolute_url(self):
         """Must return the absolute url for this content"""
-        return reverse('modules:detail', kwargs={'slug': self.slug})
+        raise NotImplementedError()
 
     def __str__(self):
         return self.title
 
+    def next_content(self):
+        if self._next_content_cache is not _NoneCache:
+            return self._next_content_cache
+        current = self
+        while current is not None:
+            try:
+                self._next_content_cache = current._next_content_query_set().get()
+                break
+            except ObjectDoesNotExist:
+                current = current.parent()
+        else:
+            self._next_content_cache = None
+        return self._next_content_cache
+
+    def _next_content_query_set(self):
+        """Must provide a query set for next content"""
+        raise NotImplementedError()
+
+    def previous_content(self):
+        if self._previous_content_cache is not _NoneCache:
+            return self._previous_content_cache
+        previous = self
+        while previous is not None:
+            try:
+                self._previous_content_cache = previous._previous_content_query_set().get()
+                break
+            except ObjectDoesNotExist:
+                previous = previous.parent()
+        else:
+            self._previous_content_cache = None
+        return self._previous_content_cache
+
+    def _previous_content_query_set(self):
+        """Must provide a query set for previous content"""
+        raise NotImplementedError()
+
+    def module_slug(self):
+        if self.parent() is None:
+            return self.slug
+        return self.parent().module_slug()
+
 
 class ContentWithTitleMixin(Content):
     """
-    Mising implementing breadcrumb method for models which has a title
+    Missing implementing breadcrumb method for models which has a title
     """
 
     class Meta:
@@ -56,6 +107,16 @@ class Module(Content):
     def parent(self):
         return None
 
+    def get_absolute_url(self):
+        """Must return the absolute url for this content"""
+        return reverse('modules:detail', kwargs={'slug': self.slug})
+
+    def _next_content_query_set(self):
+        return Module.objects.filter(order=self.order + 1)
+
+    def _previous_content_query_set(self):
+        return Module.objects.filter(order=self.order - 1)
+
 
 class Section(Content):
     module = models.ForeignKey('Module', on_delete=models.CASCADE)
@@ -69,6 +130,12 @@ class Section(Content):
 
     def parent(self):
         return self.module
+
+    def _next_content_query_set(self):
+        return Section.objects.filter(module=self.module, order=self.order + 1)
+
+    def _previous_content_query_set(self):
+        return Section.objects.filter(module=self.module, order=self.order - 1)
 
 
 class Chapter(Content):
@@ -84,6 +151,12 @@ class Chapter(Content):
     def parent(self):
         return self.section
 
+    def _next_content_query_set(self):
+        return Chapter.objects.filter(section=self.section, order=self.order + 1)
+
+    def _previous_content_query_set(self):
+        return Chapter.objects.filter(section=self.section, order=self.order - 1)
+
 
 class Topic(Content):
     chapter = models.ForeignKey('Chapter', on_delete=models.CASCADE)
@@ -91,20 +164,17 @@ class Topic(Content):
     discourse_topic_id = models.CharField(max_length=11, db_index=False)
     order_with_respect_to = 'chapter'
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._next_topic_cache = None
-
     class Meta:
         ordering = ['chapter', 'order']
 
     def get_absolute_url(self):
-        return reverse('topics:detail', kwargs={'slug': self.slug})
+        return reverse('modules:topic_detail', kwargs={'module_slug': self.module_slug(), 'topic_slug': self.slug})
 
     def parent(self):
         return self.chapter
 
-    def next_topic(self):
-        if self._next_topic_cache is None:
-            self._next_topic_cache = Topic.objects.filter(chapter=self.chapter, order=self.order + 1).get()
-        return self._next_topic_cache
+    def _next_content_query_set(self):
+        return Topic.objects.filter(chapter=self.chapter, order=self.order + 1)
+
+    def _previous_content_query_set(self):
+        return Topic.objects.filter(chapter=self.chapter, order=self.order - 1)

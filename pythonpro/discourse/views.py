@@ -46,7 +46,8 @@ def _generate_discourse_login_url(nonce, user):
         'nonce': nonce,
         'email': user.email,
         'external_id': user.id,
-        'require_activation': 'false'
+        'require_activation': 'false',
+        'groups': ','.join(g.name for g in user.groups.all())
     }
     return_payload = base64.encodebytes(parse.urlencode(params).encode('utf-8'))
     h = hmac.new(_key_bytes, return_payload, digestmod=hashlib.sha256)

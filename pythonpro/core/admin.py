@@ -4,7 +4,7 @@ from django.contrib.admin.options import IS_POPUP_VAR
 from django.contrib.admin.utils import unquote
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import (
-    AdminPasswordChangeForm, UserChangeForm, UserCreationForm,
+    AdminPasswordChangeForm, UserChangeForm,
 )
 from django.core.exceptions import PermissionDenied
 from django.db import router, transaction
@@ -16,37 +16,53 @@ from django.utils.html import escape
 from django.utils.translation import gettext, gettext_lazy as _
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
+from rolepermissions.admin import RolePermissionsUserAdminMixin
 
-from pythonpro.core.models import User
+from pythonpro.core.forms import UserSignupForm
+from pythonpro.core.models import User, UserInteraction
 
 csrf_protect_m = method_decorator(csrf_protect)
 sensitive_post_parameters_m = method_decorator(sensitive_post_parameters())
 
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(RolePermissionsUserAdminMixin, admin.ModelAdmin):
     add_form_template = 'admin/auth/user/add_form.html'
     change_user_password_template = None
     fieldsets = (
-        (None, {'fields': ('first_name', 'email', 'password')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
-                                       'groups', 'user_permissions')}),
+        (None, {'fields': ('first_name', 'email', 'password', 'source')}),
+        (_('Permissions'), {
+            'fields': ('is_active', 'is_staff', 'is_superuser',
+                       'groups', 'user_permissions')
+        }),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('first_name', 'email', 'password1', 'password2'),
+            'fields': ('first_name', 'email', 'source'),
         }),
     )
+
     form = UserChangeForm
-    add_form = UserCreationForm
+    add_form = UserSignupForm
     change_password_form = AdminPasswordChangeForm
-    list_display = ('email', 'first_name', 'is_staff')
-    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
+    list_display = ('email', 'first_name', 'source', 'date_joined', 'is_staff',)
+    list_filter = ('groups', 'source', 'is_staff', 'is_superuser', 'is_active',)
     search_fields = ('first_name', 'email')
     ordering = ('first_name',)
     filter_horizontal = ('groups', 'user_permissions',)
+    actions = ['make_client', 'make_member']
+
+    def make_client(self, request, queryset):
+        from pythonpro.domain import user_facade
+        for user in queryset:
+            user_facade.promote_client(user, 'django_admin')
+
+    def make_member(self, request, queryset):
+        from pythonpro.domain import user_facade
+        for user in queryset:
+            user_facade.promote_member(user, 'django_admin')
 
     def get_fieldsets(self, request, obj=None):
         if not obj:
@@ -189,3 +205,24 @@ class UserAdmin(admin.ModelAdmin):
             request.POST = request.POST.copy()
             request.POST['_continue'] = 1
         return super().response_add(request, obj, post_url_continue)
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(UserInteraction)
+class UserInteractionAdmin(admin.ModelAdmin):
+    list_display = 'creation user category'.split()
+    ordering = ('-creation',)
+    list_filter = ('category',)
+    actions = None
+    search_fields = ('user__email',)
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False

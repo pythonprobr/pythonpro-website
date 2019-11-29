@@ -1,0 +1,26 @@
+{% extends 'launch/landing_page.html' %}
+{% load static %}
+{% block form %}
+    <form method="post" action="{% url 'launch:lead_form' %}">
+        {% csrf_token %}
+        <div class="form-group  form-row justify-content-md-center">
+            <div class="col-md-4 col-md text-left">
+                <label class="text-white" for="{{ form.email.id_for_label }}">{{ form.email.label_tag }}</label>
+                <input type="email" name="{{ form.email.html_name }}"
+                       class="form-control text-white{% if form.email.errors %} is-invalid{% endif %}"
+                       value="{{ form.email.value }}" autofocus="" maxlength="{{ form.email.max_length }}"
+                       required="required" id="{{ form.email.id_for_label }}" placeholder="Digite seu Email">
+                {% if form.email.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.email.errors }}
+                    </div>
+                {% else %}
+                    <br/>
+                {% endif %}
+
+                <button type="submit" class="btn btn-lg btn-warning btn-block">Sim, quero programar &raquo;
+                </button>
+            </div>
+        </div>
+    </form>
+{% endblock form %}

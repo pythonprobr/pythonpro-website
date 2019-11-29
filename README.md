@@ -9,17 +9,16 @@ Source code of website www.python.pro.br
 [![Python 3](https://pyup.io/repos/github/pythonprobr/pythonpro-website/python-3-shield.svg)](https://pyup.io/repos/github/pythonprobr/pythonpro-website/)
 
 
-It is been migrated from App Engine using Tekton to Heroky using Django
+It's developed using Django
 
-How to install in locally (supposing you have git and python >= 3.6 installed):
+How to install in locally (supposing you have git and python >= 3.7 installed):
 
 ```console
 git clone https://github.com/pythonprobr/pythonpro-website.git
 cd pythonpro-website
 cp contrib/env-sample .env
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements-dev.txt
+python -m pip install pipenv
+pipenv install -d
 ```
 
 If you want use SQLite on your dev environment, please remove DATABASE_URL from .env file.
@@ -58,7 +57,7 @@ pytest pythonpro
 If you want run your amb dev using postgres, you can install docker and run:
 
 ```console
-docker run -p 5432:5432 --env POSTGRES_PASSWORD=pass --name pythonpro-postgres -d postgres:9
+docker-compose docker-compose.yml up 
 ```
 
 and add to your .env
@@ -75,6 +74,3 @@ So you need to change this data for you own trademark.
 
 
 Have fun!
-
-
-

@@ -3,13 +3,13 @@ from django.conf import settings
 from django.urls import reverse
 from model_mommy import mommy
 
-from pythonpro.django_assertions import dj_assert_contains
-from pythonpro.modules.models import Section, Module, Chapter, Topic
+from pythonpro.django_assertions import dj_assert_contains, dj_assert_template_used
+from pythonpro.modules.models import Chapter, Module, Section, Topic
 
 
 @pytest.fixture
 def module(db):
-    return mommy.make(Module)
+    return mommy.make(Module, slug='python-birds')
 
 
 @pytest.fixture
@@ -33,10 +33,8 @@ def topic(chapter):
 
 
 @pytest.fixture
-def resp_chapter(client, django_user_model, chapter, topics):
-    user = mommy.make(django_user_model)
-    client.force_login(user)
-    return client.get(reverse('chapters:detail', kwargs={'slug': chapter.slug}))
+def resp_chapter(client_with_lead, django_user_model, chapter, topics):
+    return client_with_lead.get(reverse('chapters:detail', kwargs={'slug': chapter.slug}), secure=True)
 
 
 def test_topic_title_on_chapter(resp_chapter, topics):
@@ -50,18 +48,22 @@ def test_topic_url_on_section(resp_chapter, topics):
 
 
 @pytest.fixture
-def resp(client, topic, django_user_model):
-    user = mommy.make(django_user_model)
-    client.force_login(user)
-    return client.get(reverse('topics:detail', kwargs={'slug': topic.slug}))
+def resp(client_with_lead, topic, django_user_model):
+    return client_with_lead.get(
+        reverse('modules:topic_detail', kwargs={'module_slug': topic.module_slug(), 'topic_slug': topic.slug}),
+        secure=True)
 
 
 def test_status_code(resp):
     assert resp.status_code == 200
 
 
+def test_video_template(resp):
+    dj_assert_template_used(resp, 'topics/topic_detail.html')
+
+
 def test_vimeo_video(resp, topic):
-    dj_assert_contains(resp, f'<iframe src="https://player.vimeo.com/video/{ topic.vimeo_id }"')
+    dj_assert_contains(resp, f'<iframe id="topic-iframe" src="https://player.vimeo.com/video/{topic.vimeo_id}"')
 
 
 @pytest.mark.parametrize('property_name', 'title description'.split())
@@ -97,9 +99,131 @@ def test_breadcrumb_current(resp, topic):
     )
 
 
-def test_discourse_topic_id(resp, topic):
-    dj_assert_contains(resp, f"topicId: {topic.discourse_topic_id}")
+@pytest.fixture
+def module_member(db):
+    return mommy.make(Module, slug='objetos-pythonicos')
 
 
-def test_discourse_url(resp, topic):
-    dj_assert_contains(resp, f"discourseUrl: '{settings.DISCOURSE_BASE_URL}'")
+@pytest.fixture
+def section_member(module_member):
+    return mommy.make(Section, module=module_member)
+
+
+@pytest.fixture
+def chapter_member(section_member):
+    return mommy.make(Chapter, section=section_member)
+
+
+@pytest.fixture
+def topic_member(chapter_member):
+    return mommy.make(Topic, chapter=chapter_member)
+
+
+@pytest.fixture
+def resp_lead_accessing_member_content(client_with_lead, topic_member, django_user_model, logged_user):
+    return client_with_lead.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_member.module_slug(), 'topic_slug': topic_member.slug}),
+        secure=True)
+
+
+def test_lead_hitting_member_landing_page(resp_lead_accessing_member_content):
+    assert resp_lead_accessing_member_content.status_code == 302
+    assert resp_lead_accessing_member_content.url == reverse('member_landing_page')
+
+
+@pytest.fixture
+def resp_client_accessing_member_content(client_with_client, topic_member, django_user_model, mocker, logged_user):
+    return client_with_client.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_member.module_slug(), 'topic_slug': topic_member.slug}),
+        secure=True)
+
+
+def test_client_hitting_member_landing_page(resp_client_accessing_member_content):
+    assert resp_client_accessing_member_content.status_code == 302
+    assert resp_client_accessing_member_content.url == reverse('member_landing_page')
+
+
+@pytest.fixture
+def resp_member_accessing_member_content(client_with_member, topic_member, django_user_model):
+    return client_with_member.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_member.module_slug(), 'topic_slug': topic_member.slug}),
+        secure=True)
+
+
+def test_member_access_member_content(resp_member_accessing_member_content):
+    dj_assert_template_used(resp_member_accessing_member_content, 'topics/topic_detail.html')
+
+
+@pytest.fixture
+def resp_member(client_with_member, topic, django_user_model):
+    return client_with_member.get(
+        reverse('modules:topic_detail', kwargs={'module_slug': topic.module_slug(), 'topic_slug': topic.slug}),
+        secure=True)
+
+
+def test_discourse_topic_id(resp_member, topic):
+    dj_assert_contains(resp_member, f"topicId: {topic.discourse_topic_id}")
+
+
+def test_discourse_url(resp_member, topic):
+    dj_assert_contains(resp_member, f"discourseUrl: '{settings.DISCOURSE_BASE_URL}'")
+
+
+@pytest.fixture
+def module_client(db):
+    return mommy.make(Module, slug='pytools')
+
+
+@pytest.fixture
+def section_client(module_client):
+    return mommy.make(Section, module=module_client)
+
+
+@pytest.fixture
+def chapter_client(section_client):
+    return mommy.make(Chapter, section=section_client)
+
+
+@pytest.fixture
+def topic_client(chapter_client):
+    return mommy.make(Topic, chapter=chapter_client)
+
+
+@pytest.fixture
+def resp_lead_accesing_client_content(client_with_lead, topic_client, django_user_model, mocker, logged_user):
+    return client_with_lead.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_client.module_slug(), 'topic_slug': topic_client.slug}),
+        secure=True)
+
+
+def test_lead_hitting_client_landing_page(resp_lead_accesing_client_content):
+    assert resp_lead_accesing_client_content.status_code == 302
+    assert resp_lead_accesing_client_content.url == reverse('client_landing_page')
+
+
+@pytest.fixture
+def resp_client_accessing_client_content(client_with_client, topic_client, django_user_model, client_with_lead=None):
+    return client_with_client.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_client.module_slug(), 'topic_slug': topic_client.slug}),
+        secure=True)
+
+
+def test_client_access_client_content(resp_client_accessing_client_content):
+    dj_assert_template_used(resp_client_accessing_client_content, 'topics/topic_detail.html')
+
+
+@pytest.fixture
+def resp_member_accessing_client_content(client_with_member, topic_client, django_user_model):
+    return client_with_member.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_client.module_slug(), 'topic_slug': topic_client.slug}),
+        secure=True)
+
+
+def test_member_access_client_content(resp_member_accessing_client_content):
+    dj_assert_template_used(resp_member_accessing_client_content, 'topics/topic_detail.html')

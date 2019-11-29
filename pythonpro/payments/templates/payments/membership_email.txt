@@ -1,0 +1,12 @@
+Olá {{ user.first_name }},
+
+Recebemos a confirmação de seu pagamento para a próxima turma Python Pro.
+
+Faça login com sua conta e acesse a página de detalhes da turma em {{ cohort_detail_url }} para conferir as datas das atividades.
+
+Nessa página também existem as informações para vc se apresentar no fórum e também acessar nosso badalado grupo do Telegram!
+
+Agradecemos imensamente sua confiança em nosso trabalho.
+
+Grande abraço,
+Luciano Ramalho e Renzo Nuccitelli

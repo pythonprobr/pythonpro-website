@@ -21,6 +21,7 @@ class Cohort(models.Model):
 
 
 class CohortStudent(models.Model):
+    added = models.DateTimeField(auto_now_add=True)
     cohort = models.ForeignKey(Cohort, on_delete=models.DO_NOTHING)
     user = models.ForeignKey(get_user_model(), on_delete=models.DO_NOTHING)
 
@@ -29,6 +30,11 @@ class LiveClass(models.Model):
     start = models.DateTimeField()
     vimeo_id = models.CharField(max_length=11, db_index=False, blank=True)
     cohort = models.ForeignKey(Cohort, models.CASCADE)
+    discourse_topic_id = models.CharField(max_length=11, db_index=False, null=True, default='726')
+    description = models.TextField(blank=True, default='Aula Pendente')
+
+    def get_absolute_url(self):
+        return reverse('cohorts:live_class', kwargs={'pk': self.id})
 
 
 class Webinar(models.Model):
@@ -39,3 +45,9 @@ class Webinar(models.Model):
     slug = models.SlugField(unique=True)
     vimeo_id = models.CharField(max_length=11, db_index=False, blank=True)
     start = models.DateTimeField()
+    discourse_topic_id = models.CharField(max_length=11, db_index=False)
+    description = models.TextField()
+    image = models.ImageField(upload_to='webinars/', null=True, blank=True)
+
+    def get_absolute_url(self):
+        return reverse('cohorts:webinar', kwargs={'slug': self.slug})

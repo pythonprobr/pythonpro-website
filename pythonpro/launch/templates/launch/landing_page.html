@@ -1,0 +1,226 @@
+{% extends 'core/base_without_nav.html' %}
+{% load static %}
+{% block title %}Inscrições abertas! Semana do Programador Profissional{% endblock %}
+{% block description %}Página de Inscrição para Semana do Programador Profissional{% endblock %}
+{% block head %}
+    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+
+    <style>
+        @font-face {
+            font-family: 'Gilroy-Bold';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Bold ☞'), url('{% static "fonts/Gilroy-Bold.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Heavy';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Heavy ☞'), url('{% static "fonts/Gilroy-Heavy.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Light';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Light ☞'), url('{% static "fonts/Gilroy-Light.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Medium';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Medium ☞'), url('{% static "fonts/Gilroy-Medium.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Regular';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Regular ☞'), url('{% static "fonts/Gilroy-Regular.woff" %}') format('woff');
+        }
+
+    </style>
+    <link rel="stylesheet" href="{% static 'css/client.css' %}"/>
+
+    <style>
+        h1 {
+            font-size: 3.2rem;
+        }
+
+        input.form-control, button.btn {
+            border-radius: 0px;
+            margin: 5px 0;
+            font-family: 'ubuntu';
+        }
+
+        button.btn {
+            border-width: 1px;
+            font-family: 'Gilroy-Bold';
+        }
+
+        .mobile h1 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .mobile h2 {
+            font-size: 1.5rem;
+        }
+        .mobile.hero {
+            margin: 20px 0;
+        }
+    </style>
+{% endblock head %}
+
+{% block body %}
+    <div class=''>
+        <div class="container">
+            <div class="row text-center">
+                <!-- desktop -->
+                <div class="col-md-12 hero desktop d-none d-sm-block d-md-block">
+                    <h1 class='font-weight-bold' style='color: #44A5F1'>
+                        SEMANA DO PROGRAMADOR PROFISSIONAL
+                    </h1>
+                    <h2 class='col-md-8 offset-md-2'>
+                        Uma semana de vídeos e aulas que vão te ensinar como se 
+                        <b>tornar um programador profissional</b> em pouco tempo!    
+                    </h2>
+                    <h3 class='font-weight-bold col-md-8 offset-md-2 mt-4'>28/10 á 01/11</h3>
+                </div>
+                    
+                <!-- mobile -->
+                <div class="col-md-12 hero mobile d-block d-lg-none d-xl-none">
+                    <h1 class='font-weight-bold' style='color: #44A5F1'>
+                        SEMANA DO PROGRAMADOR PROFISSIONAL
+                    </h1>
+                    <h2 class='col-md-8 offset-md-2'>
+                        Uma semana de vídeos e aulas que vão te ensinar como se 
+                        <b>tornar um programador profissional</b> em pouco tempo!    
+                    </h2>
+                    <h3 class='font-weight-bold col-md-8 offset-md-2 mt-4'>28/10 á 01/11</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col hero">
+                    <form method="post" action="{% url 'launch:lead_form' %}">
+                        {% csrf_token %}
+                        <div class="form-group form-row justify-content-md-center">
+                            <div class="col-md-9 col-md text-left">
+                                <input type="email" name="{{ form.email.html_name }}"
+                                        {%  if user.is_authenticated %} value="{{ form.email.value }}"{% endif %}
+                                        class="form-control form-control-lg"
+                                        autofocus="" maxlength="{{ form.email.max_length }}"
+                                        required="required" id="{{ form.email.id_for_label }}"
+                                        placeholder="Insira o seu MELHOR EMAIL!">
+                                
+                                <!-- desktop -->
+                                <button type="submit" class="btn btn-lg btn-warning btn-block d-none d-sm-block d-md-block">
+                                    SIM, Eu quero me tornar um PROFISSIONAL!
+                                    <span class="ec ec-money-mouth-face"></span>
+                                    &raquo;
+                                </button>
+                                
+                                <!-- mobile -->
+                                <button type="submit" class="btn btn-warning btn-block d-block d-lg-none d-xl-none">
+                                    SIM, quero ser PROFISSIONAL!
+                                    <span class="ec ec-money-mouth-face"></span>
+                                    &raquo;
+                                </button>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col mb-5 mt-5">
+                <h2 class='font-weight-bold mb-5'>Olá! Eu me chamo Renzo Nuccitelli,</h2>
+
+                <div class='text-center d-block d-lg-none d-xl-none'>
+                    <img src='{% static 'img/instructors/renzo-nuccitelli-300.jpeg' %}' class="img-fluid"
+                         width="300px" alt="Foto de Renzo Nuccitelli"/>
+                </div>
+
+                <img src='{% static 'img/instructors/renzo-nuccitelli-300.jpeg' %}'
+                     class="img-fluid float-right ml-3 mb-3 d-none d-sm-none d-md-block" width="300px"
+                     alt="Foto de Renzo Nuccitelli"/>
+
+                <p>
+                    Sou programador há 13 anos e hoje atuo também como professor e diretor de tecnologia. 
+                    Já fui diretor de tecnologia em outras duas empresas
+                    e também trabalhei na maior empresa de software aberto do mundo, <b>a
+                    Red Hat</b>. Também já fui consultor de diversas outras empresas, como o Hotel Urbano.
+                </p>
+                <p>
+                    Já palestrei em diversos enventos de tecnologia. Também já fui o organizador do 
+                    maior evento sobre a melhor linguagem de programação: a <b>Python Brasil!</b>
+                </p>
+                <p><b class='highlight'>
+                    Meu sonho sempre foi que as pessoas pudessem construir as mesmas oportunidades que construí...
+                </b></p>
+                <p>
+                    Por isso eu decidi criar a <b>Semana do Programador Profissional</b>, 
+                    um workshop onde eu vou te mostrar como uma pessoa completamente leiga em 
+                    programação pode <b>se tornar um programador profissional em questão de meses</b>, 
+                    desde que faça isso da maneira certa.
+                </p>
+                <p>
+                    Esse workshop vai acontecer entre os dias <b>28 de Outubro e 01 de Novembro</b>, 
+                    online e de forma gratuita.
+                </p>
+                <p>
+                    Preencha o formulário abaixo com o seu email e venha aprender como se 
+                    tornar um programador profissional em <b>pouco tempo</b>!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col hero">
+                    <form method="post" action="{% url 'launch:lead_form' %}">
+                        {% csrf_token %}
+                        <div class="form-group form-row justify-content-md-center">
+                            <div class="col-md-9 col-md text-left">
+                                <input type="email" name="{{ form.email.html_name }}"
+                                        {%  if user.is_authenticated %} value="{{ form.email.value }}"{% endif %}
+                                        class="form-control form-control-lg"
+                                        maxlength="{{ form.email.max_length }}"
+                                        required="required" id="{{ form.email.id_for_label }}"
+                                        placeholder="Insira o seu MELHOR EMAIL!">
+                                
+                                <!-- desktop -->
+                                <button type="submit" class="btn btn-lg btn-warning btn-block d-none d-sm-block d-md-block">
+                                    SIM, Eu quero me tornar um PROFISSIONAL!
+                                    <span class="ec ec-money-mouth-face"></span>
+                                    &raquo;
+                                </button>
+                                
+                                <!-- mobile -->
+                                <button type="submit" class="btn btn-warning btn-block d-block d-lg-none d-xl-none">
+                                    SIM, quero ser PROFISSIONAL!
+                                    <span class="ec ec-money-mouth-face"></span>
+                                    &raquo;
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}

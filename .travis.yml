@@ -1,13 +1,17 @@
 language: python
+dist: xenial
+sudo: true
+
 python:
-  - 3.6
+  - 3.7
 services:
   postgresql
 addons:
   postgresql: '9.5'
 install:
   - cp contrib/env-sample .env
-  - pip install -q -r requirements-dev.txt codecov
+  - pip install pipenv codecov
+  - pipenv sync --dev
 before_script:
   - psql -c "CREATE DATABASE testdb;" -U postgres
   - python manage.py migrate --noinput
@@ -15,7 +19,7 @@ before_script:
 
 script:
   - flake8 .
-  - pytest --cov=pythonpro
+  - pytest pythonpro --cov=pythonpro
 after_success:
   - codecov
 notifications:

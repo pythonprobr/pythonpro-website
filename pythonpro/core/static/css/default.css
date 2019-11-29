@@ -9,6 +9,11 @@
     color: #9fd25f;
 }
 
+.font-ubuntu-grey {
+    font-family: 'Ubuntu', Arial, sans-serif;
+    color: #999999;
+}
+
 .pythonpro-subtitle {
     font-family: 'Ubuntu', Arial, sans-serif;
     font-size: 2em;
@@ -27,22 +32,22 @@
 
 .pallet.color-1 {
     background-color: #15b3f1;
-    height: 260px;
+    height: 140px;
 }
 
 .pallet.color-2 {
     background-color: #178eee;
-    height: 230px;
+    height: 110px;
 }
 
 .pallet.color-3 {
     background-color: #ffcc29;
-    height: 200px;
+    height: 80px;
 }
 
 .pallet.color-4 {
     background-color: #9fd25f;
-    height: 170px;
+    height: 50px;
 }
 
 .main-footer {
@@ -53,16 +58,31 @@
     background-color: #82b641;
 }
 
-.embed-container { position: relative; padding-bottom: 56.25%;  overflow: hidden; max-width: 100%; height: auto; }
-.embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.embed-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+    max-width: 100%;
+    height: auto;
+}
+
+.embed-container iframe, .embed-container object, .embed-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 
 @media only screen and (max-width: 480px) {
     .pythonpro-title {
         font-size: 3em;
     }
+
     .pythonpro-subtitle {
         font-size: 1.3em;
     }
+
     .mb-3 h3 {
         font-size: 1.5rem;
     }

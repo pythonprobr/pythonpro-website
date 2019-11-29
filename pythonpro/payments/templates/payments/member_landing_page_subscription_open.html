@@ -1,0 +1,195 @@
+{% extends 'core/base_without_nav.html' %}
+{% load static %}
+{% block title %}Curso de Python Completo!{% endblock %}
+{% block description %}Curso Completo de Python voltado para quem quer entrar no mercado de
+    tecnologia!{% endblock %}
+{% block head %}
+    <script src="{% static 'js/pagarme-checkout-1.1.0.js' %}"></script>
+    <script type="application/javascript">
+        $(document).ready(function () {
+            $('button').click(function () {
+                var $modal = $('#modal-waiting-capture');
+
+                $.post('{% url 'payments:member_checkout' %}', function () {
+                });
+
+                var checkout = new PagarMeCheckout.Checkout({
+                    encryption_key: '{{ PAGARME_CRYPTO_KEY }}',
+                    success: function (data) {
+                        $modal.modal();
+                        $.post('{% url 'payments:member_capture' %}', data, function (resp) {
+                            window.location.href = resp.redirect_url;
+                        });
+                    },
+                    error: function (err) {
+                        Sentry.captureMessage(err.responseText);
+                    },
+                    close: function () {
+
+                    }
+                });
+
+                checkout.open({
+                    amount: {{ price }},
+                    buttonText: 'Pagar',
+                    buttonClass: 'botao-pagamento',
+                    customerData: 'true',
+                    createToken: 'true',
+                    paymentMethods: 'credit_card,boleto',
+                    maxInstallments: 12,
+                    defaultInstallment: 1,
+                    freeInstallments: 1,
+                    interestRate: 1.66,
+                    postback_url: '{{ notification_url }}',
+                    items: [
+                        {
+                            id: 'membership-{{ user.id }}',
+                            title: 'Curso Python Pro - Turma {{cohort.title}}',
+                            unit_price: {{ price }},
+                            quantity: 1,
+                            tangible: false
+                        }
+                    ]
+                });
+            });
+        });
+    </script>
+{% endblock head %}
+{% block body %}
+    <div class="bg-primary pt-5 pb-5 text-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-7 mb-4">
+                    <h1 class="mb-4">Inscrições para próxima turma Python Pro Abertas!
+                    </h1>
+                    <p>Esse conteúdo é exclusivo para membros, aqueles que escolhem entrar de cabeça para a área de
+                        programação e faturar alto!
+                    </p>
+                    <p>Confira o vídeo abaixo para entender como o curso completo funciona:
+                    </p>
+                    <div class="embed-container">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/ZCuxX4vyFTo" frameborder="0"
+                                allowfullscreen></iframe>
+                    </div>
+                    <p class="mt-3">Além disso tudo, fazemos o evento "Testando o Mercado" ao fim de cada turma com
+                        empresas de TI interessadas em contratar alunos do curso.</p>
+                </div>
+                <div class="col-12 col-md-6 col-lg-5">
+                    <h2>Confira os Bônus</h2>
+                    <ol>
+                        <li>Acesso ao <span
+                                class="font-weight-bold">Fórum exclusivo</span> para retirada de dúvidas!
+                        </li>
+
+                        <li>Gravações de <span
+                                class="font-weight-bold">Aulas de TODAS</span> turmas anteriores.
+                        </li>
+                        <li>Acesso ao <span
+                                class="font-weight-bold">Grupo de Telegram exclusivo</span> para retirada de dúvidas
+                            pelo celular!
+                        </li>
+                        <li>Gravações de <span
+                                class="font-weight-bold">Webinários com PROFISSIONAIS</span>.
+                        </li>
+                        <li>Módulo extra de preparação para <span
+                                class="font-weight-bold">Entrevistas Técnicas</span> visando empresas gringas, para quem
+                            ganhar em dólar ou euro.
+                        </li>
+                        <li>Participação garantida no evento "Testando o Mercado", onde você encontrará empresas que
+                            querem contratar.
+                        </li>
+                    </ol>
+                    <p>Só esses bônus custariam R$ 3000,00 por mês.</p>
+                    <h2 class="mt-4">Preço</h2>
+                    {% if not user.is_authenticated %}
+                        <p>Caso você tenha comprado o módulo Pytools, <a href="{{ login_url }}" class="btn btn-warning">Acesse sua
+                            conta &raquo;</a> para ganhar o valor dele como desconto.</p>
+                    {% endif %}
+                    {% if has_discount %}
+                        <p>
+                            O preço cheio do curso é:<br/>
+                            12 x de R$ {{ full_price_installment|floatformat:2 }} ou a vista no valor de
+                            R$ {{ full_price_float|floatformat:2 }}.
+                        </p>
+                        <p>Mas como você comprou o curso Pytools, vc ganha o valor dele como desconto:
+                            R$ {{ discount_float|floatformat:2 }}. <br/>
+                            Portanto, o preço fica sendo: <br/>
+                            12 x de R$ {{ price_installment|floatformat:2 }} ou a vista no valor de
+                            R$ {{ price_float|floatformat:2 }}.</p>
+                    {% else %}
+                        <p> O preço do curso é 12 x de R$ {{ price_installment|floatformat:2 }} ou a vista no valor de
+                            R$ {{ price_float|floatformat:2 }}.
+                        </p>
+                    {% endif %}
+
+                    <button class="btn btn-lg btn-warning">SIM! Quero <span
+                            class="font-weight-bold"><u>me inscrever</u></span> &raquo;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-light">
+        <div class="container pt-4 pb-3">
+            <div class="row">
+                <div class="col">
+                    <h3 class="mb-3">Esse curso vai te ajudar a:</h3>
+                    <dt>Se conectar com profissionaid de TI</dt>
+                    <dd>Você conhecerá toda rede alunos, muitos já atuando no mercado, para te ajudar.
+                    </dd>
+                    <dt class="mt-2">Conhecer empresas de interessadas em contratar</dt>
+                    <dd>Você vai participar do evento "Testando o Mercado" com empresas interessadas em contratar! Já
+                        participaram Magazine Luiza, Geru, Necto e Brasil317!
+                    </dd>
+                    <dt class="mt-2">Produzir e Entregar um Aplicativo Web</dt>
+                    <dd>Você aprender como fazer um sistema web com todas boas práticas e publicá-lo em um servidor!
+                    </dd>
+                    <dt class="mt-2">Aprender a se inserir no mercado e negociar salário!</dt>
+                    <dd>Além da tecnologia, você vai conferir téncnicas de negociação salarial e de precessos seletivos
+                        para entrar no mercado e faturar alto!
+                    </dd>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container  pt-5 pb-5">
+        {% include 'core/instructors.html' %}
+    </div>
+    <div class="bg-light">
+        <div class="container pt-5 pb-5">
+            {% include 'core/social_proof.html' %}
+        </div>
+    </div>
+    <div class="bg-primary pt-5 pb-5 text-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <h3>Quer se transformar também?</h3>
+                    <p>12 x de R$ span>R$ {{ price_installment|floatformat:2 }} ou a vista no valor de
+                        R$ {{ price_float|floatformat:2 }}.
+                    </p>
+                    <button class="btn btn-lg btn-warning">SIM! Quero <span
+                            class="font-weight-bold"><u>me inscrever</u></span> &raquo;
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Calma que já está acabando ;)</h5>
+                </div>
+                <div class="modal-body">
+                    Aguarde enquanto finalizamos seu pagamento <img src="{% static 'img/ajax-loader.gif' %}"
+                                                                    alt="Ajax Loader"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock body %}

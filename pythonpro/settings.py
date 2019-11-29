@@ -11,10 +11,13 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-from decouple import config, Csv
+from functools import partial
+
+import sentry_sdk
+from decouple import Csv, config
 from dj_database_url import parse as dburl
+from sentry_sdk.integrations.django import DjangoIntegration
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -30,7 +33,14 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
 # Control subscriptions ads and payment.
-SUBSCRIPTIONS_OPEN = False
+SUBSCRIPTIONS_OPEN = config('SUBSCRIPTIONS_OPEN', cast=bool)
+
+METEORIC_LAUNCH_OPEN = config('METEORIC_LAUNCH_OPEN', cast=bool)
+
+PAGARME_CRYPTO_KEY = config('PAGARME_CRYPTO_KEY')
+PAGARME_API_KEY = config('PAGARME_API_KEY')
+
+PAGSEGURO_PAYMENT_PLAN = config('PAGSEGURO_PAYMENT_PLAN')
 
 # Email Configuration
 
@@ -57,6 +67,11 @@ INSTALLED_APPS = [
     'pythonpro.promos',
     'pythonpro.payments',
     'pythonpro.cohorts',
+    'pythonpro.mailchimp',
+    'pythonpro.dashboard',
+    'pythonpro.launch',
+    'pythonpro.analytics',
+    'rolepermissions',
     'ordered_model',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -65,6 +80,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'collectfast',
     'django.contrib.staticfiles',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -76,7 +92,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pythonpro.analytics.middleware.AnalyticsMiddleware',
 ]
+
+ROLEPERMISSIONS_MODULE = 'pythonpro.core.roles'
+
+if DEBUG:
+    INSTALLED_APPS.append('debug_toolbar')
+    MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+    INTERNAL_IPS = ['127.0.0.1']
 
 # Discourse config
 DISCOURSE_BASE_URL = 'https://forum.python.pro.br/'
@@ -109,6 +133,10 @@ WSGI_APPLICATION = 'pythonpro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+
+if 'localhost' not in ALLOWED_HOSTS:
+    dburl = partial(dburl, conn_max_age=600, ssl_require=True)
+
 DATABASES = {
     'default': config('DATABASE_URL', default=default_db_url, cast=dburl),
 }
@@ -118,16 +146,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -157,17 +189,24 @@ COLLECTFAST_ENABLED = False
 # ------------------------------------------------------------------------------
 # Uploaded Media Files
 # ------------------------------------------------------------------------------
-AWS_ACCESS_KEY_ID = config('DJANGO_AWS_ACCESS_KEY_ID')
+AWS_ACCESS_KEY_ID = config('DJANGO_AWS_ACCESS_KEY_ID', default=False)
 if AWS_ACCESS_KEY_ID:  # pragma: no cover
     COLLECTFAST_ENABLED = True
+    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
     INSTALLED_APPS.append('s3_folder_storage')
     INSTALLED_APPS.append('storages')
     AWS_SECRET_ACCESS_KEY = config('DJANGO_AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = config('DJANGO_AWS_STORAGE_BUCKET_NAME')
-    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400', }
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
     AWS_PRELOAD_METADATA = True
     AWS_AUTO_CREATE_BUCKET = False
-    AWS_QUERYSTRING_AUTH = False
+    AWS_QUERYSTRING_AUTH = True
+    AWS_S3_CUSTOM_DOMAIN = None
+
+    AWS_DEFAULT_ACL = 'private'
 
     # AWS cache settings, don't change unless you know what you're doing:
     AWS_EXPIRY = 60 * 60 * 24 * 7
@@ -196,11 +235,11 @@ if AWS_ACCESS_KEY_ID:  # pragma: no cover
 SENTRY_DSN = config('SENTRY_DSN', default=None)
 
 if SENTRY_DSN:  # pragma: no cover
-    INSTALLED_APPS.append('raven.contrib.django.raven_compat')
-    RAVEN_CONFIG = {
-        'dsn': SENTRY_DSN,
-        # If you are using git, you can also automatically configure the
-        # release based on the git info.
-        # If using Heroku use metadata: https://devcenter.heroku.com/articles/dyno-metadata
-        'release': config('HEROKU_SLUG_COMMIT'),
-    }
+    sentry_sdk.init(dsn=SENTRY_DSN, integrations=[DjangoIntegration()])
+
+# Mailchimp Configuration
+MAILCHIMP_API_KEY = config('MAILCHIMP_API_KEY')
+MAILCHIMP_LIST_ID = config('MAILCHIMP_LIST_ID')
+
+# Google Tag Manager Configuration
+GOOGLE_TAG_MANAGER_ID = config('GOOGLE_TAG_MANAGER_ID')

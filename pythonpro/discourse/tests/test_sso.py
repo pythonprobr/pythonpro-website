@@ -6,7 +6,6 @@ from urllib import parse
 
 import pytest
 from django.conf import settings
-from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from pythonpro.discourse.views import _decode_payload
@@ -23,38 +22,36 @@ def payload(nonce):
 
 
 @pytest.fixture
-def logged_user(django_user_model, fake):
-    profile = fake.profile()
-    user = django_user_model(email=profile['mail'], first_name=profile['name'])
-    user.set_password('password')
-    user.save()
-    user.plain_password = 'password'
-    return user
+def response_with_member(client_with_member, payload, sig=None):
+    return _resp(client_with_member, payload, sig)
 
 
 @pytest.fixture
-def client_with_user(client, logged_user):
-    client.login(username=logged_user.email, password=logged_user.plain_password)
-    return client
+def response_with_lead(client_with_lead, payload, sig=None):
+    return _resp(client_with_lead, payload, sig)
 
 
 @pytest.fixture
-def response(client_with_user, payload, sig=None):
+def response_with_client(client_with_client, payload, sig=None):
+    return _resp(client_with_client, payload, sig)
+
+
+def _resp(client, payload, sig=None):
     encoded_payload = base64.encodebytes(payload.encode('utf-8'))
     hmac_obj = hmac.new(settings.DISCOURSE_SSO_SECRET.encode('utf-8'), encoded_payload, digestmod=hashlib.sha256)
     sig = hmac_obj.hexdigest() if sig is None else sig
-    return client_with_user.get(reverse('discourse:sso'),
-                                data={'sso': encoded_payload, 'sig': sig})
+    return client.get(reverse('discourse:sso'),
+                      data={'sso': encoded_payload, 'sig': sig}, secure=True)
 
 
 @pytest.fixture
-def response_with_wrong_sig(client_with_user, payload):
-    return response(client_with_user, payload, 'wrong sinature')
+def response_with_wrong_sig(client_with_member, payload):
+    return _resp(client_with_member, payload, 'wrong sinature')
 
 
 @pytest.fixture
-def response_without_nonce(client_with_user):
-    return response(client_with_user, '')
+def response_without_nonce(client_with_member):
+    return _resp(client_with_member, '')
 
 
 def _extract_from_payload(response):
@@ -66,26 +63,49 @@ def _extract_from_payload(response):
     return {key: value[0] for key, value in parsed_payload.items()}
 
 
-def test_status(response):
-    assert response.status_code == 302
+def test_status(response_with_member):
+    assert response_with_member.status_code == 302
 
 
-def test_redirect_base_url(response: HttpResponseRedirect):
-    assert response.url.startswith(settings.DISCOURSE_BASE_URL)
+def test_redirect_base_url(response_with_member):
+    assert response_with_member.url.startswith(settings.DISCOURSE_BASE_URL)
 
 
-def test_redirect_payload_has_nonce(nonce, response: HttpResponseRedirect):
-    dct = _extract_from_payload(response)
+def test_redirect_payload_has_nonce(nonce, response_with_member):
+    dct = _extract_from_payload(response_with_member)
     assert nonce == dct['nonce']
 
 
-def test_redirect_payload_user_data(logged_user, nonce, response: HttpResponseRedirect):
-    dct = _extract_from_payload(response)
+def test_redirect_payload_member_data(logged_user, nonce, response_with_member):
+    dct = _extract_from_payload(response_with_member)
     assert {
                'nonce': nonce,
                'email': logged_user.email,
                'external_id': str(logged_user.id),
-               'require_activation': 'false'
+               'require_activation': 'false',
+               'groups': 'member'
+           } == dct
+
+
+def test_redirect_payload_client_data(logged_user, nonce, response_with_client):
+    dct = _extract_from_payload(response_with_client)
+    assert {
+               'nonce': nonce,
+               'email': logged_user.email,
+               'external_id': str(logged_user.id),
+               'require_activation': 'false',
+               'groups': 'client'
+           } == dct
+
+
+def test_redirect_payload_lead_data(logged_user, nonce, response_with_lead):
+    dct = _extract_from_payload(response_with_lead)
+    assert {
+               'nonce': nonce,
+               'email': logged_user.email,
+               'external_id': str(logged_user.id),
+               'require_activation': 'false',
+               'groups': 'lead'
            } == dct
 
 
@@ -98,8 +118,8 @@ def test_redirect_payload_user_data(logged_user, nonce, response: HttpResponseRe
         {'sig': 'invalid sig', 'sso': 'invalid sso'},
     ]
 )
-def test_status_invalid_data(client_with_user, invalid_data):
-    response = client_with_user.get(reverse('discourse:sso'), data=invalid_data)
+def test_status_invalid_data(client_with_member, invalid_data):
+    response = client_with_member.get(reverse('discourse:sso'), data=invalid_data)
     return response.status_code == 400
 
 
@@ -118,6 +138,6 @@ def test_user_not_logged_status_code(client):
 
 def test_user_not_logged(client):
     discourse_path = reverse('discourse:sso')
-    response = client.get(discourse_path)
+    response = client.get(discourse_path, secure=True)
     login_path = reverse('login')
     assert response.url == f'{login_path}?next={discourse_path}'

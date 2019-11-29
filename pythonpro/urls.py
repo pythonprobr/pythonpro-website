@@ -17,10 +17,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import (
-    LoginView, LogoutView, PasswordResetCompleteView, PasswordResetConfirmView, PasswordResetDoneView,
-    PasswordResetView
+    LoginView, LogoutView, PasswordResetCompleteView, PasswordResetConfirmView,
+    PasswordResetDoneView,
+    PasswordResetView,
 )
 from django.urls import include, path
+
+from pythonpro.payments import views as payments_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,7 +31,8 @@ urlpatterns = [
     path('conta/logout/', LogoutView.as_view(), name='logout'),
     path('conta/reiniciar_senha', PasswordResetView.as_view(), name='password_reset'),
     path('conta/reiniciar_senha/ok', PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('conta/reiniciar/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('conta/reiniciar/<uidb64>/<token>/', PasswordResetConfirmView.as_view(),
+         name='password_reset_confirm'),
     path('conta/reiniciar/ok', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('aperitivo/', include('pythonpro.promos.urls')),
     path('discourse/', include('pythonpro.discourse.urls')),
@@ -38,9 +42,18 @@ urlpatterns = [
     path('topicos/', include('pythonpro.modules.topics_urls')),
     path('pagamento/', include('pythonpro.payments.urls')),
     path('turmas/', include('pythonpro.cohorts.urls')),
+    path('dashboard/', include('pythonpro.dashboard.urls')),
+    path('', include('pythonpro.launch.urls')),
     path('', include('pythonpro.core.urls')),
+    path('curso-de-python-intermediario', payments_views.client_landing_page, name='client_landing_page'),
+    path('inscricao', payments_views.member_landing_page, name='member_landing_page'),
+    path('pre-inscricao', payments_views.meteoric_landing_page, name='meteoric_landing_page'),
 
 ]
 
 if not settings.AWS_ACCESS_KEY_ID:
     urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns.append(path('__debug__/', include(debug_toolbar.urls)))

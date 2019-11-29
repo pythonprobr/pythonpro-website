@@ -1,8 +1,8 @@
 {% extends 'core/base.html' %}
 {% load static %}
+{% load permission_tags %}
 
 {% block title %}Turma {{ cohort.title }}{% endblock %}
-
 {% block body %}
     <div class="container">
         <div class="row">
@@ -27,86 +27,72 @@
                 <dd>
                     {{ cohort.end }}
                 </dd>
-
             </div>
         </div>
+    {% if user|can:'access_cohorts' %}
         <div class="row">
             <div class="col">
-                <h2 class="mt-5">Intruções</h2>
+                <h2 class="mt-5">Instruções</h2>
                 <dt>Passo 1</dt>
-                <dd>Cadastre-se na <a href="{{ cohort.mail_list }}" target="_blank">lista de emails da turma</a></dd>
-                <dt>Passo 2</dt>
+{#                <dd>Cadastre-se na <a href="{{ cohort.mail_list }}" target="_blank">lista de emails da turma</a></dd>#}
+{#                <dt>Passo 2</dt>#}
                 <dd>Se apresente no <a href="{{ cohort.forum_post }}" target="_blank">post do fórum</a></dd>
-                <dt>Passo 3</dt>
+                <dt>Passo 2</dt>
                 <dd>Entre no nosso <a href="https://t.me/joinchat/DZ2HMkC_wRSHCm5YwIM1UQ" target="_blank">grupo do
                     Telegram</a> para tirar dúvidas e interagir!
                 </dd>
             </div>
         </div>
+    {% endif %}
         <div class="row">
             <div class="col">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="classes-tab" data-toggle="tab" href="#classes" role="tab"
-                           aria-controls="classes" aria-selected="true">Aulas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="webnars-tab" data-toggle="tab" href="#webnars" role="tab"
-                           aria-controls="webnars" aria-selected="false">Webinários</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="classes" role="tabpanel" aria-labelledby="classes-tab">
-                        <h2 class="mt-4 mb-3">Aulas ao Vivo</h2>
-                        {% for class in cohort.classes %}
-                            <div class="card mb-4">
-                                <div class="card-header bg-success">
-                                    {{ class.start }}
-                                </div>
-                                <div class="card-body bg-light">
-                                    {% if class.vimeo_id %}
-                                        <div class="embed-container mb-3 mt-2 border rounded">
-                                            <iframe src="https://player.vimeo.com/video/{{ class.vimeo_id }}"
-                                                    width="640"
-                                                    height="360" frameborder="0"
-                                                    webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                                        </div>
-                                    {% else %}
-                                        Vídeo Pendente
-                                    {% endif %}
-                                </div>
-                            </div>
-
-                        {% endfor %}
-                    </div>
-                    <div class="tab-pane fade" id="webnars" role="tabpanel" aria-labelledby="webnars-tab">
-                         <h2 class="mt-4 mb-3">Webinários</h2>
+                <h2 class="mt-5">Webinários</h2>
                 {% for webinar in cohort.webinars %}
-                    <div class="card mb-4">
-                        <div class="card-header bg-warning">
-                            {{ webinar.start }}
-                        </div>
-                        <div class="card-body bg-light">
-                            <blockquote class="blockquote mb-0">
-                                <p>{{ webinar.title }}</p>
-                                {% if webinar.vimeo_id %}
-                                    <div class="embed-container mb-3 mt-2 border rounded">
-                                        <iframe src="https://player.vimeo.com/video/{{ webinar.vimeo_id }}" width="640"
-                                                height="360" frameborder="0"
-                                                webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                                    </div>
-                                {% endif %}
-                                <footer class="blockquote-footer">{{ webinar.speaker }}
-                                    <cite title="Source Title">{{ webinar.speaker_title }}</cite>
-                                </footer>
-                            </blockquote>
-                            </footer>
-                            </blockquote>
-                        </div>
-                    </div>
+
+                    <h3 class="mt-4 mb-3"><a href="{{ webinar.get_absolute_url }}"
+                                             target="_blank">{{ webinar.title }}</a></h3>
+                    <img src="{{ webinar.image.url }}" class="rounded float-left mr-3"
+                         alt="Foto de {{ webinar.speaker }}"
+                         width="200px" height="200px">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">{{ webinar.speaker }}</p>
+                        <footer class="blockquote-footer">{{ webinar.speaker_title }}
+                        </footer>
+                    </blockquote>
+                    <dt>
+                        Data:
+                    </dt>
+                    <dd>
+                        {{ webinar.start }}
+                    </dd>
+                    <dt>
+                        Descrição:
+                    </dt>
+                    <dd>
+                        {{ webinar.description|linebreaks }}
+                    </dd>
+                    <br/>
+
                 {% endfor %}
-                    </div>
-                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+                <h2 class="mt-5 mb-3">Aulas ao Vivo</h2>
+                {% for class in cohort.classes %}
+                    <h3 class="mt-4 mb-3"><a href="{{ class.get_absolute_url }}"
+                                             target="_blank">{{ class.start }}</a></h3>
+                    <dt>
+                        Descrição:
+                    </dt>
+                    <dd>
+                        {{ class.description|linebreaks }}
+                    </dd>
+
+                {% endfor %}
             </div>
         </div>
     </div>

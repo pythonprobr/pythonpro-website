@@ -1,7 +1,8 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}Cursos Python Pro{% endblock %}
+{% block title %}Módulos do Curso Python Pro{% endblock %}
+{% block description %}Listagem de todos os 7 módulos que compõem o curso Python Pro visando a formação profissional dos alunos{% endblock %}
 
 {% block body %}
   <div class="container">
@@ -16,7 +17,7 @@
         <dt>Público</dt>
         <dd><ul><li>{{ module.target }}</li></ul></dd>
         <dt>Descrição</dt>
-        <dd><ul><li>{{ module.description }}</li></ul></dd>
+        <dd><ul><li>{{ module.description|linebreaks }}</li></ul></dd>
         </dl>
       </div>
     </div>

@@ -1,0 +1,124 @@
+{% extends 'core/base_without_nav.html' %}
+{% load static %}
+{% block title %}Inscrição realizada! Semana do Programador Profissional{% endblock %}
+{% block description %}Inscrição na Semana do Programador Feita com Sucesso{% endblock %}
+{% block head %}
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css'>
+    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+
+    <style>
+        @font-face {
+            font-family: 'Gilroy-Bold';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Bold ☞'), url('{% static "fonts/Gilroy-Bold.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Heavy';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Heavy ☞'), url('{% static "fonts/Gilroy-Heavy.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Light';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Light ☞'), url('{% static "fonts/Gilroy-Light.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Medium';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Medium ☞'), url('{% static "fonts/Gilroy-Medium.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Regular';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Regular ☞'), url('{% static "fonts/Gilroy-Regular.woff" %}') format('woff');
+        }
+
+    </style>
+    <link rel="stylesheet" href="{% static 'css/client.css' %}"/>
+{% endblock head %}
+
+{% block body %}
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col hero">
+                    <h1 class='font-weight-bold text-light'>
+                        MUITO OBRIGADO POR SE INSCREVER!
+                    </h1>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 offset-md-1 col-md mb-5 mt-5">
+                <h2 class='mb-5 mt-2 font-weight-bold'>
+                        Corre lá no seu email! Eu te enviei todas as instruções 
+                        detalhadas de como o workshop vai funcionar.
+                    </h2>
+
+                <p>Aproveitando que você está aqui, eu quero te fazer <b>dois convites.</b></p>
+
+                <p>
+                    <span class='highlight font-weight-bold'>Primeiro de tudo, quero te convidar para entrar no 
+                    nosso canal lá no Telegram.</span> 
+                </p>
+                <p>
+                    Vai ser por lá que eu vou te informar sobre tudo o que você precisa 
+                    saber sobre a semana do programador profissional. 
+                </p>
+                
+                <p>
+                    Além disso, quem estiver por lá vai ter uma <b>vantagem super especial.</b>
+                </p>
+                
+                <p>
+                    Para se inscrever, basta clicar no botão aqui embaixo.
+                </p>
+
+                <a class='btn btn-lg btn-primary font-weight-bold text-light mb-5' href='https://t.me/ProgramadorProfissional' target='_blank'>
+                    <i class="fa fa-telegram" aria-hidden="true"></i> Entrar para o canal no Telegram!
+                </a>
+
+                <p class='mt-4'>
+                E quero aproveitar também pra te convidar a me seguir nas redes sociais. Por elas eu falo quase que
+                    diariamente sobre tecnologia e sobre o mercado de programação.</p>
+
+                <p class="mb-0">Os links também estão aqui embaixo: </p>
+                <ul class="mt-0 ml-5">
+                    <li><a class='btn btn-success' target='_blank' href="https://twitter.com/renzoprobr"> 
+                        Seguir o <b>@renzoprobr</b> no Twitter</a></li>
+                    <li><a class='btn btn-success' target='_blank' href="https://www.youtube.com/user/renzonuccitelli">
+                        Inscrever-se no canal <b>Dev Profissional</b> no Youtube</a></li>
+                    <li><a class='btn btn-success' target='_blank' href="https://instagram.com/renzoprobr"> 
+                        Seguir o <b>@renzoprobr</b> no Instagram</a></li>
+                </ul>
+                <p>Muito obrigado pela sua atenção e nos vemos na semana do programador profissional!</p>
+
+                <p>
+                    Abraços, <br/>
+                    Renzo
+                </p>
+
+                <div class='text-center d-block d-lg-none d-xl-none d'>
+                    <img src='{% static 'img/instructors/renzo-nuccitelli-300.jpeg' %}' class="img-fluid"
+                         width="300px" alt="Foto de Renzo Nuccitelli"/>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+{% endblock body %}

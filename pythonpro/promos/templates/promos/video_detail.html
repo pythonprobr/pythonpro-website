@@ -1,26 +1,63 @@
 {% extends 'core/base.html' %}
 {% load static %}
-{% block title %}{{ video.title }}{% endblock %}
+{% block title %}Aula de Python: {{ video.title }}{% endblock %}
+{% block description %}Aula Aperitivo Grátis de Python sobre: {{ video.title }}{% endblock %}
 {% block body %}
-  <div class="container mt-5">
-    <div class="row">
-      <div class="col text-center mb-5">
-        <h1>{{ video.title }}</h1>
-        <div class="embed-container">
-          <iframe src="https://player.vimeo.com/video/{{ video.vimeo_id }}" width="640" height="360" frameborder="0"
-                  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    <div class="container mt-5">
+        {% if SUBSCRIPTIONS_OPEN %}
+            <div class="row">
+                <div class="col text-center">
+                    <h2 class="mb-3">Inscrições para próxima turma abertas</h2>
+                    <p>Vagas limitadas. Veja <a href="https://www.youtube.com/watch?v=ZCuxX4vyFTo"
+                                                target="_blank">esse vídeo de 4 minutos</a> para
+                        entender como o curso funciona.</p>
+                    <a class="btn btn-primary btn-lg text-light p-4" href="{% url 'payments:options' %}" role="button">
+                        Quero me inscrever! &raquo;</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="justify-content-center text-center">
+                <h2 class="mb-4">Garanta agora sua vaga na próxima turma!</h2>
+                <form class="form-inline justify-content-center"
+                      action="https://python.us17.list-manage.com/subscribe/post?u=ff7c56095f83f9c254edd749e&amp;id=a88d1dd555"
+                      method="post" name="mc-embedded-subscribe-form"
+                      target="_blank">
+                    <div class="form-row">
+                        <div class="col-12 col-md mb-2 mb-md-0">
+                            <input type="email" name="EMAIL" class="form-control" placeholder="Email"
+                                   required="required">
+                        </div>
+                        <div class="col-12 col-md mb-2 mb-md-0">
+                            <input type="text" name="FNAME" class="form-control" placeholder="Nome" required="required">
+                        </div>
+                        <input type="hidden" name="PAGE" value="{{ video.slug }}">
+                        <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                            <input type="text"
+                                   name="b_ff7c56095f83f9c254edd749e_a88d1dd555"
+                                   tabindex="-1" value=""></div>
+
+                        <div class="col-12 col-md align-content-start text-left">
+                            <button type="submit" class="btn btn-primary mb-2">Cadastrar</button>
+                        </div>
+                    </div>
+                </form>
+                <p>Cadastre seu email para receber link de inscrição antes de todo mundo. Veja <a
+                        href="https://www.youtube.com/watch?v=ZCuxX4vyFTo"
+                        target="_blank">esse vídeo de 4 minutos</a> para
+                    entender como o curso funciona.</p>
+            </div>
+        {% endif %}
+
+
+        <div class="row">
+            <div class="col text-center">
+                <h2 class="mb-3 mt-5">{{ video.title }}</h2>
+                <div class="embed-container">
+                    <iframe src="https://player.vimeo.com/video/{{ video.vimeo_id }}" width="640" height="360"
+                            frameborder="0"
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    {% if SUBSCRIPTIONS_OPEN %}
-      <div class="row">
-        <div class="col text-center">
-          <a class="btn btn-primary btn-lg text-light p-4" href="{% url 'payments:options' %}" role="button">QUERO ME
-            MATRICULAR &raquo;</a>
-        </div>
-      </div>
-    {% else %}
-      {% include 'core/leads_form.html' only %}
-    {% endif %}
-  </div>
 {% endblock body %}
