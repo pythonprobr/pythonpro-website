@@ -95,20 +95,22 @@
                             frameborder="0"
                             webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
+                <div class="row mt-5 mb-5">
                 {% if topic.previous_content %}
-                    <div class="mt-5 mb-5" style="float: left">
+                    <div class="col-md text-md-left text-center">
                         <a class="btn btn-success" href="{{ topic.previous_content.get_absolute_url }}">
-                            Conteúdo Anterior: <strong>{{ topic.previous_content.title }}</strong> &raquo;
+                           &laquo; <strong>{{ topic.previous_content.title }}</strong>
                         </a>
                     </div>
                 {% endif %}
                 {% if topic.next_content %}
-                    <div class="mt-5 mb-5" style="float: right">
-                        <a class="btn btn-success" href="{{ topic.next_content.get_absolute_url }}">
-                            Próximo Conteúdo: <strong>{{ topic.next_content.title }}</strong> &raquo;
+                    <div class="col-md text-md-right text-center mt-md-0 mt-2">
+                        <a class="btn btn-primary" href="{{ topic.next_content.get_absolute_url }}">
+                            <strong>{{ topic.next_content.title }}</strong> &raquo;
                         </a>
                     </div>
                 {% endif %}
+                </div>
                 <div id='discourse-comments'></div>
                 <script type="text/javascript">
                     DiscourseEmbed = {

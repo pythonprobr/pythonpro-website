@@ -93,9 +93,3 @@ def test_cache(chapter, mocker):
     for _ in range(3):
         topic.next_content()
     assert topic._next_content_query_set.call_count == 1
-
-
-def test_first_topic_previous_none(chapter):
-    """Assert None as last content for the First Topic of First Chapter of First Section of First Module"""
-    topic = mommy.make(Topic, chapter=chapter)
-    assert topic.previous_content() is None
