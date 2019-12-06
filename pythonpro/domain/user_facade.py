@@ -12,7 +12,7 @@ from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.cohorts import facade as _cohorts_facade
 from pythonpro.core import facade as _core_facade
 from pythonpro.core.models import User as _User
-from pythonpro.mailchimp import facade as _mailchimp_facade
+from pythonpro.email_marketing import facade as _mailchimp_facade
 from pythonpro.payments import facade as _payments_facade
 
 UserCreationException = _core_facade.UserCreationException  # exposing exception on Facade
