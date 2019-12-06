@@ -67,7 +67,7 @@ INSTALLED_APPS = [
     'pythonpro.promos',
     'pythonpro.payments',
     'pythonpro.cohorts',
-    'pythonpro.mailchimp',
+    'pythonpro.email_marketing',
     'pythonpro.dashboard',
     'pythonpro.launch',
     'pythonpro.analytics',

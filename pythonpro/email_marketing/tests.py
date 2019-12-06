@@ -3,8 +3,8 @@ import json
 import pytest
 import responses
 
-from pythonpro.mailchimp import facade
-from pythonpro.mailchimp.facade import tag_as
+from pythonpro.email_marketing import facade
+from pythonpro.email_marketing.facade import tag_as
 
 roles_to_ids = {facade._LEAD: 'lead_id', facade._CLIENT: 'client_id', facade._MEMBER: 'member_id'}
 

@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from pythonpro.mailchimp.facade import tag_as
+from pythonpro.email_marketing.facade import tag_as
 from pythonpro.modules.facade import get_all_modules, get_module_with_contents
 
 

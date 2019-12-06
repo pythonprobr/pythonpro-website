@@ -9,7 +9,7 @@ from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.cohorts.facade import find_most_recent_cohort
 from pythonpro.domain import user_facade
 from pythonpro.launch.forms import LeadForm
-from pythonpro.mailchimp import facade as mailchimp_facade
+from pythonpro.email_marketing import facade as mailchimp_facade
 
 LAUNCH_STATUS_PPL = 0
 LAUNCH_STATUS_CPL1 = 1
