@@ -11,7 +11,7 @@ def email(fake):
 
 @pytest.fixture
 def create_or_update_with_no_role(mocker):
-    return mocker.patch('pythonpro.launch.views.mailchimp_facade.create_or_update_with_no_role')
+    return mocker.patch('pythonpro.launch.views.email_marketing_facade.create_or_update_with_no_role')
 
 
 @pytest.fixture
@@ -28,7 +28,7 @@ def test_status_code(resp):
     assert 302 == resp.status_code
 
 
-def test_mailchimp_sucess_integration(resp, email, create_or_update_with_no_role, cohort):
+def test_email_marketing_sucess_integration(resp, email, create_or_update_with_no_role, cohort):
     first_name = email.split('@')[0]
     create_or_update_with_no_role.assert_called_once_with(first_name, email,
                                                           f'turma-{cohort.slug}-semana-do-programador')
@@ -39,7 +39,7 @@ def resp_with_error(client, invalid_email, create_or_update_with_no_role):
     return client.post(reverse('launch:lead_form'), {'email': invalid_email}, secure=True)
 
 
-def test_mailchimp_not_executed_on_error(resp_with_error, create_or_update_with_no_role):
+def test_email_marketing_not_executed_on_error(resp_with_error, create_or_update_with_no_role):
     assert create_or_update_with_no_role.call_count == 0
 
 
@@ -68,4 +68,6 @@ def test_user_first_name(resp_with_user, logged_user, create_or_update_with_no_r
     create_or_update_with_no_role.assert_called_once_with(
         logged_user.first_name,
         logged_user.email,
-        f'turma-{cohort.slug}-semana-do-programador')
+        f'turma-{cohort.slug}-semana-do-programador',
+        id=logged_user.id
+    )

@@ -21,7 +21,7 @@ def valid_signature():
 
 @pytest.fixture
 def create_or_update_client(client_with_lead, logged_user, mocker):
-    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.create_or_update_client')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_client')
 
 
 @pytest.fixture
@@ -76,8 +76,8 @@ def test_user_promoted_to_client(valid_resp, logged_user):
     assert not has_role(logged_user, 'member')
 
 
-def test_promoted_to_client_on_mailchimp(valid_resp, create_or_update_client, logged_user):
-    create_or_update_client.assert_called_once_with(logged_user.first_name, logged_user.email)
+def test_promoted_to_client_on_email_marketing(valid_resp, create_or_update_client, logged_user):
+    create_or_update_client.assert_called_once_with(logged_user.first_name, logged_user.email, id=logged_user.id)
 
 
 def test_email_sent(valid_resp, mailoutbox, logged_user):

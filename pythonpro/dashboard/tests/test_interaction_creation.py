@@ -8,7 +8,7 @@ from pythonpro.domain import user_facade
 
 @pytest.fixture
 def remove_tags_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.remove_tags')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.remove_tags')
 
 
 @pytest.fixture
@@ -41,7 +41,7 @@ def resp_with_interaction(client_with_lead, topic, logged_user, remove_tags_mock
 
 
 def test_user_mark_on_mainchimp(resp, remove_tags_mock, logged_user):
-    remove_tags_mock.assert_called_once_with(logged_user.email, 'never-watched-video')
+    remove_tags_mock.assert_called_once_with(logged_user.email, logged_user.id, 'never-watched-video')
 
 
 def test_user_activation(resp, remove_tags_mock, logged_user):

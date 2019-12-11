@@ -9,7 +9,7 @@ from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.cohorts.facade import find_most_recent_cohort
 from pythonpro.domain import user_facade
 from pythonpro.launch.forms import LeadForm
-from pythonpro.email_marketing import facade as mailchimp_facade
+from pythonpro.email_marketing import facade as email_marketing_facade
 
 LAUNCH_STATUS_PPL = 0
 LAUNCH_STATUS_CPL1 = 1
@@ -36,12 +36,16 @@ def lead_form(request):
     user = request.user
     if user.is_authenticated:
         first_name = user.first_name
+        email_marketing_facade.create_or_update_with_no_role(
+            first_name,
+            email,
+            f'turma-{find_most_recent_cohort().slug}-semana-do-programador', id=user.id)
     else:
         first_name = email.split('@')[0]
-    mailchimp_facade.create_or_update_with_no_role(
-        first_name,
-        email,
-        f'turma-{find_most_recent_cohort().slug}-semana-do-programador')
+        email_marketing_facade.create_or_update_with_no_role(
+            first_name,
+            email,
+            f'turma-{find_most_recent_cohort().slug}-semana-do-programador')
     return redirect(reverse('launch:ty'))
 
 

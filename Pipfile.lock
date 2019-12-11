@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "cd0fc07dbe300381fd2fc10c248b99ca6a182948a92157b0e1e88a16f4c8b039"
+            "sha256": "b32c3926685cd41a5f6eade0147e4d81e737c8efdb06e00ede20aa7e81d7c73c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,6 +16,10 @@
         ]
     },
     "default": {
+        "activecampaign-python": {
+            "git": "https://github.com/renzon/activecampaign-python.git",
+            "ref": "6192c56113390c1f12e421e88e932a9ba5abcb36"
+        },
         "appnope": {
             "hashes": [
                 "sha256:5b26757dc6f79a3b7dc9fab95359328d5747fcb2409d331ea66d0272b90ab2a0",
@@ -40,18 +44,18 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:95253e9d48585095dca6d1668f75ad977f4514b253c11e8a4e59f9795702970a",
-                "sha256:a8610e660326c84cc32a804acfb895f3e5291bf1b762c3d1d12597d11917ce14"
+                "sha256:210b119965782feacadbdf46944b2ca83d52f7ac7c625ec2e5188c60621a6153",
+                "sha256:7dc118fafbc81e32d753ee3c00600f04fd032042cec9136fc8fdce3e6f58191d"
             ],
             "index": "pypi",
-            "version": "==1.10.34"
+            "version": "==1.10.37"
         },
         "botocore": {
             "hashes": [
-                "sha256:55c82a4eda277ae145691783c064b0d6600e60e80bd379ca07eaef1cfe34a148",
-                "sha256:7350d9bcaec0ec3127f808bfb75fa0114b5b6b09a485b0dba66d739c3654521b"
+                "sha256:a5061854d117e4afb82c2f2da7ff1fb7492045e1968efdca6df80b9a9a1f31d5",
+                "sha256:cdecb25b58823784d6118d8f991bbd6a36ee220039ea7bf2001029d1bbff0cb0"
             ],
-            "version": "==1.13.34"
+            "version": "==1.13.37"
         },
         "certifi": {
             "hashes": [
@@ -241,14 +245,6 @@
                 "sha256:f6ed60a62c5f1c44e789d2cf14009423cb1646b44a43e40a9cf6a21f077678a1"
             ],
             "version": "==4.4.2"
-        },
-        "mailchimp3": {
-            "hashes": [
-                "sha256:d1be07d3863b68040deeea19224f0850e6b707c9d31b07a26ea149479aee7c4b",
-                "sha256:db092062dca8134402064fabaacd5105e0b462a6caa8e6b78ee0da99939279cb"
-            ],
-            "index": "pypi",
-            "version": "==3.0.10"
         },
         "newrelic": {
             "hashes": [
@@ -579,11 +575,11 @@
         },
         "importlib-metadata": {
             "hashes": [
-                "sha256:3a8b2dfd0a2c6a3636e7c016a7e54ae04b997d30e69d5eacdca7a6c2221a1402",
-                "sha256:41e688146d000891f32b1669e8573c57e39e5060e7f5f647aa617cd9a9568278"
+                "sha256:073a852570f92da5f744a3472af1b61e28e9f78ccf0c9117658dc32b15de7b45",
+                "sha256:d95141fbfa7ef2ec65cfd945e2af7e5a6ddbd7c8d9a25e66ff3be8e3daf9f60f"
             ],
             "markers": "python_version < '3.8'",
-            "version": "==1.2.0"
+            "version": "==1.3.0"
         },
         "mccabe": {
             "hashes": [

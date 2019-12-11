@@ -1,4 +1,4 @@
-from unittest.mock import Mock
+from unittest.mock import Mock, call
 
 import pytest
 from django.urls import reverse
@@ -20,7 +20,7 @@ def test_status_code(resp):
 
 @pytest.fixture
 def create_lead_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.create_or_update_lead')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_lead')
 
 
 @pytest.fixture
@@ -76,9 +76,10 @@ def test_user_has_role(resp_lead_creation, django_user_model):
     assert has_role(user, 'lead')
 
 
-def test_user_created_as_lead_on_mailchimp(resp_lead_creation, django_user_model, create_lead_mock: Mock):
+def test_user_created_as_lead_on_email_marketing(resp_lead_creation, django_user_model, create_lead_mock: Mock):
     user = django_user_model.objects.first()
-    create_lead_mock.assert_called_once_with(user.first_name, user.email)
+    calls = [call(user.first_name, user.email), call(user.first_name, user.email, id=user.id)]
+    create_lead_mock.assert_has_calls(calls)
 
 
 def test_user_source_was_saved_from_url(resp_lead_creation, django_user_model, create_lead_mock: Mock):

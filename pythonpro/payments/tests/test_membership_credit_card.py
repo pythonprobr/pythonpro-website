@@ -145,17 +145,17 @@ transaction_response_error = {
 
 @pytest.fixture
 def create_or_update_member(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.create_or_update_member')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_member')
 
 
 @pytest.fixture
 def tag_as_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.tag_as')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.tag_as')
 
 
 @pytest.fixture
 def create_or_update_lead(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.create_or_update_lead')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_lead')
 
 
 @pytest.fixture
@@ -178,8 +178,8 @@ def resp_token(cohort, client_with_lead, logged_user, create_or_update_member, r
     return client_with_lead.post(reverse('payments:member_capture'), data, secure=True)
 
 
-def test_mailchimp_update(resp_token, create_or_update_member, logged_user):
-    create_or_update_member.assert_called_once_with(logged_user.first_name, logged_user.email)
+def test_email_marketing_update(resp_token, create_or_update_member, logged_user):
+    create_or_update_member.assert_called_once_with(logged_user.first_name, logged_user.email, id=logged_user.id)
 
 
 def test_user_become_member(resp_token, logged_user):
@@ -197,7 +197,7 @@ def test_user_registered_to_last_cohort(cohort, resp_token, logged_user):
 
 
 def test_user_tagged_with_cohort_slug(cohort, resp_token, logged_user, tag_as_mock):
-    tag_as_mock.assert_called_once_with(logged_user.email, f'turma-{cohort.slug}')
+    tag_as_mock.assert_called_once_with(logged_user.email, logged_user.id, f'turma-{cohort.slug}')
 
 
 def test_redirect_url(resp_token):
@@ -221,8 +221,9 @@ def test_user_name(resp_token_with_no_user, django_user_model):
 
 
 def test_client_update_on_mail_chimp(resp_token_with_no_user, django_user_model, create_or_update_member):
-    create_or_update_member.assert_called_once_with(CUSTOMER_FIRST_NAME, CUSTOMER_EMAIL)
+    user = django_user_model.objects.get(email=CUSTOMER_EMAIL)
+    create_or_update_member.assert_called_once_with(CUSTOMER_FIRST_NAME, CUSTOMER_EMAIL, id=user.id)
 
 
-def test_client_lead_not_created_on_mailchimp(resp_token_with_no_user, django_user_model, create_or_update_lead):
+def test_client_lead_not_created_on_email_marketing(resp_token_with_no_user, django_user_model, create_or_update_lead):
     assert create_or_update_lead.call_count == 0

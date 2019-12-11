@@ -21,12 +21,12 @@ def valid_signature():
 
 @pytest.fixture
 def create_or_update_member(client_with_lead, logged_user, mocker):
-    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.create_or_update_member')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_member')
 
 
 @pytest.fixture
 def tag_as_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.tag_as')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.tag_as')
 
 
 @pytest.fixture
@@ -82,8 +82,8 @@ def test_user_promoted_to_member(valid_resp, logged_user):
     assert not has_role(logged_user, 'client')
 
 
-def test_promoted_to_member_on_mailchimp(valid_resp, create_or_update_member, logged_user):
-    create_or_update_member.assert_called_once_with(logged_user.first_name, logged_user.email)
+def test_promoted_to_member_on_email_marketing(valid_resp, create_or_update_member, logged_user):
+    create_or_update_member.assert_called_once_with(logged_user.first_name, logged_user.email, id=logged_user.id)
 
 
 def test_user_registered_to_last_cohort(cohort, valid_resp, create_or_update_member, logged_user):
@@ -91,7 +91,7 @@ def test_user_registered_to_last_cohort(cohort, valid_resp, create_or_update_mem
 
 
 def test_user_tagged_with_cohort_slug(cohort, valid_resp, logged_user, tag_as_mock):
-    tag_as_mock.assert_called_once_with(logged_user.email, f'turma-{cohort.slug}')
+    tag_as_mock.assert_called_once_with(logged_user.email, logged_user.id, f'turma-{cohort.slug}')
 
 
 def test_email_sent(cohort, valid_resp, mailoutbox, logged_user):

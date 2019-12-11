@@ -237,9 +237,9 @@ SENTRY_DSN = config('SENTRY_DSN', default=None)
 if SENTRY_DSN:  # pragma: no cover
     sentry_sdk.init(dsn=SENTRY_DSN, integrations=[DjangoIntegration()])
 
-# Mailchimp Configuration
-MAILCHIMP_API_KEY = config('MAILCHIMP_API_KEY')
-MAILCHIMP_LIST_ID = config('MAILCHIMP_LIST_ID')
+# Active Campaign Configuration
+ACTIVE_CAMPAIGN_URL = config('ACTIVE_CAMPAIGN_URL')
+ACTIVE_CAMPAIGN_KEY = config('ACTIVE_CAMPAIGN_KEY')
 
 # Google Tag Manager Configuration
 GOOGLE_TAG_MANAGER_ID = config('GOOGLE_TAG_MANAGER_ID')
