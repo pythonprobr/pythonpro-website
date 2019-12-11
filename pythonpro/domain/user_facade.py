@@ -2,17 +2,18 @@
 Module working as a facade to all business rules from the entire system.
 It must interact only with app's internal facades and can be used by views, CLI and other interfaces
 """
+
+from activecampaign.exception import ActiveCampaignError as _ActiveCampaignError
 from django.conf import settings as _settings
 from django.core.mail import send_mail as _send_mail
 from django.template.loader import render_to_string
 from django.urls import reverse
-from mailchimp3.mailchimpclient import MailChimpError as _MailChimpError
 
 from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.cohorts import facade as _cohorts_facade
 from pythonpro.core import facade as _core_facade
 from pythonpro.core.models import User as _User
-from pythonpro.email_marketing import facade as _mailchimp_facade
+from pythonpro.email_marketing import facade as _email_marketing_facade
 from pythonpro.payments import facade as _payments_facade
 
 UserCreationException = _core_facade.UserCreationException  # exposing exception on Facade
@@ -42,11 +43,13 @@ def register_lead(first_name: str, email: str, source: str = 'unknown') -> _User
         source = 'unknown'
     form = _core_facade.validate_user(first_name, email, source)
     try:
-        _mailchimp_facade.create_or_update_lead(first_name, email)
-    except _MailChimpError:
+        _email_marketing_facade.create_or_update_lead(first_name, email)
+    except _ActiveCampaignError:
         form.add_error('email', 'Email Inválido')
         raise UserCreationException(form)
-    return _core_facade.register_lead(first_name, email, source)
+    lead = _core_facade.register_lead(first_name, email, source)
+    _email_marketing_facade.create_or_update_lead(first_name, email, id=lead.id)
+    return lead
 
 
 def force_register_lead(first_name: str, email: str, source: str = 'unknown') -> _User:
@@ -61,8 +64,8 @@ def force_register_lead(first_name: str, email: str, source: str = 'unknown') ->
     """
     user = _core_facade.register_lead(first_name, email, source)
     try:
-        _mailchimp_facade.create_or_update_lead(first_name, email)
-    except _MailChimpError:
+        _email_marketing_facade.create_or_update_lead(first_name, email, id=user.id)
+    except _ActiveCampaignError:
         pass
     return user
 
@@ -79,8 +82,8 @@ def force_register_client(first_name: str, email: str, source: str = 'unknown') 
     """
     user = _core_facade.register_client(first_name, email, source)
     try:
-        _mailchimp_facade.create_or_update_client(first_name, email)
-    except _MailChimpError:
+        _email_marketing_facade.create_or_update_client(first_name, email, id=user.id)
+    except _ActiveCampaignError:
         pass
     return user
 
@@ -99,9 +102,9 @@ def force_register_member(first_name, email, source='unknown'):
     _cohorts_facade.subscribe_to_last_cohort(user)
     cohort = _cohorts_facade.find_most_recent_cohort()
     try:
-        _mailchimp_facade.create_or_update_member(first_name, email)
-        _mailchimp_facade.tag_as(email, f'turma-{cohort.slug}')
-    except _MailChimpError:
+        _email_marketing_facade.create_or_update_member(first_name, email, id=user.id)
+        _email_marketing_facade.tag_as(email, f'turma-{cohort.slug}')
+    except _ActiveCampaignError:
         pass
     return user
 
@@ -118,9 +121,9 @@ def promote_member(user: _User, source: str) -> _User:
     _cohorts_facade.subscribe_to_last_cohort(user)
     cohort = _cohorts_facade.find_most_recent_cohort()
     try:
-        _mailchimp_facade.create_or_update_member(user.first_name, user.email)
-        _mailchimp_facade.tag_as(user.email, f'turma-{cohort.slug}')
-    except _MailChimpError:
+        _email_marketing_facade.create_or_update_member(user.first_name, user.email, id=user.id)
+        _email_marketing_facade.tag_as(user.email, user.id, f'turma-{cohort.slug}')
+    except _ActiveCampaignError:
         pass
     email_msg = render_to_string(
         'payments/membership_email.txt',
@@ -148,8 +151,8 @@ def promote_client(user: _User, source: str) -> None:
     """
     _core_facade.promote_to_client(user, source)
     try:
-        _mailchimp_facade.create_or_update_client(user.first_name, user.email)
-    except _MailChimpError:
+        _email_marketing_facade.create_or_update_client(user.first_name, user.email, id=user.id)
+    except _ActiveCampaignError:
         pass
     email_msg = render_to_string(
         'payments/pytools_email.txt',
@@ -202,8 +205,8 @@ def run_pytools_promotion_campaign() -> int:
     promotion_users = _core_facade.find_leads_by_date_joined_interval(begin, end)
     for user in promotion_users:
         try:
-            _mailchimp_facade.tag_as(user.email, 'pytools-promotion')
-        except _MailChimpError:
+            _email_marketing_facade.tag_as(user.email, user.id, 'pytools-promotion')
+        except _ActiveCampaignError:
             pass
     return len(promotion_users)
 
@@ -216,7 +219,7 @@ def visit_client_landing_page(user: _User, source: str) -> None:
     :return:
     """
     _core_facade.visit_client_landing_page(user, source)
-    _mailchimp_facade.tag_as(user.email, 'potential-client')
+    _email_marketing_facade.tag_as(user.email, user.id, 'potential-client')
 
 
 def visit_member_landing_page(user, source):
@@ -228,8 +231,8 @@ def visit_member_landing_page(user, source):
     """
     _core_facade.visit_member_landing_page(user, source)
     try:
-        _mailchimp_facade.tag_as(user.email, 'potential-member')
-    except _MailChimpError:
+        _email_marketing_facade.tag_as(user.email, user.id, 'potential-member')
+    except _ActiveCampaignError:
         pass  # Ok not handling, probably invalid email
 
 
@@ -260,7 +263,7 @@ def click_member_checkout(user):
     :return:
     """
     _core_facade.member_checkout(user, None)
-    _mailchimp_facade.tag_as(user.email, 'member-checkout')
+    _email_marketing_facade.tag_as(user.email, user.id, 'member-checkout')
 
 
 def click_client_checkout(user: _User):
@@ -270,7 +273,7 @@ def click_client_checkout(user: _User):
     :return:
     """
     _core_facade.client_checkout(user, None)
-    _mailchimp_facade.tag_as(user.email, 'client-checkout')
+    _email_marketing_facade.tag_as(user.email, user.id, 'client-checkout')
 
 
 def client_generated_boleto(user):
@@ -294,7 +297,7 @@ def subscribe_to_waiting_list(user: _User, source: str) -> None:
     :return:
     """
     _core_facade.subscribe_to_waiting_list(user, source)
-    _mailchimp_facade.tag_as(user.email, 'lista-de-espera')
+    _email_marketing_facade.tag_as(user.email, user.id, 'lista-de-espera')
 
 
 def activate_user(user: _User, source: str) -> None:
@@ -305,7 +308,7 @@ def activate_user(user: _User, source: str) -> None:
     :return:
     """
     _core_facade.activate_user(user, source)
-    _mailchimp_facade.remove_tags(user.email, 'never-watched-video')
+    _email_marketing_facade.remove_tags(user.email, user.id, 'never-watched-video')
 
 
 def visit_cpl1(user: _User, source: str) -> None:
@@ -316,7 +319,7 @@ def visit_cpl1(user: _User, source: str) -> None:
     :return:
     """
     _core_facade.visit_cpl1(user, source)
-    _mailchimp_facade.tag_as(user.email, 'cpl1')
+    _email_marketing_facade.tag_as(user.email, user.id, 'cpl1')
 
 
 def visit_cpl2(user: _User, source: str) -> None:
@@ -327,7 +330,7 @@ def visit_cpl2(user: _User, source: str) -> None:
     :return:
     """
     _core_facade.visit_cpl2(user, source)
-    _mailchimp_facade.tag_as(user.email, 'cpl2')
+    _email_marketing_facade.tag_as(user.email, user.id, 'cpl2')
 
 
 def visit_cpl3(user: _User, source: str) -> None:
@@ -338,4 +341,4 @@ def visit_cpl3(user: _User, source: str) -> None:
     :return:
     """
     _core_facade.visit_cpl3(user, source)
-    _mailchimp_facade.tag_as(user.email, 'cpl3')
+    _email_marketing_facade.tag_as(user.email, user.id, 'cpl3')

@@ -11,9 +11,9 @@ def subscription_closed(settings):
 
 @pytest.fixture
 def resp(subscription_closed, client_with_lead, mocker, logged_user):
-    tag_as = mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.tag_as')
+    tag_as = mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.tag_as')
     yield client_with_lead.get(reverse('meteoric_landing_page'), secure=True)
-    tag_as.assert_called_once_with(logged_user.email, 'potential-member')
+    tag_as.assert_called_once_with(logged_user.email, logged_user.id, 'potential-member')
 
 
 def test_status_code(resp):

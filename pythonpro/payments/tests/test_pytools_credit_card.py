@@ -144,12 +144,12 @@ transaction_response_error = {
 
 @pytest.fixture
 def create_or_update_client(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.create_or_update_client')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_client')
 
 
 @pytest.fixture
 def create_or_update_lead(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.create_or_update_lead')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_lead')
 
 
 @pytest.fixture
@@ -172,8 +172,8 @@ def resp_token(client_with_lead, logged_user, create_or_update_client, resps_suc
     return client_with_lead.post(reverse('payments:pytools_capture'), data, secure=True)
 
 
-def test_mailchimp_update(resp_token, create_or_update_client, logged_user):
-    create_or_update_client.assert_called_once_with(logged_user.first_name, logged_user.email)
+def test_email_marketing_update(resp_token, create_or_update_client, logged_user):
+    create_or_update_client.assert_called_once_with(logged_user.first_name, logged_user.email, id=logged_user.id)
 
 
 def test_user_become_client(resp_token, logged_user):
@@ -204,9 +204,10 @@ def test_user_name(resp_token_with_no_user, django_user_model):
     assert user.first_name == CUSTOMER_FIRST_NAME
 
 
-def test_client_update_on_mail_chimp(resp_token_with_no_user, django_user_model, create_or_update_client):
-    create_or_update_client.assert_called_once_with(CUSTOMER_FIRST_NAME, CUSTOMER_EMAIL)
+def test_client_update_on_email_marketing(resp_token_with_no_user, django_user_model, create_or_update_client):
+    user = django_user_model.objects.first()
+    create_or_update_client.assert_called_once_with(CUSTOMER_FIRST_NAME, CUSTOMER_EMAIL, id=user.id)
 
 
-def test_client_lead_not_created_on_mailchimp(resp_token_with_no_user, django_user_model, create_or_update_lead):
+def test_client_lead_not_created_on_email_marketing(resp_token_with_no_user, django_user_model, create_or_update_lead):
     assert create_or_update_lead.call_count == 0

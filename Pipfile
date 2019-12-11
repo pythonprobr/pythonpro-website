@@ -19,13 +19,13 @@ Pillow = "*"
 ipython = "*"
 django-sitemaps = "*"
 django-role-permissions = "*"
-mailchimp3 = "*"
 responses = "*"
 newrelic = "*"
 pagarme-python = "*"
 sentry-sdk = "*"
 python-dateutil = "*"
 django-extensions = "*"
+activecampaign-python = {git = "https://github.com/renzon/activecampaign-python.git",ref = "last-v1-api"}
 
 [dev-packages]
 faker = "*"

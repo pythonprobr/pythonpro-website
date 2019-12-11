@@ -137,12 +137,12 @@ transaction_response_error = {
 
 @pytest.fixture
 def create_or_update_member(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.create_or_update_member')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_member')
 
 
 @pytest.fixture
 def create_or_update_lead(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._mailchimp_facade.create_or_update_lead')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_lead')
 
 
 @pytest.fixture
@@ -163,7 +163,7 @@ def resp_token_with_no_user(client, create_or_update_member, create_or_update_le
     return client.post(reverse('payments:member_capture'), transaction_data, secure=True)
 
 
-def test_mailchimp_update(resp_token, create_or_update_member, logged_user):
+def test_email_marketing_update(resp_token, create_or_update_member, logged_user):
     assert create_or_update_member.call_count == 0
 
 
@@ -231,8 +231,9 @@ def test_client_update_on_mail_chimp(resp_token_with_no_user, django_user_model,
     assert create_or_update_member.call_count == 0
 
 
-def test_client_lead_not_created_on_mailchimp(resp_token_with_no_user, django_user_model, create_or_update_lead):
-    create_or_update_lead.assert_called_once_with(CUSTOMER_FIRST_NAME, CUSTOMER_EMAIL)
+def test_client_lead_not_created_on_email_marketing(resp_token_with_no_user, django_user_model, create_or_update_lead):
+    user = django_user_model.objects.get(email=CUSTOMER_EMAIL)
+    create_or_update_lead.assert_called_once_with(CUSTOMER_FIRST_NAME, CUSTOMER_EMAIL, id=user.id)
 
 
 @pytest.fixture
