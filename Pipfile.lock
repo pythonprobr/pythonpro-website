@@ -408,11 +408,10 @@
         },
         "responses": {
             "hashes": [
-                "sha256:46d4e546a19fc6106bc7e804edd4551ef04690405e41e7e750ebc295d042623b",
-                "sha256:93b1e0f2f960c0f3304ca4436856241d64c33683ef441431b9caf1d05d9d9e23"
+                "sha256:caa5f7afd14666f970ea54a4125a639f6491218b45a013c6dc2544f0473ae2b8",
+                "sha256:f602986c715073b6bcb5d68a3225254aa447a1bd06040c66341816267d327721"
             ],
-            "index": "pypi",
-            "version": "==0.10.7"
+            "version": "==0.10.8"
         },
         "s3transfer": {
             "hashes": [
