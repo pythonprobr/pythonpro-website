@@ -142,5 +142,5 @@ def test_chapter_urls(resp_with_chapters, chapters):
 def test_enrol_user_tags(python_birds, client_with_lead, mocker, logged_user):
     tag_as = mocker.patch('pythonpro.modules.modules_views.tag_as')
     resp = client_with_lead.get(reverse('modules:enrol', kwargs={'slug': python_birds.slug}), secure=True)
-    tag_as.assert_called_once_with(logged_user.email, python_birds.slug)
+    tag_as.assert_called_once_with(logged_user.email, logged_user.id, python_birds.slug)
     assert resp.status_code == 200
