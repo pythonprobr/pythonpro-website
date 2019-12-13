@@ -18,5 +18,6 @@ def index(request):
 @login_required
 def enrol(request, slug):
     module = get_module_with_contents(slug)
-    tag_as(request.user.email, slug)
+    user = request.user
+    tag_as(user.email, user.id, slug)
     return render(request, 'modules/module_enrol.html', {'module': module})

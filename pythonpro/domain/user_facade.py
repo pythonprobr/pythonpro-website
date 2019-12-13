@@ -103,7 +103,7 @@ def force_register_member(first_name, email, source='unknown'):
     cohort = _cohorts_facade.find_most_recent_cohort()
     try:
         _email_marketing_facade.create_or_update_member(first_name, email, id=user.id)
-        _email_marketing_facade.tag_as(email, f'turma-{cohort.slug}')
+        _email_marketing_facade.tag_as(email, user.id, f'turma-{cohort.slug}')
     except _ActiveCampaignError:
         pass
     return user
