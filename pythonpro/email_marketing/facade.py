@@ -29,9 +29,20 @@ def create_or_update_member(name: str, email: str, *tags, id='0'):
     return _create_or_update(name, email, _MEMBER, *tags, id=id)
 
 
+def _normalise_id(id):
+    """
+    Need to normalize id because active campaing search for custom fields like a "startswith" metheod. Check:
+    https://community.activecampaign.com/t/contact-api-v3-search-by-query-params-fields/5658/8?u=python
+
+    So we have to add 0 to avoid a not exact match
+    """
+    id = int(id)
+    return f'{id:010d}'
+
+
 def _create_or_update(name: str, email: str, role: str, *tags, id='0'):
     prospect_list_id = _get_lists()['Prospects']
-    id = str(id)
+    id = _normalise_id(id)
     tags = list(tags)
 
     data = {
@@ -42,15 +53,15 @@ def _create_or_update(name: str, email: str, role: str, *tags, id='0'):
         f'p[{prospect_list_id}]': prospect_list_id,
         'status': '1',
     }
-    if id == '0':
+    if id == _normalise_id('0'):
         contact = _client.contacts.create_contact(data)
     else:
         try:
-            contacts = _client.contacts.list({'filters[fields][%PYTHONPRO_ID%]': id})
+            contact_id = _find_active_campaign_contact_id(id)
         except ActiveCampaignError:
             contact = _client.contacts.create_contact(data)
         else:
-            data['id'] = contacts['0']['id']
+            data['id'] = contact_id
             contact = _client.contacts.edit_contact(data)
     if role:
         grant_role(email, id, role)
@@ -58,9 +69,10 @@ def _create_or_update(name: str, email: str, role: str, *tags, id='0'):
 
 
 def _find_active_campaign_contact_id(id):
-    raise ActiveCampaignError()
-    id = str(id)
-    contacts_list = _client.contacts.list({'filters[fields][%PYTHONPRO_ID%]': id})
+    id = _normalise_id(id)
+    contacts_list = _client.contacts.list({'filters[fields][%PYTHONPRO_ID%]': id, 'full': 0})
+    if '1' in contacts_list:
+        raise ActiveCampaignError('Should return only one field')
     return contacts_list['0']['id']
 
 
