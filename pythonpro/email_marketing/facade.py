@@ -58,8 +58,10 @@ def _create_or_update(name: str, email: str, role: str, *tags, id='0'):
 
 
 def _find_active_campaign_contact_id(id):
+    raise ActiveCampaignError()
     id = str(id)
-    return _client.contacts.list({'filters[fields][%PYTHONPRO_ID%]': id})['0']['id']
+    contacts_list = _client.contacts.list({'filters[fields][%PYTHONPRO_ID%]': id})
+    return contacts_list['0']['id']
 
 
 def grant_role(email, id, role: str):
@@ -122,13 +124,14 @@ def _get_lists():
 
 if __name__ == '__main__':
     # client = create_or_update_lead('Renzo Nuccitelli', 'renzo@python.pro.br', id=1)
-    client = tag_as('renzo@python.pro.br', 1, 'outro_teste')
-    print(client)
-    client = tag_as('renzo@python.pro.br', 2, 'a', 'b')
-    print(client)
-    client = remove_tags('renzo@python.pro.br', 1, 'outro_teste')
-    print(client)
-    client = remove_tags('renzo@python.pro.br', 2, 'a', 'b')
-    print(client)
-    grant_role('renzo@python.pro.br', 1, 'client')
-    grant_role('renzo@python.pro.br', 2, 'member')
+    # client = tag_as('renzo@python.pro.br', 1, 'outro_teste')
+    # print(client)
+    # client = tag_as('renzo@python.pro.br', 2, 'a', 'b')
+    # print(client)
+    # client = remove_tags('renzo@python.pro.br', 1, 'outro_teste')
+    # print(client)
+    # client = remove_tags('renzo@python.pro.br', 2, 'a', 'b')
+    # print(client)
+    # grant_role('renzo@python.pro.br', 1, 'client')
+    # grant_role('renzo@python.pro.br', 2, 'member')
+    print(_find_active_campaign_contact_id(1))
