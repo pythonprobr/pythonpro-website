@@ -44,6 +44,13 @@ def test_forum_tab_is_not_present(home_resp):
     dj_assert_not_contains(home_resp, f'href="{settings.DISCOURSE_BASE_URL}"')
 
 
+def test_there_is_no_none_on_home_page(home_resp):
+    """
+    Assert there is no None field on home form
+    """
+    dj_assert_not_contains(home_resp, 'value="None"')
+
+
 def test_forum_tab_is_present(home_resp_with_user):
     """
     Assert Forum tab is present when user is logged in
