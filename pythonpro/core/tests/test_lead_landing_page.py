@@ -7,6 +7,7 @@ from rolepermissions.checkers import has_role
 from rolepermissions.roles import assign_role, remove_role
 
 from pythonpro.core.models import UserInteraction
+from pythonpro.django_assertions import dj_assert_not_contains
 
 
 @pytest.fixture
@@ -16,6 +17,13 @@ def resp(client):
 
 def test_status_code(resp):
     assert 200 == resp.status_code
+
+
+def test_there_is_no_none_on_landing_page(resp):
+    """
+    Assert there is no None field on home form
+    """
+    dj_assert_not_contains(resp, 'value="None"')
 
 
 @pytest.fixture

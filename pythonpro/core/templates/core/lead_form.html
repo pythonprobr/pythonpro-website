@@ -10,7 +10,7 @@
     <div class="form-group">
         <label for="{{ form.email.id_for_label }}">{{ form.email.label_tag }}</label>
         <input type="email" name="{{ form.email.html_name }}" class="form-control"
-               value="{{ form.email.value }}"
+               value="{{ form.email.value|default_if_none:""}}"
                maxlength="{{ form.email.max_length }}"
                required="required" id="{{ form.email.id_for_label }}">
     </div>
