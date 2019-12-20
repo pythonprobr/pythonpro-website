@@ -248,10 +248,9 @@
         },
         "newrelic": {
             "hashes": [
-                "sha256:d0e69703792f5abb7ea2440bbbcaa560892c364a09df60bdf36db77f95124f7b"
+                "sha256:0e651f2ff48dd1fc538fc1297892cf726d1ad4fc0b2578aae6a47f10f16afb2c"
             ],
-            "index": "pypi",
-            "version": "==5.4.0.132"
+            "version": "==5.4.1.134"
         },
         "pagarme-python": {
             "hashes": [
