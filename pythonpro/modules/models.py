@@ -75,9 +75,12 @@ class Content(OrderedModel):
         raise NotImplementedError()
 
     def module_slug(self):
+        return self.find_module().slug
+
+    def find_module(self):
         if self.parent() is None:
-            return self.slug
-        return self.parent().module_slug()
+            return self
+        return self.parent().find_module()
 
 
 class ContentWithTitleMixin(Content):

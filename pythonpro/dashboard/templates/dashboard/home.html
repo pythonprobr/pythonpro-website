@@ -12,32 +12,38 @@
     <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col">
-                <h1 class="mb-4">Dashboard</h1>
-                <p>Confira seus últimos acessos</p>
+            <h1 class="mb-4">Dashboard</h1>
+                <p>Confira os dados consolidados por tópico</p>
                 <table class="table table-striped text-center">
                     <thead>
                     <tr>
                         <th scope="col">Data</th>
-                        <th scope="col">Tópico</th>
+                        <th scope="col">Módulo</th>
+                        <th scope="col">Aula</th>
                         <th scope="col" data-toggle="tooltip" data-placement="top"
                             title="Tempo onde parou de ver o vídeo">Parada <span
                                 class="badge badge-pill badge-dark">?</span></th>
                         <th scope="col" data-toggle="tooltip" data-placement="top"
                             title="Tempo total que passou vendo o vídeo">Tempo <span
                                 class="badge badge-pill badge-dark">?</span></th>
+                        <th scope="col" data-toggle="tooltip" data-placement="top"
+                            title="Número de vezes que vc começou a assistir">Visualizações <span
+                                class="badge badge-pill badge-dark">?</span></th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for interaction in interactions %}
+                    {% for topic in topics %}
                         <tr>
-                            <td>{{ interaction.creation|date:"d/m/Y" }} {{ interaction.creation|time:"H:i:s" }}</td>
-                            <td><a href="{{ interaction.get_topic_url }}">{{ interaction.get_topic_title }}</a></td>
-                            <td>{{ interaction.max_watched_time|duration }}</td>
-                            <td>{{ interaction.total_watched_time|duration }}</td>
+                            <td>{{ topic.last_interaction|date:"d/m/Y" }} {{ topic.last_interaction|time:"H:i:s" }}</td>
+                            <td><a href="{{topic.calculated_module.get_absolute_url}}">{{topic.calculated_module.title}}</a></td>
+                            <td><a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a></td>
+                            <td>{{ topic.max_watched_time|duration }}</td>
+                            <td>{{ topic.total_watched_time|duration }}</td>
+                            <td>{{ topic.interactions_count }}</td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="4">Você ainda não assistiu nenhum tópico</td>
+                            <td colspan="4">Ainda não existem dados agregados</td>
                         </tr>
                     {% endfor %}
 
@@ -45,5 +51,6 @@
                 </table>
             </div>
         </div>
+
     </div>
 {% endblock body %}
