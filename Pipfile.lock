@@ -408,10 +408,10 @@
         },
         "s3transfer": {
             "hashes": [
-                "sha256:6efc926738a3cd576c2a79725fed9afde92378aa5c6a957e3af010cb019fac9d",
-                "sha256:b780f2411b824cb541dbcd2c713d0cb61c7d1bcadae204cdddda2b35cef493ba"
+                "sha256:2157640a47c8b8fa2071bdd7b0d57378ec8957eede3bd083949c2dcc4d9b0dd4",
+                "sha256:e3343ae0f371781c17590cf06cb818a54484fbac9a65a5be7603a39b0a6d7b31"
             ],
-            "version": "==0.2.1"
+            "version": "==0.3.0"
         },
         "sentry-sdk": {
             "hashes": [
