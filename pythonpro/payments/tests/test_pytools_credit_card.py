@@ -7,7 +7,7 @@ from pythonpro.domain import user_facade
 
 transaction_url = 'https://api.pagar.me/1/transactions/test_transaction_5ndnWcHEJQX1FPCbEpQpFng90gM5oM/capture'
 transaction_find_url = 'https://api.pagar.me/1/transactions/test_transaction_5ndnWcHEJQX1FPCbEpQpFng90gM5oM'
-transaction_data = {'amount': 9999, 'api_key': 'ak_test_6yd4kbaJrWzdn61m4De5yzn7jZuTt9'}
+transaction_data = {'amount': 39700, 'api_key': 'ak_test_6yd4kbaJrWzdn61m4De5yzn7jZuTt9'}
 
 CUSTOMER_EMAIL = 'renzon@gmail.com'
 CUSTOMER_FIRST_NAME = 'Renzo'
@@ -25,9 +25,9 @@ transaction_response = {
     'nsu': 6402263,
     'date_created': '2019-05-26T21:01:53.128Z',
     'date_updated': '2019-05-26T21:25:08.858Z',
-    'amount': 9999,
-    'authorized_amount': 9999,
-    'paid_amount': 9999,
+    'amount': 39700,
+    'authorized_amount': 39700,
+    'paid_amount': 39700,
     'refunded_amount': 0,
     'installments': 1,
     'id': 6402263,
@@ -94,7 +94,7 @@ transaction_response = {
         'object': 'item',
         'id': '6',
         'title': 'Curso PyTools',
-        'unit_price': 9999,
+        'unit_price': 39700,
         'quantity': 1,
         'category': None,
         'tangible': False,
