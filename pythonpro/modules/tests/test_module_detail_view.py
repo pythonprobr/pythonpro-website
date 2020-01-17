@@ -13,7 +13,7 @@ def generate_resp(slug, client):
 
 
 @pytest.fixture
-def modules(transactional_db):
+def modules(db):
     call_command('loaddata', 'pythonpro_modules.json')
     modules = facade.get_all_modules()
     return modules
