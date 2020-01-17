@@ -26,6 +26,8 @@ sentry-sdk = "*"
 python-dateutil = "*"
 django-extensions = "*"
 activecampaign-python = {git = "https://github.com/renzon/activecampaign-python.git",ref = "last-v1-api"}
+codecov = "*"
+
 
 [dev-packages]
 faker = "*"
@@ -36,6 +38,7 @@ pytest-cov = "*"
 pytest-django = "*"
 pytest-freezegun = "*"
 pytest-mock = "*"
+pytest = "==5.3.2"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"
