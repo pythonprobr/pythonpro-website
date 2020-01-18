@@ -1,19 +1,22 @@
 [[source]]
+
 url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
+
 [packages]
+
 boto3 = "*"
 collectfast = "*"
 dj-database-url = "*"
 django = "*"
 django-debug-toolbar = "*"
 django-ordered-model = "*"
-"django-s3-folder-storage" = "*"
+django-s3-folder-storage = "*"
 django-storages = "*"
 gunicorn = "*"
-"psycopg2-binary" = "*"
+psycopg2-binary = "*"
 python-decouple = "*"
 Pillow = "*"
 ipython = "*"
@@ -25,20 +28,28 @@ pagarme-python = "*"
 sentry-sdk = "*"
 python-dateutil = "*"
 django-extensions = "*"
-activecampaign-python = {git = "https://github.com/renzon/activecampaign-python.git",ref = "last-v1-api"}
 codecov = "*"
 
 
 [dev-packages]
+
 faker = "*"
-"flake8" = "*"
+flake8 = "*"
 freezegun = "*"
 model-mommy = "*"
 pytest-cov = "*"
 pytest-django = "*"
 pytest-freezegun = "*"
 pytest-mock = "*"
-pytest = "==5.3.2"
+pytest = "==5.3.3"
+
 
 [requires]
+
 python_version = "3.8"
+
+
+[packages.activecampaign-python]
+
+git = "https://github.com/renzon/activecampaign-python.git"
+ref = "last-v1-api"
