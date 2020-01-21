@@ -34,7 +34,11 @@ def topic(chapter):
 
 @pytest.fixture
 def resp_chapter(client_with_lead, django_user_model, chapter, topics):
-    return client_with_lead.get(reverse('chapters:detail', kwargs={'slug': chapter.slug}), secure=True)
+    return client_with_lead.get(reverse(
+        'modules:chapter_detail',
+        kwargs={'chapter_slug': chapter.slug, 'module_slug': chapter.slug}),
+        secure=True
+    )
 
 
 def test_topic_title_on_chapter(resp_chapter, topics):
@@ -48,13 +52,28 @@ def test_topic_url_on_section(resp_chapter, topics):
 
 
 @pytest.fixture
+def resp_old_path(client_with_lead, topic, django_user_model):
+    return client_with_lead.get(
+        reverse('topics:detail_old', kwargs={'slug': topic.slug}),
+        secure=True)
+
+
+def test_redirect_status_code(resp_old_path):
+    assert resp_old_path.status_code == 301
+
+
+def test_redirect_url(resp_old_path, topic):
+    assert resp_old_path.url == topic.get_absolute_url()
+
+
+@pytest.fixture
 def resp(client_with_lead, topic, django_user_model):
     return client_with_lead.get(
         reverse('modules:topic_detail', kwargs={'module_slug': topic.module_slug(), 'topic_slug': topic.slug}),
         secure=True)
 
 
-def test_status_code(resp):
+def test_success_status_code(resp):
     assert resp.status_code == 200
 
 

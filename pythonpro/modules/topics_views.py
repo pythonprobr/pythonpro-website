@@ -8,7 +8,7 @@ from pythonpro.modules.models import Content
 from pythonpro.modules.permissions import is_client_content
 
 
-def content_landing_page(request, content: Content):
+def content_landing_page(content: Content):
     if is_client_content(content):
         redirect_path = reverse('client_landing_page')
     else:
@@ -27,4 +27,4 @@ def detail(request, module_slug, topic_slug):  # noqa
     topic = facade.get_topic_with_contents(slug=topic_slug)
     if has_object_permission('access_content', request.user, topic):
         return render(request, 'topics/topic_detail.html', {'topic': topic})
-    return content_landing_page(request, topic)
+    return content_landing_page(topic)

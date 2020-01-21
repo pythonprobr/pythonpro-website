@@ -3,7 +3,7 @@ from django.urls import reverse
 from model_mommy import mommy
 
 from pythonpro.django_assertions import dj_assert_contains
-from pythonpro.modules.models import Section, Module, Chapter
+from pythonpro.modules.models import Chapter, Module, Section
 
 
 @pytest.fixture
@@ -27,10 +27,13 @@ def chapters(section):
 
 
 @pytest.fixture
-def resp_section(client, django_user_model, section, chapters):
+def resp_section(client, django_user_model, section: Section, chapters):
     user = mommy.make(django_user_model)
     client.force_login(user)
-    return client.get(reverse('sections:detail', kwargs={'slug': section.slug}))
+    return client.get(reverse(
+        'modules:section_detail',
+        kwargs={'section_slug': section.slug, 'module_slug': section.module_slug()}),
+        secure=True)
 
 
 def test_chapter_title_on_section(resp_section, chapters):
@@ -44,10 +47,27 @@ def test_chapter_url_on_section(resp_section, chapters):
 
 
 @pytest.fixture
-def resp(client, chapter, django_user_model):
+def resp_old_path(client_with_lead, chapter, django_user_model):
+    return client_with_lead.get(
+        reverse('chapters:detail_old', kwargs={'chapter_slug': chapter.slug}), secure=True)
+
+
+def test_redirect_status_code(resp_old_path):
+    assert resp_old_path.status_code == 301
+
+
+def test_redirect_url(resp_old_path, chapter):
+    assert resp_old_path.url == chapter.get_absolute_url()
+
+
+@pytest.fixture
+def resp(client, chapter: Chapter, django_user_model):
     user = mommy.make(django_user_model)
     client.force_login(user)
-    return client.get(reverse('chapters:detail', kwargs={'slug': chapter.slug}))
+    return client.get(reverse(
+        'modules:chapter_detail',
+        kwargs={'chapter_slug': chapter.slug, 'module_slug': chapter.module_slug()}),
+        secure=True)
 
 
 def test_status_code(resp):
