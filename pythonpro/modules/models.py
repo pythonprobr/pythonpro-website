@@ -129,7 +129,7 @@ class Section(Content):
         ordering = ['module', 'order']
 
     def get_absolute_url(self):
-        return reverse('sections:detail', kwargs={'slug': self.slug})
+        return reverse('modules:section_detail', kwargs={'section_slug': self.slug, 'module_slug': self.module_slug()})
 
     def parent(self):
         return self.module
@@ -149,7 +149,7 @@ class Chapter(Content):
         ordering = ['section', 'order']
 
     def get_absolute_url(self):
-        return reverse('chapters:detail', kwargs={'slug': self.slug})
+        return reverse('modules:chapter_detail', kwargs={'chapter_slug': self.slug, 'module_slug': self.module_slug()})
 
     def parent(self):
         return self.section

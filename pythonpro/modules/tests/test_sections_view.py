@@ -3,7 +3,7 @@ from django.urls import reverse
 from model_mommy import mommy
 
 from pythonpro.django_assertions import dj_assert_contains
-from pythonpro.modules.models import Section, Module
+from pythonpro.modules.models import Module, Section
 
 
 @pytest.fixture
@@ -17,10 +17,27 @@ def section(module):
 
 
 @pytest.fixture
-def resp(client, django_user_model, section):
+def resp_old_path(client_with_lead, section, django_user_model):
+    return client_with_lead.get(
+        reverse('sections:detail_old', kwargs={'slug': section.slug}), secure=True)
+
+
+def test_redirect_status_code(resp_old_path):
+    assert resp_old_path.status_code == 301
+
+
+def test_redirect_url(resp_old_path, section):
+    assert resp_old_path.url == section.get_absolute_url()
+
+
+@pytest.fixture
+def resp(client, django_user_model, section: Section):
     user = mommy.make(django_user_model)
     client.force_login(user)
-    return client.get(reverse('sections:detail', kwargs={'slug': section.slug}))
+    return client.get(reverse(
+        'modules:section_detail',
+        kwargs={'section_slug': section.slug, 'module_slug': section.module_slug()}),
+        secure=True)
 
 
 def test_status_code(resp):

@@ -4,5 +4,5 @@ from pythonpro.modules import chapters_views
 
 app_name = 'chapters'
 urlpatterns = [
-    path('<slug:slug>/', chapters_views.detail, name='detail'),
+    path('<slug:chapter_slug>/', chapters_views.detail_old, name='detail_old'),
 ]
