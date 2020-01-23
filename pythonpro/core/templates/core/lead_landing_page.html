@@ -1,73 +1,590 @@
 {% extends 'core/base_without_nav.html' %}
+{% load bootstrap4 %}
 {% load static %}
-{% block title %}Curso de Python Grátis{% endblock %}
-{% block description %}Curso Básico Gratuito de Python voltado para quem quer entrar no mercado de tecnologia!{% endblock %}
+
+{% block title %}Curso de Python Grátis: Python Birds{% endblock %}
+{% block description %}Curso de Python Grátis. Aprenda a programar de forma rápida, fácil e simples!{% endblock %}
+{% block head %}
+    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+
+    <style>
+        @font-face {
+            font-family: 'Gilroy-Bold';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Bold ☞'), url('{% static "fonts/Gilroy-Bold.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Heavy';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Heavy ☞'), url('{% static "fonts/Gilroy-Heavy.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Light';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Light ☞'), url('{% static "fonts/Gilroy-Light.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Medium';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Medium ☞'), url('{% static "fonts/Gilroy-Medium.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Regular';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Regular ☞'), url('{% static "fonts/Gilroy-Regular.woff" %}') format('woff');
+        }
+
+        .text-red {
+            color: #AF1B3F !important;
+        }
+
+        .container {
+            max-width: 960px;
+        }
+
+    </style>
+    <link rel="stylesheet" href="{% static 'css/client.css' %}"/>
+    <style>
+        .cta-mobile {
+            font-size: 130%;
+            padding: 10px 40px;
+        }
+        input.form-control {
+            font-size: 130%;
+            padding: 10px;
+            margin: 0;
+        }
+    </style>
+
+{% endblock head %}
+
 {% block body %}
-    <div class="bg-primary pt-5 pb-5 text-light">
+    <div class='bg-secondary'>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col hero">
+                    <h1 class=' font-weight-bold'>Aprenda Python MUITO RÁPIDO!</h1>
+                    <p class='mb-5 mt-3'>
+                        Aprenda a programar com a <b>linguagem mais simples</b> que existe e tenha acesso 
+                        a <b>um mercado que paga altos salários e está repleto de vagas em aberto!</b>
+                    </p>
+
+                    <div class='text-center initiate-checkout d-none d-sm-block d-md-block'>
+                        <a href="#lead-form-header" class="cta btn btn-primary initiate-checkout mt-10">
+                            SIM! Eu quero <b class='initiate-checkout'>aprender a programar em Python!</b>
+                        </a>
+                    </div>
+
+                    <div class='text-center initiate-checkout d-block d-lg-none d-xl-none'>
+                        <a href="#lead-form-header" class="cta-mobile btn initiate-checkout btn-primary mt-10">
+                            SIM! Eu quero <b class='initiate-checkout'>aprender<br> a programar em Python!</b>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div>
         <div class="container">
             <div class="row">
-                <div class="col-12 col-lg-7 mb-4">
-                    <h1 class="mb-4">Como seria <u>não se preocupar</u> com desemprego?
-                    </h1>
-                    <p>Já se imaginou ganhando um <span class="font-weight-bold"><u>BOM SALÁRIO</u></span>, mesmo em
-                        tempos de crise?</p>
-                    <p>Já imaginou você sendo <span class="font-weight-bold"><u>DISPUTADO</u></span> por empresas?
+                <div class="col mb-5 mt-5">
+                    <h2 class='font-weight-bold mb-5'>Olá! Meu nome é Renzo Nucitelli, e eu sou programador há 14 anos.</h2>
+
+                    <div class='text-center d-block d-lg-none d-xl-none'>
+                        <img src='{% static 'img/instructors/renzo-nuccitelli-300.jpeg' %}' class="img-fluid" width="300px" alt="Foto de Renzo Nuccitelli" />
+                    </div>
+
+                    <img src='{% static 'img/instructors/renzo-nuccitelli-300.jpeg' %}'
+                         class="img-fluid float-right ml-3 mb-3 d-none d-sm-none d-md-block" width="300px" alt="Foto de Renzo Nuccitelli" />
+
+                    <p>
+                        Já fui diretor de tecnologia em duas empresas e também trabalhei
+                        na maior empresa de software aberto do mundo, a Red Hat. 
                     </p>
-                    <p>Existe uma profissão que as pessoas estão <u>faturando alto</u>: <span
-                            class="font-weight-bold"><u>PROGRAMAÇÃO E TECNOLOGIA</u></span>.
+                    <p>
+                        Também já fui consultor de diversas outras empresas, como o Hotel Urbano.
                     </p>
-                    <p>E se você pensa que isso não é para você, nós garantimos: <span class="font-weight-bold"><u>QUALQUER PESSOA É CAPAZ DE PROGRAMAR.</u></span>
+                    <p>
+                        Além disso, sou professor há mais de 10 anos, sendo que durante 
+                        4 anos fui professor da FATEC de São José dos Campos.
                     </p>
-                    <p>Para te provar isso, nós liberamos temporariamente o <span class="font-weight-bold">Curso Introdutório de Programação Python</span> totalmente
-                        <span class="font-weight-bold"><u>GRÁTIS!</u></span>
+                    <p>
+                        Também já palestrei em grandes eventos de tecnologia, como a Python Brasil, 
+                        o Google Developers Group, o Agile Vale e muitos outros.
                     </p>
-                    <p>Você vai aprender a programar em apenas <span class="font-weight-bold">4 semanas</span>!</p>
-                    <p>Para ter acesso, basta preencher o formulário com seu nome e email. Em seguida, você receberá o acesso ao curso.</p>
-                    <p><span class="font-weight-bold">MAS SE INSCREVA AGORA PORQUE ISSO É POR TEMPO LIMITADO!</span></p>
-                </div>
-                <div class="col-12 col-md-6 col-lg-5">
-                    <h3>Curso introdutório de Programação <span class="font-weight-bold"><u>GRATUITO</u></span>!</h3>
-                    {% include 'core/lead_form.html' with form=form %}
+                    <p><b class='highlight'>
+                        Meu sonho sempre foi que as pessoas pudessem construir as mesmas oportunidades que construí...
+                    </b></p>
+                    <p>
+                        Por isso estou aqui para te fazer uma proposta que tenho certeza que vai te deixar
+                        muito interessado.
+                    </p>
                 </div>
             </div>
         </div>
     </div>
-    <div class="bg-light">
-        <div class="container pt-4 pb-3">
-            <div class="row">
-                <div class="col">
-                    <h3 class="mb-3">Esse curso vai te ajudar a:</h3>
-                    <dt>Desmistificar o Mundo da Programação</dt>
-                    <dd>Você vai instalar os programas necessários e começar a programar em menos de 30 minutos.</dd>
-                    <dt class="mt-2">Entender os Princípios Básicos</dt>
-                    <dd>Esse curso aborda os conceitos fundamentais de forma objetiva, é o primeiro passo rumo à sua
-                        carreira em TI!
-                    </dd>
-                    <dt class="mt-2">Mostrar como a Tecnologia é divertida</dt>
-                    <dd>Você vai poder avaliar sua aptidão construindo um projeto prático. Seguindo o método, poderá se
-                        inserir no mercado mais rápido do que vc imagina!
-                    </dd>
+
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row text-light">
+                <div class="col mt-5 mb-5">
+                    <u><h2 class='text-center text-uppercase mb-5'>
+                        Eu criei um <b>curso grátis de introdução a programação chamado Python Birds.</b>
+                    </h2></u>
+                    <h4 class='text-center mb-5'>
+                        Este é o curso de introdução a programação Python que eu venho ministrando 
+                        ao longo dos meus anos para ensinar as pessoas a programarem.
+                    </h4>
+                    <h4 class='text-center'>
+                        <b>Com ele, você vai aprender Python em apenas quatro semanas!</b>
+                    </h4>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container  pt-5 pb-5">
-        {% include 'core/instructors.html' %}
-    </div>
-    <div class="bg-light">
-        <div class="container pt-5 pb-5">
-            {% include 'core/social_proof.html' %}
-        </div>
-    </div>
-    <div class="bg-primary pt-5 pb-5 text-light">
+
+    <div>
         <div class="container">
             <div class="row">
-                <div class="col-8">
-                    <h3>Quer se transformar também?</h3>
-                    {% include 'core/lead_form.html' with form=form %}
+                <div class="col mb-5 mt-5">
+                    <h2 class=''>
+                        <b>É um curso composto de 67 aulas, que somam 6 horas, 
+                        37 minutos e 31 segundos de conteúdo.</b>
+                    </h2>
+                    <p>
+                        Neste curso você vai poder desmistificar o mundo da programação, 
+                        aprendendo a instalar os programas necessários e começar a programar 
+                        em menos de 30 minutos.
+                    </p>
+
+                    <p>
+                        Vai também entender os princípios básicos da programação, aprendendo 
+                        os conceitos fundamentais de forma objetiva.
+                    </p>
+
+                    <p>
+                        Tudo isso, percebendo como a tecnologia pode ser divertida. 
+                        Neste curso eu te ensino através da prática. Você vai aprender, 
+                        junto comigo, a criar uma cópia do jogo Angry Birds 
+                        (por isso o nome Python Birds 😉).
+                    </p>
+
+                    <p class='mb-5 mt-5'>
+                        <b class='highlight'>
+                            E o melhor, eu estou entregando isso tudo DE GRAÇA!
+                        </b>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-gray'>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <h2 class='font-weight-bold'>
+                        "E por que você deveria aprender a programar?"
+                    </h2>
+
+                    <p>
+                       A notícia abaixo saiu dia 16 de Janeiro de 2020 no site 
+                       Valor Econômico, do Grupo Globo. 
+                    </p>
+                    
+                    <p class="text-center">
+                        <img src='{% static 'img/python-birds/noticia-sobram-vagas.png' %}' class="img-fluid">
+                    </p>
+
+                    <p>
+                        O mercado de tecnologia é o mercado que mais cresce na atualidade. 
+                        A demanda é enorme, e, segundo a notícia, as faculdades 
+                        só conseguem suprir 65% desta demanda. 
+                    </p>
+
+                    <p>
+                        Só que esses números não são reais. Sabe por quê? <b class='highlight'>Porque a faculdade 
+                        não prepara para o mercado de trabalho.</b>
+                    </p>
+
+                    <p>
+                        Eu sei disso porque sempre estou contratando novos programadores. 
+                    </p>
+
+                    <p>
+                        Além disso, também já fui professor universitário e pude conferir, 
+                        de lá de dentro, como os cursos estão muito mais atrasados 
+                        perante as exigências do mercado de trabalho…
+                    </p>
+
+                    <p><i>
+                        (Inclusive este foi um dos motivos que resolvi largar minha profissão 
+                        como professor universitário e passei a ensinar pela internet)
+                    </i><p>
+
+                    <p>
+                        <b class='highlight'>
+                            Além disso, o mercado de tecnologia é um mercado que nunca passou por uma crise.
+                        </b>
+                    </p>
+
+                    <p>
+                        Isso acontece por causa dessa diferença entre necessidade de novos 
+                        profissionais e falta de profissionais qualificados.
+                    </p>
+
+                    <p>
+                        Eu eu posso te falar isso com propriedade, pois estou no mercado 
+                        há quase 15 anos e <b>nunca fiquei desempregado. </b>
+                    </p>
+
+                    <p>
+                        E essa regra não vale só pra mim. 
+                        Dificilmente vejo um colega de profissão sem emprego.
+                    </p>
+
+                    <h3 class='mt-5 mb-5'>
+                        Resumindo: O mercado de tecnologia está repleto de oportunidades. 
+                        <b>E, como falta gente, eles pagam muito bem!</b>
+                    </h3>
+                    
+                    <p>
+                        Agora olha essa outra notícia, que saiu na InfoMoney, 
+                        dia 08 de Janeiro de 2020: 
+                    </p>
+
+                    <p class="text-center">
+                        <img src='{% static 'img/python-birds/noticia-15-profissoes.png' %}' class="img-fluid">
+                    </p>
+
+                    <p>
+                        13 dos 15 cargos, ou seja, 85%, tem ligação direta com tecnologia.
+                    </p>
+
+                    <p>
+                        Essa notícia tem total relação com a notícia anterior, sabe por quê? 
+                        <b>Porque hoje em dia praticamente todas as profissões possuem 
+                        relação direta com tecnologia.</b>
+                    </p>
+
+                    <p>
+                        <b class='highlight'>
+                            Só que para você trabalhar neste mercado, 
+                            você precisa saber programar. Isso é pré-requisito.
+                        </b>
+                    </p>
+
+                    <h2 class='font-weight-bold mt-5 mb-5'>
+                        "E por que programar em Python?"
+                    </h2>
+
+                    <p class="text-center">
+                        <img src='{% static 'img/python-birds/noticia-9-motivos.png' %}' class="img-fluid">
+                    </p>
+
+                    <p>
+                        Esta é uma matéria de um site super conceituado no ramo de tecnologia, 
+                        o ComputerWorld. 
+                    </p>
+
+                    <p>
+                        Veja um trecho da reportagem:
+                    </p>
+
+                    <p class="text-center">
+                        <img src='{% static 'img/python-birds/noticia-9-motivos-conteudo.png' %}' class="img-fluid">
+                    </p>
+                    
+                    <p>
+                        "Novo Excel", "Simples como Inglês", "Canivete Suiço", "Soja da TI".
+                    </p>
+                    
+                    <p>
+                        Estes são os adjetivos utilizados para descrever a linguagem Python.
+                    </p>
+
+                    <p>
+                        <b class='highlight'>Python é simples, rápido e fácil. </b>
+                    </p>
+
+                    <p class="text-center">
+                        <img src='{% static 'img/python-birds/noticia-stack-1.png' %}' class="img-fluid">
+                    </p>
+
+                    <p>
+                        Python é a quarta linguagem de programação mais popular do mundo! 
+                    </p>
+
+                    <p><i>
+                        (Se levarmos em consideração que boa parte do mercado de tecnologia 
+                        não considera HTML/CSS e SQL como linguagens de programação, de fato, 
+                        podemos considerar que <b>Python é a segunda linguagem de 
+                        programação mais popular no mundo</b>)
+                    </i></p>
+
+                    <p class="text-center">
+                        <img src='{% static 'img/python-birds/noticia-stack-2.png' %}' class="img-fluid">
+                    </p>
+                    
+                    <p class="text-center">
+                        <img src='{% static 'img/python-birds/noticia-stack-3.png' %}' class="img-fluid">
+                    </p>
+
+                    <p>
+                        Além disso, é a segunda linguagem mais amada e a primeira 
+                        linguagem mais desejada.
+                    </p>
+
+                    <p>
+                        Todos esses dados foram obtidos através de uma pesquisa feita em 2019 
+                        pelo site StackOverflow, a maior comunidade de programadores do mundo. 
+                    </p>
+
+                    <p>
+                        Esta pesquisa foi respondida por aproximadamente 90 mil programadores, 
+                        espalhados por todo o mundo.
+                    </p>
+
+                    <p><b class='highlight'>
+                        Ou seja, Python com certeza é a melhor opção para se aprender!
+                    </b></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-primary text-light'>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <h3>
+                        <span class="ec ec-thinking"></span>
+                        <b>"E como eu posso aprender Python?"</b>
+                    </h3>
+                    
+                    <p>
+                        Agora que você está convencido de que aprender a programar e 
+                        trabalhar no mercado de tecnologia é a melhor opção para você, 
+                        eu vou te explicar o que você precisa fazer para <b>aprender 
+                        Python em apenas quatro semanas.</b>
+                    </p>
+
+                    <p>
+                        Para ter acesso ao curso basta você preencher o formulário 
+                        que eu deixei no fim da página. Depois disso, eu vou te dar o acesso a 
+                        nossa plataforma de cursos e assim você já vai poder começar a estudar. 
+                    </p>
+
+                    <p>
+                        E, não se esqueça, tudo isso é DE GRAÇA!
+                    </p>
+
+                    <p>
+                        Sim, eu sei que você pode estar pensando que isso tudo é bom demais para 
+                        ser verdade e que provavelmente tem alguma pegadinha aí no meio.
+                    </p>
+
+                    <p>
+                        <b>
+                            Pode ficar tranquilo, não tem nenhuma pegadinha. 
+                            O curso de introdução à programação em
+                            Python é grátis, free, na faixa, 0800.
+                        </b>
+                    </p>
+
+                    <p>
+                        Eu vou te explicar porque eu te entrego este curso de graça. 
+                    </p>
+
+                    <p>
+                        São basicamente dois motivos:
+                    </p>
+
+                    <h4 class='mt-5'>
+                        <span class="ec ec-notebook-with-decorative-cover"></span>
+                        Primeiro motivo: <b>A minha missão é educar! O meu objetivo é formar 
+                        profissionais! Antes de ser diretor de tecnologia, antes de ser 
+                        programador, eu sou um professor. </b>
+                    </h4>
+                    
+                    <h4 class='mt-5'>
+                        <span class="ec ec-briefcase"></span>
+                        Segundo motivo: <b>Eu também sou um contratante do mercado de tecnologia. 
+                        É de meu interesse que cada vez mais pessoas saibam programar.</b>
+                    </h4>
+
+
+
+                    <p>
+                        Esses são os motivos de eu te dar este curso de presente. 
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-black">
+        <div class="container">
+            <div class="row">
+                <div class="text-light col mb-5 mt-5">
+                    <h2 class="text-light font-weight-bold mb-5">
+                        Só que eu não sei por quanto tempo eu vou deixar este curso liberado. 
+                        Pelo fato de ser de graça, MUITA gente acaba entrando…
+                    </h2>
+
+                    <p>
+                        <i>(para você ter uma ideia, até o momento em que estou escrevendo 
+                        este texto, exatamente 18.882 pessoas já se inscreveram)</i>
+                    </p>
+
+                    <p>
+                        Quanto mais gente, mais aumentam os meus custos de servidor e, 
+                        principalmente, a demanda pelo nosso suporte. 
+                    </p>
+
+                    <p>
+                        Por enquanto a minha equipe está conseguindo dar conta de tudo, 
+                        mas, te confesso: está cada vez mais difícil.
+                    </p>
+
+                    <h3>
+                        <b class='text-red'>Então, se eu fosse você, eu correria e me inscreveria pois este 
+                        curso pode sair do ar a qualquer momento!</b>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col mb-5 mt-5">
+                    <h2 class='font-weight-bold mb-5'>Recapitulando...</h2>                    
+
+                    <p>
+                        Ao se inscrever no nosso Curso Grátis de Introdução à Programação 
+                        Python você vai poder aprender em até 4 semanas a segunda linguagem 
+                        mais utilizada no mercado de tecnologia e poder ter acesso a um mercado 
+                        que paga altos salários e não possui crise!
+                    </p>
+
+                    <p>
+                        Mas, para isso, você precisa se inscrever rápido pois eu posso encerrar 
+                        essa oportunidade a qualquer momento.
+                    </p>
+
+                    <p>
+                        Então, não perca tempo e aprenda Python!
+                    </p>
+
+                    <p>
+                        Obrigado,<br>
+                        Renzo
+                    </p>
+                    
 
                 </div>
             </div>
         </div>
     </div>
+
+    <div class='bg-primary text-light'>
+        <div class="container">
+            <div class="row">    
+                <div class="col-lg-8 offset-lg-2 text-center  mb-5">
+                    <h2 class='mt-5 mb-5 text-center' id="lead-form-header">
+                        Preencha o formulário abaixo e tenha <b>acesso GRÁTIS ao curso!</b>
+                    </h2>
+                    {% block lead_form %}
+                        <form method="post" action="{% url 'core:lead_form' %}{% if request.GET.utm_source %}?utm_source={{ request.GET.utm_source }}{% endif %}">
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                          
+                    <div class='text-center initiate-checkout d-none d-sm-block d-md-block'>
+                        <button class="cta btn btn-warning initiate-checkout mt-10">
+                            SIM! Eu quero <b class='initiate-checkout'>aprender a programar em Python!</b>
+                        </button>
+                    </div>
+
+                    <div class='text-center initiate-checkout d-block d-lg-none d-xl-none'>
+                        <button class="cta-mobile btn initiate-checkout btn-warning mt-10">
+                            SIM! Eu quero <b class='initiate-checkout'>aprender<br> a programar em Python!</b>
+                        </button>
+                    </div>
+                        </form>
+                    {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class='bg-secondary'>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <h3 class='mb-5'><b>
+                        Já são vários alunos transformados!
+                        <span class="ec ec-heart-eyes"></span>
+                        <span class="ec ec-heart-eyes"></span>
+                    </b>
+                    </h3>
+                    <div class='social-proof'>
+                        {% include 'core/social_proof.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class=''>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <div class='instructors'>
+                        {% include 'core/instructors.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=''>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5 text-center">
+                    <i>
+                        2019 Python Pro. Todos os direitos reservados. <br>
+                        CNPJ: 31.080.715/0001-25<br>
+                        +55 12 99741-1854 - renzo@python.pro.br
+                    </i>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function(){
+            $('label').hide();
+            $('#id_first_name').attr('placeholder', 'Preencha com seu nome');
+            $('#id_email').attr('placeholder', 'Preencha com o seu MELHOR EMAIL');
+            $('#id_cellphone').attr('placeholder', 'Preencha com seu número de WhatsApp');
+        });
+    </script>
 {% endblock body %}
+
+{% block footer %}{% endblock footer %}
