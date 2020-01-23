@@ -9,7 +9,7 @@ from django.views.generic import TemplateView, UpdateView
 from django_sitemaps import Sitemap
 from rolepermissions.checkers import has_role
 
-from pythonpro.core.forms import UserEmailForm, UserSignupForm
+from pythonpro.core.forms import UserEmailForm, UserSignupForm, LeadForm
 from pythonpro.core.models import User
 from pythonpro.domain import user_facade
 
@@ -127,7 +127,7 @@ def lead_landing(request):
     :param request:
     :return:
     """
-    return render(request, 'core/lead_landing_page.html', context={'form': UserSignupForm()})
+    return render(request, 'core/lead_landing_page.html', context={'form': LeadForm()})
 
 
 def programmer_week_ty(request):

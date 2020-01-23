@@ -63,3 +63,13 @@ class UserSignupForm(UserCreationForm):
         required=False,
         help_text=_("Enter the same password as before, for verification."),
     )
+
+
+class LeadForm(UserSignupForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'email')
+
+    source = forms.CharField(widget=forms.HiddenInput())
+    password1 = forms.CharField(widget=forms.HiddenInput())
+    password2 = forms.CharField(widget=forms.HiddenInput())
