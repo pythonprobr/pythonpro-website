@@ -8,7 +8,7 @@ from django.utils.timezone import now
 
 _pagarme.authentication_key(settings.PAGARME_API_KEY)
 
-PYTOOLS_PRICE = 9700
+PYTOOLS_PRICE = 39700
 PYTOOLS_PROMOTION_PRICE = 9700
 MEMBERSHIP_PRICE = 159990
 MEMBERSHIP_DISCOUNT_FOR_CLIENTS = 10000
