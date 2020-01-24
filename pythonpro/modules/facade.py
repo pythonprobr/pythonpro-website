@@ -1,6 +1,6 @@
 from django.db.models import Prefetch
 
-from pythonpro.modules.models import (Section as _Section, Module as _Module, Chapter as _Chapter, Topic as _Topic)
+from pythonpro.modules.models import (Chapter as _Chapter, Module as _Module, Section as _Section, Topic as _Topic)
 
 
 def get_topic_model():
@@ -74,3 +74,28 @@ def get_topic_with_contents(slug):
     """
     return _Topic.objects.filter(slug=slug).select_related('chapter').select_related('chapter__section').select_related(
         'chapter__section__module').get()
+
+
+def get_entire_content_forest():
+    """
+    Return a list of modules with the entire content on it
+    :return:
+    """
+    return list(_Module.objects.all().prefetch_related(
+        Prefetch(
+            'section_set',
+            queryset=_Section.objects.order_by('order').prefetch_related(
+                Prefetch(
+                    'chapter_set',
+                    queryset=_Chapter.objects.order_by('order').prefetch_related(
+                        Prefetch(
+                            'topic_set',
+                            queryset=_Topic.objects.order_by('order'),
+                            to_attr='topics'
+                        )
+                    ),
+                    to_attr='chapters'
+                )
+            ),
+            to_attr='sections')
+    ))

@@ -77,7 +77,7 @@ def test_topic_url(resp, topic: Topic):
 
 def test_module_table_row(resp, topic: Topic):
     module = topic.find_module()
-    dj_assert_contains(resp, f'<td><a href="{module.get_absolute_url()}">{module.title}</a></td>')
+    dj_assert_contains(resp, f'<a href="{module.get_absolute_url()}">{module.title}</a>')
 
 
 def test_max_creation(resp, interactions):
