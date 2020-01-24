@@ -32,6 +32,8 @@ DISCOURSE_SSO_SECRET=
 # Active Campaign Config
 ACTIVE_CAMPAIGN_URL=
 ACTIVE_CAMPAIGN_KEY=
+# Make it False on dev to avoiding sending data to ActiveCampaign
+ACTIVE_CAMPAIGN_TURNED_ON=true
 
 # Google Tag Manager Config
 GOOGLE_TAG_MANAGER_ID=GTM-ABC1234

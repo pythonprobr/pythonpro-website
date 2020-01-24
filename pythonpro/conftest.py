@@ -54,4 +54,12 @@ def use_db_always(db):
     pass
 
 
+@pytest.fixture(autouse=True)
+def turn_active_campaign_on(settings):
+    """
+    This way test don't depend on local .env configuration
+    """
+    settings.ACTIVE_CAMPAIGN_TURNED_ON = True
+
+
 pytest_plugins = ['pythonpro.modules.tests.test_topics_view']
