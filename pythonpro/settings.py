@@ -147,19 +147,19 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+            'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
         'NAME':
-        'django.contrib.auth.password_validation.MinimumLengthValidator',
+            'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
         'NAME':
-        'django.contrib.auth.password_validation.CommonPasswordValidator',
+            'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
         'NAME':
-        'django.contrib.auth.password_validation.NumericPasswordValidator',
+            'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -240,6 +240,7 @@ if SENTRY_DSN:  # pragma: no cover
 # Active Campaign Configuration
 ACTIVE_CAMPAIGN_URL = config('ACTIVE_CAMPAIGN_URL')
 ACTIVE_CAMPAIGN_KEY = config('ACTIVE_CAMPAIGN_KEY')
+ACTIVE_CAMPAIGN_TURNED_ON = config('ACTIVE_CAMPAIGN_TURNED_ON', cast=bool, default=True)
 
 # Google Tag Manager Configuration
 GOOGLE_TAG_MANAGER_ID = config('GOOGLE_TAG_MANAGER_ID')

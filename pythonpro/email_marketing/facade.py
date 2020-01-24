@@ -41,6 +41,8 @@ def _normalise_id(id):
 
 
 def _create_or_update(name: str, email: str, role: str, *tags, id='0'):
+    if settings.ACTIVE_CAMPAIGN_TURNED_ON is False:
+        return
     prospect_list_id = _get_lists()['Prospects']
     id = _normalise_id(id)
     tags = list(tags)
@@ -77,6 +79,8 @@ def _find_active_campaign_contact_id(id):
 
 
 def grant_role(email, id, role: str):
+    if settings.ACTIVE_CAMPAIGN_TURNED_ON is False:
+        return
     role = role.lower()
     if role not in _ROLES:
         raise ValueError(f'Role {role} must be one of {_ROLES}')
@@ -100,6 +104,8 @@ def grant_role(email, id, role: str):
 
 
 def tag_as(email: str, id: int, *tags):
+    if settings.ACTIVE_CAMPAIGN_TURNED_ON is False:
+        return
     data = _build_tags_array(tags)
     try:
         data['id'] = _find_active_campaign_contact_id(id)
@@ -116,6 +122,8 @@ def _build_tags_array(tags) -> dict:
 
 
 def remove_tags(email: str, id: int, *tags):
+    if settings.ACTIVE_CAMPAIGN_TURNED_ON is False:
+        return
     data = _build_tags_array(tags)
     try:
         data['id'] = _find_active_campaign_contact_id(id)
