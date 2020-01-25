@@ -58,7 +58,13 @@ def calculate_module_progresses(user):
         'duration': 0,
     }
 
-    sum_with_start_0 = partial(sum, start=0)
+# this is here due to bug on Heroku which is not installing Python 3.8:
+# https://sentry.io/organizations/python-pro/issues/1471675608/?project=236278&query=is%3Aunresolved
+    def sum_with_start_0(lst):
+        lst = list(lst)
+        if len(lst) == 0:
+            return 0
+        return sum(lst)
 
     aggregation_functions = {
         'last_interaction': partial(max, default=default_min_time),
