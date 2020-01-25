@@ -61,13 +61,14 @@
             player.on('timeupdate', function (e) {
                 setMaxTimeWatched(e.seconds);
                 increaseWatchTime();
+                let watched_1_minute = totalWatchedTime >= 60;
+                if (watched_1_minute){
+                    storeStats();
+                }
             });
 
             $(window).on('beforeunload', storeStats);
-
             player.on('ended', storeStats);
-
-
         });
     </script>
 
