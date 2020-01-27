@@ -73,3 +73,7 @@ class LeadForm(UserSignupForm):
     source = forms.CharField(widget=forms.HiddenInput())
     password1 = forms.CharField(widget=forms.HiddenInput())
     password2 = forms.CharField(widget=forms.HiddenInput())
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.pop("autofocus", None)
