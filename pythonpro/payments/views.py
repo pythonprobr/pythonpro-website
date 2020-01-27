@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
+from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.http import urlencode
@@ -11,7 +11,13 @@ from django.views.generic import RedirectView
 from pythonpro.cohorts import facade as cohorts_facade
 from pythonpro.domain import membership_facade, user_facade
 from pythonpro.payments import facade as payment_facade
-from pythonpro.payments.facade import PYTOOLS_PRICE, PYTOOLS_PROMOTION_PRICE, PagarmeNotPaidTransaction
+from pythonpro.payments.facade import (
+    PYTOOLS_PRICE,
+    PYTOOLS_PROMOTION_PRICE,
+    PYTOOLS_OTO_PRICE,
+    PagarmeNotPaidTransaction,
+    calculate_oto_expires_datetime
+)
 
 
 def thanks(request):
@@ -201,6 +207,34 @@ def client_landing_page(request):
             'is_promotion_season': is_promotion_season,
             'promotion_end_date': promotion_end_date,
             'notification_url': request.build_absolute_uri(notification_url)
+        })
+
+
+def client_landing_page_oto(request):
+    notification_url = ""
+    is_debug = request.GET.get('debug') is not None
+
+    user = request.user
+    if not user.is_authenticated and not is_debug:
+        return HttpResponseRedirect(reverse('client_landing_page'))
+
+    if not is_debug:
+        notification_url = reverse('payments:pagarme_notification', kwargs={'user_id': user.id})
+
+    price = PYTOOLS_OTO_PRICE
+    price_float = price / 100
+    price_installment = (price // 10) / 100
+    countdown_limit = calculate_oto_expires_datetime(user.date_joined) if not is_debug else now()
+
+    return render(
+        request,
+        'payments/client_landing_page_oto.html', {
+            'PAGARME_CRYPTO_KEY': settings.PAGARME_CRYPTO_KEY,
+            'price': price,
+            'price_float': price_float,
+            'price_installment': price_installment,
+            'notification_url': request.build_absolute_uri(notification_url),
+            'countdown_limit': countdown_limit
         })
 
 

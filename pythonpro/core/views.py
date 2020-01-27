@@ -151,4 +151,4 @@ def lead_form(request):
     except user_facade.UserCreationException as e:
         return render(request, 'core/lead_form_errors.html', context={'form': e.form})
     login(request, user)
-    return redirect(reverse('core:lead_change_password'))
+    return redirect(reverse('payments:client_landing_page_oto'))
