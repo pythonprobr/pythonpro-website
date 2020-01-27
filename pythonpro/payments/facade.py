@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Tuple
 
 import pagarme as _pagarme
@@ -9,13 +9,26 @@ from django.utils.timezone import now
 _pagarme.authentication_key(settings.PAGARME_API_KEY)
 
 PYTOOLS_PRICE = 39700
-PYTOOLS_PROMOTION_PRICE = 9700
+PYTOOLS_PROMOTION_PRICE = 9700  # flashning launch
+PYTOOLS_OTO_PRICE = 9700  # one time offer in python birds thank you page
 MEMBERSHIP_PRICE = 159990
 MEMBERSHIP_DISCOUNT_FOR_CLIENTS = 10000
 
 
+def _discover_pytools_price(user_creation: datetime):
+    price = PYTOOLS_PRICE
+
+    if is_on_pytools_oto_season(user_creation):
+        price = PYTOOLS_OTO_PRICE
+
+    elif is_on_pytools_promotion_season(user_creation):
+        price = PYTOOLS_PROMOTION_PRICE
+
+    return price
+
+
 def pytools_capture(token: str, user_creation: datetime):
-    price = PYTOOLS_PROMOTION_PRICE if is_on_pytools_promotion_season(user_creation) else PYTOOLS_PRICE
+    price = _discover_pytools_price(user_creation)
     amount = _pagarme.transaction.find_by_id(token)['amount']
     if amount < price:
         raise PagarmeValidationException(f'Payment done ({amount}) is less then price ({price}) for token: {token}')
@@ -95,3 +108,19 @@ def calculate_7th_week_before_promotion() -> Tuple[datetime, datetime]:
     creation_begin = promotion_begin + relativedelta(weekday=MO(-8))
     creation_end = creation_begin + relativedelta(days=6, hour=23, minute=59, second=59)
     return creation_begin, creation_end
+
+
+def calculate_oto_expires_datetime(user_creation: datetime) -> datetime:
+    """
+    Calculate datetime expiration for OTO pytools offer.
+    :return: datetime
+    """
+    return user_creation + timedelta(minutes=30)
+
+
+def is_on_pytools_oto_season(user_creation: datetime) -> bool:
+    """
+    Chekc if user is available to receive Pytools OTO.
+    :return: boolean
+    """
+    return calculate_oto_expires_datetime(user_creation) > now()

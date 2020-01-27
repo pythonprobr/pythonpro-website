@@ -112,3 +112,7 @@ def test_only_role_lead_can_change_password(resp_lead_change_pasword, django_use
 
     response = client.get(reverse('core:lead_change_password'), secure=True)
     assert response.status_code == 302
+
+
+def test_should_redirect_to_OTO_page(resp_lead_creation):
+    assert resp_lead_creation['Location'] == reverse('payments:client_landing_page_oto')
