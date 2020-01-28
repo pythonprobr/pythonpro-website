@@ -29,7 +29,7 @@ def test_home_status_code(home_resp):
 
 
 def test_thanks_status_code(client):
-    resp = client.get(reverse('core:thanks'))
+    resp = client.get(reverse('core:thanks'), secure=True)
     assert 200 == resp.status_code
 
 

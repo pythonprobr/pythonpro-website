@@ -17,7 +17,7 @@ def test_page_status(login_get_resp):
     'content',
     [
         '<form',
-        '<input type="text" name="username"',
+        '<input type="email" name="username"',
         '<input type="password" name="password"',
         'type="submit"',
     ]

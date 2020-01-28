@@ -23,11 +23,11 @@
           <input type="hidden" name="next" value="{{ next }}"/>
           <div class="form-group">
             <label for="{{ form.username.id_for_label }}">{{ form.username.label_tag }}</label>
-            <input type="text" name="{{ form.username.html_name }}" class="form-control" value="{{ field.value }}" autofocus="" maxlength="{{ form.username.max_length }}" required="required" id="{{ form.username.id_for_label }}">
+            <input type="email" name="{{ form.username.html_name }}" class="form-control" value="{{ field.value }}" autofocus="" maxlength="{{ form.username.max_length }}" required="required" id="{{ form.username.id_for_label }}">
           </div>
           <div class="form-group">
             <label for="{{ form.password.id_for_label }}">{{ form.password.label_tag }}</label>
-            <input type="password" name="{{ form.password.html_name }}" class="form-control" value="{{ field.value }}" autofocus="" maxlength="{{ form.password.max_length }}" required="required" id="{{ form.password.id_for_label }}">
+            <input type="password" name="{{ form.password.html_name }}" class="form-control" value="{{ field.value }}" maxlength="{{ form.password.max_length }}" required="required" id="{{ form.password.id_for_label }}">
           </div>
           <button type="submit" class="btn btn-primary">Entrar</button>
         </form>
