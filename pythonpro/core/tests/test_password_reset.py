@@ -6,7 +6,7 @@ from pythonpro.django_assertions import dj_assert_contains
 
 @pytest.fixture
 def reset_password_resp(client):
-    return client.get(reverse('password_reset'))
+    return client.get(reverse('password_reset'), secure=True)
 
 
 def test_email_form_status(reset_password_resp):
@@ -25,5 +25,5 @@ def test_email_form_content(content, reset_password_resp):
 
 
 def test_reset_done(client):
-    resp = client.get(reverse('password_reset_done'))
+    resp = client.get(reverse('password_reset_done'), secure=True)
     assert resp.status_code == 200
