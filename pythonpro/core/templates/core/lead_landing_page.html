@@ -72,9 +72,9 @@
         <div class="container">
             <div class="row text-center">
                 <div class="col hero">
-                    <h1 class=' font-weight-bold'>Aprenda Python MUITO RÁPIDO!</h1>
+                    <h1 class=' font-weight-bold'>Aprenda Python <u>EM 4 SEMANAS!</u></h1>
                     <p class='mb-5 mt-3'>
-                        Aprenda a programar com a <b>linguagem mais simples</b> que existe e tenha acesso 
+                        Aprenda a programar com a <b>linguagem mais rentável</b> que existe e tenha acesso 
                         a <b>um mercado que paga altos salários e está repleto de vagas em aberto!</b>
                     </p>
 
@@ -99,7 +99,9 @@
         <div class="container">
             <div class="row">
                 <div class="col mb-5 mt-5">
-                    <h2 class='font-weight-bold mb-5'>Olá! Meu nome é Renzo Nucitelli, e eu sou programador há 14 anos.</h2>
+                    <u><h2 class='text-center text-uppercase mb-5'>
+                        Eu criei um <b>curso grátis de introdução a programação chamado Python Birds.</b>
+                    </h2></u>
 
                     <div class='text-center d-block d-lg-none d-xl-none'>
                         <img src='{% static 'img/instructors/renzo-nuccitelli-300.jpeg' %}' class="img-fluid" width="300px" alt="Foto de Renzo Nuccitelli" />
@@ -109,19 +111,13 @@
                          class="img-fluid float-right ml-3 mb-3 d-none d-sm-none d-md-block" width="300px" alt="Foto de Renzo Nuccitelli" />
 
                     <p>
-                        Já fui diretor de tecnologia em duas empresas e também trabalhei
-                        na maior empresa de software aberto do mundo, a Red Hat. 
+                        Olá!
                     </p>
                     <p>
-                        Também já fui consultor de diversas outras empresas, como o Hotel Urbano.
+                        Meu nome é Renzo, muito prazer em conhecê-lo!
                     </p>
                     <p>
-                        Além disso, sou professor há mais de 10 anos, sendo que durante 
-                        4 anos fui professor da FATEC de São José dos Campos.
-                    </p>
-                    <p>
-                        Também já palestrei em grandes eventos de tecnologia, como a Python Brasil, 
-                        o Google Developers Group, o Agile Vale e muitos outros.
+                        Eu sou programador há 14 anos e professor há 10 anos. 
                     </p>
                     <p><b class='highlight'>
                         Meu sonho sempre foi que as pessoas pudessem construir as mesmas oportunidades que construí...
@@ -140,14 +136,12 @@
             <div class="row text-light">
                 <div class="col mt-5 mb-5">
                     <u><h2 class='text-center text-uppercase mb-5'>
-                        Eu criei um <b>curso grátis de introdução a programação chamado Python Birds.</b>
+                        Que tal <b>aprender Python em 4 semanas</b> com o meu curso completo, <b>de forma
+                        totalmente gratuita?</b>
                     </h2></u>
-                    <h4 class='text-center mb-5'>
+                    <h4 class='text-center'>
                         Este é o curso de introdução a programação Python que eu venho ministrando 
                         ao longo dos meus anos para ensinar as pessoas a programarem.
-                    </h4>
-                    <h4 class='text-center'>
-                        <b>Com ele, você vai aprender Python em apenas quatro semanas!</b>
                     </h4>
                 </div>
             </div>
@@ -507,24 +501,24 @@
                     <h2 class='mt-5 mb-5 text-center' id="lead-form-header">
                         Preencha o formulário abaixo e tenha <b>acesso GRÁTIS ao curso!</b>
                     </h2>
-                    {% block lead_form %}
-                        <form method="post" action="{% url 'core:lead_form' %}{% if request.GET.utm_source %}?utm_source={{ request.GET.utm_source }}{% endif %}">
-                            {% csrf_token %}
-                            {% bootstrap_form form %}
-                          
-                    <div class='text-center initiate-checkout d-none d-sm-block d-md-block'>
-                        <button class="cta btn btn-warning initiate-checkout mt-10">
-                            SIM! Eu quero <b class='initiate-checkout'>aprender a programar em Python!</b>
-                        </button>
-                    </div>
 
-                    <div class='text-center initiate-checkout d-block d-lg-none d-xl-none'>
-                        <button class="cta-mobile btn initiate-checkout btn-warning mt-10">
-                            SIM! Eu quero <b class='initiate-checkout'>aprender<br> a programar em Python!</b>
-                        </button>
-                    </div>
-                        </form>
-                    {% endblock %}
+                    <form method="post" action="{% url 'core:lead_form' %}{% if request.GET.utm_source %}?utm_source={{ request.GET.utm_source }}{% endif %}">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        
+                        <div class='text-center initiate-checkout d-none d-sm-block d-md-block'>
+                            <button class="cta btn btn-warning initiate-checkout mt-10">
+                                SIM! Eu quero <b class='initiate-checkout'>aprender a programar em Python!</b>
+                            </button>
+                        </div>
+
+                        <div class='text-center initiate-checkout d-block d-lg-none d-xl-none'>
+                            <button class="cta-mobile btn initiate-checkout btn-warning mt-10">
+                                SIM! Eu quero <b class='initiate-checkout'>aprender<br> a programar em Python!</b>
+                            </button>
+                        </div>
+                    </form>
+
                     </div>
                 </div>
             </div>
@@ -549,7 +543,6 @@
         </div>
     </div>
 
-
     <div class=''>
         <div class="container">
             <div class="row">
@@ -557,6 +550,35 @@
                     <div class='instructors'>
                         {% include 'core/instructors.html' %}
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-primary text-light'>
+        <div class="container">
+            <div class="row">    
+                <div class="col-lg-8 offset-lg-2 text-center  mb-5">
+                    <h2 class='mt-5 mb-5 text-center' id="lead-form-header">
+                        Preencha o formulário abaixo e tenha <b>acesso GRÁTIS ao curso!</b>
+                    </h2>
+
+                    <form method="post" action="{% url 'core:lead_form' %}{% if request.GET.utm_source %}?utm_source={{ request.GET.utm_source }}{% endif %}">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        
+                        <div class='text-center initiate-checkout d-none d-sm-block d-md-block'>
+                            <button class="cta btn btn-warning initiate-checkout mt-10">
+                                SIM! Eu quero <b class='initiate-checkout'>aprender a programar em Python!</b>
+                            </button>
+                        </div>
+
+                        <div class='text-center initiate-checkout d-block d-lg-none d-xl-none'>
+                            <button class="cta-mobile btn initiate-checkout btn-warning mt-10">
+                                SIM! Eu quero <b class='initiate-checkout'>aprender<br> a programar em Python!</b>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
