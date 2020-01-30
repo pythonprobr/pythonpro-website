@@ -90,7 +90,7 @@
                     postback_url: '{{ notification_url }}',
                     items: [
                         {
-                            id: 'pytools-{{ user.id }}',
+                            id: '{% block course_id_prefix %}pytools{% endblock %}-{{ user.id }}',
                             title: 'Módulo PyTools',
                             unit_price: {{ price }},
                             quantity: 1,
