@@ -4,11 +4,15 @@ from model_mommy import mommy
 
 from pythonpro.dashboard.models import TopicInteraction
 from pythonpro.domain import user_facade
+from pythonpro.modules.models import Topic
 
 
 @pytest.fixture
 def remove_tags_mock(mocker):
     return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.remove_tags')
+
+
+TOPIC_DURATION = 200
 
 
 @pytest.fixture
@@ -17,7 +21,7 @@ def resp(client_with_lead, topic, logged_user, remove_tags_mock):
         reverse('dashboard:topic_interaction'),
         data={
             'topic': topic.id,
-            'topic_duration': 200,
+            'topic_duration': TOPIC_DURATION,
             'total_watched_time': 120,
             'max_watched_time': 60
         },
@@ -32,7 +36,7 @@ def resp_with_interaction(client_with_lead, topic, logged_user, remove_tags_mock
         reverse('dashboard:topic_interaction'),
         data={
             'topic': topic.id,
-            'topic_duration': 200,
+            'topic_duration': TOPIC_DURATION,
             'total_watched_time': 120,
             'max_watched_time': 60
         },
@@ -64,6 +68,10 @@ def test_topic_interaction_data(resp, topic, logged_user):
     interaction = TopicInteraction.objects.first()
     assert interaction.topic == topic
     assert interaction.user == logged_user
-    assert interaction.topic_duration == 200
+    assert interaction.topic_duration == TOPIC_DURATION
     assert interaction.total_watched_time == 120
     assert interaction.max_watched_time == 60
+
+
+def test_topic_is_updated(resp, topic, logged_user):
+    assert Topic.objects.values('duration').get(id=topic.id)['duration'] == TOPIC_DURATION
