@@ -41,5 +41,5 @@ def topic_interaction(request):
         maybe_new_topic_duration = form.cleaned_data['topic_duration']
         if current_topic_duration != maybe_new_topic_duration:
             Topic.objects.filter(id=topic_id).update(duration=maybe_new_topic_duration)
-
+        form.save()
         return JsonResponse({'msg': 'ok'})
