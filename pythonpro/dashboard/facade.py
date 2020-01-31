@@ -3,7 +3,7 @@ from itertools import chain, product
 from operator import attrgetter
 
 import pytz
-from django.db.models import Count, Max, Min, Sum
+from django.db.models import Count, Max, Sum
 from django.utils.datetime_safe import datetime
 
 from pythonpro.dashboard.models import TopicInteraction as _TopicInteracion
@@ -34,8 +34,7 @@ def calculate_topic_interaction_history(user):
         last_interaction=Max('topicinteraction__creation'),
         max_watched_time=Max('topicinteraction__max_watched_time'),
         total_watched_time=Sum('topicinteraction__total_watched_time'),
-        interactions_count=Count('topicinteraction'),
-        duration=Min('topicinteraction__topic_duration')
+        interactions_count=Count('topicinteraction')
     ).order_by('-last_interaction').select_related('chapter').select_related('chapter__section').select_related(
         'chapter__section__module')[:20]
 
@@ -48,18 +47,17 @@ def calculate_module_progresses(user):
     """
     # arbitrary default value for last interaction
     default_min_time = datetime(1970, 1, 1, tzinfo=pytz.utc)
-    property_defaults = {
+    topic_property_defaults = {
         'last_interaction': default_min_time,
         'max_watched_time': 0,
         'total_watched_time': 0,
         'interactions_count': 0,
         'topics_count': 0,
         'finished_topics_count': 0,
-        'duration': 0,
     }
 
-# this is here due to bug on Heroku which is not installing Python 3.8:
-# https://sentry.io/organizations/python-pro/issues/1471675608/?project=236278&query=is%3Aunresolved
+    # this is here due to bug on Heroku which is not installing Python 3.8:
+    # https://sentry.io/organizations/python-pro/issues/1471675608/?project=236278&query=is%3Aunresolved
     def sum_with_start_0(lst):
         lst = list(lst)
         if len(lst) == 0:
@@ -97,15 +95,14 @@ def calculate_module_progresses(user):
         interactions_count=Max('topicinteraction'),
         max_watched_time=Max('topicinteraction__max_watched_time'),
         total_watched_time=Sum('topicinteraction__total_watched_time'),
-        children_count=Count('topicinteraction'),
-        duration=Min('topicinteraction__topic_duration')).all()
+        children_count=Count('topicinteraction')).all()
 
     user_interacted_topics = {t['id']: t for t in qs}
     modules = get_entire_content_forest()
     all_sections = list(_flaten(modules, 'sections'))
     all_chapters = list(_flaten(all_sections, 'chapters'))
     all_topics = list(_flaten(all_chapters, 'topics'))
-    for topic, (property_, default_value) in product(all_topics, property_defaults.items()):
+    for topic, (property_, default_value) in product(all_topics, topic_property_defaults.items()):
         user_interaction_data = user_interacted_topics.get(topic.id, {})
         setattr(topic, property_, user_interaction_data.get(property_, default_value))
     for topic in all_topics:

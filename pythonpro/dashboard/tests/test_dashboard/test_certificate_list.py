@@ -8,43 +8,7 @@ from pythonpro.django_assertions import dj_assert_contains
 from pythonpro.modules.models import Chapter, Module, Section, Topic
 
 
-# @pytest.fixture
-# def interactions(logged_user, topic):
-#     with freeze_time("2019-07-22 00:00:00"):
-#         first_interaction = mommy.make(
-#             TopicInteraction,
-#             user=logged_user,
-#             topic=topic,
-#             topic_duration=125,
-#             total_watched_time=125,
-#             max_watched_time=95
-#         )
-#
-#     with freeze_time("2019-07-22 01:00:00"):
-#         second_interaction = mommy.make(
-#             TopicInteraction,
-#             user=logged_user,
-#             topic=topic,
-#             topic_duration=125,
-#             total_watched_time=34,
-#             max_watched_time=14
-#         )
-#     with freeze_time("2019-07-22 00:30:00"):
-#         third_interaction = mommy.make(
-#             TopicInteraction,
-#             user=logged_user,
-#             topic=topic,
-#             topic_duration=125,
-#             total_watched_time=64,
-#             max_watched_time=34
-#         )
-#     return [
-#         first_interaction,
-#         second_interaction,
-#         third_interaction,
-#     ]
-
-
+# Tests user interacted with all topics
 @pytest.fixture
 def modules(db):
     return mommy.make(Module, 2)
@@ -66,11 +30,14 @@ def chapters(sections):
     return models
 
 
+TOPIC_DURATION = 100
+
+
 @pytest.fixture
 def topics(chapters):
     models = []
     for c in chapters:
-        models.extend(mommy.make(Topic, 2, chapter=c))
+        models.extend(mommy.make(Topic, 2, chapter=c, duration=TOPIC_DURATION))
     return models
 
 
@@ -83,7 +50,7 @@ def interactions(topics, logged_user):
                 TopicInteraction,
                 user=logged_user,
                 topic=t,
-                topic_duration=100,
+                topic_duration=TOPIC_DURATION,
                 total_watched_time=100,
                 max_watched_time=50
             )
@@ -107,3 +74,21 @@ def test_module_title_is_present_on_card(resp, modules):
 def test_module_percentage_style_on_card(resp, logged_user):
     for m in facade.calculate_module_progresses(logged_user):
         dj_assert_contains(resp, f'style="width: {m.progress:.0%}"')
+
+
+def test_module_duration(resp, logged_user):
+    modules_progresses = resp.context['module_progresses']
+    for module in modules_progresses:
+        assert module.duration == module.topics_count * TOPIC_DURATION
+
+
+# Tests User has not interaction with topics
+@pytest.fixture
+def resp_user_has_no_interactions(client_with_lead, topics):
+    return client_with_lead.get(reverse('dashboard:home'), secure=True)
+
+
+def test_module_duration_with_no_interactions(resp_user_has_no_interactions, logged_user, ):
+    modules_progresses = resp_user_has_no_interactions.context['module_progresses']
+    for module in modules_progresses:
+        assert module.duration == module.topics_count * TOPIC_DURATION

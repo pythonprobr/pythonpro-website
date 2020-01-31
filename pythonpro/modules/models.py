@@ -13,6 +13,7 @@ class Content(OrderedModel):
     title = models.CharField(max_length=50)
     description = models.TextField()
     slug = models.SlugField(unique=True)
+
     _next_content_cache = _NoneCache
     _previous_content_cache = _NoneCache
 
@@ -166,6 +167,7 @@ class Topic(Content):
     vimeo_id = models.CharField(max_length=11, db_index=False)
     discourse_topic_id = models.CharField(max_length=11, db_index=False)
     order_with_respect_to = 'chapter'
+    duration = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['chapter', 'order']
