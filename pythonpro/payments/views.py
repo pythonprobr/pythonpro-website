@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.core import mail
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect, JsonResponse
@@ -58,6 +59,7 @@ def pytools_capture(request):
     elif payment_method == 'boleto':
         if not user.is_authenticated:
             user = user_facade.force_register_lead(customer_first_name, customer_email, source)
+            login(request, user)
         user_facade.client_generated_boleto(user)
         path = reverse('payments:pytools_boleto')
         qs = urlencode(_extract_boleto_params(pagarme_resp))
@@ -103,6 +105,7 @@ def pytools_thanks(request):
     return render(request, 'payments/pytools_thanks.html')
 
 
+@login_required
 def pytools_boleto(request):
     dct = request.GET
     boleto_params = _extract_boleto_params(dct)
