@@ -5,4 +5,4 @@ Recebemos a confirmação de seu pagamento. Acesse {{ ty_url }} para conferir os
 Agradecemos imensamente sua confiança em nosso trabalho.
 
 Grande abraço,
-Luciano Ramalho e Renzo Nuccitelli
+Renzo Nuccitelli

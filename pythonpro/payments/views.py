@@ -1,7 +1,9 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse, HttpResponseRedirect
+from django.core import mail
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.http import urlencode
 from django.utils.timezone import now
@@ -12,11 +14,8 @@ from pythonpro.cohorts import facade as cohorts_facade
 from pythonpro.domain import membership_facade, user_facade
 from pythonpro.payments import facade as payment_facade
 from pythonpro.payments.facade import (
-    PYTOOLS_PRICE,
-    PYTOOLS_PROMOTION_PRICE,
-    PYTOOLS_OTO_PRICE,
-    PagarmeNotPaidTransaction,
-    calculate_oto_expires_datetime
+    PYTOOLS_OTO_PRICE, PYTOOLS_PRICE, PYTOOLS_PROMOTION_PRICE, PagarmeNotPaidTransaction,
+    calculate_oto_expires_datetime,
 )
 
 
@@ -106,8 +105,14 @@ def pytools_thanks(request):
 
 def pytools_boleto(request):
     dct = request.GET
-    context = _extract_boleto_params(dct)
-    return render(request, 'payments/pytools_boleto.html', context=context)
+    boleto_params = _extract_boleto_params(dct)
+    user = request.user
+    mail_context = {'user': user}
+    mail_context.update(boleto_params)
+    body = render_to_string('payments/pytools_boleto_email.txt', context=mail_context, request=request)
+    subject = 'Boleto curso Pytools'
+    mail.send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [user.email])
+    return render(request, 'payments/pytools_boleto.html', context=boleto_params)
 
 
 def membership_boleto(request):
