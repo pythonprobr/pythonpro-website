@@ -213,6 +213,25 @@ def test_boleto_url(resp_show_boleto, content):
     dj_assert_contains(resp_show_boleto, content)
 
 
+@pytest.mark.parametrize(
+    'barcode, url',
+    [
+        (
+                '1234 5678',  # Barcode
+                'https://api.pagar.me/1/boletos/live_cjw86db172bld2p3en7gy50l6'
+        )
+    ]
+)
+def test_boleto_sent_to_email(resp_show_boleto, barcode, url, mailoutbox, settings, logged_user):
+    assert len(mailoutbox) == 1
+    m = mailoutbox[0]
+    assert m.subject == 'Boleto curso Pytools'
+    assert barcode in m.body
+    assert url in m.body
+    assert m.from_email == settings.DEFAULT_FROM_EMAIL
+    assert list(m.to) == [logged_user.email]
+
+
 def test_user_creation(resp_token_with_no_user, django_user_model):
     user = django_user_model.objects.get(email=CUSTOMER_EMAIL)
     assert has_role(user, 'lead')
