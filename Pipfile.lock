@@ -721,11 +721,10 @@
         },
         "pytest-freezegun": {
             "hashes": [
-                "sha256:94c370a2cd3db9692962522cb74525d908e669df7cb53a448e01bb47c21a8173",
-                "sha256:b86b13ef75959bedf4c32f1fd81fec66fa4502d9892e0ef6ad1717a34fe1560e"
+                "sha256:060cdf192848e50a4a681a5e73f8b544c4ee5ebc1fab3cb7223a0097bac2f83f",
+                "sha256:1c77b2917883b8abf817fc39a1fd3f40ac43711eb923512abe7b6557e55eaaf1"
             ],
-            "index": "pypi",
-            "version": "==0.3.0.post1"
+            "version": "==0.4.1"
         },
         "pytest-mock": {
             "hashes": [
