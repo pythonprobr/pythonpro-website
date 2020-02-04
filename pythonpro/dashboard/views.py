@@ -3,21 +3,20 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
-from pythonpro.dashboard import facade as dashboard_facade
 from pythonpro.dashboard.facade import has_watched_any_topic
 from pythonpro.dashboard.forms import TopicInteractionForm
-from pythonpro.domain import user_facade
+from pythonpro.domain import content_statistics_domain, user_facade
 from pythonpro.modules.models import Topic
 
 
 @login_required
 def home(request):
-    topics = list(dashboard_facade.calculate_topic_interaction_history(request.user))
+    topics = list(content_statistics_domain.calculate_topic_interaction_history(request.user))
 
     for topic in topics:
         topic.calculated_module = topic.find_module()
 
-    module_progresses = dashboard_facade.calculate_module_progresses(request.user)
+    module_progresses = content_statistics_domain.calculate_module_progresses(request.user)
     ctx = {'topics': topics, 'module_progresses': module_progresses}
     return render(
         request,

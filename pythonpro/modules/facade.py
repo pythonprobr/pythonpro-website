@@ -1,6 +1,8 @@
 from django.db.models import Prefetch
 
-from pythonpro.modules.models import (Chapter as _Chapter, Module as _Module, Section as _Section, Topic as _Topic)
+from pythonpro.modules.models import (
+    Chapter as _Chapter, Module as _Module, Section as _Section, Topic as _Topic,
+)
 
 
 def get_topic_model():
@@ -99,3 +101,11 @@ def get_entire_content_forest():
             ),
             to_attr='sections')
     ))
+
+
+def topics_user_interacted_queryset(user):
+    return _Topic.objects.filter(
+        topicinteraction__user=user
+    ).select_related('chapter').select_related('chapter__section').select_related(
+        'chapter__section__module'
+    )

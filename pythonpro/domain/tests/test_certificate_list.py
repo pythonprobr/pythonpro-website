@@ -2,7 +2,7 @@ import pytest
 from django.urls import reverse
 from model_mommy import mommy
 
-from pythonpro.dashboard import facade
+import pythonpro.domain.content_statistics_domain
 from pythonpro.dashboard.models import TopicInteraction
 from pythonpro.django_assertions import dj_assert_contains
 from pythonpro.modules.models import Chapter, Module, Section, Topic
@@ -72,7 +72,7 @@ def test_module_title_is_present_on_card(resp, modules):
 
 
 def test_module_percentage_style_on_card(resp, logged_user):
-    for m in facade.calculate_module_progresses(logged_user):
+    for m in pythonpro.domain.content_statistics_domain.calculate_module_progresses(logged_user):
         dj_assert_contains(resp, f'style="width: {m.progress:.0%}"')
 
 
