@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
 
 from pythonpro.cohorts import facade as cohorts_facade
-from pythonpro.domain import membership_facade, user_facade
+from pythonpro.domain import membership_domain, user_facade
 from pythonpro.payments import facade as payment_facade
 from pythonpro.payments.facade import (
     PYTOOLS_OTO_PRICE, PYTOOLS_PRICE, PYTOOLS_PROMOTION_PRICE, PagarmeNotPaidTransaction,
@@ -34,7 +34,7 @@ def member_capture(request):
         return
     user = request.user
     token = request.POST['token']
-    dct = membership_facade.capture_payment(token, user, request.GET.get('utm_source', default='unknown'))
+    dct = membership_domain.capture_payment(token, user, request.GET.get('utm_source', default='unknown'))
     return JsonResponse(dct)
 
 
@@ -156,10 +156,10 @@ def _render_launch_page(is_launch_open, request, template_closed_launch, templat
         notification_url = reverse('payments:membership_anonymous_notification')
     if is_launch_open:
         template = template_open_launch
-        discount = membership_facade.calculate_discount(user)
+        discount = membership_domain.calculate_discount(user)
         discount_float = discount / 100
 
-        price = membership_facade.calculate_membership_price(user)
+        price = membership_domain.calculate_membership_price(user)
         price_float = price / 100
         full_price_float = price_float + discount_float
         price_installment = (price // 10) / 100
@@ -256,7 +256,7 @@ def waiting_list_ty(request):
 def membership_notification(request, user_id: int):
     if request.method != 'POST':
         return HttpResponseNotAllowed([request.method])
-    membership_facade.subscribe_member_who_paid_boleto(
+    membership_domain.subscribe_member_who_paid_boleto(
         user_id,
         request.POST,
         request.body.decode('utf8'),
@@ -300,7 +300,7 @@ def pagarme_anonymous_notification(request):
 def membership_anonymous_notification(request):
     if request.method != 'POST':
         return HttpResponseNotAllowed([request.method])
-    membership_facade.subscribe_anonymous_member_who_paid_boleto(
+    membership_domain.subscribe_anonymous_member_who_paid_boleto(
         request.POST,
         request.body.decode('utf8'),
         request.headers['X-Hub-Signature'],
