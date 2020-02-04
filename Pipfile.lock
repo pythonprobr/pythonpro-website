@@ -217,11 +217,10 @@
         },
         "django-storages": {
             "hashes": [
-                "sha256:2b02f9e24ae617a075c8e3f39a56fa26faa250c052f42958c2a3ee1c56d7a06e",
-                "sha256:9bc1fff05d45eafeaedd3973defbb301e4065e1d813e71b0251c756108aad2dd"
+                "sha256:3103991c2ee8cef8a2ff096709973ffe7106183d211a79f22cf855f33533d924",
+                "sha256:a59e9923cbce7068792f75344ed7727021ee4ac20f227cf17297d0d03d141e91"
             ],
-            "index": "pypi",
-            "version": "==1.9"
+            "version": "==1.9.1"
         },
         "docutils": {
             "hashes": [
