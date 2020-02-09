@@ -10,6 +10,17 @@ from pythonpro.modules.models import Topic
 
 
 @login_required
+def certificate(request, module_slug):
+    module_progresses = content_statistics_domain.calculate_module_progresses(request.user)
+    ctx = {}
+    for module in module_progresses:
+        if module.slug == module_slug:
+            ctx['module'] = module
+            break
+    return render(request, 'dashboard/certificate.html', ctx)
+
+
+@login_required
 def home(request):
     topics = list(content_statistics_domain.calculate_topic_interaction_history(request.user))
 

@@ -1,3 +1,5 @@
+from typing import List
+
 import pytest
 from django.urls import reverse
 from model_mommy import mommy
@@ -69,6 +71,11 @@ def resp(client_with_lead, interactions):
 def test_module_title_is_present_on_card(resp, modules):
     for m in modules:
         dj_assert_contains(resp, f'Módulo: {m.title}')
+
+
+def test_module_certificate_link(resp, modules: List[Module]):
+    for m in modules:
+        dj_assert_contains(resp, f'href="{m.get_certificate_url()}"')
 
 
 def test_module_percentage_style_on_card(resp, logged_user):
