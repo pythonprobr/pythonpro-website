@@ -44,7 +44,7 @@ PAGSEGURO_PAYMENT_PLAN = config('PAGSEGURO_PAYMENT_PLAN')
 
 # Email Configuration
 
-DEFAULT_FROM_EMAIL = 'renzo@python.pro.br'
+DEFAULT_FROM_EMAIL = 'suporte@python.pro.br'
 
 EMAIL_BACKEND = config('EMAIL_BACKEND')
 EMAIL_HOST = config('EMAIL_HOST')
