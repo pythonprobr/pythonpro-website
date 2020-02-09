@@ -1,0 +1,61 @@
+{% extends 'core/base_without_nav.html' %}
+{% load dashboard_tags %}
+{% load static %}
+{% block title %}Certificado do Curso {{ module.title }}{% endblock %}
+{% block description %}Certificado do Curso {{ module.title }}{% endblock %}
+{% block head %}
+
+{% endblock head %}
+
+{% block body %}
+    <div class="colors-pallet d-none d-md-block">
+        <div class="color-1 pallet"></div>
+        <div class="color-2 pallet"></div>
+        <div class="color-3 pallet"></div>
+        <div class="color-4 pallet"></div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <h1 class="pythonpro-title mt-5"><span class="python">Python</span> Pro</h1>
+                <h2 class="pythonpro-subtitle mb-4 mb-md-5">Python para Profissionais</h2>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <h1 class="mb-5">Certificado</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-4 font-weight-bold">
+                Conferimos que {{ user.first_name }} concluiu {% widthratio module.progress 1 100 %}% do curso
+                {{ module.title }}
+                com carga horária de {{ module.duration|duration }},
+                tendo assistido {{ module.total_watched_time|duration }} de video aulas e
+                finalizado {{ module.finished_topics_count }} aulas de um total de {{ module.topics_count }}.
+            </div>
+        </div>
+        <div class="row font-weight-bold mb-5">
+            <div class="col text-right">
+                São José dos Campos, {% now 'd' %} de {% now 'F' %} de {% now 'Y' %}.
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="col text-center">
+                    <img src="{% static 'dashboard/img/assinatura-renzo.jpg' %}" alt="Assinatura de Renzo Nuccitelli"/>
+                    <br/>
+
+                    ________________________________
+                    <br/>
+                    Renzo Nuccitelli
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}
+
+{% block footer %}{% endblock footer %}

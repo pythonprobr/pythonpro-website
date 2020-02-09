@@ -115,6 +115,13 @@ class Module(Content):
         """Must return the absolute url for this content"""
         return reverse('modules:detail', kwargs={'slug': self.slug})
 
+    def get_certificate_url(self):
+        """
+        Generate Module's certificate url
+        :return:
+        """
+        return reverse('dashboard:certificate', kwargs={'module_slug': self.slug})
+
     def _next_content_query_set(self):
         return Module.objects.filter(order=self.order + 1)
 
