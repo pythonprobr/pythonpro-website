@@ -9,7 +9,7 @@
                 <p>Você agora já consegue acessar todo <a href="{% url 'modules:detail' slug='pytools' %}">conteúdo do
                     módulo PyTools</a>.</p>
                 <p>Se você tiver qualquer dúvida, entre em contato pelo email <a
-                        href="mailto:renzo@python.pro.br?subject=Pessoas%20Pessoais">renzo@python.pro.br</a>.
+                        href="mailto:{{ DEFAULT_FROM_EMAIL }}?subject=Pessoas%20Pessoais">{{ DEFAULT_FROM_EMAIL }}</a>.
                 </p>
                 <p>Nas próximas 6 semanas vamos enviar 1 email a cada semana para ajudar você a completar todo módulo. É
                     importante que você consiga bater as metas semanais.</p>
