@@ -54,9 +54,9 @@ def confirm_boleto_payment(user_id: int, notification: dict, raw_post: str, expe
     transaction = extract_transaction(notification, raw_post, expected_signature)
     item_id = transaction['items'][0]['id']
     # id is generated concatenating Module slug and user's id. Check content_client_landing_page pagarme JS
-    expected_id = f'pytools-{user_id}'
-    if item_id != expected_id:
-        raise PagarmeValidationException(f"Expected item's id {expected_id} differs from {item_id}", notification)
+    expected_ids = {f'pytools-{user_id}', f'pytools-oto-{user_id}'}
+    if item_id not in expected_ids:
+        raise PagarmeValidationException(f"{item_id} not in expected ids {expected_ids}", notification)
     return transaction
 
 
