@@ -172,6 +172,20 @@ def resp_token(client_with_lead, logged_user, create_or_update_client, resps_suc
     return client_with_lead.post(reverse('payments:pytools_capture'), data, secure=True)
 
 
+@pytest.fixture(autouse=True)
+def sync_user(mocker):
+    return mocker.patch('pythonpro.domain.user_facade._discourse_facade.sync_user')
+
+
+def test_user_discourse_sync_no_user(resp_token_with_no_user, django_user_model, sync_user):
+    user = django_user_model.objects.first()
+    sync_user.assert_called_once_with(user)
+
+
+def test_user_discourse_sync_with_token(resp_token, django_user_model, sync_user):
+    test_user_discourse_sync_no_user(resp_token, django_user_model, sync_user)
+
+
 def test_email_marketing_update(resp_token, create_or_update_client, logged_user):
     create_or_update_client.assert_called_once_with(logged_user.first_name, logged_user.email, id=logged_user.id)
 

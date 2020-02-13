@@ -70,6 +70,16 @@ def valid_resp_anonymous(cohort, client, anonymous_user, valid_signature, transa
         )
 
 
+@pytest.fixture(autouse=True)
+def sync_user(mocker):
+    return mocker.patch('pythonpro.domain.user_facade._discourse_facade.sync_user')
+
+
+def test_user_discourse_sync_no_user(valid_resp_anonymous, django_user_model, sync_user):
+    user = django_user_model.objects.first()
+    sync_user.assert_called_once_with(user)
+
+
 def test_anonymous_user_promoted_to_member(valid_resp_anonymous, anonymous_user):
     assert has_role(anonymous_user, 'member')
     assert not has_role(anonymous_user, 'lead')
@@ -80,6 +90,10 @@ def test_user_promoted_to_member(valid_resp, logged_user):
     assert has_role(logged_user, 'member')
     assert not has_role(logged_user, 'lead')
     assert not has_role(logged_user, 'client')
+
+
+def test_user_discourse_sync_valid_resp(valid_resp, django_user_model, sync_user):
+    test_user_discourse_sync_no_user(valid_resp, django_user_model, sync_user)
 
 
 def test_promoted_to_member_on_email_marketing(valid_resp, create_or_update_member, logged_user):

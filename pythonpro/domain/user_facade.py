@@ -15,6 +15,7 @@ from pythonpro.core import facade as _core_facade
 from pythonpro.core.models import User as _User
 from pythonpro.email_marketing import facade as _email_marketing_facade
 from pythonpro.payments import facade as _payments_facade
+from pythonpro.discourse import facade as _discourse_facade
 
 UserCreationException = _core_facade.UserCreationException  # exposing exception on Facade
 
@@ -33,7 +34,6 @@ def register_lead(first_name: str, email: str, source: str = 'unknown') -> _User
     User is also registered on Mailchimp and subscribed to LeadWorkflow and is not registered on system in case api call
     fails
 
-    Check force_register_lead if Maichimp validation is not mandatory
     :param first_name: User's first name
     :param email: User's email
     :param source: source of User traffic
@@ -48,7 +48,9 @@ def register_lead(first_name: str, email: str, source: str = 'unknown') -> _User
         form.add_error('email', 'Email Inválido')
         raise UserCreationException(form)
     lead = _core_facade.register_lead(first_name, email, source)
+    _discourse_facade.sync_user(lead)
     _email_marketing_facade.create_or_update_lead(first_name, email, id=lead.id)
+
     return lead
 
 
@@ -63,6 +65,7 @@ def force_register_lead(first_name: str, email: str, source: str = 'unknown') ->
     :return: User
     """
     user = _core_facade.register_lead(first_name, email, source)
+    _discourse_facade.sync_user(user)
     try:
         _email_marketing_facade.create_or_update_lead(first_name, email, id=user.id)
     except _ActiveCampaignError:
@@ -81,6 +84,7 @@ def force_register_client(first_name: str, email: str, source: str = 'unknown') 
     :return: User
     """
     user = _core_facade.register_client(first_name, email, source)
+    _discourse_facade.sync_user(user)
     try:
         _email_marketing_facade.create_or_update_client(first_name, email, id=user.id)
     except _ActiveCampaignError:
@@ -101,6 +105,7 @@ def force_register_member(first_name, email, source='unknown'):
     user = _core_facade.register_member(first_name, email, source)
     _cohorts_facade.subscribe_to_last_cohort(user)
     cohort = _cohorts_facade.find_most_recent_cohort()
+    _discourse_facade.sync_user(user)
     try:
         _email_marketing_facade.create_or_update_member(first_name, email, id=user.id)
         _email_marketing_facade.tag_as(email, user.id, f'turma-{cohort.slug}')
@@ -120,6 +125,7 @@ def promote_member(user: _User, source: str) -> _User:
     _core_facade.promote_to_member(user, source)
     _cohorts_facade.subscribe_to_last_cohort(user)
     cohort = _cohorts_facade.find_most_recent_cohort()
+    _discourse_facade.sync_user(user)
     try:
         _email_marketing_facade.create_or_update_member(user.first_name, user.email, id=user.id)
         _email_marketing_facade.tag_as(user.email, user.id, f'turma-{cohort.slug}')
@@ -150,6 +156,7 @@ def promote_client(user: _User, source: str) -> None:
     :return:
     """
     _core_facade.promote_to_client(user, source)
+    _discourse_facade.sync_user(user)
     try:
         _email_marketing_facade.create_or_update_client(user.first_name, user.email, id=user.id)
     except _ActiveCampaignError:

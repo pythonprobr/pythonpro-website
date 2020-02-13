@@ -222,6 +222,16 @@ def test_user_creation(resp_token_with_no_user, django_user_model):
     assert not has_role(user, 'member')
 
 
+@pytest.fixture(autouse=True)
+def sync_user(mocker):
+    return mocker.patch('pythonpro.domain.user_facade._discourse_facade.sync_user')
+
+
+def test_user_discourse_sync_no_user(resp_token_with_no_user, django_user_model, sync_user):
+    user = django_user_model.objects.first()
+    sync_user.assert_called_once_with(user)
+
+
 def test_user_name(resp_token_with_no_user, django_user_model):
     user = django_user_model.objects.get(email=CUSTOMER_EMAIL)
     assert user.first_name == CUSTOMER_FIRST_NAME

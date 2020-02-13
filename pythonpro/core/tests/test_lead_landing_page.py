@@ -55,6 +55,16 @@ def resp_lead_change_pasword(resp_lead_creation, client):
     )
 
 
+@pytest.fixture(autouse=True)
+def sync_user(mocker):
+    return mocker.patch('pythonpro.domain.user_facade._discourse_facade.sync_user')
+
+
+def test_user_discourse_sync(resp_lead_creation, django_user_model, sync_user):
+    user = django_user_model.objects.first()
+    sync_user.assert_called_once_with(user)
+
+
 def test_lead_creation(resp_lead_creation, django_user_model):
     assert django_user_model.objects.exists()
 

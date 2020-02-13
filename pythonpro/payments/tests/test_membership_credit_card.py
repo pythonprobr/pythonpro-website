@@ -172,6 +172,20 @@ def resp_token_with_no_user(cohort, client, create_or_update_member, create_or_u
     return client.post(reverse('payments:member_capture'), data, secure=True)
 
 
+@pytest.fixture(autouse=True)
+def sync_user(mocker):
+    return mocker.patch('pythonpro.domain.user_facade._discourse_facade.sync_user')
+
+
+def test_user_discourse_sync_no_user(resp_token_with_no_user, django_user_model, sync_user):
+    user = django_user_model.objects.first()
+    sync_user.assert_called_once_with(user)
+
+
+def test_user_discourse_sync_with_token(resp_token, django_user_model, sync_user):
+    test_user_discourse_sync_no_user(resp_token, django_user_model, sync_user)
+
+
 @pytest.fixture
 def resp_token(cohort, client_with_lead, logged_user, create_or_update_member, resps_success, tag_as_mock):
     data = {'token': 'test_transaction_5ndnWcHEJQX1FPCbEpQpFng90gM5oM', 'payment_method': 'credit_card'}
