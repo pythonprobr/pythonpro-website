@@ -8,7 +8,7 @@ import pytest
 from django.conf import settings
 from django.urls import reverse
 
-from pythonpro.discourse.views import _decode_payload
+from pythonpro.discourse.facade import _decode_payload
 
 
 @pytest.fixture
