@@ -105,6 +105,8 @@ if DEBUG:
 # Discourse config
 DISCOURSE_BASE_URL = 'https://forum.python.pro.br/'
 DISCOURSE_SSO_SECRET = config('DISCOURSE_SSO_SECRET')
+DISCOURSE_API_USER = config('DISCOURSE_API_USER')
+DISCOURSE_API_KEY = config('DISCOURSE_API_KEY')
 
 ROOT_URLCONF = 'pythonpro.urls'
 

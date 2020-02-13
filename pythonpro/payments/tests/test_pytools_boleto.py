@@ -232,6 +232,20 @@ def test_boleto_sent_to_email(resp_show_boleto, barcode, url, mailoutbox, settin
     assert list(m.to) == [logged_user.email]
 
 
+@pytest.fixture(autouse=True)
+def sync_user(mocker):
+    return mocker.patch('pythonpro.domain.user_facade._discourse_facade.sync_user')
+
+
+def test_user_discourse_sync_no_user(resp_token_with_no_user, django_user_model, sync_user):
+    user = django_user_model.objects.first()
+    sync_user.assert_called_once_with(user)
+
+
+def test_user_discourse_sync_existing_user_not_logged(resp_existing_user_not_logged, django_user_model, sync_user):
+    test_user_discourse_sync_no_user(resp_token, django_user_model, sync_user)
+
+
 def test_user_creation(resp_token_with_no_user, django_user_model):
     user = django_user_model.objects.get(email=CUSTOMER_EMAIL)
     assert has_role(user, 'lead')

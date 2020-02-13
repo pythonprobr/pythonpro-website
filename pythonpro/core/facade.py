@@ -36,7 +36,7 @@ def validate_user(first_name: str, email: str, source: str) -> UserSignupForm:
 
 def register_lead(first_name: str, email: str, source: str) -> User:
     """
-    Create a new user on the system generation a random password.
+    Create a new user on the system generating a random password.
     :param first_name: User's first name
     :param email: User's email
     :param source: source of User traffic

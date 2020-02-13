@@ -64,6 +64,16 @@ def valid_resp_anonymous(client, anonymous_user, valid_signature, transaction_re
         )
 
 
+@pytest.fixture(autouse=True)
+def sync_user(mocker):
+    return mocker.patch('pythonpro.domain.user_facade._discourse_facade.sync_user')
+
+
+def test_user_discourse_sync_no_user(valid_resp_anonymous, django_user_model, sync_user):
+    user = django_user_model.objects.first()
+    sync_user.assert_called_once_with(user)
+
+
 def test_anonymous_user_promoted_to_client(valid_resp_anonymous, anonymous_user):
     assert has_role(anonymous_user, 'client')
     assert not has_role(anonymous_user, 'lead')
