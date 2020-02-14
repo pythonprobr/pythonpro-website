@@ -1,8 +1,13 @@
 from datetime import datetime
 
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.urls import reverse
 from rolepermissions.checkers import has_role
 from rolepermissions.roles import assign_role, remove_role
 
+from pythonpro import settings
+from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.core.forms import UserSignupForm
 from pythonpro.core.models import User, UserInteraction
 
@@ -45,10 +50,24 @@ def register_lead(first_name: str, email: str, source: str) -> User:
     try:
         user = User.objects.filter(email=email).get()
     except User.DoesNotExist:
-        form = validate_user(first_name, email, source)
-        user = form.save()
+        user = save_and_sent_password_email(first_name, email, source)
         UserInteraction(category=UserInteraction.BECOME_LEAD, source=source, user=user).save()
     assign_role(user, 'lead')
+    return user
+
+
+def save_and_sent_password_email(first_name, email, source):
+    form = validate_user(first_name, email, source)
+    user = form.save()
+    subject = 'Confira sua senha do Python Pro'
+    change_password_uri = build_absolute_uri(reverse('core:profile_password'))
+    ctx = {
+        'first_name': first_name,
+        'password': form.plain_password,
+        'change_password_uri': change_password_uri
+    }
+    msg = render_to_string('core/password_email.txt', context=ctx)
+    send_mail(subject, msg, settings.DEFAULT_FROM_EMAIL, [user.email])
     return user
 
 
@@ -63,8 +82,7 @@ def register_member(first_name, email, source):
     try:
         user = User.objects.filter(email=email).get()
     except User.DoesNotExist:
-        form = validate_user(first_name, email, source)
-        user = form.save()
+        user = save_and_sent_password_email(first_name, email, source)
     promote_to_member(user, source)
     return user
 
@@ -80,8 +98,7 @@ def register_client(first_name: str, email: str, source: str) -> User:
     try:
         user = User.objects.filter(email=email).get()
     except User.DoesNotExist:
-        form = validate_user(first_name, email, source)
-        user = form.save()
+        user = save_and_sent_password_email(first_name, email, source)
     promote_to_client(user, source)
     return user
 

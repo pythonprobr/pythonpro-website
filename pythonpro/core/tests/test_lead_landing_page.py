@@ -6,6 +6,7 @@ from faker import Faker
 from rolepermissions.checkers import has_role
 from rolepermissions.roles import assign_role, remove_role
 
+from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.core.models import UserInteraction
 from pythonpro.django_assertions import dj_assert_not_contains
 
@@ -75,18 +76,27 @@ def test_lead_created_interaction(resp_lead_creation, django_user_model):
     assert interaction.source == 'facebook'
 
 
-def test_lead_from_unknow_source(resp_lead_creation, django_user_model, client, fake):
-    email = fake.email()
-    client.post(
+@pytest.fixture
+def resp_lead_creation_without_source(client, db, fake: Faker, create_lead_mock):
+    return client.post(
         reverse('core:lead_form'),
         data={
             'first_name': fake.name(),
-            'email': email,
+            'email': fake.email(),
         },
         secure=True
     )
-    user = django_user_model.objects.filter(email=email).get()
+
+
+def test_lead_from_unknow_source(resp_lead_creation_without_source, django_user_model):
+    user = django_user_model.objects.get()
     assert user.source == 'unknown'
+
+
+def test_password_email_sent(resp_lead_creation_without_source, django_user_model, mailoutbox):
+    assert len(mailoutbox) == 1
+    body = mailoutbox[0].body
+    assert build_absolute_uri(reverse('core:profile_password')) in body
 
 
 def test_user_has_role(resp_lead_creation, django_user_model):
