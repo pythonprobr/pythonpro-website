@@ -2,6 +2,7 @@
 {% load tz %}
 
 {% block extra_style %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <style>
     h2.countdown {
         font-size: 50pt !important;
@@ -9,6 +10,23 @@
     }
     h2, h3, h4 {
         line-height: 150%;
+    }
+    .support-button{
+        position:fixed;
+        width:45px;
+        height:45px;
+        bottom:20px;
+        right:20px;
+        background-color: #25d366;
+        color:#FFF;
+        border-radius:50px;
+        text-align:center;
+        font-size:25px;
+        box-shadow: 2px 2px 3px #999;
+        z-index:100;
+    }
+    .fa-whatsapp{
+        margin-top: 10px;
     }
 </style>
 {% endblock %}
@@ -23,6 +41,10 @@
 {% block hero_cta %}{% endblock %}
 
 {% block copy %}
+    <a href="https://api.whatsapp.com/send?phone=5512992488788&text=Olá! Estou vendo a página de promoção do PyTools e fiquei com uma dúvida. Vocês poderiam me ajudar?" class="support-button" target="_blank">
+        <i class="fa fa-whatsapp"></i>
+    </a>
+    
     <div>
         <div class="container">
             <div class="row">
