@@ -130,6 +130,15 @@ def lead_landing(request):
     return render(request, 'core/lead_landing_page.html', context={'form': LeadForm()})
 
 
+def lead_landing_lite(request):
+    """
+    View with lead landing page lite version
+    :param request:
+    :return:
+    """
+    return render(request, 'core/lead_landing_lite_page.html', context={'form': LeadForm()})
+
+
 def programmer_week_ty(request):
     """
     View with lead landing page

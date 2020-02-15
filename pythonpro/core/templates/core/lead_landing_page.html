@@ -68,6 +68,7 @@
 {% endblock head %}
 
 {% block body %}
+    {% block first_block %}
     <div class='bg-secondary'>
         <div class="container">
             <div class="row text-center">
@@ -94,7 +95,9 @@
             </div>
         </div>
     </div>
+    {% endblock %}
 
+    {% block second_block %}
     <div>
         <div class="container">
             <div class="row">
@@ -130,7 +133,9 @@
             </div>
         </div>
     </div>
+    {% endblock %}
 
+    {% block third_block %}
     <div class='bg-primary'>
         <div class="container">
             <div class="row text-light">
@@ -147,7 +152,9 @@
             </div>
         </div>
     </div>
-
+    {% endblock %}
+    
+    {% block fourth_block %}
     <div>
         <div class="container">
             <div class="row">
@@ -183,7 +190,9 @@
             </div>
         </div>
     </div>
+    {% endblock %}
 
+    {% block fifth_block %}
     <div class='bg-gray'>
         <div class="container">
             <div class="row">
@@ -357,7 +366,9 @@
             </div>
         </div>
     </div>
+    {% endblock %}
 
+    {% block sixth_block %}
     <div class='bg-primary text-light'>
         <div class="container">
             <div class="row">
@@ -427,7 +438,9 @@
             </div>
         </div>
     </div>
+    {% endblock  %}
     
+    {% block seventh_block %}
     <div class="bg-black">
         <div class="container">
             <div class="row">
@@ -460,7 +473,9 @@
             </div>
         </div>
     </div>
+    {% endblock %}
 
+    {% block eighth_block %}
     <div>
         <div class="container">
             <div class="row">
@@ -493,13 +508,17 @@
             </div>
         </div>
     </div>
+    {% endblock %}
 
+    {% block lead_form_1 %}
     <div class='bg-primary text-light'>
         <div class="container">
             <div class="row">    
                 <div class="col-lg-8 offset-lg-2 text-center  mb-5">
                     <h2 class='mt-5 mb-5 text-center' id="lead-form-header">
+                        {% block lead_form_1_title %}
                         Preencha o formulário abaixo e tenha <b>acesso GRÁTIS ao curso!</b>
+                        {% endblock %}
                     </h2>
 
                     <form method="post" action="{% url 'core:lead_form' %}{% if request.GET.utm_source %}?utm_source={{ request.GET.utm_source }}{% endif %}">
@@ -524,7 +543,9 @@
             </div>
         </div>
     </div>
+    {% endblock %}
     
+    {% block testimonials %}
     <div class='bg-secondary'>
         <div class="container">
             <div class="row">
@@ -542,7 +563,9 @@
             </div>
         </div>
     </div>
+    {% endblock %}
 
+    {% block instructors %}
     <div class=''>
         <div class="container">
             <div class="row">
@@ -554,7 +577,9 @@
             </div>
         </div>
     </div>
+    {% endblock %}
 
+    {% block lead_form_2 %}
     <div class='bg-primary text-light'>
         <div class="container">
             <div class="row">    
@@ -583,13 +608,17 @@
             </div>
         </div>
     </div>
+    {% endblock %}
 
+{% endblock body %}
+
+{% block footer %}
     <div class=''>
         <div class="container">
             <div class="row">
                 <div class="col mt-5 mb-5 text-center">
                     <i>
-                        2019 Python Pro. Todos os direitos reservados. <br>
+                        {% now "Y" %} Python Pro. Todos os direitos reservados. <br>
                         CNPJ: 31.080.715/0001-25<br>
                         +55 12 99248-8788 - {{ DEFAULT_FROM_EMAIL }}
                     </i>
@@ -598,7 +627,7 @@
             </div>
         </div>
     </div>
-
+    
     <script>
         $(function(){
             $('label').hide();
@@ -607,6 +636,4 @@
             $('#id_cellphone').attr('placeholder', 'Preencha com seu número de WhatsApp');
         });
     </script>
-{% endblock body %}
-
-{% block footer %}{% endblock footer %}
+{% endblock  %}

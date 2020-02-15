@@ -136,3 +136,7 @@ def test_only_role_lead_can_change_password(resp_lead_change_pasword, django_use
 
 def test_should_redirect_to_OTO_page(resp_lead_creation):
     assert resp_lead_creation['Location'] == reverse('payments:client_landing_page_oto')
+
+
+def test_should_has_a_lite_version(client):
+    assert client.get(reverse('core:lead_landing_lite'), secure=True)
