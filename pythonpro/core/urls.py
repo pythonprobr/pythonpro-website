@@ -11,6 +11,7 @@ urlpatterns = [
     path('tech-talks', views.teck_talks, name='tech_talks'),
     path('podcast', views.podcast, name='podcast'),
     path('curso-de-python-gratis', views.lead_landing, name='lead_landing'),
+    path('curso-de-python-gratis-lite', views.lead_landing_lite, name='lead_landing_lite'),
     path('cadastro-python-birds', views.lead_form, name='lead_form'),
     path('definir-senha', views.lead_change_password, name='lead_change_password'),
     path('obrigado', views.thanks, name='thanks'),
