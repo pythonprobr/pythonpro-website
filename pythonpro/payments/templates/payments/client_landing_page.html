@@ -54,7 +54,9 @@
     <script src="{% static 'js/pagarme-checkout-1.1.0.js' %}"></script>
     <script type="application/javascript">
         $(document).ready(function () {
-            $('button').click(function () {
+            $('button').click(function (e) {
+                e.preventDefault();
+                
                 var $modal = $('#modal-waiting-capture');
 
                 $.post('{% url 'payments:client_checkout' %}', function () {
