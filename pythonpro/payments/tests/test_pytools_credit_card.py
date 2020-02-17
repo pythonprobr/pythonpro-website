@@ -161,13 +161,19 @@ def resps_success():
 
 
 @pytest.fixture
-def resp_token_with_no_user(db, client, create_or_update_client, create_or_update_lead, resps_success):
+def remove_tags_mock(mocker):
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.remove_tags')
+
+
+@pytest.fixture
+def resp_token_with_no_user(db, client, create_or_update_client, create_or_update_lead, resps_success,
+                            remove_tags_mock):
     data = {'token': 'test_transaction_5ndnWcHEJQX1FPCbEpQpFng90gM5oM', 'payment_method': 'credit_card'}
     return client.post(reverse('payments:pytools_capture'), data, secure=True)
 
 
 @pytest.fixture
-def resp_token(client_with_lead, logged_user, create_or_update_client, resps_success):
+def resp_token(client_with_lead, logged_user, create_or_update_client, resps_success, remove_tags_mock):
     data = {'token': 'test_transaction_5ndnWcHEJQX1FPCbEpQpFng90gM5oM', 'payment_method': 'credit_card'}
     return client_with_lead.post(reverse('payments:pytools_capture'), data, secure=True)
 

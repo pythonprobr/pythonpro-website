@@ -101,6 +101,10 @@ def _promote_client(user, request):
     user_facade.promote_client(user, source=request.GET.get('utm_source', default='unknown'))
 
 
+def _promote_client_and_remove_tag_boleto(user, request):
+    user_facade.promote_client_and_remove_boleto_tag(user, source=request.GET.get('utm_source', default='unknown'))
+
+
 def pytools_thanks(request):
     return render(request, 'payments/pytools_thanks.html')
 
@@ -277,7 +281,7 @@ def pagarme_notification(request, user_id: int):
         pass
     else:
         user = user_facade.find_user_by_id(user_id)
-        _promote_client(user, request)
+        _promote_client_and_remove_tag_boleto(user, request)
     return HttpResponse('')
 
 
@@ -292,7 +296,7 @@ def pagarme_anonymous_notification(request):
         pass  # No problem, we need to handle only paid transactions
     else:
         user = user_facade.find_user_by_email(transaction['customer']['email'])
-        _promote_client(user, request)
+        _promote_client_and_remove_tag_boleto(user, request)
     return HttpResponse('')
 
 
