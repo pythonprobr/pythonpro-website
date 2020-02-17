@@ -140,6 +140,11 @@ def create_or_update_client(mocker):
 
 
 @pytest.fixture
+def tag_as_mock(mocker):
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.tag_as')
+
+
+@pytest.fixture
 def create_or_update_lead(mocker):
     return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_lead')
 
@@ -153,17 +158,21 @@ def resps_success():
 
 
 @pytest.fixture
-def resp_token(client_with_lead, logged_user, create_or_update_client, resps_success):
+def resp_token(client_with_lead, logged_user, create_or_update_client, resps_success, tag_as_mock):
     return client_with_lead.post(reverse('payments:pytools_capture'), transaction_data, secure=True)
 
 
 @pytest.fixture
-def resp_token_with_no_user(client, create_or_update_client, create_or_update_lead, resps_success, db):
+def resp_token_with_no_user(client, create_or_update_client, create_or_update_lead, resps_success, db, tag_as_mock):
     return client.post(reverse('payments:pytools_capture'), transaction_data, secure=True)
 
 
 def test_email_marketing_update(resp_token, create_or_update_client, logged_user):
     assert create_or_update_client.call_count == 0
+
+
+def test_email_marketing_boleto_tag(resp_token, logged_user, tag_as_mock):
+    tag_as_mock.assert_called_once_with(logged_user.email, logged_user.id, 'client-boleto')
 
 
 def test_user_stay_lead(resp_token, logged_user):
@@ -268,7 +277,7 @@ def test_client_lead_not_created_on_email_marketing(resp_token_with_no_user, dja
 
 @pytest.fixture
 def resp_existing_user_not_logged(db, client, create_or_update_client, create_or_update_lead, resps_success,
-                                  django_user_model):
+                                  django_user_model, tag_as_mock):
     mommy.make(django_user_model, email=CUSTOMER_EMAIL)
     return client.post(reverse('payments:pytools_capture'), transaction_data, secure=True)
 

@@ -25,7 +25,8 @@ def create_or_update_client(client_with_lead, logged_user, mocker):
 
 
 @pytest.fixture
-def valid_resp(client, logged_user, valid_signature, transaction_response, create_or_update_client, mailoutbox):
+def valid_resp(client, logged_user, valid_signature, transaction_response, create_or_update_client, mailoutbox,
+               remove_tags_mock):
     transaction_response['items'][0]['id'] = f'pytools-{logged_user.id}'
     with responses.RequestsMock(assert_all_requests_are_fired=True) as r:
         r.add(r.GET, 'https://api.pagar.me/1/transactions/1396639', json=transaction_response, status=200)
@@ -49,8 +50,13 @@ def anonymous_user(db, django_user_model):
 
 
 @pytest.fixture
+def remove_tags_mock(mocker):
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.remove_tags')
+
+
+@pytest.fixture
 def valid_resp_anonymous(client, anonymous_user, valid_signature, transaction_response, create_or_update_client,
-                         mailoutbox):
+                         mailoutbox, remove_tags_mock):
     transaction_response['items'][0]['id'] = 'pytools-'
     with responses.RequestsMock(assert_all_requests_are_fired=True) as r:
         r.add(r.GET, 'https://api.pagar.me/1/transactions/1396639', json=transaction_response, status=200)
@@ -78,6 +84,14 @@ def test_anonymous_user_promoted_to_client(valid_resp_anonymous, anonymous_user)
     assert has_role(anonymous_user, 'client')
     assert not has_role(anonymous_user, 'lead')
     assert not has_role(anonymous_user, 'member')
+
+
+def test_anonymous_user_tag_removed(valid_resp_anonymous, anonymous_user, remove_tags_mock):
+    remove_tags_mock.assert_called_once_with(anonymous_user.email, anonymous_user.id, 'client-boleto')
+
+
+def test_user_tag_removed(valid_resp, logged_user, remove_tags_mock):
+    remove_tags_mock.assert_called_once_with(logged_user.email, logged_user.id, 'client-boleto')
 
 
 def test_user_promoted_to_client(valid_resp, logged_user):

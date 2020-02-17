@@ -13,9 +13,9 @@ from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.cohorts import facade as _cohorts_facade
 from pythonpro.core import facade as _core_facade
 from pythonpro.core.models import User as _User
+from pythonpro.discourse import facade as _discourse_facade
 from pythonpro.email_marketing import facade as _email_marketing_facade
 from pythonpro.payments import facade as _payments_facade
-from pythonpro.discourse import facade as _discourse_facade
 
 UserCreationException = _core_facade.UserCreationException  # exposing exception on Facade
 
@@ -25,6 +25,8 @@ __all__ = [
     'client_generated_boleto', 'promote_member', 'find_user_by_email', 'find_user_by_id', 'force_register_lead',
     'subscribe_to_waiting_list', 'force_register_member', 'click_member_checkout'
 ]
+
+CLIENT_BOLETO_TAG = 'client-boleto'
 
 
 def register_lead(first_name: str, email: str, source: str = 'unknown') -> _User:
@@ -176,6 +178,11 @@ def promote_client(user: _User, source: str) -> None:
     )
 
 
+def promote_client_and_remove_boleto_tag(user: _User, source: str = None):
+    promote_client(user, source)
+    _email_marketing_facade.remove_tags(user.email, user.id, CLIENT_BOLETO_TAG)
+
+
 def find_user_by_email(user_email: str) -> _User:
     """
     Find user by her email
@@ -289,6 +296,7 @@ def client_generated_boleto(user):
         :param user:
         :return:
         """
+    _email_marketing_facade.tag_as(user.email, user.id, CLIENT_BOLETO_TAG)
     _core_facade.client_generated_boleto(user, None)
 
 
