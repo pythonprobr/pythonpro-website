@@ -1,0 +1,31 @@
+<div class="modal fade" id="idModalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <form method="post" action="{% url 'login' %}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Acesse sua conta para continuar...</h5>
+            </div>
+            <div class="modal-body">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}"/>
+                <div class="form-group">
+                    <input type="email" name="username" class="form-control" required="required" id="username" placeholder="Digite seu e-mail">
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control" value=""required="required" id="password" placeholder="Digite sua senha">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Entrar">
+            </div>
+        </div>
+    </form>
+  </div>
+</div>
+
+<script>
+    $(function(){
+        $("#idModalLogin").modal('show');
+    })
+</script>

@@ -11,16 +11,17 @@ _pagarme.authentication_key(settings.PAGARME_API_KEY)
 PYTOOLS_PRICE = 39700
 PYTOOLS_PROMOTION_PRICE = 9700  # flashning launch
 PYTOOLS_OTO_PRICE = 9700  # one time offer in python birds thank you page
+PYTOOLS_DO_PRICE = 19700  # done offer for people who finished python birds
 MEMBERSHIP_PRICE = 159990
 MEMBERSHIP_DISCOUNT_FOR_CLIENTS = 10000
 
 
-def _discover_pytools_price(user_creation: datetime):
+def _discover_pytools_price(user_creation: datetime, item_id=''):
     price = PYTOOLS_PRICE
-
-    if is_on_pytools_oto_season(user_creation):
+    if item_id.startswith('pytools-do'):
+        price = PYTOOLS_DO_PRICE
+    elif is_on_pytools_oto_season(user_creation):
         price = PYTOOLS_OTO_PRICE
-
     elif is_on_pytools_promotion_season(user_creation):
         price = PYTOOLS_PROMOTION_PRICE
 
@@ -28,8 +29,9 @@ def _discover_pytools_price(user_creation: datetime):
 
 
 def pytools_capture(token: str, user_creation: datetime):
-    price = _discover_pytools_price(user_creation)
-    amount = _pagarme.transaction.find_by_id(token)['amount']
+    transaction = _pagarme.transaction.find_by_id(token)
+    amount = transaction['amount']
+    price = _discover_pytools_price(user_creation, transaction['items'][0]['id'])
     if amount < price:
         raise PagarmeValidationException(f'Payment done ({amount}) is less then price ({price}) for token: {token}')
     return _pagarme.transaction.capture(token, {'amount': amount})
@@ -54,7 +56,7 @@ def confirm_boleto_payment(user_id: int, notification: dict, raw_post: str, expe
     transaction = extract_transaction(notification, raw_post, expected_signature)
     item_id = transaction['items'][0]['id']
     # id is generated concatenating Module slug and user's id. Check content_client_landing_page pagarme JS
-    expected_ids = {f'pytools-{user_id}', f'pytools-oto-{user_id}'}
+    expected_ids = {f'pytools-{user_id}', f'pytools-oto-{user_id}', f'pytools-do-{user_id}'}
     if item_id not in expected_ids:
         raise PagarmeValidationException(f"{item_id} not in expected ids {expected_ids}", notification)
     return transaction

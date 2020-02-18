@@ -121,6 +121,8 @@
                         {% endblock %}
                     </p>
 
+                    {% block h3 %}{% endblock %}
+                    
                     {% block hero_cta %}
                         <div class='text-center initiate-checkout d-none d-sm-block d-md-block'>
                             <button class="cta btn btn-warning initiate-checkout mt-10">
@@ -677,46 +679,49 @@
     {% endblock %}
     
     {% block price_first_block %}
-        <div class='bg-primary'>
-            <div class="container">
-                <div class="row text-center text-light">
+        {% if not is_promotion_expired %}
+            <!-- block price appearing -->
+            <div class='bg-primary'>
+                <div class="container">
+                    <div class="row text-center text-light">
 
-                    <div class='col mb-5 mt-5'>
-                        <h2 class='font-weight-bold'>SOMENTE HOJE, VOCÊ TERÁ ACESSO AO CURSO POR APENAS:</h2>
-                        <p class='price'>
-                            <b>12x </b>
-                            <b class='real'><span>R$</span> {{ price_installment|floatformat:2 }}</b>
-                        </p>
+                        <div class='col mb-5 mt-5'>
+                            <h2 class='font-weight-bold'>SOMENTE HOJE, VOCÊ TERÁ ACESSO AO CURSO POR APENAS:</h2>
+                            <p class='price'>
+                                <b>12x </b>
+                                <b class='real'><span>R$</span> {{ price_installment|floatformat:2 }}</b>
+                            </p>
 
-                        <p class='a-vista'>
-                            <i class=''>(ou apenas <b>R$ {{ price_float|floatformat:2 }}</b> se você comprar à vista)</i>
-                        </p>
+                            <p class='a-vista'>
+                                <i class=''>(ou apenas <b>R$ {{ price_float|floatformat:2 }}</b> se você comprar à vista)</i>
+                            </p>
 
-                        <div class='text-center initiate-checkout d-none d-sm-block d-md-block'>
-                            <button class="cta btn btn-warning initiate-checkout mt-10">
-                                {% block price_first_block_cta_desktop %}
-                                    SIM! Eu quero <b class='initiate-checkout'>ir além do básico!</b>
-                                {% endblock %}
-                            </button>
-                        </div>
+                            <div class='text-center initiate-checkout d-none d-sm-block d-md-block'>
+                                <button class="cta btn btn-warning initiate-checkout mt-10">
+                                    {% block price_first_block_cta_desktop %}
+                                        SIM! Eu quero <b class='initiate-checkout'>ir além do básico!</b>
+                                    {% endblock %}
+                                </button>
+                            </div>
 
-                        <div class='text-center initiate-checkout d-block d-lg-none d-xl-none'>
-                            <button class="cta-mobile btn initiate-checkout btn-warning mt-10">
-                                {% block price_first_block_cta_mobile %}
-                                    SIM! Eu quero <b class='initiate-checkout'>ir além do básico!</b>
-                                {% endblock %}
-                            </button>
-                        </div>
+                            <div class='text-center initiate-checkout d-block d-lg-none d-xl-none'>
+                                <button class="cta-mobile btn initiate-checkout btn-warning mt-10">
+                                    {% block price_first_block_cta_mobile %}
+                                        SIM! Eu quero <b class='initiate-checkout'>ir além do básico!</b>
+                                    {% endblock %}
+                                </button>
+                            </div>
 
-                        <div class="mt-3">
-                            <img src='{% static "img/compra-segura-1.png" %}' width='250px' alt="Imagem Compra Segura"/>
+                            <div class="mt-3">
+                                <img src='{% static "img/compra-segura-1.png" %}' width='250px' alt="Imagem Compra Segura"/>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {% block price_first_block_additional %}{% endblock price_first_block_additional %}
+                    {% block price_first_block_additional %}{% endblock price_first_block_additional %}
+                </div>
             </div>
-        </div>
+        {% endif %}
     {% endblock %}
 
     {% block countdown %}{% endblock %}
@@ -892,48 +897,51 @@
     </div>
 
     {% block price_second_block %}
-        <div class='bg-primary'>
-            <div class="container">
-                <div class="row text-center text-light">
+        {% if not is_promotion_expired %}
+            <!-- block price appearing --> 
+            <div class='bg-primary'>
+                <div class="container">
+                    <div class="row text-center text-light">
 
-                    <div class='col mb-5 mt-5'>
-                        <h2 class='font-weight-bold'>ADQUIRA O PYTOOLS POR APENAS:</h2>
-                        <p class='price'>
-                            <b>12x </b>
-                            <b class='real'><span>R$</span> {{ price_installment|floatformat:2 }}</b>
-                        </p>
+                        <div class='col mb-5 mt-5'>
+                            <h2 class='font-weight-bold'>ADQUIRA O PYTOOLS POR APENAS:</h2>
+                            <p class='price'>
+                                <b>12x </b>
+                                <b class='real'><span>R$</span> {{ price_installment|floatformat:2 }}</b>
+                            </p>
 
-                        <p class='a-vista'>
-                            <i class=''>(ou apenas <b>R$ {{ price_float|floatformat:2 }}</b> se você comprar à vista)</i>
-                        </p>
+                            <p class='a-vista'>
+                                <i class=''>(ou apenas <b>R$ {{ price_float|floatformat:2 }}</b> se você comprar à vista)</i>
+                            </p>
 
-                        <div class='text-center initiate-checkout d-none d-sm-block d-md-block'>
-                            <button class="cta btn btn-warning initiate-checkout mt-10">
-                                {% block price_second_block_cta_desktop %}
-                                    SIM! Eu quero <b class='initiate-checkout'>ir além do básico!</b>
-                                {% endblock %}
-                            </button>
+                            <div class='text-center initiate-checkout d-none d-sm-block d-md-block'>
+                                <button class="cta btn btn-warning initiate-checkout mt-10">
+                                    {% block price_second_block_cta_desktop %}
+                                        SIM! Eu quero <b class='initiate-checkout'>ir além do básico!</b>
+                                    {% endblock %}
+                                </button>
+                            </div>
+
+                            <div class='text-center initiate-checkout d-block d-lg-none d-xl-none'>
+                                <button class="cta-mobile btn initiate-checkout btn-warning mt-10">
+                                    {% block price_second_block_cta_mobile %}
+                                        SIM! Eu quero <b class='initiate-checkout'>ir além do básico!</b>
+                                    {% endblock %}
+                                </button>
+                            </div>
+
+                            <div class="mt-3">
+                                <img src='{% static "img/compra-segura-1.png" %}' width='250px' alt="Imagem Compra Segura"/>
+                            </div>
+
+
                         </div>
-
-                        <div class='text-center initiate-checkout d-block d-lg-none d-xl-none'>
-                            <button class="cta-mobile btn initiate-checkout btn-warning mt-10">
-                                {% block price_second_block_cta_mobile %}
-                                    SIM! Eu quero <b class='initiate-checkout'>ir além do básico!</b>
-                                {% endblock %}
-                            </button>
-                        </div>
-
-                        <div class="mt-3">
-                            <img src='{% static "img/compra-segura-1.png" %}' width='250px' alt="Imagem Compra Segura"/>
-                        </div>
-
-
                     </div>
-                </div>
 
-                {% block price_second_block_additional %}{% endblock %}
+                    {% block price_second_block_additional %}{% endblock %}
+                </div>
             </div>
-        </div>
+        {% endif %}
     {% endblock %}
     
     <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"

@@ -18,6 +18,7 @@ urlpatterns = [
     path('pytools/boleto/', views.pytools_boleto, name='pytools_boleto'),
     path('membro/boleto/', views.membership_boleto, name='membership_boleto'),
     path('curso-de-python-intermediario-oto', views.client_landing_page_oto, name='client_landing_page_oto'),
+    path('curso-de-python-intermediario-do', views.client_landing_page_do, name='client_landing_page_do'),
     path('curso-de-python-intermediario', login_required(views.client_landing_page), name='client_landing_page'),
     path('pargarme/notificacao/<int:user_id>', views.pagarme_notification, name='pagarme_notification'),
     path('membership/notification/<int:user_id>', views.membership_notification, name='membership_notification'),
