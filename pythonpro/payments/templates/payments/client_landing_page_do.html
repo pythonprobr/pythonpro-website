@@ -1,12 +1,14 @@
-{% extends "payments/client_landing_page.html" %}
+{% extends "payments/client_landing_page_oto.html" %}
 {% load tz %}
 
 {% block extra_style %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <style>
+    .countdown {
+        color: #AF1B3F !important;
+    }
     h2.countdown {
         font-size: 50pt !important;
-        color: #AF1B3F !important;
     }
     h2, h3, h4 {
         line-height: 150%;
@@ -28,20 +30,32 @@
     .fa-whatsapp{
         margin-top: 10px;
     }
+    .font-highlight-over-primary {
+        color: #F6EFA6;
+    }
+    .price {
+        line-height: 100%;
+    }
 </style>
 {% endblock %}
-{% block course_id_prefix %}pytools-oto{% endblock %}
-{% block h1 %}<b><u>CALMA!</u> <br>Falta pouco para finalizarmos...</b>{% endblock %} 
+{% block course_id_prefix %}pytools-do{% endblock %}
+{% block h1 %}
+    <u class='font-highlight-over-primary'><b style='font-size: 50pt;'>
+        PARABÉNS{% if request.user.first_name %}, {{ request.user.first_name }}{% endif %}!
+    </b></u>
+{% endblock %} 
 
 {% block h2 %}
-    Parabéns por decidir se registrar, <b><u>mas sua matrícula ainda não está finalizada.</u></b><br>
-    Leia com atenção o texto abaixo para finalizar seu cadastro.
+    <span style='font-size: 22pt;'>
+        Você está <b class='font-highlight-over-primary'><u>realmente comprometido</u></b> em se tornar um 
+        programador profissional e por isso <u class='font-weight-bold font-highlight-over-primary'>eu tenho um presente para você...</u>
+    </span>
 {% endblock %}
 
 {% block hero_cta %}{% endblock %}
 
 {% block copy %}
-    <a href="https://api.whatsapp.com/send?phone=5512992488788&text=Olá! Estou vendo a página de promoção do PyTools e fiquei com uma dúvida. Vocês poderiam me ajudar?" class="support-button" target="_blank">
+    <a href="https://api.whatsapp.com/send?phone=5512992488788&text=Olá! Estou vendo a página de promoção de 50% de desconto do PyTools e fiquei com uma dúvida. Vocês poderiam me ajudar?" class="support-button" target="_blank">
         <i class="fa fa-whatsapp"></i>
     </a>
     
@@ -59,9 +73,18 @@
                         que é Python</b>, e ter acesso a um <b>mercado que paga altos salários</b> 
                         e está repleto de vagas em aberto!
                     </p>
+                    
+                    <p>
+                        Além disso, está realmente comprometido, pois terminou o Python Birds
+                        <b>muito rápido.</b>
+                    </p>
+
+                    <p>
+                        E como você realmente está comprometido, eu resolvi te dar este presente...
+                    </p>
 
                     <p><b class='highlight'>
-                        Mas e se eu te disesse que existe uma forma mais rápida de você conseguir
+                        E se eu te dissesse que existe uma forma mais rápida de você conseguir
                         uma vaga como programador?</b>
                     </p> 
 
@@ -70,34 +93,38 @@
                     </p>
 
                     <p>
-                        Eu ofereço esta oportunidade única somente para quem me prova que está 
+                        Pode parecer mentira, mas a grande maioria das pessoas que se cadastram 
+                        no Python Birds nem chegam a abrir o curso... 
+                    </p>
+                    
+                    <p>    
+                        ...e, das que abrem, poucas pessoas chegam até a última aula.
+                    </p>
+                    
+                    <p class='mt-5'>
+                        Quando alguém termina o Python Birds eu fico muito feliz, porque essa pessoa
+                        me prova que está realmente comprometida em se tornar um programador
+                        profissional.
+                    </p>
+                    
+                    <p>
+                        Portanto, <b>saiba que você já está muito a frente dos outros.</b>
+                    </p>
+                    
+                    <p class='mt-5'>
+                        Eu só ofereço esta oportunidade para quem me prova que está 
                         realmente comprometido em se tornar um programador profissional...
                     </p>
 
                     <h4 class='mt-5 mb-5'>
-                        E, ao se matricular no Python Birds, <b>você me provou que está comprometido
-                        com o seu objetivo!</b> <span class="ec ec-muscle"></span>
+                        E, ao completar o Python Birds, <b>você me provou que está comprometido!</b> 
+                        <span class="ec ec-muscle"></span>
                     </h4>
 
                     <p>
                         A oportunidade que eu vou compartilhar com você vai te ajudar a atingir
                         seu objetivo, que é se tornar um programador profissional, de uma maneira
                         <b>muito mais rápida.</b>
-                    </p>
-
-                    <p>
-                        Sim, com o Python Birds você vai aprender conceitos mais importantes
-                        que todo programador precisa saber. <b>O Python Birds é o curso grátis 
-                        mais completo de todo o mercado brasileiro.</b>
-                    </p>
-
-                    <p>
-                        Mas para se tornar um profissional, não basta somente dominar estes conceitos.
-                    </p>
-                    
-                    <p>
-                        Para se tornar um programador profissional você precisa também dominar as
-                        principais ferramentas que estes profissionais usam no seu dia a dia.
                     </p>
 
                     {% if not is_promotion_expired %}
@@ -397,13 +424,13 @@
                         <p>
                             <span class="ec ec-gift"></span>
                             <b>E o segundo e melhor benefício: eu vou te dar um cupom de desconto no 
-                            valor de R$ 100,00 <i>(é isso mesmo: o PyTools sai praticamente de graça)</i>.</b>
+                            valor de R$ 100,00.</b>
 
                         </p>
 
                         <p>
                             Isso mesmo, quando você decidir se inscrever em uma turma,
-                            eu praticamente te devolvo o valor do PyTools.
+                            eu te devolvo boa parte do valor do PyTools.
                         </p>
 
                     </div>
@@ -438,35 +465,14 @@
                         </p>
                         
                         <h4>
-                            <b>Por isso eu resolvi te dar 75% de desconto!</b>
+                            <b>Por isso eu resolvi te dar 50% de desconto!</b>
                         </h4>
                     </div>
                 </div>
             </div>
         </div>
 
-{% endblock %}
-
-{% block price_first_block_additional %}
-    <div class="row text-center text-light">
-        <div class='col mb-5'>
-            <a href='{% url "core:thanks" %}' class='text-light'><i><u>
-                (Eu não quero ganhar dinheiro rápido, finalize meu cadastro no Python Birds).
-            </u></i></a>
-        </div>
-    </div>
-{% endblock %}
-    
-{% block price_second_block_additional %}
-    <div class="row text-center text-light">
-        <div class='col mb-5'>
-            <a href='{% url "core:thanks" %}' class='text-light'><i><u>
-                (Eu não quero ganhar dinheiro rápido, finalize meu cadastro no Python Birds).
-            </u></i></a>
-        </div>
-    </div>
-{% endblock %}
-    
+{% endblock %}    
 
 {% block countdown %}
     <div class='bg-black'>
@@ -474,36 +480,35 @@
             <div class="row text-light text-center">
                 <div class="col mb-5 mt-5">
                     {% if not is_promotion_expired %}
-                        <h2 class='font-weight-bold mb-5'>
-                            PRESTE ATENÇÃO: Essa promoção vai expirar em breve!
+                        <h2 class='font-weight-bold mb-5' style='font-size: 30pt'>
+                            <u>ATENÇÃO: Essa promoção vai expirar em breve!</u>
                         </h2>
 
                         <p>
-                            Esta oferta estará disponível apenas durante 30 minutos,
-                            contando a partir do momento do seu cadastro no Python Birds.</b>
+                            <u class='font-highlight-over-primary'>Esta oferta estará disponível apenas durante 72 horas,</u>
+                            <b>contando a partir do momento que você ver esta oferta pela primeira vez.</b>
                         </p>
                         
                         <p>
-                            Ou seja, <b>você só possui esta chance de adquirir o PyTools com 75% de desconto. </b>
+                            Ou seja, <b>você só possui esta chance de adquirir o PyTools com 50% de desconto. </b>
                             Quando o relógio abaixo chegar a zero, <b>a sua chance acabou.</b>
                         </p>
 
                         <h2 class='demo countdown text-light font-weight-bold text-center'></h2>
                     
                     {% else %}
-                    
                         <h2 class='font-weight-bold mb-5' style='font-size: 30pt'>
                             <u>Infelizmente a promoção se encerrou...</u>
                         </h2>
 
                         <div class='initiate-checkout d-none d-sm-block d-md-block mt-5 mb-5'>
-                            <a href='/pagamento/curso-de-python-intermediario' class="cta btn btn-warning initiate-checkout mt-10">
+                            <a href='{% url 'payments:client_landing_page' %}' class="cta btn btn-warning initiate-checkout mt-10">
                                 <b>Comprar o PyTools pelo preço normal</b>
                             </a>
                         </div>
 
                         <div class='initiate-checkout d-block d-lg-none d-xl-none  mt-5 mb-5'>
-                            <a href='/pagamento/curso-de-python-intermediario' class="cta-mobile btn initiate-checkout btn-warning mt-10">
+                            <a href='{% url 'payments:client_landing_page' %}' class="cta-mobile btn initiate-checkout btn-warning mt-10">
                                 <b>Comprar o PyTools pelo preço normal</b>
                             </a >
                         </div>
@@ -552,6 +557,8 @@
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+            hours = hours + 24 * days
+
             if(hours < 10) {
                 hours = "0" + hours 
             }
@@ -574,4 +581,12 @@
             }
         }, 1000);
     </script>
+    
+    {% if not request.user.is_authenticated %}
+        {% url 'payments:client_landing_page_do' as next_url %}
+        {% include 'registration/login_modal.html' with next=next_url %}
+    {% endif %}
 {% endblock %}
+
+{% block price_first_block_additional %}{% endblock %}
+{% block price_second_block_additional %}{% endblock %}

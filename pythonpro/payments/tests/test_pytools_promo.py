@@ -2,19 +2,13 @@ from datetime import datetime
 
 import pytest
 import pytz
+from django.utils import timezone
 from freezegun import freeze_time
 
-from django.utils import timezone
-
 from pythonpro.payments.facade import (
-    calculate_pytools_promotion_interval,
+    PYTOOLS_DO_PRICE, PYTOOLS_OTO_PRICE, PYTOOLS_PRICE, PYTOOLS_PROMOTION_PRICE, _discover_pytools_price,
+    calculate_oto_expires_datetime, calculate_pytools_promotion_interval, is_on_pytools_oto_season,
     is_on_pytools_promotion_season,
-    calculate_oto_expires_datetime,
-    is_on_pytools_oto_season,
-    _discover_pytools_price,
-    PYTOOLS_OTO_PRICE,
-    PYTOOLS_PRICE,
-    PYTOOLS_PROMOTION_PRICE
 )
 
 
@@ -80,6 +74,10 @@ def test_should_check_if_user_is_on_pytools_oto_season_and_return_false(mocker, 
 def test_should_discover_pytools_oto_price(mocker, user_creation):
     mocker.patch('pythonpro.payments.facade.is_on_pytools_oto_season', return_value=True)
     assert _discover_pytools_price(user_creation) == PYTOOLS_OTO_PRICE
+
+
+def test_should_discover_pytools_do_price():
+    assert _discover_pytools_price(datetime.now(), 'pytools-do') == PYTOOLS_DO_PRICE
 
 
 def test_should_discover_pytools_promotion_price(mocker, user_creation):

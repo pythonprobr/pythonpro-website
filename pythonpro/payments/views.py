@@ -1,3 +1,7 @@
+from datetime import timedelta, datetime
+
+import pytz
+
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -7,7 +11,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.http import urlencode
-from django.utils.timezone import now
+from django.utils.timezone import now, make_aware
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
 
@@ -15,8 +19,13 @@ from pythonpro.cohorts import facade as cohorts_facade
 from pythonpro.domain import membership_domain, user_facade
 from pythonpro.payments import facade as payment_facade
 from pythonpro.payments.facade import (
-    PYTOOLS_OTO_PRICE, PYTOOLS_PRICE, PYTOOLS_PROMOTION_PRICE, PagarmeNotPaidTransaction,
+    PYTOOLS_OTO_PRICE,
+    PYTOOLS_DO_PRICE,
+    PYTOOLS_PRICE,
+    PYTOOLS_PROMOTION_PRICE,
+    PagarmeNotPaidTransaction,
     calculate_oto_expires_datetime,
+    is_on_pytools_oto_season,
 )
 
 
@@ -218,7 +227,8 @@ def client_landing_page(request):
             'price_installment': price_installment,
             'is_promotion_season': is_promotion_season,
             'promotion_end_date': promotion_end_date,
-            'notification_url': request.build_absolute_uri(notification_url)
+            'notification_url': request.build_absolute_uri(notification_url),
+            'is_promotion_expired': False,
         })
 
 
@@ -238,6 +248,10 @@ def client_landing_page_oto(request):
     price_installment = (price // 10) / 100
     countdown_limit = calculate_oto_expires_datetime(user.date_joined) if not is_debug else now()
 
+    is_promotion_expired = True
+    if request.GET.get('debug') is not None or is_on_pytools_oto_season(user.date_joined):
+        is_promotion_expired = False
+
     return render(
         request,
         'payments/client_landing_page_oto.html', {
@@ -246,7 +260,51 @@ def client_landing_page_oto(request):
             'price_float': price_float,
             'price_installment': price_installment,
             'notification_url': request.build_absolute_uri(notification_url),
-            'countdown_limit': countdown_limit
+            'countdown_limit': countdown_limit,
+            'is_promotion_expired': is_promotion_expired,
+        })
+
+
+def client_landing_page_do(request):
+    notification_url = ""
+    is_debug = request.GET.get('debug') is not None
+
+    user = request.user
+    # if not user.is_authenticated and not is_debug:
+    #     return HttpResponseRedirect(reverse('client_landing_page'))
+
+    notification_url = ""
+    if not is_debug and user.is_authenticated:
+        notification_url = reverse('payments:pagarme_notification', kwargs={'user_id': user.id})
+
+    price = PYTOOLS_DO_PRICE
+    price_float = price / 100
+    price_installment = (price // 10) / 100
+
+    countdown_limit = request.session.get('DO_countdown_limit')
+    if countdown_limit is None:
+        countdown_limit = now() + timedelta(days=3)
+
+        countdown_limit_str = countdown_limit.strftime('%Y-%m-%d-%H-%M-%S')
+        request.session['DO_countdown_limit'] = countdown_limit_str
+    else:
+        countdown_limit = datetime.strptime(countdown_limit, '%Y-%m-%d-%H-%M-%S')
+        countdown_limit = make_aware(countdown_limit, timezone=pytz.utc)
+
+    is_promotion_expired = True
+    if request.GET.get('debug') is not None or countdown_limit >= now():
+        is_promotion_expired = False
+
+    return render(
+        request,
+        'payments/client_landing_page_do.html', {
+            'PAGARME_CRYPTO_KEY': settings.PAGARME_CRYPTO_KEY,
+            'price': price,
+            'price_float': price_float,
+            'price_installment': price_installment,
+            'notification_url': request.build_absolute_uri(notification_url),
+            'countdown_limit': countdown_limit,
+            'is_promotion_expired': is_promotion_expired,
         })
 
 
