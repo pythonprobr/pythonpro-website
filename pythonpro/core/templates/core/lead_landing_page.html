@@ -4,69 +4,6 @@
 
 {% block title %}Curso de Python Grátis: Python Birds{% endblock %}
 {% block description %}Curso de Python Grátis. Aprenda a programar de forma rápida, fácil e simples!{% endblock %}
-{% block head %}
-    <script type="application/javascript" src="{% static 'js/lazy.js' %}"></script>
-    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
-
-    <style>
-        @font-face {
-            font-family: 'Gilroy-Bold';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Bold ☞'), url('{% static "fonts/Gilroy-Bold.woff" %}') format('woff');
-        }
-
-        @font-face {
-            font-family: 'Gilroy-Heavy';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Heavy ☞'), url('{% static "fonts/Gilroy-Heavy.woff" %}') format('woff');
-        }
-
-        @font-face {
-            font-family: 'Gilroy-Light';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Light ☞'), url('{% static "fonts/Gilroy-Light.woff" %}') format('woff');
-        }
-
-        @font-face {
-            font-family: 'Gilroy-Medium';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Medium ☞'), url('{% static "fonts/Gilroy-Medium.woff" %}') format('woff');
-        }
-
-        @font-face {
-            font-family: 'Gilroy-Regular';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Regular ☞'), url('{% static "fonts/Gilroy-Regular.woff" %}') format('woff');
-        }
-
-        .text-red {
-            color: #AF1B3F !important;
-        }
-
-        .container {
-            max-width: 960px;
-        }
-
-    </style>
-    <link rel="stylesheet" href="{% static 'css/client.css' %}"/>
-    <style>
-        .cta-mobile {
-            font-size: 130%;
-            padding: 10px 40px;
-        }
-        input.form-control {
-            font-size: 130%;
-            padding: 10px;
-            margin: 0;
-        }
-    </style>
-
-{% endblock head %}
 
 {% block body %}
     {% block first_block %}
@@ -638,3 +575,89 @@
         });
     </script>
 {% endblock  %}
+
+{% block scripts %}
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+    <script type="application/javascript" src="{% static 'js/lazy.js' %}"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44718512-1"></script>
+    {#    Google Tag Manager#}
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','{{GOOGLE_TAG_MANAGER_ID}}');</script>
+    {#     End Google Tag Manager#}
+    
+{% endblock %}
+
+
+{% block styles %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+
+    <style>
+        @font-face {
+            font-family: 'Gilroy-Bold';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Bold ☞'), url('{% static "fonts/Gilroy-Bold.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Heavy';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Heavy ☞'), url('{% static "fonts/Gilroy-Heavy.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Light';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Light ☞'), url('{% static "fonts/Gilroy-Light.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Medium';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Medium ☞'), url('{% static "fonts/Gilroy-Medium.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Regular';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Regular ☞'), url('{% static "fonts/Gilroy-Regular.woff" %}') format('woff');
+        }
+
+        .text-red {
+            color: #AF1B3F !important;
+        }
+
+        .container {
+            max-width: 960px;
+        }
+
+    </style>
+    
+    <link rel="stylesheet" href="{% static 'css/client.css' %}"/>
+    
+    <style>
+        .cta-mobile {
+            font-size: 130%;
+            padding: 10px 40px;
+        }
+        input.form-control {
+            font-size: 130%;
+            padding: 10px;
+            margin: 0;
+        }
+    </style>
+
+{% endblock %}
