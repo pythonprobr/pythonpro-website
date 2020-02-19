@@ -79,7 +79,7 @@ def test_module_certificate_link(resp, modules: List[Module]):
 
 
 def test_module_percentage_style_on_card(resp, logged_user):
-    for m in pythonpro.domain.content_statistics_domain.calculate_module_progresses(logged_user):
+    for m in pythonpro.domain.content_statistics_domain.calculate_modules_progresses(logged_user):
         dj_assert_contains(resp, f'style="width: {m.progress:.0%}"')
 
 

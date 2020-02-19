@@ -9,8 +9,11 @@ import pytz
 from django.db.models import Count, Max, Sum
 from django.utils.datetime_safe import datetime
 
-from pythonpro.modules.facade import get_entire_content_forest, topics_user_interacted_queryset
-from pythonpro.modules.models import Topic
+from pythonpro.dashboard.models import TopicInteraction
+from pythonpro.email_marketing import facade as email_marketing_facade
+from pythonpro.modules.facade import (
+    get_entire_content_forest, get_topic_with_contents_by_id, get_tree, topics_user_interacted_queryset,
+)
 
 __all = [
     'calculate_topic_interaction_history',
@@ -39,12 +42,28 @@ def calculate_topic_interaction_history(user):
     ).order_by('-last_interaction')[:20]
 
 
-def calculate_module_progresses(user):
+def calculate_modules_progresses(user):
     """
     Calculate the user progress on all modules
     :param user:
     :return:
     """
+    modules = get_entire_content_forest()
+    return _calculate_modules_statistics(modules, user)
+
+
+def calculate_module_progresses(user, module):
+    """
+    Calculate the user progress on all modules
+    :param module: Module progresses will be calculated
+    :param user:
+    :return:
+    """
+    module.sections = get_tree(module)
+    return _calculate_modules_statistics([module], user)[0]
+
+
+def _calculate_modules_statistics(modules, user):
     # arbitrary default value for last interaction
     default_min_time = datetime(1970, 1, 1, tzinfo=pytz.utc)
     topic_property_defaults = {
@@ -90,15 +109,13 @@ def calculate_module_progresses(user):
         except ZeroDivisionError:
             return 0
 
-    qs = Topic.objects.filter(topicinteraction__user=user).values('id').annotate(
-        last_interaction=Max('topicinteraction__creation'),
-        interactions_count=Max('topicinteraction'),
-        max_watched_time=Max('topicinteraction__max_watched_time'),
-        total_watched_time=Sum('topicinteraction__total_watched_time'),
-        children_count=Count('topicinteraction')).all()
-
-    user_interacted_topics = {t['id']: t for t in qs}
-    modules = get_entire_content_forest()
+    qs = TopicInteraction.objects.filter(user=user).values('topic_id').annotate(
+        last_interaction=Max('creation'),
+        interactions_count=Count('*'),
+        max_watched_time=Max('max_watched_time'),
+        total_watched_time=Sum('total_watched_time')
+    ).all()
+    user_interacted_topics = {t['topic_id']: t for t in qs}
     all_sections = list(_flaten(modules, 'sections'))
     all_chapters = list(_flaten(all_sections, 'chapters'))
     all_topics = list(_flaten(all_chapters, 'topics'))
@@ -111,7 +128,6 @@ def calculate_module_progresses(user):
         watched_to_end = topic.progress > 0.99
         spent_half_time_watching = topic.total_watched_time * 2 > topic.duration
         topic.finished_topics_count = 1 if (watched_to_end and spent_half_time_watching) else 0
-
     contents_with_children_property_name = [
         (all_chapters, 'topics'),
         (all_sections, 'chapters'),
@@ -119,8 +135,68 @@ def calculate_module_progresses(user):
     ]
     for contents, content_children_property_name in contents_with_children_property_name:
         _aggregate_statistics(contents, content_children_property_name)
-
     for content in chain(all_chapters, all_sections, modules):
         setattr(content, 'progress', calculate_progression(content))
-
     return modules
+
+
+def _generate_completed_contents(modules):
+    for module in modules:
+        if _is_completed(module):
+            yield module
+        for section in module.sections:
+            if _is_completed(section):
+                yield section
+            for chapter in section.chapters:
+                if _is_completed(chapter):
+                    yield chapter
+                for topic in chapter.topics:
+                    if _is_completed(topic):
+                        yield topic
+
+
+def completed_contents(user):
+    """
+    Calculate a list with all contents (Module, Section, Chapter or Topic) user has completed
+    :param user:
+    :return: generator of completed contents
+    """
+    modules = calculate_modules_progresses(user)
+    yield from _generate_completed_contents(modules)
+
+
+def completed_module_contents(user, module):
+    """
+    Calculate a list with all contents (Module, Section, Chapter or Topic) user has completed
+    :param user:
+    :return: generator of completed contents
+    """
+    module_progresses = calculate_module_progresses(user, module)
+    yield from _generate_completed_contents([module_progresses])
+
+
+def _is_completed(content):
+    return content.topics_count > 0 and (content.finished_topics_count == content.topics_count)
+
+
+def tag_newly_completed_contents(user, topic_id: int):
+    """
+    Tag user completed contents on email marketing for segmentation
+    This will only consider module -> section -> chapter -> topic
+    accordingly with topics_id
+    :param topic_id: topic_id from topic user last updated
+    :param user:
+    :return: list of contents_full_tags
+    """
+    topic = get_topic_with_contents_by_id(topic_id)
+    possible_changing_tags = {
+        topic.chapter.section.module.full_slug,
+        topic.chapter.section.full_slug,
+        topic.chapter.full_slug,
+        topic.full_slug,
+    }
+    completed_module_content_slugs = (c.full_slug for c in completed_module_contents(user, topic.find_module()))
+    tags = [s for s in completed_module_content_slugs if s in possible_changing_tags]
+    if tags:
+        email_marketing_facade.tag_as(user.email, user.id, *tags)
+    return tags

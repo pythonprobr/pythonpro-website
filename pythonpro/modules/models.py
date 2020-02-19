@@ -24,6 +24,10 @@ class Content(OrderedModel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+    @property
+    def full_slug(self):
+        raise NotImplementedError()
+
     def parent(self):
         """Must return the parent of current content, which must be also implement Content or None"""
         raise NotImplementedError()
@@ -111,6 +115,10 @@ class Module(Content):
     def parent(self):
         return None
 
+    @property
+    def full_slug(self):
+        return f'module-{self.slug}'
+
     def get_absolute_url(self):
         """Must return the absolute url for this content"""
         return reverse('modules:detail', kwargs={'slug': self.slug})
@@ -132,6 +140,10 @@ class Module(Content):
 class Section(Content):
     module = models.ForeignKey('Module', on_delete=models.CASCADE)
     order_with_respect_to = 'module'
+
+    @property
+    def full_slug(self):
+        return f'module-{self.module_slug()}/section-{self.slug}'
 
     class Meta:
         ordering = ['module', 'order']
@@ -156,6 +168,10 @@ class Chapter(Content):
     class Meta:
         ordering = ['section', 'order']
 
+    @property
+    def full_slug(self):
+        return f'module-{self.module_slug()}/chapter-{self.slug}'
+
     def get_absolute_url(self):
         return reverse('modules:chapter_detail', kwargs={'chapter_slug': self.slug, 'module_slug': self.module_slug()})
 
@@ -178,6 +194,10 @@ class Topic(Content):
 
     class Meta:
         ordering = ['chapter', 'order']
+
+    @property
+    def full_slug(self):
+        return f'module-{self.module_slug()}/topic-{self.slug}'
 
     def get_absolute_url(self):
         return reverse('modules:topic_detail', kwargs={'module_slug': self.module_slug(), 'topic_slug': self.slug})

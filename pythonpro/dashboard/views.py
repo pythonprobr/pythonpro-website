@@ -11,7 +11,7 @@ from pythonpro.modules.models import Topic
 
 @login_required
 def certificate(request, module_slug):
-    module_progresses = content_statistics_domain.calculate_module_progresses(request.user)
+    module_progresses = content_statistics_domain.calculate_modules_progresses(request.user)
     ctx = {}
     for module in module_progresses:
         if module.slug == module_slug:
@@ -27,7 +27,7 @@ def home(request):
     for topic in topics:
         topic.calculated_module = topic.find_module()
 
-    module_progresses = content_statistics_domain.calculate_module_progresses(request.user)
+    module_progresses = content_statistics_domain.calculate_modules_progresses(request.user)
     ctx = {'topics': topics, 'module_progresses': module_progresses}
     return render(
         request,
@@ -52,4 +52,7 @@ def topic_interaction(request):
         if current_topic_duration != maybe_new_topic_duration:
             Topic.objects.filter(id=topic_id).update(duration=maybe_new_topic_duration)
         form.save()
+        data = form.cleaned_data
+        if data['max_watched_time'] >= data['topic_duration']:
+            content_statistics_domain.tag_newly_completed_contents(user, topic_id)
         return JsonResponse({'msg': 'ok'})

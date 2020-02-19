@@ -78,6 +78,16 @@ def get_topic_with_contents(slug):
         'chapter__section__module').get()
 
 
+def get_topic_with_contents_by_id(id: int) -> _Topic:
+    """
+    Search for a topic respective to slug with it's module, section and chapter
+    :param id: topic's id
+    :return: Topic
+    """
+    return _Topic.objects.filter(id=id).select_related('chapter').select_related('chapter__section').select_related(
+        'chapter__section__module').get()
+
+
 def get_entire_content_forest():
     """
     Return a list of modules with the entire content on it
@@ -101,6 +111,26 @@ def get_entire_content_forest():
             ),
             to_attr='sections')
     ))
+
+
+def get_tree(module):
+    """
+    Return a list of modules with the entire content on it
+    :return:
+    """
+    sections = list(_Section.objects.filter(module=module).order_by('order').prefetch_related(
+        Prefetch(
+            'chapter_set',
+            queryset=_Chapter.objects.order_by(
+                'order').prefetch_related(
+                Prefetch(
+                    'topic_set',
+                    queryset=_Topic.objects.order_by(
+                        'order'),
+                    to_attr='topics')),
+            to_attr='chapters')))
+    module.sections = sections
+    return sections
 
 
 def topics_user_interacted_queryset(user):
