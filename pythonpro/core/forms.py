@@ -9,7 +9,15 @@ from django.utils.translation import gettext_lazy as _
 from pythonpro.core.models import User
 
 
-class UserEmailForm(ModelForm):
+class NormalizeEmailMixin:
+    def _normalize_email(self):
+        self.data = dict(self.data.items())
+        email = self.data.get('email')
+        if email is not None:
+            self.data['email'] = email.lower()
+
+
+class UserEmailForm(ModelForm, NormalizeEmailMixin):
     current_password = CharField(label=_("Password"), strip=False, required=True)
 
     class Meta:
@@ -19,6 +27,7 @@ class UserEmailForm(ModelForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
         super().__init__(*args, **kwargs)
+        self._normalize_email()
 
     def clean(self):
         cleaned_data = super().clean()
@@ -27,7 +36,7 @@ class UserEmailForm(ModelForm):
         return cleaned_data
 
 
-class UserSignupForm(UserCreationForm):
+class UserSignupForm(UserCreationForm, NormalizeEmailMixin):
     class Meta:
         model = User
         fields = ('first_name', 'email', 'source')
@@ -44,6 +53,7 @@ class UserSignupForm(UserCreationForm):
             self._set_passwords(dct)
             args = (ChainMap(query_dict, dct), *args[1:])
         super().__init__(*args, **kwargs)
+        self._normalize_email()
 
     def _set_passwords(self, data):
         if 'password1' not in data and 'password2' not in data:

@@ -6,7 +6,12 @@ from pythonpro.django_assertions import dj_assert_contains
 
 @pytest.fixture
 def email(fake):
-    return fake.email()
+    return fake.email().lower()
+
+
+@pytest.fixture
+def email_upper(email):
+    return email.upper()
 
 
 @pytest.fixture
@@ -20,6 +25,11 @@ def resp(client, email, create_or_update_with_no_role, cohort):
 
 
 @pytest.fixture
+def resp_email_upper(client, email_upper, create_or_update_with_no_role, cohort):
+    return client.post(reverse('launch:lead_form'), {'email': email_upper}, secure=True)
+
+
+@pytest.fixture
 def invalid_email(email):
     return f'@{email}'
 
@@ -29,6 +39,12 @@ def test_status_code(resp):
 
 
 def test_email_marketing_sucess_integration(resp, email, create_or_update_with_no_role, cohort):
+    first_name = email.split('@')[0]
+    create_or_update_with_no_role.assert_called_once_with(first_name, email,
+                                                          f'turma-{cohort.slug}-semana-do-programador')
+
+
+def test_email_normalization(resp_email_upper, email, create_or_update_with_no_role, cohort):
     first_name = email.split('@')[0]
     create_or_update_with_no_role.assert_called_once_with(first_name, email,
                                                           f'turma-{cohort.slug}-semana-do-programador')
