@@ -32,16 +32,54 @@ def create_lead_mock(mocker):
     return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_lead')
 
 
+@pytest.fixture()
+def email(fake):
+    return fake.email()
+
+
 @pytest.fixture
-def resp_lead_creation(client, db, fake: Faker, create_lead_mock):
+def resp_lead_creation(client, db, fake: Faker, create_lead_mock, email):
     return client.post(
         reverse('core:lead_form') + '?utm_source=facebook',
         data={
             'first_name': fake.name(),
-            'email': fake.email(),
+            'email': email,
         },
         secure=True
     )
+
+
+def test_email_error_subscribing_with_email_variation(resp_lead_creation, email: str, fake, client):
+    email_upercase = email.upper()
+    resp = client.post(
+        reverse('core:lead_form') + '?utm_source=facebook',
+        data={
+            'first_name': fake.name(),
+            'email': email_upercase,
+        },
+        secure=True
+    )
+
+    assert resp.status_code == 400
+
+
+@pytest.fixture
+def resp_email_upper_case(client, db, fake: Faker, create_lead_mock, email):
+    email = email.upper()
+    return client.post(
+        reverse('core:lead_form') + '?utm_source=facebook',
+        data={
+            'first_name': fake.name(),
+            'email': email,
+        },
+        secure=True
+    )
+
+
+def test_email_normalization(resp_email_upper_case, email, django_user_model):
+    email_lower = email.lower()
+    user = django_user_model.objects.first()
+    assert user.email == email_lower
 
 
 @pytest.fixture

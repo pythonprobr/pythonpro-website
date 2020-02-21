@@ -54,3 +54,25 @@ def test_edit_email_link(resp_with_user):
 
 def test_edit_password_link(resp_with_user):
     dj_assert_contains(resp_with_user, reverse('core:profile_password'))
+
+
+@pytest.fixture
+def user_with_plain_password(django_user_model):
+    plain_password = 'senha'
+    u = mommy.make(django_user_model)
+    u.set_password(plain_password)
+    u.plain_password = plain_password
+    u.save()
+    return u
+
+
+def test_email_normalization(user_with_plain_password, client, django_user_model):
+    client.force_login(user_with_plain_password)
+    email = 'ALUNO@PYTHON.PRO.BR'
+    client.post(
+        reverse('core:profile_email'),
+        {'email': email, 'current_password': user_with_plain_password.plain_password},
+        secure=True
+    )
+    saved_user = django_user_model.objects.first()
+    assert saved_user.email == email.lower()
