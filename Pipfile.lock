@@ -89,11 +89,10 @@
         },
         "collectfast": {
             "hashes": [
-                "sha256:bc47426542f7db96083b0a48db68286987f82dd4aa9a191b510b2493e3410458",
-                "sha256:f74a658fc5ed51577e20efd9ed7ae8da4abaf81eafecd870f93cc30b46b52804"
+                "sha256:7733f71b9db940050e41bc3ce4abccf1309b048957744a3a6a8d55a867a47286",
+                "sha256:cdffa10277cfe5d72a666090edcefed23c7351b8ef7993575df12363796af2ee"
             ],
-            "index": "pypi",
-            "version": "==1.3.2"
+            "version": "==2.0.0"
         },
         "coverage": {
             "hashes": [
