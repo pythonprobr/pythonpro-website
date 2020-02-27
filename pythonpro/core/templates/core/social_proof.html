@@ -91,11 +91,11 @@
 </div>
 
 
-<div class="modal fade" id="idModalTestimonial" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade social-proof" id="idModalTestimonial" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-        <div class="modal-body text-center">
-            <iframe id='youtubeTestimonialEmbed' max-width="711" max-height="400" src="" frameborder="0"></iframe>
+        <div class='embed-video'>
+            <iframe id='youtubeTestimonialEmbed' src="" frameborder="0"></iframe>
         </div>
     </div>
   </div>
@@ -115,3 +115,22 @@
         })
     });
 </script>
+
+<style>
+    .social-proof .modal-content {
+        background: rgba(0, 0, 0, 0) !important;
+    }
+
+    @media (min-width: 768px) and (max-width: 899px) {
+        #youtubeTestimonialEmbed {
+            width: 498px;
+            height: 281px;
+        }
+    }
+    @media (min-width: 900px) {
+        #youtubeTestimonialEmbed {
+            width: 798px;
+            height: 449px;
+        }
+    }
+</style>
