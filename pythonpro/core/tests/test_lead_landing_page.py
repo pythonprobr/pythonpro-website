@@ -8,7 +8,9 @@ from rolepermissions.roles import assign_role, remove_role
 
 from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.core.models import UserInteraction
-from pythonpro.django_assertions import dj_assert_not_contains
+from pythonpro.django_assertions import (
+    dj_assert_not_contains, dj_assert_contains, dj_assert_template_used
+)
 
 
 @pytest.fixture
@@ -176,14 +178,30 @@ def test_should_redirect_to_OTO_page(resp_lead_creation):
     assert resp_lead_creation['Location'] == reverse('payments:client_landing_page_oto')
 
 
+def test_should_has_a_normal_version(resp):
+    dj_assert_template_used(resp, 'core/lead_landing_page.html')
+
+
 def test_should_has_a_lite_version(client):
-    assert client.get(reverse('core:lead_landing_lite'), secure=True)
+    resp = client.get(reverse('core:lead_landing_lite'), secure=True)
+    dj_assert_template_used(resp, 'core/lead_landing_lite_page.html')
+
+
+def test_should_use_lead_form_with_no_offer(client):
+    resp = client.get(reverse('core:lead_landing_with_no_offer'), secure=True)
+    dj_assert_not_contains(resp, reverse('core:lead_form') + '">')
+    dj_assert_contains(resp, reverse('core:lead_form_with_no_offer'))
+
+
+def test_should_use_lead_form_with_OTO(resp):
+    dj_assert_contains(resp, reverse('core:lead_form') + '">')
+    dj_assert_not_contains(resp, reverse('core:lead_form_with_no_offer'))
 
 
 @pytest.fixture
-def resp_lead_creation_without_OTO(client, db, fake: Faker, create_lead_mock, email):
+def resp_lead_creation_with_no_offer(client, db, fake: Faker, create_lead_mock, email):
     return client.post(
-        reverse('core:lead_landing_without_OTO'),
+        reverse('core:lead_form_with_no_offer'),
         data={
             'first_name': fake.name(),
             'email': email,
@@ -192,5 +210,5 @@ def resp_lead_creation_without_OTO(client, db, fake: Faker, create_lead_mock, em
     )
 
 
-def test_should_has_a_version_that_not_redirect_to_OTO_page(resp_lead_creation_without_OTO):
-    assert resp_lead_creation_without_OTO['Location'] == reverse('core:thanks')
+def test_should_not_redirect_to_any_offer(resp_lead_creation_with_no_offer):
+    assert resp_lead_creation_with_no_offer['Location'] == reverse('core:thanks')

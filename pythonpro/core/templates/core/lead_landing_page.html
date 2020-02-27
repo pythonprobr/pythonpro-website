@@ -459,7 +459,7 @@
                         {% endblock %}
                     </h2>
 
-                    <form method="post" action="{% url 'core:lead_form' %}{% if request.GET.utm_source %}?utm_source={{ request.GET.utm_source }}{% endif %}">
+                    <form method="post" action="{{ form_action }}{% if request.GET.utm_source %}?utm_source={{ request.GET.utm_source }}{% endif %}">
                         {% csrf_token %}
                         {% bootstrap_form form %}
                         
@@ -526,7 +526,7 @@
                         Preencha o formulário abaixo e tenha <b>acesso GRÁTIS ao curso!</b>
                     </h2>
 
-                    <form method="post" action="{% url 'core:lead_form' %}{% if request.GET.utm_source %}?utm_source={{ request.GET.utm_source }}{% endif %}">
+                    <form method="post" action="{{ form_action }}{% if request.GET.utm_source %}?utm_source={{ request.GET.utm_source }}{% endif %}">
                         {% csrf_token %}
                         {% bootstrap_form form %}
                         
