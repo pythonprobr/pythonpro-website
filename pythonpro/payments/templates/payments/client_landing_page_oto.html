@@ -11,7 +11,7 @@
     h2, h3, h4 {
         line-height: 150%;
     }
-    .support-button{
+    .support-button {
         position:fixed;
         width:45px;
         height:45px;
@@ -25,8 +25,13 @@
         box-shadow: 2px 2px 3px #999;
         z-index:100;
     }
-    .fa-whatsapp{
+    .fa-whatsapp {
         margin-top: 10px;
+    }
+    .thanks {
+        font-size: 14pt;
+        font-weight: bold;
+        color: #787F8C;
     }
 </style>
 {% endblock %}
@@ -112,6 +117,11 @@
                                 SIM! Eu quero <b class='initiate-checkout'>ir além do básico!</b>
                             </button>
                         </div>
+
+                        <a href='{% url "core:thanks" %}' class='thanks'><u>
+                            <b>(Caso não queira ir mais rápido, clique aqui e 
+                            finalize seu cadastro grátis no Python Birds).</b>
+                        </u></a>
                     {% endif %}
 
                     <h4 class='mt-5 mb-5'>
