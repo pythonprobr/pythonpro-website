@@ -161,3 +161,7 @@ def lead_form(request):
         return render(request, 'core/lead_form_errors.html', context={'form': e.form}, status=400)
     login(request, user)
     return redirect(reverse('payments:client_landing_page_oto'))
+
+
+def linktree(request):
+    return render(request, 'core/linktree.html', {})
