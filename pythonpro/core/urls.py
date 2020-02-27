@@ -9,6 +9,7 @@ urlpatterns = [
     path('sitemap.xml', views.sitemap, name='sitemap'),
     path('robots.txt', robots_txt(timeout=86400), name='robots'),
     path('tech-talks', views.teck_talks, name='tech_talks'),
+    path('linktree', views.linktree, name='linktree'),
     path('podcast', views.podcast, name='podcast'),
     path('curso-de-python-gratis', views.lead_landing, name='lead_landing'),
     path('curso-de-python-gratis-lite', views.lead_landing_lite, name='lead_landing_lite'),
