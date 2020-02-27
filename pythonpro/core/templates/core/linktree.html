@@ -1,0 +1,133 @@
+{% extends 'core/base_without_nav.html' %}
+{% load static %}
+{% block title %}Linktree Python Pro{% endblock %}
+
+{% block body_class %}bg-primary{% endblock %}
+
+{% block styles %}{{block.super}}
+    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+
+    <style>
+        @font-face {
+            font-family: 'Gilroy-Bold';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Bold ☞'), url('{% static "fonts/Gilroy-Bold.woff" %}') format('woff');
+        }
+        a, div, p, span {
+            text-decoration: none;
+            font-family: Gilroy-Bold;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container text-center">
+        <div class="row mt-5">
+            <div class="col">
+                <img src="{% static 'img/renzo-thumb.jpg' %}" class="rounded-circle" >
+            </div>
+        </div>
+
+        <div class="row mt-2 mb-5">
+            <div class="col">
+                <h1 style="text-weight: bold; color: #fff">@renzoprobr</h1>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col">
+                <a href="https://www.python.pro.br/curso-de-python-gratis?utm_source=instagram-bio&utm_medium=trafego-organico" target="_blank" class='btn btn-lg btn-block btn-warning linktree-python-birds'>
+                    <span class="ec ec-gift"></span>
+                    <b>Curso de Python GRÁTIS</b>
+                </a>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col">
+                <a href="https://www.python.pro.br/curso-de-python-intermediario?utm_source=instagram-bio&utm_medium=trafego-organico" target="_blank" class='btn btn-lg btn-block btn-warning linktree-pytools'>
+                    <span class="ec ec-desktop-computer"></span>
+                    <b>Curso PyTools</b>
+                </a>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col">
+                <a href="https://www.python.pro.br/inscricao?utm_source=instagram-bio&utm_medium=trafego-organico" target="_blank" class='btn btn-lg btn-block btn-warning linktree-python-pro'>
+                    <span class="ec ec-rocket"></span>
+                    <b>Curso Python Pro</b>
+                </a>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col">
+                <a href="https://www.youtube.com/playlist?list=PLA05yVJtRWYQjnOvJXFpOo8K8unbnAf3B" target="_blank" class='btn btn-lg btn-block btn-warning linktree-devpro'>
+                    <span class="ec ec-headphones"></span>
+                    <b>Podcast DevPro</b>
+                </a>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col">
+                <a href="http://anchor.fm/renzoprocast" target="_blank" class='btn btn-lg btn-block btn-warning linktree-renzoprocast'>
+                    <span class="ec ec-headphones"></span>
+                    <b>RenzoProCast</b>
+                </a>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col">
+                <a href="https://www.youtube.com/user/renzonuccitelli" target="_blank" class='btn btn-lg btn-block btn-warning linktree-youtube'>
+                    <span class="ec ec-clapper"></span>
+                    <b>Canal do Youtube</b>
+                </a>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col">
+                <a href="http://bit.ly/canal-python-pro" target="_blank" class='btn btn-lg btn-block btn-warning linktree-telegram'>
+                    <span class="ec ec-bell"></span>
+                    <b>Canal no Telegram</b>
+                </a>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col">
+                <a href="http://bit.ly/galera-python-pro" target="_blank" class='btn btn-lg btn-block btn-warning linktree-galera-python-pro'>
+                    <span class="ec ec-speaking-head"></span>
+                    <b>Galera Python Pro</b>
+                </a>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col">
+                <a href="https://twitter.com/renzoprobr" target="_blank" class='btn btn-lg btn-block btn-warning linktree-twitter'>
+                    <span class="ec ec-memo"></span>
+                    <b>Twitter</b>
+                </a>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col">
+                <a href="https://api.whatsapp.com/send?phone=5512992488788" target="_blank" class='btn btn-lg btn-block btn-warning linktree-whatsapp'>
+                    <span class="ec ec-iphone"></span>
+                    <b>WhatsApp</b>
+                </a>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+{% endblock body %}
+
+{% block footer %}{% endblock %}
