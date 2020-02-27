@@ -18,7 +18,8 @@ def _resp(client):
 
 
 @pytest.fixture
-def home_resp_with_user(django_user_model, client: Client):
+def home_resp_with_user(django_user_model, client: Client, settings):
+    settings.DISCOURSE_BASE_URL = 'https://forum.python.pro.br/'
     user = mommy.make(django_user_model)
     client.force_login(user)
     return _resp(client)
