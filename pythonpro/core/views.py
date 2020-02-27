@@ -148,20 +148,35 @@ def programmer_week_ty(request):
     return render(request, 'core/lead_landing_page.html', context={'form': UserSignupForm()})
 
 
-def lead_form(request):
+def _lead_form(request, redirect_to_OTO=True, *args, **kwargs):
     if request.method == 'GET':
         form = UserSignupForm()
         return render(request, 'core/lead_form_errors.html', context={'form': form})
+
     source = request.GET.get('utm_source', default='unknown')
     first_name = request.POST.get('first_name')
     email = request.POST.get('email')
+
     try:
         user = user_facade.register_lead(first_name, email, source)
     except user_facade.UserCreationException as e:
         return render(request, 'core/lead_form_errors.html', context={'form': e.form}, status=400)
+
     login(request, user)
-    return redirect(reverse('payments:client_landing_page_oto'))
+
+    if redirect_to_OTO:
+        return redirect(reverse('payments:client_landing_page_oto'))
+    else:
+        return redirect(reverse('core:thanks'))
 
 
 def linktree(request):
     return render(request, 'core/linktree.html', {})
+
+
+def lead_form(request):
+    return _lead_form(request)
+
+
+def lead_form_without_OTO(request):
+    return _lead_form(request, redirect_to_OTO=False)

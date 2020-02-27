@@ -178,3 +178,19 @@ def test_should_redirect_to_OTO_page(resp_lead_creation):
 
 def test_should_has_a_lite_version(client):
     assert client.get(reverse('core:lead_landing_lite'), secure=True)
+
+
+@pytest.fixture
+def resp_lead_creation_without_OTO(client, db, fake: Faker, create_lead_mock, email):
+    return client.post(
+        reverse('core:lead_landing_without_OTO'),
+        data={
+            'first_name': fake.name(),
+            'email': email,
+        },
+        secure=True
+    )
+
+
+def test_should_has_a_version_that_not_redirect_to_OTO_page(resp_lead_creation_without_OTO):
+    assert resp_lead_creation_without_OTO['Location'] == reverse('core:thanks')
