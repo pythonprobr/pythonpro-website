@@ -12,22 +12,22 @@ def no_responses():
 
 def test_missing_discourse_api_key(settings, no_responses):
     settings.DISCOURSE_API_KEY = ''
-    settings.DEBUG = False
+    settings.DISCOURSE_BASE_URL = 'https://forum.python.pro.br/'
     with pytest.raises(facade.MissingDiscourseAPICredentials):
         facade.sync_user(None)
 
 
 def test_missing_discourse_api_user(settings, no_responses):
     settings.DISCOURSE_API_USER = ''
-    settings.DEBUG = False
+    settings.DISCOURSE_BASE_URL = 'https://forum.python.pro.br/'
     with pytest.raises(facade.MissingDiscourseAPICredentials):
         facade.sync_user(None)
 
 
-def test_no_integration_on_debug_and_missing_config(settings, no_responses):
+def test_no_integration_on_missing_url_config(settings, no_responses):
     settings.DISCOURSE_API_USER = ''
     settings.DISCOURSE_API_KEY = ''
-    settings.DEBUG = True
+    settings.DISCOURSE_BASE_URL = ''
     assert facade.sync_user(None) is None
 
 
@@ -35,6 +35,7 @@ def test_no_integration_on_debug_and_missing_config(settings, no_responses):
 def resps(settings):
     settings.DISCOURSE_API_USER = 'someuser'
     settings.DISCOURSE_API_KEY = 'some-key'
+    settings.DISCOURSE_BASE_URL = 'https://forum.python.pro.br/'
     with responses.RequestsMock() as r:
         url = f'{settings.DISCOURSE_BASE_URL}/admin/users/sync_sso'
         r.add(r.POST, url=url, json=success_response)

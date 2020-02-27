@@ -104,7 +104,7 @@ if DEBUG:
     INTERNAL_IPS = ['127.0.0.1']
 
 # Discourse config
-DISCOURSE_BASE_URL = 'https://forum.python.pro.br/'
+DISCOURSE_BASE_URL = config('DISCOURSE_BASE_URL', default='')
 DISCOURSE_SSO_SECRET = config('DISCOURSE_SSO_SECRET')
 DISCOURSE_API_USER = config('DISCOURSE_API_USER')
 DISCOURSE_API_KEY = config('DISCOURSE_API_KEY')
