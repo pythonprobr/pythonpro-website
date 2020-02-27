@@ -176,3 +176,8 @@ def lead_form(request):
 
 def lead_form_without_OTO(request):
     return _lead_form(request, redirect_to_OTO=False)
+    return redirect(reverse('payments:client_landing_page_oto'))
+
+
+def linktree(request):
+    return render(request, 'core/linktree.html', {})
