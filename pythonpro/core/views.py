@@ -121,13 +121,18 @@ class _WaitingListView(TemplateView):
 waiting_list = _WaitingListView.as_view()
 
 
+def _lead_landing(request, template_name='core/lead_landing_page.html', form_action=None):
+    form_action = reverse('core:lead_form') if form_action is None else form_action
+    return render(request, template_name, context={'form': LeadForm(), 'form_action': form_action})
+
+
 def lead_landing(request):
     """
     View with lead landing page
     :param request:
     :return:
     """
-    return render(request, 'core/lead_landing_page.html', context={'form': LeadForm()})
+    return _lead_landing(request)
 
 
 def lead_landing_lite(request):
@@ -136,7 +141,16 @@ def lead_landing_lite(request):
     :param request:
     :return:
     """
-    return render(request, 'core/lead_landing_lite_page.html', context={'form': LeadForm()})
+    return _lead_landing(request, template_name='core/lead_landing_lite_page.html')
+
+
+def lead_landing_with_no_offer(request):
+    """
+    View with lead landing page normal version and no offer in sequence
+    :param request:
+    :return:
+    """
+    return _lead_landing(request, form_action=reverse('core:lead_form_with_no_offer'))
 
 
 def programmer_week_ty(request):
@@ -174,9 +188,8 @@ def lead_form(request):
     return _lead_form(request)
 
 
-def lead_form_without_OTO(request):
+def lead_form_with_no_offer(request):
     return _lead_form(request, redirect_to_OTO=False)
-    return redirect(reverse('payments:client_landing_page_oto'))
 
 
 def linktree(request):
