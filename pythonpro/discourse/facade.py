@@ -50,7 +50,7 @@ def sync_user(user):
     :return: returns nothing
     """
     can_make_api_call = bool(settings.DISCOURSE_API_KEY and settings.DISCOURSE_API_USER)
-    can_work_without_sync = settings.DEBUG and not can_make_api_call
+    can_work_without_sync = not (settings.DISCOURSE_BASE_URL or can_make_api_call)
     if can_work_without_sync:
         return
     elif not can_make_api_call:
