@@ -12,6 +12,7 @@ urlpatterns = [
     path('podcast', views.podcast, name='podcast'),
     path('curso-de-python-gratis', views.lead_landing, name='lead_landing'),
     path('curso-de-python-gratis-lite', views.lead_landing_lite, name='lead_landing_lite'),
+    path('curso-de-python-gratis-no-oto', views.lead_form_without_OTO, name='lead_landing_without_OTO'),
     path('cadastro-python-birds', views.lead_form, name='lead_form'),
     path('definir-senha', views.lead_change_password, name='lead_change_password'),
     path('obrigado', views.thanks, name='thanks'),
