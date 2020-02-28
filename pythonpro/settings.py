@@ -11,18 +11,15 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
 import os
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from functools import partial
 
 import sentry_sdk
 from decouple import Csv, config
 from dj_database_url import parse as dburl
+from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk.integrations.django import DjangoIntegration
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
@@ -238,7 +235,10 @@ if AWS_ACCESS_KEY_ID:  # pragma: no cover
 SENTRY_DSN = config('SENTRY_DSN', default=None)
 
 if SENTRY_DSN:  # pragma: no cover
-    sentry_sdk.init(dsn=SENTRY_DSN, integrations=[DjangoIntegration()])
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[DjangoIntegration(), CeleryIntegration()]
+    )
 
 # Active Campaign Configuration
 ACTIVE_CAMPAIGN_URL = config('ACTIVE_CAMPAIGN_URL')
@@ -247,3 +247,12 @@ ACTIVE_CAMPAIGN_TURNED_ON = config('ACTIVE_CAMPAIGN_TURNED_ON', cast=bool, defau
 
 # Google Tag Manager Configuration
 GOOGLE_TAG_MANAGER_ID = config('GOOGLE_TAG_MANAGER_ID')
+
+# Celery config
+
+
+BROKER_URL = config('CLOUDAMQP_URL')
+
+CELERY_RESULT_BACKEND = config('REDIS_URL')
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE

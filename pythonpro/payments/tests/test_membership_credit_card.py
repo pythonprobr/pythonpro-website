@@ -174,7 +174,7 @@ def resp_token_with_no_user(cohort, client, create_or_update_member, create_or_u
 
 @pytest.fixture(autouse=True)
 def sync_user(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._discourse_facade.sync_user')
+    return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse')
 
 
 def test_user_discourse_sync_no_user(resp_token_with_no_user, django_user_model, sync_user):

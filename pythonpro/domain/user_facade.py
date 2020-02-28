@@ -2,20 +2,25 @@
 Module working as a facade to all business rules from the entire system.
 It must interact only with app's internal facades and can be used by views, CLI and other interfaces
 """
+from logging import Logger
 
+import requests
 from activecampaign.exception import ActiveCampaignError as _ActiveCampaignError
-from django.conf import settings as _settings
+from django.conf import settings, settings as _settings
 from django.core.mail import send_mail as _send_mail
 from django.template.loader import render_to_string
 from django.urls import reverse
+from celery import shared_task
 
 from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.cohorts import facade as _cohorts_facade
 from pythonpro.core import facade as _core_facade
 from pythonpro.core.models import User as _User
-from pythonpro.discourse import facade as _discourse_facade
+from pythonpro.discourse.facade import MissingDiscourseAPICredentials, generate_sso_payload_and_signature
 from pythonpro.email_marketing import facade as _email_marketing_facade
 from pythonpro.payments import facade as _payments_facade
+
+_logger = Logger(__file__)
 
 UserCreationException = _core_facade.UserCreationException  # exposing exception on Facade
 
@@ -50,7 +55,7 @@ def register_lead(first_name: str, email: str, source: str = 'unknown') -> _User
         form.add_error('email', 'Email Inválido')
         raise UserCreationException(form)
     lead = _core_facade.register_lead(first_name, email, source)
-    _discourse_facade.sync_user(lead)
+    sync_user_on_discourse.delay(lead.id)
     _email_marketing_facade.create_or_update_lead(first_name, email, id=lead.id)
 
     return lead
@@ -67,7 +72,7 @@ def force_register_lead(first_name: str, email: str, source: str = 'unknown') ->
     :return: User
     """
     user = _core_facade.register_lead(first_name, email, source)
-    _discourse_facade.sync_user(user)
+    sync_user_on_discourse(user)
     try:
         _email_marketing_facade.create_or_update_lead(first_name, email, id=user.id)
     except _ActiveCampaignError:
@@ -86,7 +91,7 @@ def force_register_client(first_name: str, email: str, source: str = 'unknown') 
     :return: User
     """
     user = _core_facade.register_client(first_name, email, source)
-    _discourse_facade.sync_user(user)
+    sync_user_on_discourse(user)
     try:
         _email_marketing_facade.create_or_update_client(first_name, email, id=user.id)
     except _ActiveCampaignError:
@@ -107,7 +112,7 @@ def force_register_member(first_name, email, source='unknown'):
     user = _core_facade.register_member(first_name, email, source)
     _cohorts_facade.subscribe_to_last_cohort(user)
     cohort = _cohorts_facade.find_most_recent_cohort()
-    _discourse_facade.sync_user(user)
+    sync_user_on_discourse(user)
     try:
         _email_marketing_facade.create_or_update_member(first_name, email, id=user.id)
         _email_marketing_facade.tag_as(email, user.id, f'turma-{cohort.slug}')
@@ -127,7 +132,7 @@ def promote_member(user: _User, source: str) -> _User:
     _core_facade.promote_to_member(user, source)
     _cohorts_facade.subscribe_to_last_cohort(user)
     cohort = _cohorts_facade.find_most_recent_cohort()
-    _discourse_facade.sync_user(user)
+    sync_user_on_discourse(user)
     try:
         _email_marketing_facade.create_or_update_member(user.first_name, user.email, id=user.id)
         _email_marketing_facade.tag_as(user.email, user.id, f'turma-{cohort.slug}')
@@ -158,7 +163,7 @@ def promote_client(user: _User, source: str) -> None:
     :return:
     """
     _core_facade.promote_to_client(user, source)
-    _discourse_facade.sync_user(user)
+    sync_user_on_discourse(user)
     try:
         _email_marketing_facade.create_or_update_client(user.first_name, user.email, id=user.id)
     except _ActiveCampaignError:
@@ -357,3 +362,40 @@ def visit_cpl3(user: _User, source: str) -> None:
     """
     _core_facade.visit_cpl3(user, source)
     _email_marketing_facade.tag_as(user.email, user.id, 'cpl3')
+
+
+@shared_task()
+def sync_user_on_discourse(user_or_id):
+    """
+    Synchronize user data on forum if API is configured
+    :param user_or_id: Django user or his id
+    :return: returns result of hitting Discourse api
+    """
+    can_make_api_call = bool(settings.DISCOURSE_API_KEY and settings.DISCOURSE_API_USER)
+    can_work_without_sync = not (settings.DISCOURSE_BASE_URL or can_make_api_call)
+    if can_work_without_sync:
+        _logger.info('Discourse Integration not available')
+        return
+    elif not can_make_api_call:
+        raise MissingDiscourseAPICredentials('Must define both DISCOURSE_API_KEY and DISCOURSE_API_USER configs')
+    if isinstance(user_or_id, int):
+        user = _core_facade.find_user_by_id(user_or_id)
+    else:
+        user = user_or_id
+    # https://meta.discourse.org/t/sync-sso-user-data-with-the-sync-sso-route/84398
+    params = {
+        'email': user.email,
+        'external_id': user.id,
+        'require_activation': 'false',
+        'groups': ','.join(g.name for g in user.groups.all())
+    }
+    sso_payload, signature = generate_sso_payload_and_signature(params)
+    # query_string = parse.urlencode()
+    url = f'{settings.DISCOURSE_BASE_URL}/admin/users/sync_sso'
+    headers = {
+        'content-type': 'multipart/form-data',
+        'Api-Key': settings.DISCOURSE_API_KEY,
+        'Api-Username': settings.DISCOURSE_API_USER,
+    }
+
+    return requests.post(url, data={'sso': sso_payload, 'sig': signature}, headers=headers)

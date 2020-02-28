@@ -11,13 +11,13 @@ def create_or_update_lead_mock(mocker):
 
 
 @pytest.fixture
-def sync_user(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._discourse_facade.sync_user')
+def sync_user_delay(mocker):
+    return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse.delay')
 
 
-def test_creation(db, django_user_model, create_or_update_lead_mock, sync_user):
+def test_creation(db, django_user_model, create_or_update_lead_mock, sync_user_delay):
     user = user_facade.register_lead('Renzo Nuccitelli', 'renzo@python.pro.br', 'google_ads')
     calls = [call(user.first_name, user.email), call(user.first_name, user.email, id=user.id)]
     create_or_update_lead_mock.assert_has_calls(calls)
-    sync_user.assert_called_once_with(user)
+    sync_user_delay.assert_called_once_with(user.id)
     assert django_user_model.objects.all().get() == user

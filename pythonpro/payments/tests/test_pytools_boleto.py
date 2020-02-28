@@ -243,7 +243,7 @@ def test_boleto_sent_to_email(resp_show_boleto, barcode, url, mailoutbox, settin
 
 @pytest.fixture(autouse=True)
 def sync_user(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._discourse_facade.sync_user')
+    return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse')
 
 
 def test_user_discourse_sync_no_user(resp_token_with_no_user, django_user_model, sync_user):

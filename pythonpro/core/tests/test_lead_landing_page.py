@@ -8,9 +8,7 @@ from rolepermissions.roles import assign_role, remove_role
 
 from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.core.models import UserInteraction
-from pythonpro.django_assertions import (
-    dj_assert_not_contains, dj_assert_contains, dj_assert_template_used
-)
+from pythonpro.django_assertions import (dj_assert_contains, dj_assert_not_contains, dj_assert_template_used)
 
 
 @pytest.fixture
@@ -98,12 +96,17 @@ def resp_lead_change_pasword(resp_lead_creation, client):
 
 @pytest.fixture(autouse=True)
 def sync_user(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._discourse_facade.sync_user')
+    return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse')
 
 
-def test_user_discourse_sync(resp_lead_creation, django_user_model, sync_user):
+@pytest.fixture(autouse=True)
+def sync_user_delay(mocker):
+    return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse.delay')
+
+
+def test_user_discourse_sync(resp_lead_creation, django_user_model, sync_user_delay):
     user = django_user_model.objects.first()
-    sync_user.assert_called_once_with(user)
+    sync_user_delay.assert_called_once_with(user.id)
 
 
 def test_lead_creation(resp_lead_creation, django_user_model):

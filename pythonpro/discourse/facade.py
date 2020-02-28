@@ -5,7 +5,6 @@ import hmac
 from logging import Logger
 from urllib import parse
 
-import requests
 from django.conf import settings
 
 _key_bytes = settings.DISCOURSE_SSO_SECRET.encode('utf-8')
@@ -41,37 +40,6 @@ def generate_discourse_login_url(user, payload, signature):
     _check_nonce_is_present(decoded)
     nonce = parse.parse_qs(decoded)['nonce'][0]
     return _generate_discourse_login_url(nonce, user)
-
-
-def sync_user(user):
-    """
-    Synchronize user data on forum if API is set
-    :param user: Django user
-    :return: returns nothing
-    """
-    can_make_api_call = bool(settings.DISCOURSE_API_KEY and settings.DISCOURSE_API_USER)
-    can_work_without_sync = not (settings.DISCOURSE_BASE_URL or can_make_api_call)
-    if can_work_without_sync:
-        return
-    elif not can_make_api_call:
-        raise MissingDiscourseAPICredentials('Must define both DISCOURSE_API_KEY and DISCOURSE_API_USER configs')
-    # https://meta.discourse.org/t/sync-sso-user-data-with-the-sync-sso-route/84398
-    params = {
-        'email': user.email,
-        'external_id': user.id,
-        'require_activation': 'false',
-        'groups': ','.join(g.name for g in user.groups.all())
-    }
-    sso_payload, signature = generate_sso_payload_and_signature(params)
-    # query_string = parse.urlencode()
-    url = f'{settings.DISCOURSE_BASE_URL}/admin/users/sync_sso'
-    headers = {
-        'content-type': 'multipart/form-data',
-        'Api-Key': settings.DISCOURSE_API_KEY,
-        'Api-Username': settings.DISCOURSE_API_USER,
-    }
-
-    return requests.post(url, data={'sso': sso_payload, 'sig': signature}, headers=headers)
 
 
 def _generate_discourse_login_url(nonce, user):

@@ -40,4 +40,9 @@ ACTIVE_CAMPAIGN_TURNED_ON=true
 
 # Google Tag Manager Config
 GOOGLE_TAG_MANAGER_ID=GTM-ABC1234
+
+#CELERY_CONFIG
+
+CLOUDAMQP_URL=amqp://guest:guest@localhost:5672
+REDIS_URL=redis://localhost:6379/1
                   
