@@ -72,7 +72,7 @@ def valid_resp_anonymous(cohort, client, anonymous_user, valid_signature, transa
 
 @pytest.fixture(autouse=True)
 def sync_user(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._discourse_facade.sync_user')
+    return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse')
 
 
 def test_user_discourse_sync_no_user(valid_resp_anonymous, django_user_model, sync_user):

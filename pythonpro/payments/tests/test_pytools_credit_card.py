@@ -180,7 +180,7 @@ def resp_token(client_with_lead, logged_user, create_or_update_client, resps_suc
 
 @pytest.fixture(autouse=True)
 def sync_user(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._discourse_facade.sync_user')
+    return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse')
 
 
 def test_user_discourse_sync_no_user(resp_token_with_no_user, django_user_model, sync_user):

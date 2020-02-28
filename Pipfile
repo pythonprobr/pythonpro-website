@@ -28,6 +28,8 @@ django-extensions = "*"
 activecampaign-python = {git = "https://github.com/renzon/activecampaign-python.git",ref = "last-v1-api"}
 codecov = "*"
 django-bootstrap4 = "*"
+celery = "*"
+redis = "*"
 
 [dev-packages]
 faker = "*"
