@@ -39,6 +39,7 @@ pytest-django = "*"
 pytest-freezegun = "*"
 pytest-mock = "*"
 pytest = "*"
+django-test-migrations = "*"
 
 [requires]
 python_version = "3.8"
