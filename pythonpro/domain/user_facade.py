@@ -398,4 +398,4 @@ def sync_user_on_discourse(user_or_id):
         'Api-Username': settings.DISCOURSE_API_USER,
     }
 
-    return requests.post(url, data={'sso': sso_payload, 'sig': signature}, headers=headers)
+    requests.post(url, data={'sso': sso_payload, 'sig': signature}, headers=headers)
