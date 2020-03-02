@@ -155,7 +155,7 @@ def tag_as_mock(mocker):
 
 @pytest.fixture
 def create_or_update_lead(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_lead')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_lead.delay')
 
 
 @pytest.fixture

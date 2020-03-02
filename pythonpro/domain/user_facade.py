@@ -50,13 +50,13 @@ def register_lead(first_name: str, email: str, source: str = 'unknown') -> _User
         source = 'unknown'
     form = _core_facade.validate_user(first_name, email, source)
     try:
-        _email_marketing_facade.create_or_update_lead(first_name, email)
+        _email_marketing_facade.create_or_update_lead.delay(first_name, email)
     except _ActiveCampaignError:
         form.add_error('email', 'Email Inválido')
         raise UserCreationException(form)
     lead = _core_facade.register_lead(first_name, email, source)
     sync_user_on_discourse.delay(lead.id)
-    _email_marketing_facade.create_or_update_lead(first_name, email, id=lead.id)
+    _email_marketing_facade.create_or_update_lead.delay(first_name, email, id=lead.id)
 
     return lead
 
@@ -74,7 +74,7 @@ def force_register_lead(first_name: str, email: str, source: str = 'unknown') ->
     user = _core_facade.register_lead(first_name, email, source)
     sync_user_on_discourse(user)
     try:
-        _email_marketing_facade.create_or_update_lead(first_name, email, id=user.id)
+        _email_marketing_facade.create_or_update_lead.delay(first_name, email, id=user.id)
     except _ActiveCampaignError:
         pass
     return user

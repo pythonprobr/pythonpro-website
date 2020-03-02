@@ -2,6 +2,7 @@ from functools import lru_cache
 
 from activecampaign.client import Client
 from activecampaign.exception import ActiveCampaignError
+from celery import shared_task
 from django.conf import settings
 
 _client = Client(settings.ACTIVE_CAMPAIGN_URL, settings.ACTIVE_CAMPAIGN_KEY)
@@ -17,6 +18,7 @@ def create_or_update_with_no_role(name: str, email: str, *tags, id='0'):
     return _create_or_update(name, email, '', *tags, id=id)
 
 
+@shared_task()
 def create_or_update_lead(name: str, email: str, *tags, id='0'):
     return _create_or_update(name, email, _LEAD, *tags, id=id)
 
