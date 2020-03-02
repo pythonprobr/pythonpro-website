@@ -29,7 +29,7 @@ def test_there_is_no_none_on_landing_page(resp):
 
 @pytest.fixture
 def create_lead_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_lead')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_lead.delay')
 
 
 @pytest.fixture()

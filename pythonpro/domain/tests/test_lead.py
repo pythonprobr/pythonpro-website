@@ -7,7 +7,7 @@ from pythonpro.domain import user_facade
 
 @pytest.fixture
 def create_or_update_lead_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_lead')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_lead.delay')
 
 
 @pytest.fixture
