@@ -6,9 +6,11 @@ from itertools import chain, product
 from operator import attrgetter
 
 import pytz
+from celery import shared_task
 from django.db.models import Count, Max, Sum
 from django.utils.datetime_safe import datetime
 
+from pythonpro.core import facade as core_facade
 from pythonpro.dashboard.models import TopicInteraction
 from pythonpro.email_marketing import facade as email_marketing_facade
 from pythonpro.modules.facade import (
@@ -179,15 +181,17 @@ def _is_completed(content):
     return content.topics_count > 0 and (content.finished_topics_count == content.topics_count)
 
 
-def tag_newly_completed_contents(user, topic_id: int):
+@shared_task()
+def tag_newly_completed_contents(user_or_user_id, topic_id: int):
     """
     Tag user completed contents on email marketing for segmentation
     This will only consider module -> section -> chapter -> topic
     accordingly with topics_id
     :param topic_id: topic_id from topic user last updated
-    :param user:
+    :param user_or_user_id: Django User or his id
     :return: list of contents_full_tags
     """
+    user = core_facade.find_user_by_id(user_or_user_id)
     topic = get_topic_with_contents_by_id(topic_id)
     possible_changing_tags = {
         topic.chapter.section.module.full_slug,

@@ -54,5 +54,5 @@ def topic_interaction(request):
         form.save()
         data = form.cleaned_data
         if data['max_watched_time'] >= data['topic_duration']:
-            content_statistics_domain.tag_newly_completed_contents(user, topic_id)
+            content_statistics_domain.tag_newly_completed_contents.delay(user.id, topic_id)
         return JsonResponse({'msg': 'ok'})

@@ -9,19 +9,19 @@ from pythonpro.modules.models import Topic
 
 @pytest.fixture
 def remove_tags_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.remove_tags')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.remove_tags.delay')
 
 
 @pytest.fixture
-def tag_as_mock(mocker):
-    return mocker.patch('pythonpro.email_marketing.facade.tag_as')
+def tag_newly_completed_contents_mock(mocker):
+    return mocker.patch('pythonpro.dashboard.views.content_statistics_domain.tag_newly_completed_contents.delay')
 
 
 TOPIC_DURATION = 200
 
 
 @pytest.fixture
-def resp(client_with_lead, topic, logged_user, remove_tags_mock, tag_as_mock):
+def resp(client_with_lead, topic, logged_user, remove_tags_mock, tag_newly_completed_contents_mock):
     return client_with_lead.post(
         reverse('dashboard:topic_interaction'),
         data={
@@ -35,7 +35,7 @@ def resp(client_with_lead, topic, logged_user, remove_tags_mock, tag_as_mock):
 
 
 @pytest.fixture
-def resp_with_interaction(client_with_lead, topic, logged_user, remove_tags_mock, tag_as_mock):
+def resp_with_interaction(client_with_lead, topic, logged_user, remove_tags_mock, tag_newly_completed_contents_mock):
     mommy.make(TopicInteraction, user=logged_user, topic=topic)
     return client_with_lead.post(
         reverse('dashboard:topic_interaction'),
@@ -82,12 +82,12 @@ def test_user_not_first_video(resp_with_interaction, remove_tags_mock):
     assert remove_tags_mock.call_count == 0
 
 
-def test_tag_as_not_called_with_uncomplete_contents(resp, tag_as_mock):
-    assert tag_as_mock.call_count == 0
+def test_tag_as_not_called_with_uncomplete_contents(resp, tag_newly_completed_contents_mock):
+    assert tag_newly_completed_contents_mock.call_count == 0
 
 
 @pytest.fixture
-def resp_complete_content(client_with_lead, topic, logged_user, remove_tags_mock, tag_as_mock):
+def resp_complete_content(client_with_lead, topic, logged_user, remove_tags_mock, tag_newly_completed_contents_mock):
     return client_with_lead.post(
         reverse('dashboard:topic_interaction'),
         data={
@@ -100,7 +100,7 @@ def resp_complete_content(client_with_lead, topic, logged_user, remove_tags_mock
     )
 
 
-def test_tag_as_called_with_complete_contents(resp_complete_content, tag_as_mock, logged_user, module, section, chapter,
-                                              topic):
-    tags = [content.full_slug for content in [module, section, chapter, topic]]
-    tag_as_mock.assert_called_once_with(logged_user.email, logged_user.id, *tags)
+def test_tag_as_called_with_complete_contents(
+        resp_complete_content, tag_newly_completed_contents_mock, logged_user,
+        module, section, chapter, topic):
+    tag_newly_completed_contents_mock.assert_called_once_with(logged_user.id, topic.id)

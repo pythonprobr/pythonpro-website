@@ -6,11 +6,11 @@ from logging import Logger
 
 import requests
 from activecampaign.exception import ActiveCampaignError as _ActiveCampaignError
+from celery import shared_task
 from django.conf import settings, settings as _settings
 from django.core.mail import send_mail as _send_mail
 from django.template.loader import render_to_string
 from django.urls import reverse
-from celery import shared_task
 
 from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.cohorts import facade as _cohorts_facade
@@ -328,7 +328,7 @@ def activate_user(user: _User, source: str) -> None:
     :return:
     """
     _core_facade.activate_user(user, source)
-    _email_marketing_facade.remove_tags(user.email, user.id, 'never-watched-video')
+    _email_marketing_facade.remove_tags.delay(user.email, user.id, 'never-watched-video')
 
 
 def visit_cpl1(user: _User, source: str) -> None:
@@ -378,10 +378,9 @@ def sync_user_on_discourse(user_or_id):
         return
     elif not can_make_api_call:
         raise MissingDiscourseAPICredentials('Must define both DISCOURSE_API_KEY and DISCOURSE_API_USER configs')
-    if isinstance(user_or_id, int):
-        user = _core_facade.find_user_by_id(user_or_id)
-    else:
-        user = user_or_id
+
+    user = _core_facade.find_user_by_id(user_or_id)
+
     # https://meta.discourse.org/t/sync-sso-user-data-with-the-sync-sso-route/84398
     params = {
         'email': user.email,

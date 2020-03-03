@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Union
 
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -163,8 +164,15 @@ def find_user_by_email(email: str):
     return User.objects.filter(email=email).get()
 
 
-def find_user_by_id(id: int):
-    return User.objects.filter(id=id).get()
+def find_user_by_id(user_or_user_id: Union[int, User]):
+    """
+    Find user by his id. If user instance is passed he is returned without directly
+    :param user_or_user_id:
+    :return:
+    """
+    if isinstance(user_or_user_id, User):
+        return user_or_user_id
+    return User.objects.filter(id=user_or_user_id).get()
 
 
 def find_user_interactions(user: User):
