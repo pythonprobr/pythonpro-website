@@ -123,6 +123,7 @@ def _build_tags_array(tags) -> dict:
     return {f'tags[{i}]': tag for i, tag in enumerate(tags, start=1)}
 
 
+@shared_task()
 def remove_tags(email: str, id: int, *tags):
     if settings.ACTIVE_CAMPAIGN_TURNED_ON is False:
         return
