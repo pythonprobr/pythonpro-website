@@ -1,7 +1,6 @@
-from datetime import timedelta, datetime
+from datetime import datetime, timedelta
 
 import pytz
-
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -11,21 +10,17 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.http import urlencode
-from django.utils.timezone import now, make_aware
+from django.utils.timezone import make_aware, now
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
 
 from pythonpro.cohorts import facade as cohorts_facade
+from pythonpro.core.facade import UserRoleException
 from pythonpro.domain import membership_domain, user_facade
 from pythonpro.payments import facade as payment_facade
 from pythonpro.payments.facade import (
-    PYTOOLS_OTO_PRICE,
-    PYTOOLS_DO_PRICE,
-    PYTOOLS_PRICE,
-    PYTOOLS_PROMOTION_PRICE,
-    PagarmeNotPaidTransaction,
-    calculate_oto_expires_datetime,
-    is_on_pytools_oto_season,
+    PYTOOLS_DO_PRICE, PYTOOLS_OTO_PRICE, PYTOOLS_PRICE, PYTOOLS_PROMOTION_PRICE, PagarmeNotPaidTransaction,
+    calculate_oto_expires_datetime, is_on_pytools_oto_season,
 )
 
 
@@ -111,7 +106,10 @@ def _promote_client(user, request):
 
 
 def _promote_client_and_remove_tag_boleto(user, request):
-    user_facade.promote_client_and_remove_boleto_tag(user, source=request.GET.get('utm_source', default='unknown'))
+    try:
+        user_facade.promote_client_and_remove_boleto_tag(user, source=request.GET.get('utm_source', default='unknown'))
+    except UserRoleException:
+        pass  # No need to handle since user can be a client due to active marketing
 
 
 def pytools_thanks(request):

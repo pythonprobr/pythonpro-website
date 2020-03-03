@@ -18,6 +18,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from rolepermissions.admin import RolePermissionsUserAdminMixin
 
+from pythonpro.core.facade import UserRoleException
 from pythonpro.core.forms import UserSignupForm
 from pythonpro.core.models import User, UserInteraction
 
@@ -57,12 +58,18 @@ class UserAdmin(RolePermissionsUserAdminMixin, admin.ModelAdmin):
     def make_client(self, request, queryset):
         from pythonpro.domain import user_facade
         for user in queryset:
-            user_facade.promote_client(user, 'django_admin')
+            try:
+                user_facade.promote_client(user, 'django_admin')
+            except UserRoleException:
+                pass  # No need to handle on admin
 
     def make_member(self, request, queryset):
         from pythonpro.domain import user_facade
         for user in queryset:
-            user_facade.promote_member(user, 'django_admin')
+            try:
+                user_facade.promote_member(user, 'django_admin')
+            except UserRoleException:
+                pass  # No need to handle on admin
 
     def get_fieldsets(self, request, obj=None):
         if not obj:
