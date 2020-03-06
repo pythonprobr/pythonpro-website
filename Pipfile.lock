@@ -74,10 +74,10 @@
         },
         "botocore": {
             "hashes": [
-                "sha256:0347c44d3913ed0a818f83e0c317120f07c150a63ca4167ad3b4b55240a26f42",
-                "sha256:857ec0be8aabd3591b0cca382bce723c0802d48ac0f0e8798ce305af93112a24"
+                "sha256:1109f36e658de2097d1e466842d6634a6b66bb9d3779abe16698171360e1ae5f",
+                "sha256:39e903e1d1ae862e469b4d5f15dc6770a7c9c81da9fcffb1a40f551ea36acd35"
             ],
-            "version": "==1.15.15"
+            "version": "==1.15.16"
         },
         "celery": {
             "hashes": [
