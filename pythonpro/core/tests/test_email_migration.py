@@ -22,7 +22,7 @@ def test_no_msg_for_already_normalized_emails(django_user_model):
     assert msg is None
 
 
-def test_conflictiong_email_msg(django_user_model):
+def test_conflicting_email_msg(django_user_model):
     lower_email = 'normalized@python.pro.br'
     upper_email = 'NORMALIZED@python.pro.br'
     upper_email_user = mommy.make(django_user_model, email=upper_email)
