@@ -57,11 +57,10 @@ def test_pending_live_class_msg(resp_video_not_recorded):
         'Ainda não temos máquina do tempo, essa aula ainda não foi gravada'
     )
 
-
-dj_assert_contains(
-    resp_video_not_recorded,
-    'Retornar à página da turma'
-)
+    dj_assert_contains(
+        resp_video_not_recorded,
+        'Retornar à página da turma'
+    )
 
 
 def test_vimeo_player_not_present(resp_video_not_recorded):
