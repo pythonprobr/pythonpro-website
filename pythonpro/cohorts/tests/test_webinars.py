@@ -32,3 +32,22 @@ def test_basic_contents(resp, webinars, property_name):
 def test_absolute_url(resp, webinars):
     for webinar in webinars:
         dj_assert_contains(resp, webinar.get_absolute_url())
+
+
+@pytest.fixture
+def not_recorded_webinars(webinars):
+    first_two_webinars = webinars[:2]
+    for w in first_two_webinars:
+        w.vimeo_id = ''
+        w.save()
+    return first_two_webinars
+
+
+@pytest.fixture
+def resp_not_recorded_webinars(client_with_user, not_recorded_webinars):
+    return client_with_user.get(reverse('cohorts:webinars'), secure=True)
+
+
+def test_not_recorded_webinar_url_not_present(resp_not_recorded_webinars, not_recorded_webinars):
+    for webinar in not_recorded_webinars:
+        dj_assert_not_contains(resp_not_recorded_webinars, webinar.get_absolute_url())

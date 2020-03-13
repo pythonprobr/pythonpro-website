@@ -46,9 +46,18 @@ def calculate_most_recent_cohort_path() -> str:
 def find_webinars():
     """
     Retrieve Webinars from database ordered by date desc
-    :return: List of webinars
+    :return: Tuple of webinars
     """
     return tuple(_Webinar.objects.order_by('-start'))
+
+
+def find_recorded_webinars():
+    """
+    Retrieve recorded Webinars from database ordered by date desc.
+    A recorded Webinar has vimeo_id not empty
+    :return: Tuple of webinars
+    """
+    return tuple(_Webinar.objects.order_by('-start').exclude(vimeo_id__exact=''))
 
 
 def find_webinar(slug):

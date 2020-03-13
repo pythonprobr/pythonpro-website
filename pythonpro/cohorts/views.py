@@ -14,7 +14,7 @@ def detail(request, slug):
 
 @login_required
 def webinars(request):
-    return render(request, 'cohorts/webinars.html', {'webinars': facade.find_webinars()})
+    return render(request, 'cohorts/webinars.html', {'webinars': facade.find_recorded_webinars()})
 
 
 @login_required
