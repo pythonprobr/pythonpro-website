@@ -36,7 +36,7 @@ def test_basic_contents(resp, webinar, property_name):
 
 @pytest.fixture
 def resp_video_not_recorded(client_with_member, webinar: Webinar):
-    webinar.vimeo_id = None
+    webinar.vimeo_id = ''
     webinar.save()
     return client_with_member.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}), secure=True)
 
@@ -48,7 +48,7 @@ def test_pending_webinar_msg(resp_video_not_recorded):
     )
 
 
-def test_vime_player_not_present(resp_video_not_recorded):
+def test_vimeo_player_not_present(resp_video_not_recorded):
     dj_assert_not_contains(
         resp_video_not_recorded,
         'src="https://player.vimeo.com/video/"'

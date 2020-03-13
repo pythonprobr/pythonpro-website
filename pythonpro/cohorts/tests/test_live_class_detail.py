@@ -6,7 +6,7 @@ from django.utils import timezone
 from model_mommy import mommy
 
 from pythonpro.cohorts.models import Cohort, LiveClass
-from pythonpro.django_assertions import dj_assert_contains
+from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains
 
 
 @pytest.fixture
@@ -42,6 +42,33 @@ def test_basic_contents(resp, live_class, property_name):
 
 def test_cohort_title(cohort, resp):
     dj_assert_contains(resp, cohort.title)
+
+
+@pytest.fixture
+def resp_video_not_recorded(client_with_member, live_class: LiveClass):
+    live_class.vimeo_id = ''
+    live_class.save()
+    return client_with_member.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
+
+
+def test_pending_live_class_msg(resp_video_not_recorded):
+    dj_assert_contains(
+        resp_video_not_recorded,
+        'Ainda não temos máquina do tempo, essa aula ainda não foi gravada'
+    )
+
+
+dj_assert_contains(
+    resp_video_not_recorded,
+    'Retornar à página da turma'
+)
+
+
+def test_vimeo_player_not_present(resp_video_not_recorded):
+    dj_assert_not_contains(
+        resp_video_not_recorded,
+        'src="https://player.vimeo.com/video/"'
+    )
 
 
 @pytest.fixture
