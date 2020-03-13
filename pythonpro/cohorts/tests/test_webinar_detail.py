@@ -5,7 +5,7 @@ from model_mommy import mommy
 
 from pythonpro.cohorts.models import Webinar
 from pythonpro.cohorts.tests.conftest import img_path
-from pythonpro.django_assertions import dj_assert_contains
+from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains
 
 
 @pytest.fixture
@@ -32,6 +32,27 @@ def test_link_unavailable_for_non_users(client):
 @pytest.mark.parametrize('property_name', 'speaker speaker_title title description vimeo_id discourse_topic_id'.split())
 def test_basic_contents(resp, webinar, property_name):
     dj_assert_contains(resp, getattr(webinar, property_name))
+
+
+@pytest.fixture
+def resp_video_not_recorded(client_with_member, webinar: Webinar):
+    webinar.vimeo_id = None
+    webinar.save()
+    return client_with_member.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}), secure=True)
+
+
+def test_pending_webinar_msg(resp_video_not_recorded):
+    dj_assert_contains(
+        resp_video_not_recorded,
+        'Ainda não temos máquina do tempo, esse webinário ainda não foi gravado'
+    )
+
+
+def test_vime_player_not_present(resp_video_not_recorded):
+    dj_assert_not_contains(
+        resp_video_not_recorded,
+        'src="https://player.vimeo.com/video/"'
+    )
 
 
 @pytest.fixture
