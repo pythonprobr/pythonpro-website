@@ -9,6 +9,7 @@
             <div class="col">
                 <h1 class="mt-4 mb-3">Aula da Turma <a
                         href="{{ live_class.cohort.get_absolute_url }}">{{ live_class.cohort.title }}</a></h1>
+                {% if live_class.vimeo_id %}
                 <p>Aula Gravada em {{ live_class.start }}</p>
                 <p>{{ live_class.description|linebreaks }}</p>
                 <div class="embed-container mb-3">
@@ -32,6 +33,14 @@
                         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
                     })();
                 </script>
+                {% else %}
+                    <div class="alert alert-warning mt-5 mb-5 text-center">
+                        <p class="h3">Ainda não temos máquina do tempo, essa aula ainda não foi gravada 😉</p>
+                    </div>
+                    <div class="text-center">
+                        <a class="btn btn-success" href="{{ live_class.cohort.get_absolute_url }}">Retornar à página da turma {{ live_class.cohort.title }}</a>
+                    </div>
+                {% endif %}
 
             </div>
         </div>
