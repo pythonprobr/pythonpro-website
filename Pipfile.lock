@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2c3272beef86f4fd434728ddeb2cb4e9606db6d63dc24c664eb669bd4817b4d7"
+            "sha256": "93bc2bf4c6bee0da8c2e4bdee417052d43d312064728672ce3aeabfd7587e360"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -41,6 +41,13 @@
                 "sha256:c8f49dd3b42edcc51d09dd2eea8a92b3cfc987ff7e6486be734b4d0cbfd5d315"
             ],
             "version": "==3.2.5"
+        },
+        "babel": {
+            "hashes": [
+                "sha256:1aac2ae2d0d8ea368fa90906567f5c08463d98ade155c0c4bfedd6a0f7160e38",
+                "sha256:d670ea0b10f8b723672d3a6abeb87b565b244da220d76b4dba1b66269ec152d4"
+            ],
+            "version": "==2.8.0"
         },
         "backcall": {
             "hashes": [
@@ -215,6 +222,24 @@
             "index": "pypi",
             "version": "==3.3.0"
         },
+        "django-pagarme": {
+            "hashes": [
+                "sha256:09f5524fbaf6353d97df0b38be86ff74bb36a7076609de0a2f910619707824c6",
+                "sha256:e910310aacb0218fc0c134337ab0e1d87cfac449cba5322c4865247df5616b07"
+            ],
+            "index": "pypi",
+            "version": "==0.2"
+        },
+        "django-phonenumber-field": {
+            "extras": [
+                "phonenumberslite"
+            ],
+            "hashes": [
+                "sha256:2ca3bb0ada0ebc164bd903a981a34f1202a4294006e520b0da961bd7ce9f20a4",
+                "sha256:d4580cc3352f4433962825f9927e6669852c1b40ec484fcb5a74064dabc1201a"
+            ],
+            "version": "==4.0.0"
+        },
         "django-role-permissions": {
             "hashes": [
                 "sha256:c00fc15f67e63cbf5514b95caeb369d6094fe94d75b14c3afc1bb4963babd1fc"
@@ -364,6 +389,13 @@
             ],
             "markers": "sys_platform != 'win32'",
             "version": "==4.8.0"
+        },
+        "phonenumberslite": {
+            "hashes": [
+                "sha256:0982ee5c15b0d89f1ab23cd0d303eddbac7a424c809fa44f5dbec9718db9821a",
+                "sha256:5ea41aedc3bb4a7723bc23cf3faf64c69dd2935315ff8319b38dbd13e6b01466"
+            ],
+            "version": "==8.11.5"
         },
         "pickleshare": {
             "hashes": [

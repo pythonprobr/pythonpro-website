@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'pythonpro.dashboard',
     'pythonpro.launch',
     'pythonpro.analytics',
+    'pythonpro.checkout',
     'rolepermissions',
     'ordered_model',
     'django.contrib.admin',
@@ -78,6 +79,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'bootstrap4',
+    'django_pagarme',
 ]
 
 MIDDLEWARE = [
