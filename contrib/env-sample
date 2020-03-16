@@ -8,6 +8,10 @@ DATABASE_URL=postgres://postgres:postgres@localhost/postgres
 PAGARME_API_KEY=ak_test_6yd4kbaJrWzdn61m4De5yzn7jZuTt9
 PAGARME_CRYPTO_KEY=
 
+CHAVE_PAGARME_CRIPTOGRAFIA_PUBLICA=ak_test_6yd4kbaJrWzdn61m4De5yzn7jZuTt9
+CHAVE_PAGARME_API_PRIVADA=
+
+
 # Control subscriptions ads and payment.
 SUBSCRIPTIONS_OPEN=False
 METEORIC_LAUNCH_OPEN=False
