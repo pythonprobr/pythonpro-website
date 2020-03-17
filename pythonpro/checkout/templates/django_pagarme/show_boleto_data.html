@@ -1,0 +1,21 @@
+{% extends 'core/base_without_nav.html' %}
+{% load django_pagarme %}
+{% block title %}Dados do Boleto{% endblock %}
+{% block description %}Dados de Boleto para Pagamento{% endblock %}
+{% block head %}
+{% endblock head %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Dados do Boleto</h1>
+                <p>Código de Barras: {{ payment.boleto_barcode }}</p>
+                <p><a href="{{ payment.boleto_url }}" class="btn btn-success" target="_blank">Abrir em Boleto em Outra Aba</a></p>
+                <iframe src="{{ payment.boleto_url }}"></iframe>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block footer %}{% endblock footer %}
