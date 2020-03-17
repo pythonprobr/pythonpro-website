@@ -14,26 +14,29 @@ _MEMBER = 'member'
 _ROLES = {_LEAD, _CLIENT, _MEMBER}
 
 
-def create_or_update_with_no_role(name: str, email: str, *tags, id='0'):
-    return _create_or_update(name, email, '', *tags, id=id)
+@shared_task()
+def create_or_update_with_no_role(name: str, email: str, *tags, id='0', phone=None):
+    return _create_or_update(name, email, '', *tags, id=id, phone=phone)
 
 
 @shared_task()
-def create_or_update_lead(name: str, email: str, *tags, id='0'):
-    return _create_or_update(name, email, _LEAD, *tags, id=id)
+def create_or_update_lead(name: str, email: str, *tags, id='0', phone=None):
+    return _create_or_update(name, email, _LEAD, *tags, id=id, phone=phone)
 
 
-def create_or_update_client(name: str, email: str, *tags, id='0'):
-    return _create_or_update(name, email, _CLIENT, *tags, id=id)
+@shared_task()
+def create_or_update_client(name: str, email: str, *tags, id='0', phone=None):
+    return _create_or_update(name, email, _CLIENT, *tags, id=id, phone=phone)
 
 
-def create_or_update_member(name: str, email: str, *tags, id='0'):
-    return _create_or_update(name, email, _MEMBER, *tags, id=id)
+@shared_task()
+def create_or_update_member(name: str, email: str, *tags, id='0', phone=None):
+    return _create_or_update(name, email, _MEMBER, *tags, id=id, phone=phone)
 
 
 def _normalise_id(id):
     """
-    Need to normalize id because active campaing search for custom fields like a "startswith" metheod. Check:
+    Need to normalize id because active campaing search for custom fields like a "startswith" method. Check:
     https://community.activecampaign.com/t/contact-api-v3-search-by-query-params-fields/5658/8?u=python
 
     So we have to add 0 to avoid a not exact match
@@ -42,7 +45,7 @@ def _normalise_id(id):
     return f'{id:010d}'
 
 
-def _create_or_update(name: str, email: str, role: str, *tags, id='0'):
+def _create_or_update(name: str, email: str, role: str, *tags, id='0', phone=None):
     if settings.ACTIVE_CAMPAIGN_TURNED_ON is False:
         return
     prospect_list_id = _get_lists()['Prospects']
@@ -57,6 +60,8 @@ def _create_or_update(name: str, email: str, role: str, *tags, id='0'):
         f'p[{prospect_list_id}]': prospect_list_id,
         'status': '1',
     }
+    if phone is not None:
+        data['phone'] = phone
     if id == _normalise_id('0'):
         contact = _client.contacts.create_contact(data)
     else:

@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'bootstrap4',
     'django_pagarme',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -169,6 +170,9 @@ AUTH_USER_MODEL = 'core.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
+
+# for phone validation
+PHONENUMBER_DEFAULT_REGION = 'BR'
 
 LANGUAGE_CODE = 'pt-br'
 

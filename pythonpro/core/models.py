@@ -81,10 +81,12 @@ class UserInteraction(models.Model):
     ACTIVATED = 'ACTIVATED'
     CLIENT_LP = 'CLIENT_LP'
     CLIENT_CHECKOUT = 'CLIENT_CHECKOUT'
+    CLIENT_CHECKOUT_FORM = 'CLIENT_CHECKOUT_FORM'
     CLIENT_BOLETO = 'CLIENT_BOLETO'
     BECOME_CLIENT = 'BECOME_CLIENT'
     MEMBER_LP = 'MEMBER_LP'
     MEMBER_CHECKOUT = 'MEMBER_CHECKOUT'
+    MEMBER_CHECKOUT_FORM = 'MEMBER_CHECKOUT_FORM'
     MEMBER_BOLETO = 'MEMBER_BOLETO'
     WAITING_LIST = 'WAITING_LIST'
     BECOME_MEMBER = 'BECOME_MEMBER'
@@ -104,10 +106,12 @@ class UserInteraction(models.Model):
                 (ACTIVATED, 'User Watched first video class'),
                 (CLIENT_LP, 'User visited Client Landing Page'),
                 (CLIENT_CHECKOUT, 'User clicked on Client checkout button'),
+                (CLIENT_CHECKOUT_FORM, 'User Filled Client Checkout form'),
                 (CLIENT_BOLETO, 'User generated a Client Boleto'),
                 (BECOME_CLIENT, 'User become Client'),
                 (MEMBER_LP, 'User visited Member Landing Page'),
                 (MEMBER_CHECKOUT, 'User clicked on Member checkout Button'),
+                (MEMBER_CHECKOUT_FORM, 'User Filled Member Checkout form'),
                 (MEMBER_BOLETO, 'User generate Member Boleto'),
                 (WAITING_LIST, 'User subscribed to Waiting List'),
                 (BECOME_MEMBER, 'User Become Member'),

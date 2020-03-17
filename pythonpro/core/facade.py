@@ -196,6 +196,14 @@ def client_checkout(user: User, source: str) -> None:
     return UserInteraction(category=UserInteraction.CLIENT_CHECKOUT, source=source, user=user).save()
 
 
+def client_checkout_form(user: User, source: str) -> None:
+    return UserInteraction(category=UserInteraction.CLIENT_CHECKOUT_FORM, source=source, user=user).save()
+
+
+def member_checkout_form(user: User, source='unknown'):
+    return UserInteraction(category=UserInteraction.MEMBER_CHECKOUT_FORM, source=source, user=user).save()
+
+
 def member_checkout(user: User, source='unknown'):
     return UserInteraction(category=UserInteraction.MEMBER_CHECKOUT, source=source, user=user).save()
 
