@@ -110,6 +110,7 @@ def grant_role(email, id, role: str):
     _client.contacts.remove_tag(roles_to_remove_data)
 
 
+@shared_task()
 def tag_as(email: str, id: int, *tags):
     if settings.ACTIVE_CAMPAIGN_TURNED_ON is False:
         return

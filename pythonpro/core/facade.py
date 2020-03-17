@@ -222,3 +222,11 @@ def subscribe_to_waiting_list(user: User, source: str):
 
 def is_client(user: User):
     return has_role(user, 'client')
+
+
+def is_lead(user: User):
+    return has_role(user, 'lead')
+
+
+def is_member(user: User):
+    return has_role(user, 'member')
