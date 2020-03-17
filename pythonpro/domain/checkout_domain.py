@@ -15,7 +15,7 @@ def contact_info_listener(name, email, phone, payment_item_slug, user=None):
     else:
         user_id = None
     email_marketing_facade.create_or_update_with_no_role.delay(
-        name, email, payment_item_slug, id=user_id, phone=str(phone)
+        name, email, f'{payment_item_slug}-form', id=user_id, phone=str(phone)
     )
 
 
