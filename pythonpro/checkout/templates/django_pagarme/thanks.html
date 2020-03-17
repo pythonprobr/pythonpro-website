@@ -1,0 +1,24 @@
+{% extends 'core/base_without_nav.html' %}
+{% load django_pagarme %}
+{% block title %}Obrigado por se Inscrever{% endblock %}
+{% block description %}Página final da página de inscrição {{ payment_item_config.name }}{% endblock %}
+{% block head %}
+{% endblock head %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Cadastro Finalizado {{ payment_item_config.name }}</h1>
+                <div class="embed-container mb-2">
+                        <iframe src="https://www.youtube.com/embed/bexSB6jw2m8" width="640" height="360" frameborder="0"
+                                webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    </div>
+                <p>Confira em seu email detalhes sobre o curso e sua conta. Não esqueça de verificar caixa de spam</p>
+                <a class="btn btn-success &raquo;" href="{% url 'modules:index' %}">Ver módulos</a>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block footer %}{% endblock footer %}
