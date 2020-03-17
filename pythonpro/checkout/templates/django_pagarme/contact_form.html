@@ -1,0 +1,23 @@
+{% extends 'core/base_without_nav.html' %}
+{% load bootstrap4 %}
+{% block title %}Formulário para Pagamento{% endblock %}
+{% block description %}Formulário com dados de contato par iniciar pagamento!{% endblock %}
+{% block head %} {% endblock head %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Formulário de Pagamento</h1>
+                <form action="{% url 'django_pagarme:contact_info' slug=slug %}" method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form contact_form %}
+                    <button type="submit">Pagar</button>
+                </form>
+                <p>Você será redirecionado para o ambiente de seguro de pagamentos do Pagarme</p>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block footer %}{% endblock footer %}
