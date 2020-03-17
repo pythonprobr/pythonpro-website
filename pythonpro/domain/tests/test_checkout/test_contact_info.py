@@ -84,7 +84,7 @@ def test_member_history(resp, client_with_user, valid_data, slug, logged_user):
 def test_email_marketing_register(client, valid_data, slug, create_or_update_with_no_role_mock):
     make_post(client, valid_data, slug)
     create_or_update_with_no_role_mock.assert_called_once_with(
-        valid_data['name'], valid_data['email'], slug, id=None, phone='+5512999999999'
+        valid_data['name'], valid_data['email'], f'{slug}-form', id=None, phone='+5512999999999'
     )
 
 
@@ -92,7 +92,7 @@ def test_email_marketing_register(client, valid_data, slug, create_or_update_wit
 def test_email_marketing_update(client_with_user, valid_data, slug, create_or_update_with_no_role_mock, logged_user):
     make_post(client_with_user, valid_data, slug)
     create_or_update_with_no_role_mock.assert_called_once_with(
-        valid_data['name'], valid_data['email'], slug, id=logged_user.id, phone='+5512999999999'
+        valid_data['name'], valid_data['email'], f'{slug}-form', id=logged_user.id, phone='+5512999999999'
     )
 
 

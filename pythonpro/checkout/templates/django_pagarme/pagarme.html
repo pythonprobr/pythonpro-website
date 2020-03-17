@@ -1,0 +1,22 @@
+{% extends 'core/base_without_nav.html' %}
+{% load django_pagarme %}
+{% block title %}Checkout Pagarme{% endblock %}
+{% block description %}Checkout seguro via ambiente Pagarme{% endblock %}
+{% block head %}
+    <!-- SCRIPT PAGAR.ME -->
+    <script src="//assets.pagar.me/checkout/1.1.0/checkout.js"></script>
+{% endblock head %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>{{ payment_item.name }}</h1>
+                <button class="btn btn-success pay-button">Abrir modal de pagamento</button>
+                {% show_pagarme payment_item customer open_modal %}
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block footer %}{% endblock footer %}
