@@ -12,7 +12,18 @@
         <div class="row">
             <div class="col">
                 <h1>{{ payment_item.name }}</h1>
-                <button class="btn btn-success pay-button">Abrir modal de pagamento</button>
+                <h2>Formas de pagamento</h2>
+                <ul>
+                    {% for installments, amount, installment_amount in payment_item.payment_plans %}
+                        {% if installments == 1 %}
+                            <li>{{ amount|cents_to_brl }} a vista no cartão ou boleto</li>
+                        {% else %}
+                            <li>{{ amount|cents_to_brl }} em {{ installments }} parcelas
+                                de {{ installment_amount|cents_to_brl }}. Apenas no cartão de crédito</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <button class="btn btn-success pay-button">Pagar com Pagarme</button>
                 {% show_pagarme payment_item customer open_modal %}
             </div>
         </div>
