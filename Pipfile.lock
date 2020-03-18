@@ -27,14 +27,6 @@
             ],
             "version": "==2.5.2"
         },
-        "appnope": {
-            "hashes": [
-                "sha256:5b26757dc6f79a3b7dc9fab95359328d5747fcb2409d331ea66d0272b90ab2a0",
-                "sha256:8b995ffe925347a2138d7ac0fe77155e4311a0ea6d6da4f5128fe4b3cbe5ed71"
-            ],
-            "markers": "sys_platform == 'darwin'",
-            "version": "==0.1.0"
-        },
         "asgiref": {
             "hashes": [
                 "sha256:3e4192eaec0758b99722f0b0666d5fbfaa713054d92e8de5b58ba84ec5ce696f",
@@ -73,26 +65,26 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:172f07391ad6bd261336cddaf988944b2d8e528a7c036d82c7841676cbc935ec",
-                "sha256:e3cf4a0e1a6d79d2761b6ab050cb897a4e753f625524d15c01540f9522a11874"
+                "sha256:934057d57331d1f9c969f186533e87f460e97d2127ca2fde0505a234ec9ad286",
+                "sha256:c998a5a8c6ec6ebb4f3fc6884faa0250e511dbc27fee555e422fe6023e0e73ac"
             ],
             "index": "pypi",
-            "version": "==1.12.22"
+            "version": "==1.12.26"
         },
         "botocore": {
             "hashes": [
-                "sha256:ac6b6ae659b797f7bb106a7bee5ff1c7de9ece85e542a334a1cd618f9f2782cc",
-                "sha256:b8b399828d6dfe8ee879c22aa313591c183b78a8733df437ba84d9f39cd1b219"
+                "sha256:285bd8f8f2258628eb32994505570896c76bdd8f3c7828d2e7749739f9ba07a9",
+                "sha256:9a697a5e1fca536d68b13f99545a49f446db622c0c525f0d29609bb875ac0b7a"
             ],
-            "version": "==1.15.22"
+            "version": "==1.15.26"
         },
         "celery": {
             "hashes": [
-                "sha256:3c5fcd6bfcf9a6323cb742cfc121d1790d50cfeddf300ba723cfa0b356413f07",
-                "sha256:a650525303ee866fb0c62c82f68681fcc2183eebbfafae552c27d30125fe518b"
+                "sha256:108a0bf9018a871620936c33a3ee9f6336a89f8ef0a0f567a9001f4aa361415f",
+                "sha256:5b4b37e276033fe47575107a2775469f0b721646a08c96ec2c61531e4fe45f2a"
             ],
             "index": "pypi",
-            "version": "==4.4.1"
+            "version": "==4.4.2"
         },
         "certifi": {
             "hashes": [
@@ -110,11 +102,11 @@
         },
         "codecov": {
             "hashes": [
-                "sha256:38b32934e759a29313382287f59986f25613708f60760c88d31e956399bbeffe",
-                "sha256:4cf93c30cc1ddb6d7414fce0a45816889499c3febc8bbbc24f1cd1936a804087"
+                "sha256:09fb045eb044a619cd2b9dacd7789ae8e322cb7f18196378579fd8d883e6b665",
+                "sha256:aeeefa3a03cac8a78e4f988e935b51a4689bb1f17f20d4e827807ee11135f845"
             ],
             "index": "pypi",
-            "version": "==2.0.16"
+            "version": "==2.0.22"
         },
         "collectfast": {
             "hashes": [
@@ -224,11 +216,11 @@
         },
         "django-pagarme": {
             "hashes": [
-                "sha256:0db3dd97fbca1a2abf286bd2bce3933f5ee6471a5233b6beabab061778072a01",
-                "sha256:adff29f3fc8cece4d07ca0eae27a7454273876dd6a7531c889c0db95eacfddb1"
+                "sha256:3afe6b8cecb9f491b65c51948a21fdbc8ec3cd82e3f48f73986edbadf0b59961",
+                "sha256:ae48618ab12209d755fd41ac9cc41a3cdc34b4144dabed407e0f66ded9b52b53"
             ],
             "index": "pypi",
-            "version": "==0.4"
+            "version": "==0.6"
         },
         "django-phonenumber-field": {
             "extras": [
@@ -392,10 +384,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:0982ee5c15b0d89f1ab23cd0d303eddbac7a424c809fa44f5dbec9718db9821a",
-                "sha256:5ea41aedc3bb4a7723bc23cf3faf64c69dd2935315ff8319b38dbd13e6b01466"
+                "sha256:b0678cd22eda9d6eba8535d0d7fce8f6c896427375bf4f4cc5ae433261733d19",
+                "sha256:d6c5789cb4812342768a58d4a1f93544b48923095be1fb757dbcd7f038ca0ff5"
             ],
-            "version": "==8.11.5"
+            "version": "==8.12.0"
         },
         "pickleshare": {
             "hashes": [
@@ -545,11 +537,11 @@
         },
         "sentry-sdk": {
             "hashes": [
-                "sha256:480eee754e60bcae983787a9a13bc8f155a111aef199afaa4f289d6a76aa622a",
-                "sha256:a920387dc3ee252a66679d0afecd34479fb6fc52c2bc20763793ed69e5b0dcc0"
+                "sha256:23808d571d2461a4ce3784ec12bbee5bdb8c026c143fe79d36cef8a6d653e71f",
+                "sha256:bb90a4e19c7233a580715fc986cc44be2c48fc10b31e71580a2037e1c94b6950"
             ],
             "index": "pypi",
-            "version": "==0.14.2"
+            "version": "==0.14.3"
         },
         "six": {
             "hashes": [
