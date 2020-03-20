@@ -392,10 +392,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:0982ee5c15b0d89f1ab23cd0d303eddbac7a424c809fa44f5dbec9718db9821a",
-                "sha256:5ea41aedc3bb4a7723bc23cf3faf64c69dd2935315ff8319b38dbd13e6b01466"
+                "sha256:b0678cd22eda9d6eba8535d0d7fce8f6c896427375bf4f4cc5ae433261733d19",
+                "sha256:d6c5789cb4812342768a58d4a1f93544b48923095be1fb757dbcd7f038ca0ff5"
             ],
-            "version": "==8.11.5"
+            "version": "==8.12.0"
         },
         "pickleshare": {
             "hashes": [
