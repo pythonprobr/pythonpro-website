@@ -1,8 +1,10 @@
+import os
 from datetime import datetime
 
+from django.conf import settings
 from django.utils import timezone
 from django.shortcuts import redirect, render
-# Create your views here.
+from django.views.static import serve
 from django.urls import reverse
 
 from pythonpro.absolute_uri import build_absolute_uri
@@ -114,3 +116,19 @@ def _get_launch_status():
         return LAUNCH_STATUS_CPL3
 
     return LAUNCH_STATUS_OPEN_CART
+
+
+def onesignal_sdk_worker(request):
+    return serve(
+        request,
+        'js/spp/OneSignalSDKWorker.js',
+        document_root=os.path.join(settings.BASE_DIR, 'pythonpro', 'core', 'static')
+    )
+
+
+def onesignal_sdk_updater_worker(request):
+    return serve(
+        request,
+        'js/spp/OneSignalSDUpdaterKWorker.js',
+        document_root=os.path.join(settings.BASE_DIR, 'pythonpro', 'core', 'static')
+    )

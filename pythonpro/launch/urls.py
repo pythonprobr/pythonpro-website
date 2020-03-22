@@ -10,4 +10,6 @@ urlpatterns = [
     path('semana-do-programador-profissional/aula-1', views.cpl1, name='cpl1'),
     path('semana-do-programador-profissional/aula-2', views.cpl2, name='cpl2'),
     path('semana-do-programador-profissional/aula-3', views.cpl3, name='cpl3'),
+    path('OneSignalSDKWorker.js', views.onesignal_sdk_worker),
+    path('OneSignalSDUpdaterKWorker.js', views.onesignal_sdk_worker),
 ]
