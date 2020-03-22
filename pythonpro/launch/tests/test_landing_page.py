@@ -15,15 +15,15 @@ def test_status_code(resp):
 
 
 def test_email_field_is_present(resp):
-    dj_assert_contains(resp, '<input type="email" name="email"')
+    dj_assert_contains(resp, 'type="email" name="email"')
 
 
 def test_submmit_button_is_present(resp):
-    dj_assert_contains(resp, '<button type="submit"')
+    dj_assert_contains(resp, 'type="submit"')
 
 
 def test_form_action_is_present(resp):
-    dj_assert_contains(resp, f'<form method="post" action="{reverse("launch:lead_form")}">')
+    dj_assert_contains(resp, f'action="{reverse("launch:lead_form")}" method="POST"')
 
 
 @pytest.fixture

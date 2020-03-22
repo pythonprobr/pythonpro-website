@@ -33,15 +33,14 @@ def lead_form(request):
     if not form.is_valid():
         return render(request, 'launch/form.html', {'form': form}, status=400)
     email = form.cleaned_data['email']
+    first_name = form.cleaned_data['name']
     user = request.user
     if user.is_authenticated:
-        first_name = user.first_name
         email_marketing_facade.create_or_update_with_no_role(
             first_name,
             email,
             f'turma-{find_most_recent_cohort().slug}-semana-do-programador', id=user.id)
     else:
-        first_name = email.split('@')[0]
         email_marketing_facade.create_or_update_with_no_role(
             first_name,
             email,
