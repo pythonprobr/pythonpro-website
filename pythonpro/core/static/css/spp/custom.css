@@ -1193,7 +1193,7 @@ h1 {
 .header-thank-you {
   margin-top: 50px;
   padding: 20px 20px 64px;
-  background: url(../img/thank-you/backgrounds/bg-header-mobile.jpg) top center scroll no-repeat;
+  background: url(/static/img/spp/thank-you/backgrounds/bg-header-mobile.jpg) top center scroll no-repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -1257,7 +1257,7 @@ h1 {
   .header-thank-you {
     margin-top: 0;
     padding: 60px 0;
-    background: #F9F9F9 url(../img/thank-you/backgrounds/bg-header-desktop.jpg) top center scroll no-repeat;
+    background: #F9F9F9 url(/static/img/spp/thank-you/backgrounds/bg-header-desktop.jpg) top center scroll no-repeat;
     -webkit-background-size: 100%;
     -moz-background-size: 100%;
     -o-background-size: 100%;
