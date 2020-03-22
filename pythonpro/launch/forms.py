@@ -3,6 +3,7 @@ from django.forms.utils import ErrorList
 
 
 class LeadForm(forms.Form):
+    name = forms.CharField(required=True)
     email = forms.EmailField(required=True)
 
     def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None, initial=None, error_class=ErrorList,

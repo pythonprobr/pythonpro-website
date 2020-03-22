@@ -1,226 +1,180 @@
-{% extends 'core/base_without_nav.html' %}
 {% load static %}
-{% block title %}Inscrições abertas! Semana do Programador Profissional{% endblock %}
-{% block description %}Página de Inscrição para Semana do Programador Profissional{% endblock %}
-{% block head %}
-    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
 
-    <style>
-        @font-face {
-            font-family: 'Gilroy-Bold';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Bold ☞'), url('{% static "fonts/Gilroy-Bold.woff" %}') format('woff');
-        }
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A Semana do Programador Profissional é um evento gratuito onde vou te mostrar o passo a passo que vai te dar acesso a um mercado que paga altos salários e milhares de vagas em aberto!">
+  <meta name="author" content="Eder Christian">
+  <title>INSCRIÇÕES ABERTAS! Semana do Programador Profissional</title>
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/spp/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/spp/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/spp/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'favicon/spp/site.webmanifest' %}">
+  <link rel="mask-icon" href="{% static 'favicon/spp/safari-pinned-tab.svg' %}" color="#777777">
+  
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="format-detection" content="telephone=no">
+  <link href="{% static 'css/spp/custom.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/spp/normalize.min.css' %}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700,800,900&display=swap" rel="stylesheet">
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="https://www.python.pro.br/semana-do-programador-profissional/inscricao" />
+  <meta name="twitter:title" content="Descubra o caminho para se tornar um programador profissional em pouco tempo" />
+  <meta name="twitter:description" content="A Semana do Programador Profissional é um evento gratuito onde vou te mostrar o passo a passo que vai te dar acesso a um mercado que paga altos salários e milhares de vagas em aberto!" />
+  <meta property="twitter:image" content="{% static 'img/spp/card-python-pro.png' %}" />
+  <meta property="og:url" content="https://www.python.pro.br/semana-do-programador-profissional/inscricao" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Descubra o caminho para se tornar um programador profissional em pouco tempo" />
+  <meta property="og:site_name" content="Descubra o caminho para se tornar um programador profissional em pouco tempo" />
+  <meta property="og:description" content="A Semana do Programador Profissional é um evento gratuito onde vou te mostrar o passo a passo que vai te dar acesso a um mercado que paga altos salários e milhares de vagas em aberto!" />
+  <meta property="og:image" content="{% static 'img/spp/card-python-pro.png' %}" />
+</head>
+<body>
+  <nav class="navbar">
+    <img class="navbar__icon" src="{% static 'svg/spp/logo-python-pro.svg' %}" alt="Logo Python Pro">
+  </nav>
 
-        @font-face {
-            font-family: 'Gilroy-Heavy';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Heavy ☞'), url('{% static "fonts/Gilroy-Heavy.woff" %}') format('woff');
-        }
-
-        @font-face {
-            font-family: 'Gilroy-Light';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Light ☞'), url('{% static "fonts/Gilroy-Light.woff" %}') format('woff');
-        }
-
-        @font-face {
-            font-family: 'Gilroy-Medium';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Medium ☞'), url('{% static "fonts/Gilroy-Medium.woff" %}') format('woff');
-        }
-
-        @font-face {
-            font-family: 'Gilroy-Regular';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Regular ☞'), url('{% static "fonts/Gilroy-Regular.woff" %}') format('woff');
-        }
-
-    </style>
-    <link rel="stylesheet" href="{% static 'css/client.css' %}"/>
-
-    <style>
-        h1 {
-            font-size: 3.2rem;
-        }
-
-        input.form-control, button.btn {
-            border-radius: 0px;
-            margin: 5px 0;
-            font-family: 'ubuntu';
-        }
-
-        button.btn {
-            border-width: 1px;
-            font-family: 'Gilroy-Bold';
-        }
-
-        .mobile h1 {
-            font-size: 2rem;
-            margin-bottom: 30px;
-        }
-
-        .mobile h2 {
-            font-size: 1.5rem;
-        }
-        .mobile.hero {
-            margin: 20px 0;
-        }
-    </style>
-{% endblock head %}
-
-{% block body %}
-    <div class=''>
-        <div class="container">
-            <div class="row text-center">
-                <!-- desktop -->
-                <div class="col-md-12 hero desktop d-none d-sm-block d-md-block">
-                    <h1 class='font-weight-bold' style='color: #44A5F1'>
-                        SEMANA DO PROGRAMADOR PROFISSIONAL
-                    </h1>
-                    <h2 class='col-md-8 offset-md-2'>
-                        Uma semana de vídeos e aulas que vão te ensinar como se 
-                        <b>tornar um programador profissional</b> em pouco tempo!    
-                    </h2>
-                    <h3 class='font-weight-bold col-md-8 offset-md-2 mt-4'>28/10 á 01/11</h3>
-                </div>
-                    
-                <!-- mobile -->
-                <div class="col-md-12 hero mobile d-block d-lg-none d-xl-none">
-                    <h1 class='font-weight-bold' style='color: #44A5F1'>
-                        SEMANA DO PROGRAMADOR PROFISSIONAL
-                    </h1>
-                    <h2 class='col-md-8 offset-md-2'>
-                        Uma semana de vídeos e aulas que vão te ensinar como se 
-                        <b>tornar um programador profissional</b> em pouco tempo!    
-                    </h2>
-                    <h3 class='font-weight-bold col-md-8 offset-md-2 mt-4'>28/10 á 01/11</h3>
-                </div>
-            </div>
-        </div>
+  <header class="header">
+    <div class="header__content">
+      <h1 class="header__content__title text-uppercase fw-300 font-highlighted">Descubra o caminho para se tornar um <span class="fw-800">programador profissional em pouco tempo</span></h1>
+      <h2 class="header__content__subtitle fw-400">A <span class="text-underline">Semana do Programador Profissional</span> é um evento gratuito onde vou te mostrar o passo a passo que vai te dar acesso a um mercado que paga altos salários e milhares de vagas em aberto!</h2>
+      <h3 class="header__content__description font-highlighted fw-700">Preencha os campos abaixo para garantir sua vaga:</h3>
     </div>
 
-    <div class='bg-primary'>
-        <div class="container">
-            <div class="row text-center">
-                <div class="col hero">
-                    <form method="post" action="{% url 'launch:lead_form' %}">
-                        {% csrf_token %}
-                        <div class="form-group form-row justify-content-md-center">
-                            <div class="col-md-9 col-md text-left">
-                                <input type="email" name="{{ form.email.html_name }}"
-                                        {%  if user.is_authenticated %} value="{{ form.email.value }}"{% endif %}
-                                        class="form-control form-control-lg"
-                                        autofocus="" maxlength="{{ form.email.max_length }}"
-                                        required="required" id="{{ form.email.id_for_label }}"
-                                        placeholder="Insira o seu MELHOR EMAIL!">
-                                
-                                <!-- desktop -->
-                                <button type="submit" class="btn btn-lg btn-warning btn-block d-none d-sm-block d-md-block">
-                                    SIM, Eu quero me tornar um PROFISSIONAL!
-                                    <span class="ec ec-money-mouth-face"></span>
-                                    &raquo;
-                                </button>
-                                
-                                <!-- mobile -->
-                                <button type="submit" class="btn btn-warning btn-block d-block d-lg-none d-xl-none">
-                                    SIM, quero ser PROFISSIONAL!
-                                    <span class="ec ec-money-mouth-face"></span>
-                                    &raquo;
-                                </button>
+    <img class="header__renzo-mobile" src="{% static 'img/spp/header/renzo-nuccitelli-mobile.png' %}" alt="Renzo Nuccitelli com camiseta preta da Python Pro, sorrindo, indicador da mão direita apontando para baixo">
 
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <div class="header__content__form">
+      <form action="{% url 'launch:lead_form' %}" method="POST" class="header__content__form__item">{% csrf_token %}
+        <input class="form__group__item__input" name="name" type="text" placeholder="Nome" value="{{ user.first_name }}" required>
+          <input class="form__group__item__input" type="email" name="email" placeholder="Insira seu melhor e-mail" inputmode="email" value="{{ user.email }}" required>
+        <button type="submit" class="header__content__form__item__button text-uppercase fw-700 main-transition">Sim, eu quero me tornar um profissional!</button>
+      </form>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col mb-5 mt-5">
-                <h2 class='font-weight-bold mb-5'>Olá! Eu me chamo Renzo Nuccitelli,</h2>
-
-                <div class='text-center d-block d-lg-none d-xl-none'>
-                    <img src='{% static 'img/instructors/renzo-nuccitelli-300.jpeg' %}' class="img-fluid"
-                         width="300px" alt="Foto de Renzo Nuccitelli"/>
-                </div>
-
-                <img src='{% static 'img/instructors/renzo-nuccitelli-300.jpeg' %}'
-                     class="img-fluid float-right ml-3 mb-3 d-none d-sm-none d-md-block" width="300px"
-                     alt="Foto de Renzo Nuccitelli"/>
-
-                <p>
-                    Sou programador há 13 anos e hoje atuo também como professor e diretor de tecnologia. 
-                    Já fui diretor de tecnologia em outras duas empresas
-                    e também trabalhei na maior empresa de software aberto do mundo, <b>a
-                    Red Hat</b>. Também já fui consultor de diversas outras empresas, como o Hotel Urbano.
-                </p>
-                <p>
-                    Já palestrei em diversos enventos de tecnologia. Também já fui o organizador do 
-                    maior evento sobre a melhor linguagem de programação: a <b>Python Brasil!</b>
-                </p>
-                <p><b class='highlight'>
-                    Meu sonho sempre foi que as pessoas pudessem construir as mesmas oportunidades que construí...
-                </b></p>
-                <p>
-                    Por isso eu decidi criar a <b>Semana do Programador Profissional</b>, 
-                    um workshop onde eu vou te mostrar como uma pessoa completamente leiga em 
-                    programação pode <b>se tornar um programador profissional em questão de meses</b>, 
-                    desde que faça isso da maneira certa.
-                </p>
-                <p>
-                    Esse workshop vai acontecer entre os dias <b>28 de Outubro e 01 de Novembro</b>, 
-                    online e de forma gratuita.
-                </p>
-                <p>
-                    Preencha o formulário abaixo com o seu email e venha aprender como se 
-                    tornar um programador profissional em <b>pouco tempo</b>!
-                </p>
-            </div>
-        </div>
+    <div class="header__date">
+      <span class="header__date__title text-uppercase fw-800 font-highlighted">13 a 16 de abril</span>
     </div>
 
-    <div class='bg-primary'>
-        <div class="container">
-            <div class="row text-center">
-                <div class="col hero">
-                    <form method="post" action="{% url 'launch:lead_form' %}">
-                        {% csrf_token %}
-                        <div class="form-group form-row justify-content-md-center">
-                            <div class="col-md-9 col-md text-left">
-                                <input type="email" name="{{ form.email.html_name }}"
-                                        {%  if user.is_authenticated %} value="{{ form.email.value }}"{% endif %}
-                                        class="form-control form-control-lg"
-                                        maxlength="{{ form.email.max_length }}"
-                                        required="required" id="{{ form.email.id_for_label }}"
-                                        placeholder="Insira o seu MELHOR EMAIL!">
-                                
-                                <!-- desktop -->
-                                <button type="submit" class="btn btn-lg btn-warning btn-block d-none d-sm-block d-md-block">
-                                    SIM, Eu quero me tornar um PROFISSIONAL!
-                                    <span class="ec ec-money-mouth-face"></span>
-                                    &raquo;
-                                </button>
-                                
-                                <!-- mobile -->
-                                <button type="submit" class="btn btn-warning btn-block d-block d-lg-none d-xl-none">
-                                    SIM, quero ser PROFISSIONAL!
-                                    <span class="ec ec-money-mouth-face"></span>
-                                    &raquo;
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <div class="header__disclaimer">
+      <span class="header__disclaimer__title text-uppercase fw-800">100% online e grátis</span>
     </div>
+  </header>
 
-{% endblock body %}
+  <img class="header__image" src="{% static 'img/spp/header/renzo-nuccitelli-desktop.jpg' %}" alt="Renzo Nuccitelli com camiseta preta da Python Pro, sorrindo, indicador da mão direita apontando para baixo. Círculo azul atrás">
+
+  <main role="main">
+    <section class="countdown">
+      <div class="countdown__group">
+        <div class="countdown__group__content">
+          <h2 class="countdown__group__title text-uppercase text-green fw-800">A contagem regressiva <span class="break-mobile text-blue">já começou.</span></h2>
+          <h3 class="countdown__group__subtitle fw-300 text-blue">Não perca tempo e garanta já a sua vaga :)</h3>
+          <img class="countdown__group__content__detail" src="{% static 'img/spp/countdown/countdown-detail.png' %}" alt="Pequenos círculos na cor amarela formando um quadrado">
+        </div>
+
+        <div class="countdown__group__numbers">
+          <div class="countdown__group__numbers__item">
+            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted" id="days"></span>
+            <span class="countdown__group__numbers__item__description text-uppercase text-green fw-700">Dias</span>
+          </div>
+
+          <div class="countdown__group__numbers__item">
+            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted" id="hours"></span>
+            <span class="countdown__group__numbers__item__description text-uppercase text-green fw-700">Horas</span>
+          </div>
+
+          <div class="countdown__group__numbers__item">
+            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted" id="minutes"></span>
+            <span class="countdown__group__numbers__item__description text-uppercase text-green fw-700">Minutos</span>
+          </div>
+
+          <div class="countdown__group__numbers__item">
+            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted" id="seconds"></span>
+            <span class="countdown__group__numbers__item__description text-uppercase text-green fw-700">Segundos</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="renzo">
+      <img class="renzo__img__mobile" src="{% static 'img/spp/renzo/about-renzo-nuccitelli-mobile.jpg' %}" alt="Renzo Nuccitelli com braços cruzados, olhando para foto. Fundo verde abacate com códigos escritos em branco. Imagem pequena">
+      <img class="renzo__img__desktop" src="{% static 'img/spp/renzo/about-renzo-nuccitelli-desktop.png' %}" alt="Renzo Nuccitelli com braços cruzados, olhando para foto. Fundo verde abacate com códigos escritos em branco. Imagem grande">
+
+      <div class="renzo__group">
+        <span class="renzo__group__about text-uppercase text-green fw-700">Conheça o professor</span>
+        <h2 class="renzo__group__title fw-400 text-gray"><span class="text-blue text-uppercase font-highlighted fw-900">Olá! Eu me chamo</span> <span class="text-green text-uppercase font-highlighted fw-900">Renzo Nuccitelli,</span> <span class="break renzo__group__title__small"><span class="text-green">sou programador há 13 anos,</span> palestrante, consultor, diretor de tecnologia e, principalmente, professor.</span></h2>
+        <h3 class="renzo__group__description renzo__group__description text-green fw-400">Meu sonho sempre foi que as pessoas pudessem construir as mesmas oportunidades que construí...</h3>
+        <h4 class="renzo__group__description text-gray fw-400">Por isso eu decidi criar a <span class="text-green">Semana do Programador Profissional</span>, um workshop onde eu vou te mostrar como uma pessoa completamente leiga em programação pode se tornar um programador profissional em questão de meses, desde que faça isso da maneira certa.</h4>
+      </div>
+    </section>
+
+    <section class="form">
+      <div class="form__group">
+        <h2 class="form__group__title fw-900 text-blue text-uppercase font-highlighted">Preencha o <span class="break">formulário abaixo</span></h2>
+        <h3 class="form__group__subtitle fw-300 text-gray">e venha aprender como se tornar um programador profissional em pouco tempo!</h3>
+
+        <form action="{% url 'launch:lead_form' %}" method="rPOST" class="form__group__item">{% csrf_token %}
+          <input class="form__group__item__input" name="name" type="text" placeholder="Nome" value="{{ user.first_name }}" required>
+          <input class="form__group__item__input" type="email" name="email" placeholder="Insira seu melhor e-mail" inputmode="email" value="{{ user.email }}" required>
+          <button type="submit" class="form__group__item__button text-uppercase fw-700 main-transition">Sim, eu quero me tornar um profissional!</button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__group">
+        <img class="footer__group__detail-left-desktop" src="{% static 'img/spp/footer/detail-top-footer.png' %}" alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
+        <div class="footer__group__header">
+          <img class="footer__group__header__logo" src="{% static 'svg/spp/logo-python-pro.svg' %}" alt="Logo Python Pro">
+          <h2 class="footer__group__header__title fw-700 text-blue text-uppercase">Semana do Programador Profissional</h2>
+          <h3 class="footer__group__header__subtitle fw-700 text-blue text-uppercase">13 a 16 de abril</h3>
+        </div>
+
+        <div class="footer__group__content">
+          <div class="footer__group__content__item">
+            <img class="footer__group__content__item__icon" src="{% static 'img/spp/footer/phone.jpg' %}" alt="Ícone de um telefone na cor verde abacate">
+            <div>
+              <h4 class="footer__group__content__item__title fw-700 text-blue text-uppercase">Ligue para gente</h4>
+              <p class="footer__group__content__item__description fw-300 text-gray">+55 12 99248-8788</p>
+            </div>
+          </div>
+
+          <div class="footer__group__content__item">
+            <img class="footer__group__content__item__icon" src="{% static 'img/spp/footer/email.jpg' %}" alt="Ícone de um envelope na cor verde abacate">
+            <div>
+              <h4 class="footer__group__content__item__title fw-700 text-blue text-uppercase">Envie um e-mail</h4>
+              <p class="footer__group__content__item__description fw-300 text-gray">suporte@python.pro.br</p>
+            </div>
+          </div>
+
+          <div class="footer__group__content__item">
+            <img class="footer__group__content__item__icon" src="{% static 'img/spp/footer/cpnj.jpg' %}" alt="Ícone de um globo na cor verde abacate">
+            <div>
+              <h4 class="footer__group__content__item__title fw-700 text-blue text-uppercase">CNPJ</h4>
+              <p class="footer__group__content__item__description fw-300 text-gray">31.080.715/0001-25</p>
+            </div>
+          </div>
+        </div>
+
+        <img class="footer__renzo-mobile" src="{% static 'img/spp/footer/renzo-nuccitelli-footer.jpg' %}" alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Python Pro. Imagem pequena">
+
+        <img class="footer__group__detail" src="{% static 'img/spp/footer/footer-group-detail.jpg' %}" alt="Pequenos círculos na cor verde abacate formando um retângulo">
+      </div>
+
+      <div class="footer__copyright">
+        <p class="footer__copyright__title fw-700 text-uppercase text-copyright">&copy; Python Pro. 2020 Todos os direitos reservados.</p>
+        <img class="footer__copyright__renzo-desktop" src="" alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Python Pro. Imagem grande">
+      </div>
+
+      <img class="footer__group__detail-right-desktop" src="{% static 'img/spp/footer/renzo-nuccitelli-footer-desktop.png' %}" alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
+    </footer>
+  </main>
+
+  <script src="{% static 'js/spp/countdown.min.js' %}"></script>
+</body>
+</html>
