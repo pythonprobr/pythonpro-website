@@ -41,6 +41,8 @@ def _normalise_id(id):
 
     So we have to add 0 to avoid a not exact match
     """
+    if id is None:
+        id = 0
     id = int(id)
     return f'{id:010d}'
 
