@@ -238,7 +238,7 @@ def visit_client_landing_page(user: _User, source: str) -> None:
     :return:
     """
     _core_facade.visit_client_landing_page(user, source)
-    _email_marketing_facade.tag_as(user.email, user.id, 'potential-client')
+    _email_marketing_facade.tag_as.delay(user.email, user.id, 'potential-client')
 
 
 def visit_member_landing_page(user, source):
@@ -249,10 +249,7 @@ def visit_member_landing_page(user, source):
     :return:
     """
     _core_facade.visit_member_landing_page(user, source)
-    try:
-        _email_marketing_facade.tag_as(user.email, user.id, 'potential-member')
-    except _ActiveCampaignError:
-        pass  # Ok not handling, probably invalid email
+    _email_marketing_facade.tag_as.delay(user.email, user.id, 'potential-member')
 
 
 def visit_launch_landing_page(user, source):
@@ -282,7 +279,7 @@ def click_member_checkout(user):
     :return:
     """
     _core_facade.member_checkout(user, None)
-    _email_marketing_facade.tag_as(user.email, user.id, 'member-checkout')
+    _email_marketing_facade.tag_as.delay(user.email, user.id, 'member-checkout')
 
 
 def click_client_checkout(user: _User):
@@ -292,7 +289,7 @@ def click_client_checkout(user: _User):
     :return:
     """
     _core_facade.client_checkout(user, None)
-    _email_marketing_facade.tag_as(user.email, user.id, 'client-checkout')
+    _email_marketing_facade.tag_as.delay(user.email, user.id, 'client-checkout')
 
 
 def client_generated_boleto(user):
@@ -301,7 +298,7 @@ def client_generated_boleto(user):
         :param user:
         :return:
         """
-    _email_marketing_facade.tag_as(user.email, user.id, CLIENT_BOLETO_TAG)
+    _email_marketing_facade.tag_as.delay(user.email, user.id, CLIENT_BOLETO_TAG)
     _core_facade.client_generated_boleto(user, None)
 
 
@@ -317,7 +314,7 @@ def subscribe_to_waiting_list(user: _User, source: str) -> None:
     :return:
     """
     _core_facade.subscribe_to_waiting_list(user, source)
-    _email_marketing_facade.tag_as(user.email, user.id, 'lista-de-espera')
+    _email_marketing_facade.tag_as.delay(user.email, user.id, 'lista-de-espera')
 
 
 def activate_user(user: _User, source: str) -> None:
@@ -339,7 +336,7 @@ def visit_cpl1(user: _User, source: str) -> None:
     :return:
     """
     _core_facade.visit_cpl1(user, source)
-    _email_marketing_facade.tag_as(user.email, user.id, 'cpl1')
+    _email_marketing_facade.tag_as.delay(user.email, user.id, 'cpl1')
 
 
 def visit_cpl2(user: _User, source: str) -> None:
@@ -350,7 +347,7 @@ def visit_cpl2(user: _User, source: str) -> None:
     :return:
     """
     _core_facade.visit_cpl2(user, source)
-    _email_marketing_facade.tag_as(user.email, user.id, 'cpl2')
+    _email_marketing_facade.tag_as.delay(user.email, user.id, 'cpl2')
 
 
 def visit_cpl3(user: _User, source: str) -> None:
@@ -361,7 +358,7 @@ def visit_cpl3(user: _User, source: str) -> None:
     :return:
     """
     _core_facade.visit_cpl3(user, source)
-    _email_marketing_facade.tag_as(user.email, user.id, 'cpl3')
+    _email_marketing_facade.tag_as.delay(user.email, user.id, 'cpl3')
 
 
 @shared_task()

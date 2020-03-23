@@ -8,7 +8,7 @@ from pythonpro.launch.views import LAUNCH_STATUS_CPL1, LAUNCH_STATUS_OPEN_CART, 
 
 @pytest.fixture
 def tag_as_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.tag_as')
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.tag_as.delay')
 
 
 @pytest.fixture

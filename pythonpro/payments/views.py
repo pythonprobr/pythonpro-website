@@ -236,7 +236,7 @@ def client_landing_page_oto(request):
 
     user = request.user
     if not user.is_authenticated and not is_debug:
-        return HttpResponseRedirect(reverse('client_landing_page'))
+        return HttpResponseRedirect(reverse('checkout:pytools_lp'))
 
     if not is_debug:
         notification_url = reverse('payments:pagarme_notification', kwargs={'user_id': user.id})
@@ -269,7 +269,7 @@ def client_landing_page_do(request):
 
     user = request.user
     # if not user.is_authenticated and not is_debug:
-    #     return HttpResponseRedirect(reverse('client_landing_page'))
+    #     return HttpResponseRedirect(reverse('checkout:pytools_lp'))
 
     notification_url = ""
     if not is_debug and user.is_authenticated:

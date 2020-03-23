@@ -11,7 +11,7 @@ def subscription_closed(settings):
 
 @pytest.fixture
 def resp(subscription_closed, client_with_lead, logged_user, mocker):
-    tag_as = mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.tag_as')
+    tag_as = mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.tag_as.delay')
     yield client_with_lead.get(reverse('payments:waiting_list_ty'), secure=True)
     tag_as.assert_called_once_with(logged_user.email, logged_user.id, 'lista-de-espera')
 

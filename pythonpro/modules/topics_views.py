@@ -10,7 +10,7 @@ from pythonpro.modules.permissions import is_client_content
 
 def content_landing_page(content: Content):
     if is_client_content(content):
-        redirect_path = reverse('client_landing_page')
+        redirect_path = reverse('checkout:pytools_lp')
     else:
         redirect_path = reverse('member_landing_page')
     return redirect(redirect_path, permanent=False)
