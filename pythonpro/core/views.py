@@ -59,7 +59,7 @@ def sitemap(request):
     named_views = [
         'core:index',
         'core:lead_landing',
-        'client_landing_page',
+        'checkout:pytools_lp',
         'member_landing_page',
         'core:podcast',
         'core:tech_talks',
