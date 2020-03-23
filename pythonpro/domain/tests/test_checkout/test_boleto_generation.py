@@ -74,7 +74,7 @@ def test_payment_linked_with_created_user(resp, django_user_model):
 def test_created_user_tagged_with_boleto(resp, django_user_model, tag_as_mock, pytools_item):
     User = django_user_model
     user = User.objects.first()
-    tag_as_mock.assert_called_once_with(user.id, f'{pytools_item.slug}-boleto')
+    tag_as_mock.assert_called_once_with(user.email, user.id, f'{pytools_item.slug}-boleto')
 
 
 # Tests user logged
@@ -94,7 +94,7 @@ def test_payment_linked_with_logged_user(resp_logged_user, logged_user):
 
 
 def test_user_tagged_with_boleto(resp_logged_user, logged_user, tag_as_mock, pytools_item):
-    tag_as_mock.assert_called_once_with(logged_user.id, f'{pytools_item.slug}-boleto')
+    tag_as_mock.assert_called_once_with(logged_user.email, logged_user.id, f'{pytools_item.slug}-boleto')
 
 
 @pytest.fixture

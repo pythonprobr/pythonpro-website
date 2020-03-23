@@ -46,7 +46,7 @@ def payment_handler_task(payment_id):
         _promote(user, slug)
     elif status == django_pagarme_facade.WAITING_PAYMENT:
         user = payment.user
-        email_marketing_facade.tag_as.delay(user.id, f'{slug}-boleto')
+        email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-boleto')
 
 
 def _promote(user, slug):
