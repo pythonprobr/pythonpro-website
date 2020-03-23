@@ -40,7 +40,12 @@ def payment_handler_task_mock(mocker):
 
 
 @pytest.fixture
-def resp(client, pagarme_responses, create_or_update_lead_mock, payment_handler_task_mock):
+def tag_as_mock(mocker):
+    return mocker.patch('pythonpro.domain.checkout_domain.email_marketing_facade.tag_as.delay')
+
+
+@pytest.fixture
+def resp(client, pagarme_responses, create_or_update_lead_mock, payment_handler_task_mock, tag_as_mock):
     return client.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN}), secure=True)
 
 
@@ -66,10 +71,16 @@ def test_payment_linked_with_created_user(resp, django_user_model):
     assert user == payment.user
 
 
+def test_created_user_tagged_with_boleto(resp, django_user_model, tag_as_mock, pytools_item):
+    User = django_user_model
+    user = User.objects.first()
+    tag_as_mock.assert_called_once_with(user.id, f'{pytools_item.slug}-boleto')
+
+
 # Tests user logged
 
 @pytest.fixture
-def resp_logged_user(client_with_lead, pagarme_responses, payment_handler_task_mock):
+def resp_logged_user(client_with_lead, pagarme_responses, payment_handler_task_mock, tag_as_mock):
     return client_with_lead.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN}), secure=True)
 
 
@@ -80,6 +91,10 @@ def test_logged_user_become_lead(resp_logged_user, logged_user):
 def test_payment_linked_with_logged_user(resp_logged_user, logged_user):
     payment = django_pagarme_facade.find_payment_by_transaction(TRANSACTION_ID)
     assert logged_user == payment.user
+
+
+def test_user_tagged_with_boleto(resp_logged_user, logged_user, tag_as_mock, pytools_item):
+    tag_as_mock.assert_called_once_with(logged_user.id, f'{pytools_item.slug}-boleto')
 
 
 @pytest.fixture
