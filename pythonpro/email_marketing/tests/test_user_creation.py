@@ -178,6 +178,12 @@ def test_normalise_id(transform):
     assert int(normalized_id) == id
 
 
+def test_normalise_id_none():
+    normalized_id = _normalise_id(None)
+    assert len(normalized_id) == 10
+    assert int(normalized_id) == 0
+
+
 def test_granted_client_role(resps_user_found, grant_role_mock):
     facade.create_or_update_client('Renzo Nuccitelli', 'renzo@python.pro.br', 'turma', id=1)
     grant_role_mock.assert_called_once_with('renzo@python.pro.br', '0000000001', 'client')
