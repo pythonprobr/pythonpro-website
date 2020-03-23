@@ -6,6 +6,8 @@ from pythonpro.core import facade as core_facade
 from pythonpro.domain import user_facade
 from pythonpro.email_marketing import facade as email_marketing_facade
 
+__all__ = ['contact_info_listener', 'user_factory', 'payment_handler_task', 'payment_change_handler']
+
 
 def contact_info_listener(name, email, phone, payment_item_slug, user=None):
     if (user is not None) and user.is_authenticated:
@@ -38,14 +40,22 @@ django_pagarme_facade.set_user_factory(user_factory)
 def payment_handler_task(payment_id):
     payment = django_pagarme_facade.find_payment(payment_id)
     status = payment.status()
+    slug = payment.first_item_slug()
     if status == django_pagarme_facade.PAID:
-        slug = payment.first_item_slug()
-        if 'pytools' in slug:
-            user_facade.promote_client(payment.user, 'unknow')
-        elif 'membership' in slug:
-            user_facade.promote_member(payment.user, 'unknow')
-        else:
-            raise ValueError(f'{slug} should contain pytools or membership')
+        user = payment.user
+        _promote(user, slug)
+    elif status == django_pagarme_facade.WAITING_PAYMENT:
+        user = payment.user
+        email_marketing_facade.tag_as.delay(user.id, f'{slug}-boleto')
+
+
+def _promote(user, slug):
+    if 'pytools' in slug:
+        user_facade.promote_client(user, 'unknow')
+    elif 'membership' in slug:
+        user_facade.promote_member(user, 'unknow')
+    else:
+        raise ValueError(f'{slug} should contain pytools or membership')
 
 
 def payment_change_handler(payment_id):
