@@ -34,6 +34,20 @@
   <meta property="og:site_name" content="Descubra o caminho para se tornar um programador profissional em pouco tempo" />
   <meta property="og:description" content="A Semana do Programador Profissional é um evento gratuito onde vou te mostrar o passo a passo que vai te dar acesso a um mercado que paga altos salários e milhares de vagas em aberto!" />
   <meta property="og:image" content="{% static 'img/spp/card-python-pro.png' %}" />
+
+  <script src="{% static 'js/sentry.5.3.0.min.js' %}" crossorigin="anonymous"></script>
+  <script type="application/javascript">
+      Sentry.init({ dsn: '{{ SENTRY_DSN }}' });
+  </script>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44718512-1"></script>
+  {#    Google Tag Manager#}
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','{{GOOGLE_TAG_MANAGER_ID}}');</script>
+  {#     End Google Tag Manager#}
 </head>
 <body>
   <nav class="navbar">
