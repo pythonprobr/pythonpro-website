@@ -39,7 +39,7 @@ def test_cohort_links_for_logged_user(client, django_user_model):
     image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
                                content_type='image/png')
     cohorts = mommy.make(Cohort, 4, image=image)
-    resp = client.get('/', secure=True)
+    resp = client.get(reverse('dashboard:home'), secure=True)
     for c in cohorts:
         dj_assert_contains(resp, c.get_absolute_url())
 

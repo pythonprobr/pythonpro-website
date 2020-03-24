@@ -52,11 +52,12 @@ def test_there_is_no_none_on_home_page(home_resp):
     dj_assert_not_contains(home_resp, 'value="None"')
 
 
-def test_forum_tab_is_present(home_resp_with_user):
+def test_redirec_to_dashboard(home_resp_with_user):
     """
-    Assert Forum tab is present when user is logged in
+    Assert User is redirected to dashboard
     """
-    dj_assert_contains(home_resp_with_user, f'href="{settings.DISCOURSE_BASE_URL}"')
+    assert home_resp_with_user.status_code == 302
+    assert home_resp_with_user.url == reverse('dashboard:home')
 
 
 @pytest.fixture

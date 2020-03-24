@@ -15,6 +15,8 @@ from pythonpro.domain import user_facade
 
 
 def index(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('dashboard:home'))
     return render(request, 'core/index.html', {'form': UserSignupForm()})
 
 
