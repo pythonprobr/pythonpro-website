@@ -18,21 +18,6 @@
             </div>
         </div>
     </div>
-    {% if SUBSCRIPTIONS_OPEN %}
-        <div class="bg-light">
-            <div class="container pt-5 pb-5">
-                <div class="row">
-                    <div class="col text-center">
-                        <h1 class="pb-3">Inscrições Abertas!</h1>
-                        <p>Aulas da turma começam em novembro. Garanta sua matrícula, vagas limitadas!</p>
-                        <a class="btn btn-warning p-4 font-weight-bold" href="{% url 'member_landing_page' %}"
-                           role="button">SIM! Quero Participar da Próxima TURMA &raquo;</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    {% endif %}
     <div class="bg-primary">
         <div class="container pt-5 pb-5">
             <div class="row mt-8">
@@ -43,9 +28,19 @@
                     </div>
                 </div>
                 <div class="col-12 col-md text-light">
+                    {% if SUBSCRIPTIONS_OPEN %}                    
+                    <h3 class="mb-3">Inscrições Abertas!</h3>
+                    <p>Aulas da turma começam em novembro. Garanta sua matrícula, vagas limitadas!</p>
+                    <a class="btn btn-warning p-4 font-weight-bold" href="{% url 'member_landing_page' %}" role="button">SIM! Quero me matricular &raquo;</a>
+    
+                    {% else %}
                     <h3 class="mb-3">Curso Python Birds Grátis</h3>
                     <p>Cadastre seu email para ganhar um curso básico de Programação!</p>
-                    {% include 'core/lead_form.html' %}
+                    <a class="btn btn-warning p-4 font-weight-bold" href="{% url 'core:lead_landing' %}" role="button">SIM! Quero meu curso grátis &raquo;</a>
+                    {% endif %}
+
+                    <h5 class="mt-4 mb-2">Já tem conta?</h5>
+                    <a class="btn btn-light my-2 my-sm-0" ref="{% url 'login' %}?next={% url 'dashboard:home' %}" role="button">Entrar</a>
                 </div>
             </div>
         </div>

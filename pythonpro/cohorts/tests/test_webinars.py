@@ -10,7 +10,7 @@ def resp(client_with_user, webinars):
 
 
 def test_link_for_logged_user(client_with_user):
-    resp = client_with_user.get('/', secure=True)
+    resp = client_with_user.get(reverse('dashboard:home'), secure=True)
     dj_assert_contains(resp, reverse('cohorts:webinars'))
 
 
