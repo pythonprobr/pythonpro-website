@@ -5,8 +5,8 @@ from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.core import mail
-from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
+from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.http import urlencode
@@ -18,10 +18,9 @@ from pythonpro.cohorts import facade as cohorts_facade
 from pythonpro.core.facade import UserRoleException
 from pythonpro.domain import membership_domain, user_facade
 from pythonpro.payments import facade as payment_facade
-from pythonpro.payments.facade import (
-    PYTOOLS_DO_PRICE, PYTOOLS_OTO_PRICE, PYTOOLS_PRICE, PYTOOLS_PROMOTION_PRICE, PagarmeNotPaidTransaction,
-    calculate_oto_expires_datetime, is_on_pytools_oto_season,
-)
+from pythonpro.payments.facade import (PYTOOLS_DO_PRICE, PYTOOLS_PRICE,
+                                       PYTOOLS_PROMOTION_PRICE,
+                                       PagarmeNotPaidTransaction)
 
 
 def thanks(request):
@@ -231,36 +230,7 @@ def client_landing_page(request):
 
 
 def client_landing_page_oto(request):
-    notification_url = ""
-    is_debug = request.GET.get('debug') is not None
-
-    user = request.user
-    if not user.is_authenticated and not is_debug:
-        return HttpResponseRedirect(reverse('checkout:pytools_lp'))
-
-    if not is_debug:
-        notification_url = reverse('payments:pagarme_notification', kwargs={'user_id': user.id})
-
-    price = PYTOOLS_OTO_PRICE
-    price_float = price / 100
-    price_installment = (price // 10) / 100
-    countdown_limit = calculate_oto_expires_datetime(user.date_joined) if not is_debug else now()
-
-    is_promotion_expired = True
-    if request.GET.get('debug') is not None or is_on_pytools_oto_season(user.date_joined):
-        is_promotion_expired = False
-
-    return render(
-        request,
-        'payments/client_landing_page_oto.html', {
-            'PAGARME_CRYPTO_KEY': settings.PAGARME_CRYPTO_KEY,
-            'price': price,
-            'price_float': price_float,
-            'price_installment': price_installment,
-            'notification_url': request.build_absolute_uri(notification_url),
-            'countdown_limit': countdown_limit,
-            'is_promotion_expired': is_promotion_expired,
-        })
+    return redirect(reverse('checkout:pytools_oto_lp'), permanent=True)
 
 
 def client_landing_page_do(request):
