@@ -16,9 +16,9 @@
                 <ul>
                     {% for installments, amount, installment_amount in payment_item.payment_plans %}
                         {% if installments == 1 %}
-                            <li>{{ amount|cents_to_brl }} a vista no cartão ou boleto</li>
+                            <li>{{ amount|cents_to_brl }} a vista no boleto ou cartão de crédito</li>
                         {% else %}
-                            <li>{{ amount|cents_to_brl }} em {{ installments }} parcelas
+                            <li>{{ installments }} parcelas
                                 de {{ installment_amount|cents_to_brl }}. Apenas no cartão de crédito</li>
                         {% endif %}
                     {% endfor %}
