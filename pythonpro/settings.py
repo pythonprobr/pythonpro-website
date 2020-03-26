@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'pythonpro.launch',
     'pythonpro.analytics',
     'pythonpro.checkout',
+    'pythonpro.redirector',
     'rolepermissions',
     'ordered_model',
     'django.contrib.admin',
