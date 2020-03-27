@@ -59,7 +59,7 @@ def test_status_code(resp):
 
 
 @pytest.mark.parametrize('property_name', 'title forum_post'.split())
-def test_cohort_propeties(cohort, resp, property_name):
+def test_cohort_properties(cohort, resp, property_name):
     dj_assert_contains(resp, getattr(cohort, property_name))
 
 
@@ -76,7 +76,7 @@ def test_cohort_end(cohort: Cohort, resp):
 
 
 @pytest.fixture
-def live_classes(cohort, fake):
+def recorded_live_classes(cohort, fake):
     now = timezone.now()
     return [
         mommy.make(
@@ -90,30 +90,55 @@ def live_classes(cohort, fake):
 
 
 @pytest.fixture
-def resp_with_classes(live_classes, cohort, client_with_member):
+def future_live_classes(cohort, fake):
+    """
+    No recorded live classes (missing vimeo id)
+    :param cohort:
+    :param fake:
+    :return:
+    """
+    now = timezone.now()
+    return [
+        mommy.make(
+            LiveClass,
+            cohort=cohort,
+            vimeo_id='',
+            start=now + timedelta(days=i),
+            description=fake.paragraph(nb_sentences=3, variable_nb_sentences=True, ext_word_list=None))
+        for i in range(100, 105)
+    ]
+
+
+@pytest.fixture
+def resp_with_classes(recorded_live_classes, future_live_classes, cohort, client_with_member):
     return client_with_member.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
 
 
-def test_live_classes_are_sorted(live_classes: list, cohort):
-    live_classes.sort(key=operator.attrgetter('start'))
+def test_live_classes_are_sorted(recorded_live_classes, cohort):
+    recorded_live_classes.sort(key=operator.attrgetter('start'))
     db_cohort = facade.find_cohort(slug=cohort.slug)
-    assert live_classes == db_cohort.classes
+    assert recorded_live_classes == db_cohort.classes
 
 
 @pytest.mark.freeze_time('2019-01-01 18:00:00')
-def test_live_classes_datetime(resp_with_classes, live_classes):
-    for live_class in live_classes:
+def test_live_classes_datetime(resp_with_classes, recorded_live_classes):
+    for live_class in recorded_live_classes:
         dj_assert_contains(resp_with_classes, date(live_class.start))
 
 
-def test_live_classes_descriptions(resp_with_classes, live_classes):
-    for live_class in live_classes:
+def test_live_classes_descriptions(resp_with_classes, recorded_live_classes):
+    for live_class in recorded_live_classes:
         dj_assert_contains(resp_with_classes, live_class.description)
 
 
-def test_live_classes_urls(resp_with_classes, live_classes):
-    for live_class in live_classes:
+def test_recorded_live_classes_urls_are_present(resp_with_classes, recorded_live_classes):
+    for live_class in recorded_live_classes:
         dj_assert_contains(resp_with_classes, live_class.get_absolute_url())
+
+
+def test_future_live_classes_urls_are_absent(resp_with_classes, future_live_classes):
+    for live_class in future_live_classes:
+        dj_assert_not_contains(resp_with_classes, live_class.get_absolute_url())
 
 
 @pytest.fixture
