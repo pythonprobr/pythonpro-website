@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic import TemplateView
 from django_sitemaps import robots_txt
 
 from . import views
@@ -23,4 +24,5 @@ urlpatterns = [
     path('perfil/email', views.profile_email, name='profile_email'),
     path('perfil/senha', views.profile_password, name='profile_password'),
     path('lista-de-espera', views.waiting_list, name='waiting_list'),
+    path('unsubscribe', TemplateView.as_view(template_name='core/unsubscribe.html'), name='unsubscribe'),
 ]
