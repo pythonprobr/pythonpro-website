@@ -49,8 +49,13 @@
                 <h2 class="mt-5">Webinários</h2>
                 {% for webinar in cohort.webinars %}
 
-                    <h3 class="mt-4 mb-3"><a href="{{ webinar.get_absolute_url }}"
-                                             target="_blank">{{ webinar.title }}</a></h3>
+                    <h3 class="mt-4 mb-3">
+                        {% if webinar.vimeo_id %}
+                            <a href="{{ webinar.get_absolute_url }}" target="_blank">{{ webinar.title }}</a>
+                        {% else %}
+                            {{ webinar.title }}
+                        {% endif %}
+                    </h3>
                     <img src="{{ webinar.image.url }}" class="rounded float-left mr-3"
                          alt="Foto de {{ webinar.speaker }}"
                          width="200px" height="200px">

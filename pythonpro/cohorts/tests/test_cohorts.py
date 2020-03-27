@@ -9,7 +9,7 @@ from django.utils import timezone
 from model_mommy import mommy
 
 from pythonpro.cohorts import facade
-from pythonpro.cohorts.models import Cohort, LiveClass
+from pythonpro.cohorts.models import Cohort, LiveClass, Webinar
 from pythonpro.cohorts.tests.conftest import img_path
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains
 
@@ -142,23 +142,55 @@ def test_future_live_classes_urls_are_absent(resp_with_classes, future_live_clas
 
 
 @pytest.fixture
-def resp_with_webinars(webinars, cohort, client_with_member):
+def recorded_webinars(cohort):
+    now = timezone.now()
+    image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
+                               content_type='image/png')
+    return [
+        mommy.make(Webinar, cohort=cohort, vimeo_id=str(i), image=image, start=now + timedelta(days=i)) for i in
+        range(100, 105)
+    ]
+
+
+@pytest.fixture
+def future_webinars(cohort):
+    now = timezone.now()
+    image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
+                               content_type='image/png')
+    return [
+        mommy.make(Webinar, cohort=cohort, vimeo_id='', image=image, start=now + timedelta(days=i)) for i in
+        range(100, 105)
+    ]
+
+
+@pytest.fixture
+def resp_with_webnars(recorded_webinars, future_webinars, cohort, client_with_member):
     return client_with_member.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
 
 
-def test_webinars_are_sorted(webinars: list, cohort):
-    webinars.sort(key=operator.attrgetter('start'))
+def test_webnars_are_sorted(recorded_webinars: list, cohort):
+    recorded_webinars.sort(key=operator.attrgetter('start'))
     db_cohort = facade.find_cohort(slug=cohort.slug)
-    assert webinars == db_cohort.webinars
+    assert recorded_webinars == db_cohort.webinars
 
 
 @pytest.mark.freeze_time('2019-01-01 18:00:00')
-def test_webinars_datetime(resp_with_webinars, webinars):
-    for live_class in webinars:
-        dj_assert_contains(resp_with_webinars, date(live_class.start))
+def test_webnars_datetime(resp_with_webnars, recorded_webinars):
+    for webnar in recorded_webinars:
+        dj_assert_contains(resp_with_webnars, date(webnar.start))
 
 
 @pytest.mark.parametrize('property_name', 'speaker speaker_title title'.split())
-def test_webinars_vimeo(resp_with_webinars, webinars, property_name):
-    for webnar in webinars:
-        dj_assert_contains(resp_with_webinars, getattr(webnar, property_name))
+def test_webnars_vimeo(resp_with_webnars, recorded_webinars, property_name):
+    for webnar in recorded_webinars:
+        dj_assert_contains(resp_with_webnars, getattr(webnar, property_name))
+
+
+def test_recorded_webnars_url_are_present(resp_with_webnars, recorded_webinars):
+    for webnar in recorded_webinars:
+        dj_assert_contains(resp_with_webnars, webnar.get_absolute_url())
+
+
+def test_future_webnars_url_are_absent(resp_with_webnars, future_webinars):
+    for webnar in future_webinars:
+        dj_assert_not_contains(resp_with_webnars, webnar.get_absolute_url())
