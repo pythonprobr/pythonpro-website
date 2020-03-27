@@ -1,9 +1,89 @@
+{% load static %}
 <html>
 <head>
+    <title>Preparando destino...</title>
+    <script src="{% static 'js/sentry.5.3.0.min.js' %}" crossorigin="anonymous"></script>
+    <script type="application/javascript">
+        Sentry.init({ dsn: '{{ SENTRY_DSN }}' });
+    </script>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44718512-1"></script>
+    {#    Google Tag Manager#}
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','{{GOOGLE_TAG_MANAGER_ID}}');</script>
+    {#     End Google Tag Manager#}
 
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700,800,900&display=swap" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Ubuntu:400,500' rel='stylesheet' type='text/css'/>
+    <style>
+        body{
+            background-color: #15B3F0;
+            color: #fff;
+            font-family: 'Poppins',sans-serif;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 10%;
+            -webkit-animation: 1s blink ease infinite;
+            -moz-animation: 1s blink ease infinite;
+            -ms-animation: 1s blink ease infinite;
+            -o-animation: 1s blink ease infinite;
+            animation: 1s blink ease infinite;
+        }
+
+        @keyframes "blink" {
+            from, to {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+            }
+
+            @-moz-keyframes blink {
+            from, to {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+            }
+
+            @-webkit-keyframes "blink" {
+            from, to {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+            }
+
+            @-ms-keyframes "blink" {
+            from, to {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+            }
+
+            @-o-keyframes "blink" {
+            from, to {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+            }
+    </style>
 </head>
 <body>
+    <h1>Preparando destino...</h1>
 <script type="application/javascript">
-    setTimeout(function(){window.location.replace("{{ redirect.url|safe }}")}, 2000);</script>
+    setTimeout(function(){window.location.replace("{{ redirect.url|safe }}")}, 2000);
+</script>
 </body>
 </html>
