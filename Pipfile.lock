@@ -384,10 +384,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:b0678cd22eda9d6eba8535d0d7fce8f6c896427375bf4f4cc5ae433261733d19",
-                "sha256:d6c5789cb4812342768a58d4a1f93544b48923095be1fb757dbcd7f038ca0ff5"
+                "sha256:54231daa23593fd1b3b2e32200119316a2ad3f3eddd873bfe62c8247e582d600",
+                "sha256:f0c2c992e894bc3f46647b71489ef8d88d0248796b877b732d882e80ac2fd10f"
             ],
-            "version": "==8.12.0"
+            "version": "==8.12.1"
         },
         "pickleshare": {
             "hashes": [
