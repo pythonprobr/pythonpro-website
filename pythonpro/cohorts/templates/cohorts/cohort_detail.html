@@ -46,16 +46,17 @@
         {% endif %}
         <div class="row">
             <div class="col">
-                <h2 class="mt-5">Webinários</h2>
-                {% for webinar in cohort.webinars %}
-
-                    <h3 class="mt-4 mb-3">
-                        {% if webinar.vimeo_id %}
-                            <a href="{{ webinar.get_absolute_url }}" target="_blank">{{ webinar.title }}</a>
-                        {% else %}
-                            {{ webinar.title }}
+                <h2 class="mt-5 mb-4 text-center">Webinários</h2>
+                <div class="row">
+                    {% if cohort.recorded_webinars %}
+                    <div class="col-md col-12">
+                        {% if cohort.future_webinars %}
+                        <h3 class="text-center">Já Gravados</h3>
                         {% endif %}
-                    </h3>
+                        {% for webinar in cohort.recorded_webinars %}
+                    <h4 class="mt-4 mb-3">
+                        <a href="{{ webinar.get_absolute_url }}" target="_blank">{{ webinar.title }}</a>
+                    </h4>
                     <img src="{{ webinar.image.url }}" class="rounded float-left mr-3"
                          alt="Foto de {{ webinar.speaker }}"
                          width="200px" height="200px">
@@ -79,6 +80,43 @@
                     <br/>
 
                 {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% if cohort.future_webinars %}
+                    <div class="col-md col-12">
+                        {% if cohort.recorded_webinars %}
+                        <h3 class="text-center">Pendentes</h3>
+                        {% endif %}
+                        {% for webinar in cohort.future_webinars %}
+                    <h4 class="mt-4 mb-3">{{ webinar.title }}</h4>
+                    <img src="{{ webinar.image.url }}" class="rounded float-left mr-3"
+                         alt="Foto de {{ webinar.speaker }}"
+                         width="200px" height="200px">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">{{ webinar.speaker }}</p>
+                        <footer class="blockquote-footer">{{ webinar.speaker_title }}
+                        </footer>
+                    </blockquote>
+                    <dt>
+                        Data:
+                    </dt>
+                    <dd>
+                        {{ webinar.start }}
+                    </dd>
+                    <dt>
+                        Descrição:
+                    </dt>
+                    <dd>
+                        {{ webinar.description|linebreaks }}
+                    </dd>
+                    <br/>
+
+                {% endfor %}
+                    </div>
+                    {% endif %}
+
+                </div>
+                
             </div>
 
         </div>
