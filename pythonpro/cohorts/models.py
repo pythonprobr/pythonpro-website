@@ -19,6 +19,14 @@ class Cohort(models.Model):
     def get_absolute_url(self):
         return reverse('cohorts:detail', kwargs={'slug': self.slug})
 
+    @property
+    def recorded_webinars(self):
+        return [w for w in self.webinars if w.vimeo_id]
+
+    @property
+    def future_webinars(self):
+        return [w for w in self.webinars if not w.vimeo_id]
+
 
 class CohortStudent(models.Model):
     added = models.DateTimeField(auto_now_add=True)
@@ -51,3 +59,6 @@ class Webinar(models.Model):
 
     def get_absolute_url(self):
         return reverse('cohorts:webinar', kwargs={'slug': self.slug})
+
+    def __str__(self):
+        return f'Turma {self.title}'

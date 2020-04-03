@@ -163,6 +163,16 @@ def future_webinars(cohort):
     ]
 
 
+def test_recorded_webinars_in_cohort(recorded_webinars, future_webinars, cohort):
+    cohort = facade.find_cohort(cohort.slug)
+    assert cohort.recorded_webinars == recorded_webinars
+
+
+def test_future_webinars_in_cohort(recorded_webinars, future_webinars, cohort):
+    cohort = facade.find_cohort(cohort.slug)
+    assert cohort.future_webinars == future_webinars
+
+
 @pytest.fixture
 def resp_with_webnars(recorded_webinars, future_webinars, cohort, client_with_member):
     return client_with_member.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
