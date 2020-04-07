@@ -1,0 +1,282 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A Semana do Programador Profissional é um evento gratuito onde vou te mostrar o passo a passo que vai te dar acesso a um mercado que paga altos salários e milhares de vagas em aberto!">
+  <meta name="author" content="Renzo Nuccitelli">
+  <title>AVISO IMPORTANTE!</title>
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/spp/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/spp/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/spp/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'favicon/spp/site.webmanifest' %}">
+  <link rel="mask-icon" href="{% static 'favicon/spp/safari-pinned-tab.svg' %}" color="#777777">
+  
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="format-detection" content="telephone=no">
+  <link href="{% static 'css/spp/normalize.min.css' %}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700,800,900&display=swap" rel="stylesheet">
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="https://www.python.pro.br/semana-do-programador-profissional/inscricao" />
+  <meta name="twitter:title" content="Descubra o caminho para se tornar um programador profissional em pouco tempo" />
+  <meta name="twitter:description" content="A Semana do Programador Profissional é um evento gratuito onde vou te mostrar o passo a passo que vai te dar acesso a um mercado que paga altos salários e milhares de vagas em aberto!" />
+  <meta property="twitter:image" content="{% static 'img/spp/card-python-pro.png' %}" />
+  <meta property="og:url" content="https://www.python.pro.br/semana-do-programador-profissional/inscricao" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Descubra o caminho para se tornar um programador profissional em pouco tempo" />
+  <meta property="og:site_name" content="Descubra o caminho para se tornar um programador profissional em pouco tempo" />
+  <meta property="og:description" content="A Semana do Programador Profissional é um evento gratuito onde vou te mostrar o passo a passo que vai te dar acesso a um mercado que paga altos salários e milhares de vagas em aberto!" />
+  <meta property="og:image" content="{% static 'img/spp/card-python-pro.png' %}" />
+
+  <script src="{% static 'js/sentry.5.3.0.min.js' %}" crossorigin="anonymous"></script>
+  <script type="application/javascript">
+      Sentry.init({ dsn: '{{ SENTRY_DSN }}' });
+  </script>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44718512-1"></script>
+  {#    Google Tag Manager#}
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','{{GOOGLE_TAG_MANAGER_ID}}');</script>
+  {#     End Google Tag Manager#}
+
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <style>
+    body {
+        font-family: 'Poppins';font-size: 20px;
+        line-height: 40px;
+    }
+    
+    div.main {
+        margin: 10px 15%;
+    }
+    h1 {
+        text-align: center;
+        margin: 50px 0 80px 0;
+    }
+    h2 {
+        margin: 50px 0 30px 0;
+    }
+    p {
+        margin: 40px 0;
+    }
+    .highlight {
+        background-color: #fff2ac;
+        padding: 1px 3px 3px 3px;
+    }
+    ._form_2 ._form-title{
+        display: none;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    li {
+        margin: 15px 0;
+    }
+
+    @media only screen and (max-width: 1024px) {
+        body {
+            font-family: 'Poppins';font-size: 16px;
+            line-height: 30px;
+        }
+        div.main {
+            margin: 20px;
+        }
+    }
+
+  </style>
+</head>
+<body>
+    <div class='main'>
+        <h1><u>AVISO IMPORTANTE!</u></h1>
+
+        <p>
+            Hoje, 17/04, durante a última aula da Semana do Programador Profissional, 
+            <b class='highlight'>eu vou abrir as inscrições para a nova turma do Python Pro!</b>
+        </p>
+
+        <p>
+        Além disso eu vou anunciar <b>um desconto super especial</b> que só vai valer durante um período muito curto de tempo. 
+        </p>
+
+        <p>
+        Python Pro é o método que vai te levar de 0 a 100 com Python, podendo te tornar um programador 
+        profissional em questão de meses e te dar <b>acesso a um mercado que paga altos salários e 
+        têm milhares de vagas em aberto!</b>
+        </p>
+
+        <p>
+        Não importa seu nível de conhecimento atual, não importa se seu conhecimento em Python é zero… porque o Python Pro é um método passo a passo que mostra detalhadamente tudo que você precisa fazer para aprender Python e conseguir sua primeira oportunidade como Programador Profissional.
+        </p>
+
+        <p>
+        Agora leia com atenção para entender como garantir sua vaga na próxima turma.
+        </p>
+
+        <h2><span class='highlight'>As vagas são limitadas!</span></h2>
+
+        <p>
+        E por que isso?
+        </p>
+
+        <p>
+        Isso pode acontecer porque, caso haja muitas matrículas, pode ser que eu não consiga dar a atenção devida para todos. Como prezo muito pela qualidade, assim que lotar eu encerro as inscrições.
+        </p>
+
+        <p>
+        Mas fica tranquilo! Eu estou criando uma Lista VIP para os interessados no Curso Python Pro. 
+        <b>Quem estiver nessa lista terá sua vaga garantida</b>, independente do que aconteça. 
+        </p>
+
+        <p>
+        Além disso, quem estiver cadastrado nesta lista VIP vai receber a oferta antes dos outros <i>(se as vagas lotarem rápido pode ser que eu nem libere as inscrições para as outras pessoas)</i>. 
+        </p>
+
+        <p>
+        Como você se inscreveu na Semana do Programador Profissional, você terá direito a se inscrever na Lista VIP do Curso Python Pro.
+        </p>
+
+        <div class="_form_2"></div>
+        <script src="https://python.activehosted.com/f/embed.php?id=2" type="text/javascript" charset="utf-8"></script>
+
+        <h2>O que está incluso no Curso Python Pro?</h2>
+
+        <p>
+            <b class='highlight'>Serão 8 aulas ao vivo durante três meses de curso!</b>
+        </p>
+
+        <p>
+        Durante todas essas aulas eu vou te acompanhar para que você consiga passar por todo o conteúdo do curso e se preparar para se tornar um programador profissional.
+        </p>
+        <p>
+        Além disso teremos 4 palestras, também ao vivo, que abordam assuntos relacionados ao mercado de programação. 
+        </p>
+
+        <p>
+        Neste edição só vamos contar com feras. Confira:
+        </p>
+
+        <ul>
+            <li><b>👉🏻 Isaac Ferreira</b> vai compartilhar a jornada dele ao entrar no meio da turma Python Pro Guido Von Rossun até ser contratado como dev 7 meses depois.</li>
+            <li><b>👉🏻 Vicente Marçal</b> vai compartilhar sua jornada para se tornar programação depois dos 40 anos já tendo uma carreira como professor universitário em filosofia.</li>
+            <li><b>👉🏻 Eric Gomes</b> vai abordar os aspectos da gestão de projetos que todo dev precisa conhecer para gerar valor para o negócio e manter seu crescimento profissional.</li>
+            <li><b>👉🏻 Luiz Vital</b> vai contar os desafios de empreender com Django e Dados Geográficos para fazer o SIGEF, sistema de certificação fundiária do Brasil. Fundador da Necto Systems.</li>
+        </ul>
+        
+        <p>
+        Além disso você terá acesso irrestrito ao nosso fórum de discussão, que já conta com quase 30 mil mensagens, e também mais de 23 mil inscritos!
+        </p>
+
+        <p>
+        Você também receberá um certificado de conclusão de curso assinado por mim e reconhecido pelo mercado!
+        </p>
+
+        <p>
+        Além das aulas Ao Vivo, você terá acesso a 6 cursos completos que explicam, do básico ao avançado, como ir de 0 a 100 com o Python!
+        </p>
+
+        <ul>
+        <li><b>🐍 Python Birds</b></li>
+        <li><b>🐍 PyTools</b></li>
+        <li><b>🐍 Django</b></li>
+        <li><b>🐍 Objetos Pythônicos</b></li>
+        <li><b>🐍 Python para Pythonistas</b></li>
+        <li><b>🐍 Python Patterns</b></li>
+        </ul>
+
+        <h2>E como será a sua experiência?</h2>
+
+        <h3>O CURSO é 100% ONLINE</h3>
+        <p>
+        Assista de qualquer lugar que quiser. Do seu computador, do seu tablet ou mesmo do seu celular. Basta ter acesso a Internet.
+        </p>
+
+        <h3>São MAIS de 300 VÍDEO AULAS</h3>
+        <p>
+        Seu tempo é valioso e o nosso objetivo é que você se transforme em um profissional o mais rápido possível! As aulas são práticas, objetivas, direto ao ponto e sem enrolação. 
+        </p>
+
+        <h3>O ACESSO é VITALÍCIO</h3>
+        <p>
+        Você terá acesso ao curso para sempre, inclusive a todas as atualizações! Poderá assistir todas as aulas quantas vezes quiser.
+        </p>
+
+        <p>
+        E tem mais…
+        </p>
+
+        <p>
+        Além dos 6 cursos da formação Python Pro, do curso de entrevista técnica, das 8 aulas ao vivo e dos 4 webinários, eu preparei mais três bônus pra você!
+        </p>
+
+        <h3>🎁 BÔNUS #1: Acesso a todos os webinários das turmas passadas</h3>
+
+        <p>
+        Tem material muito bom ali no meio que vai te ajudar bastante a acelerar seu processo de se tornar um programador profissional. Foi por isso que eu decidi liberar esse bônus.
+        </p>
+
+        <p>
+        Eu poderia cobrar, tranquilamente, R$ 99 reais por cada webinário desses. Mas, nessa turma, você terá os 9 webinários de graça!
+        </p>
+
+        <p>
+            <strike>R$ 891,00</strike> <b style="color: #059142">DE GRAÇA!</b>
+        </p>
+
+        <h3>🎁 BÔNUS #2: Acesso vitalício ao grupo de discussão no Telegram</h3>
+        <p>
+        Hoje temos centenas de programadores dos mais variados níveis discutindo diariamente sobre tecnologia naquele grupo. Vai ser a sua oportunidade de ficar amigo de uma turma muito fera.
+        </p>
+        <p>
+        Eu já pensei em cobrar por essa participação. O preço que tinha decidido era de R$ 29,90/mês. Mas eu decidi liberar como bônus. Ou seja, você terá um bônus de, pelo menos, R$ 358,00/ano, totalmente de graça.
+        </p>
+        <p>
+        <strike>R$ 358,00</strike> <b style="color: #059142">DE GRAÇA!</b>
+        </p>
+
+        <h3>
+        🎁 BÔNUS #3: Acesso a todas as aulas das turmas passadas para você
+        </h3>
+
+        <p>
+        Você terá acesso a todo o conteúdo que foi passado em todas as turmas do Python Pro. Isso inclui as aulas e os arquivos dos projetos!
+        </p>
+
+        <p>
+        Eu poderia cobrar, tranquilamente, R$ 1.500,00 só por este acesso. Mas resolvi te dar como bônus para te provar como eu estou comprometido com o seu sucesso! Somente estes bônus já valem quase muito mais que o curso! 
+        </p>
+
+        <p>
+            <strike>R$ 2.000,00</strike> <b style="color: #059142">DE GRAÇA!</b>
+        </p>
+
+
+        <h2>Como se matricular na nova turma do Python Pro?</h2>
+
+        <p>
+        É muito simples! Inscreva-se na Lista VIP para garantir a sua vaga e assista a aula de hoje para garantir o super desconto que eu só vou liberar durante a aula.
+        </p>
+
+        <div class="_form_2"></div>
+        <script src="https://python.activehosted.com/f/embed.php?id=2" type="text/javascript" charset="utf-8"></script>
+
+        <p>
+        Te vejo hoje à noite,<br>
+        Renzo
+        </p>
+
+        <p>
+        <b>PS:</b> Não falte na aula de hoje. Lembre-se: O que ganha jogo não é talento, é comprometimento. 
+        </p>
+    </div>
+</body>
+</html>

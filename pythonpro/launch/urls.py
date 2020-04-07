@@ -1,6 +1,8 @@
+from django.views.generic.base import TemplateView
 from django.urls import path
 
 from . import views
+
 
 app_name = 'launch'
 urlpatterns = [
@@ -12,4 +14,9 @@ urlpatterns = [
     path('semana-do-programador-profissional/aula-3', views.cpl3, name='cpl3'),
     path('OneSignalSDKWorker.js', views.onesignal_sdk_worker),
     path('OneSignalSDUpdaterKWorker.js', views.onesignal_sdk_worker),
+    path(
+        'semana-do-programador-profissional/lista-vip',
+        TemplateView.as_view(template_name='launch/vip-list.html'),
+        name='vip_list'
+    ),
 ]
