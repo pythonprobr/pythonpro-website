@@ -1,9 +1,8 @@
 import pytest
 from django.urls import reverse
 
-from pythonpro.django_assertions import dj_assert_contains
 from pythonpro.domain.user_facade import find_user_interactions
-from pythonpro.launch.views import LAUNCH_STATUS_CPL1, LAUNCH_STATUS_OPEN_CART, LAUNCH_STATUS_PPL
+from pythonpro.launch.facade import LAUNCH_STATUS_CPL1, LAUNCH_STATUS_OPEN_CART, LAUNCH_STATUS_PPL
 
 
 @pytest.fixture
@@ -14,7 +13,7 @@ def tag_as_mock(mocker):
 @pytest.fixture
 def launch_status_as_mock(mocker):
     return mocker.patch(
-        'pythonpro.launch.views._get_launch_status', return_value=LAUNCH_STATUS_CPL1
+        'pythonpro.launch.views.get_launch_status', return_value=LAUNCH_STATUS_CPL1
     )
 
 
@@ -25,18 +24,6 @@ def resp(client, tag_as_mock, launch_status_as_mock):
 
 def test_status_code(resp):
     assert 200 == resp.status_code
-
-
-def test_email_marketing_tag_not_called(resp, tag_as_mock):
-    assert tag_as_mock.call_count == 0
-
-
-def test_cpl_video_is_present(resp):
-    dj_assert_contains(resp, 'https://www.youtube.com/embed/')
-
-
-def test_facebook_comments_is_present(resp):
-    dj_assert_contains(resp, f'<div class="fb-comments"')
 
 
 @pytest.fixture

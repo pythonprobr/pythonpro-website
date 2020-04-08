@@ -1,214 +1,280 @@
-{% extends 'core/base_without_nav.html' %}
+{% extends "launch/landing_page.html" %}
 {% load static %}
-{% block title %}{{ title }}{% endblock %}
-{% block description %}{{ description }}{% endblock %}
-{% block head %}
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css'>
-    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
 
-    <style>
-        @font-face {
-            font-family: 'Gilroy-Bold';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Bold ☞'), url('{% static "fonts/Gilroy-Bold.woff" %}') format('woff');
-        }
+{% block title %}{{ title }} - SEMANA DO PROGRAMADOR PROFISSIONAL{% endblock %}
 
-        @font-face {
-            font-family: 'Gilroy-Heavy';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Heavy ☞'), url('{% static "fonts/Gilroy-Heavy.woff" %}') format('woff');
-        }
-
-        @font-face {
-            font-family: 'Gilroy-Light';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Light ☞'), url('{% static "fonts/Gilroy-Light.woff" %}') format('woff');
-        }
-
-        @font-face {
-            font-family: 'Gilroy-Medium';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Medium ☞'), url('{% static "fonts/Gilroy-Medium.woff" %}') format('woff');
-        }
-
-        @font-face {
-            font-family: 'Gilroy-Regular';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Regular ☞'), url('{% static "fonts/Gilroy-Regular.woff" %}') format('woff');
-        }
-
-    </style>
-    <link rel="stylesheet" href="{% static 'css/client.css' %}"/>
-
-    <style>
-        h1 {
-            font-size: 3.2rem;
-        }
-
-        input.form-control, button.btn {
-            border-radius: 0px;
-            margin: 5px 0;
-            font-family: 'ubuntu';
-        }
-
-        button.btn {
-            border-width: 1px;
-            font-family: 'Gilroy-Bold';
-        }
-
-        .mobile h1 {
-            font-size: 2rem;
-            margin-bottom: 30px;
-        }
-
-        .mobile h2 {
-            font-size: 1.5rem;
-        }
-
-        .hero {
-            margin-bottom: 5px;
-        }
-
-        .mobile.hero {
-            margin: 20px 0;
-            margin-bottom: 5px;
-        }
-
-        .thumbs-aulas {
-            margin: 20px;
-        }
-        
-        {% comment %} .thumbs-aulas img {
-            margin: 0px 50px;
-        } {% endcomment %}
-
-        .video {
-            margin: 5px;
-        }
-        
-
-    </style>
-{% endblock head %}
+{% block extrahead %}
+    <link href="{% static 'css/spp/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/spp/owl.theme.default.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/spp/magnific-popup.min.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
-    <div class=''>
-        <div class="container">
-            <div class="row text-center">
-                <!-- desktop -->
-                <div class="col-md-12 hero desktop d-none d-sm-block d-md-block">
-                    <h1 class='font-weight-bold' style='color: #44A5F1'>
-                        SEMANA DO PROGRAMADOR PROFISSIONAL
-                    </h1>
-                </div>
+  <nav class="navbar-classes text-center">
+    <div class="navbar-classes__group">
+      <div class="navbar-classes__group__brand">
+        <img class="navbar-classes__group__brand__item" src="{% static 'svg/spp/logo-semana-do-programador-profissional.svg' %}" alt="Semana do Programador Profissional">
+      </div>
 
-                <!-- mobile -->
-                <div class="col-md-12 hero mobile d-block d-lg-none d-xl-none">
-                    <h1 class='font-weight-bold' style='color: #44A5F1'>
-                        SEMANA DO PROGRAMADOR PROFISSIONAL
-                    </h1>
-                </div>
-            </div>
-        
-            <div class='row thumbs-aulas justify-content-center text-center'>
-
-                    
-                    <!-- AULA 1 -->
-                    <div class="col-4">
-                        {% if launch_status >= 1 %}
-                        <a href='{% url "launch:cpl1" %}' title='Assistir a Aula 1'>
-                            <img src='{% static 'img/launch/video1-available.png' %}' class="img-fluid"
-                                width="130px" alt="Aula 1 já está disponível!"/>
-                        </a>
-                        {% else %}
-                        <img src='{% static 'img/launch/video1-unavailable.png' %}' class="img-fluid"
-                            width="130px" alt="Aula 2 já está disponível!"/>
-                        {% endif %}
-                    </div>
-
-                    <!-- AULA 2 -->
-                    <div class="col-4">
-                        {% if launch_status >= 2 %}
-                        <a href='{% url "launch:cpl2" %}' title='Assistir a Aula 2'>
-                            <img src='{% static 'img/launch/video2-available.png' %}' class="img-fluid"
-                                width="130px" alt="Aula 2 já está disponível!"/>
-                        </a>
-                        {% else %}
-                        <img src='{% static 'img/launch/video2-unavailable.png' %}' class="img-fluid"
-                            width="130px" alt="Aula 2 já está disponível!"/>
-                        {% endif %}
-                    </div>
-                
-                    <!-- AULA 3 -->
-                    <div class="col-4">
-                        {% if launch_status >= 3 %}
-                        <a href='{% url "launch:cpl3" %}' title='Assistir a Aula 3'>
-                            <img src='{% static 'img/launch/video3-available.png' %}' class="img-fluid"
-                                width="130px" alt="Aula 3 já está disponível!"/>
-                        </a>
-                        {% else %}
-                        <img src='{% static 'img/launch/video3-unavailable.png' %}' class="img-fluid"
-                            width="130px" alt="Aula 3 já está disponível!"/>
-                        {% endif %}
-                    </div>
-
-            </div>
-        </div>
+      {% include 'launch/_navbar.html' %}
     </div>
+  </nav>
 
-    
-    
-    <div class='bg-primary'>
-        <div class="container">
-            <div class="row justify-content-center text-center">
-                <div class="col video" style="max-width: 800px">
-                    <div>
-                        <div class="embed-container">
-                            <iframe  src="https://www.youtube.com/embed/{{ video_id }}?autoplay=0&showinfo=0&controls=0&modestbranding=1&autohide=1"
-                                    frameborder="0"
-                                    webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                            <div id="fb-root"></div>
-                        </div>
-                    </div>
+  <header class="header-classes">
+    <div class="header-classes__group">
+      <div class="header-classes__group__content">
+        {% comment %} <span class="header-classes__group__content__button text-uppercase fw-700">Aula 01 <span class="fw-300"> - 13/04</span></span> {% endcomment %}
+        <h1 class="header-classes__group__content__title fw-800 text-blue font-highlighted">{{ title }}</h1>
+        <h2 class="header-classes__group__content__subtitle fw-300">{{ description }}</h2>
+      </div>
 
-                </div>
+      <div class="header-classes__group__video">
+        <iframe class="header-classes__group__video__item" src="https://www.youtube.com/embed/{{ video_id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe class="header-classes__group__video__chat" src="https://www.youtube.com/live_chat?v={{ video_id }}&embed_domain={% if DEBUG %}localhost{% else %}python.pro.br{% endif %}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <img class="header-classes__group__video__detail" src="{% static 'img/spp/countdown/countdown-detail.png' %}" alt="Pequenos círculos na cor amarela formando um quadrado">
+      </div>
+    </div>
+  </header>
+
+  <main role="main">
+    <section class="cards-classes">
+      <div class="cards-classes__group">
+        <div class="cards-classes__group__item cards-classes__group__item--small bg-blue">
+          <h2 class="cards-classes__group__item--small__title text-white fw-700 font-highlighted">Baixe aqui o material completo da aula.</h2>
+          <a class="cards-classes__group__item--small__button bg-green fw-700 text-uppercase text-dark-green main-transition" href="javascript:alert('Material ainda não disponível.')" rel="noopener noreferrer">Download PDF</a>
+          <img class="cards-classes__group__item__img-material" src="{% static 'img/spp/cards-classes/image-material.png' %}" alt="Mão direita segurando iPhone na horizontal com a imagem do Renzo na tela">
+        </div>
+
+        <div class="cards-classes__group__item cards-classes__group__item--small bg-green">
+          <h2 class="cards-classes__group__item--small__title cards-classes__group__item--small__title--second text-white fw-700 font-highlighted">Faça parte do nosso time no Telegram.</h2>
+          <a class="cards-classes__group__item--small__button bg-blue fw-700 text-uppercase text-white main-transition" href="https://t.me/semprogprof" rel="noopener noreferrer" target="_blank">Acesse seu Telegram</a>
+          <img class="cards-classes__group__item__img-telegram" src="{% static 'img/spp/cards-classes/image-telegram.png' %}" alt="Mão direita segurando iPhone na vertical com a imagem do logo do Telegram na tela">
+        </div>
+
+        <div class="cards-classes__group__item cards-classes__group__item--big bg-gray">
+          <h2 class="cards-classes__group__item--big__title text-blue fw-700 font-highlighted">Cadastre-se e receba as aulas no seu e-mail</h2>
+          <a class="cards-classes__group__item--big__button bg-blue fw-700 text-uppercase text-white main-transition" href="{% url 'launch:landing_page' %}" rel="noopener noreferrer" target="_blank">Clique aqui</a>
+          <img class="cards-classes__group__item__img-big" src="{% static 'img/spp/cards-classes/card-1.jpg' %}" alt="Círculo grande transparente com bordas verdes, círculo azul com ícone de 2 documentos">
+        </div>
+
+        <div class="cards-classes__group__item cards-classes__group__item--big bg-gray">
+          <h2 class="cards-classes__group__item--big__title text-blue fw-700 font-highlighted">Quer ser avisado da próxima aula?</h2>
+          <a class="cards-classes__group__item--big__button bg-green fw-700 text-uppercase text-dark-green main-transition" href="https://www.youtube.com/watch?v={{ video_id_next_class }}" rel="noopener noreferrer" target="_blank">Clique aqui</a>
+          <img class="cards-classes__group__item__img-big" src="{% static 'img/spp/cards-classes/card-2.jpg' %}" alt="Círculo grande transparente com bordas verdes, círculo azul com ícone do YouTube">
+        </div>
+      </div>
+    </section>
+
+    <section class="comments-classes">
+      <div class="comments-classes__group">
+        <div class="comments-classes__group__content">
+          <h2 class="comments-classes__group__content__title text-green fw-700 font-highlighted">O que achou da aula?</h2>
+          <h3 class="comments-classes__group__content__subtitle fw-300">Ficou com alguma dúvida? Deixe seu comentário aqui embaixo que eu vou te ajudar!</h3>
+        </div>
+
+        <div class="comments-classes__group__script">
+          <iframe class="comments-classes__group__script__facebook" name="f29792ddc87ade8" data-testid="fb:comments Facebook Social Plugin" title="fb:comments Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="https://www.facebook.com/v4.0/plugins/comments.php?app_id=828510970515986&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter.php%3Fversion%3D46%23cb%3Df30d09583aa825c%26domain%3Dwww.python.pro.br%26origin%3Dhttps%253A%252F%252Fwww.python.pro.br%252Ff37ea6d3b6f3e1%26relation%3Dparent.parent&amp;container_width=730&amp;height=100&amp;href=https%3A%2F%2Fwww.facebook.com%2Fpythonprobr%2Fposts%2F1551609431645519&amp;locale=pt_BR&amp;sdk=joey&amp;version=v4.0"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonials-classes">
+      <div class="testimonials-classes__group">
+        <h2 class="testimonials-classes__group__title text-blue fw-700 font-highlighted text-center">Veja histórias dos alunos transformados</h2>
+
+        <div class="testimonials-classes__group__people owl-carousel">
+          <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=p-7b3LYxXPc">
+            <img src="{% static 'img/spp/thumbs-testimonials/thumb-1.jpg' %}" alt="Card do vídeo 1">
+          </a>
+
+          <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=TtlB4E7_MZM">
+            <img src="{% static 'img/spp/thumbs-testimonials/thumb-2.jpg' %}" alt="Card do vídeo 2">
+          </a>
+
+          <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=p-ZNsU9KLVkoM">
+            <img src="{% static 'img/spp/thumbs-testimonials/thumb-3.jpg' %}" alt="Card do vídeo 3">
+          </a>
+
+          <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=0HP2nS44Ip4">
+            <img src="{% static 'img/spp/thumbs-testimonials/thumb-4.jpg' %}" alt="Card do vídeo 4">
+          </a>
+
+          <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=ZNgfS9Ohwac">
+            <img src="{% static 'img/spp/thumbs-testimonials/thumb-5.jpg' %}" alt="Card do vídeo 5">
+          </a>
+
+          <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=SwGDBRrjyf0">
+            <img src="{% static 'img/spp/thumbs-testimonials/thumb-6.jpg' %}" alt="Card do vídeo 6">
+          </a>
+
+          <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=avyZ4WjluEo">
+            <img src="{% static 'img/spp/thumbs-testimonials/thumb-7.jpg' %}" alt="Card do vídeo 7">
+          </a>
+
+          <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=J4uv2lk_rZ0">
+            <img src="{% static 'img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 8">
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer-classes">
+      <div class="footer-classes__group">
+        <img class="footer-classes__group__detail-left" src="{% static 'img/spp/footer/detail-top-footer.png' %}" alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
+
+        <div class="footer-classes__group__header">
+          <div class="footer-classes__group__header__cta">
+            <h2 class="footer-classes__group__header__cta__title text-blue fw-500 font-highlighted">Ainda não se cadastrou?</h2>
+            <a class="footer-classes__group__header__cta__button text-uppercase bg-blue fw-700" href="{% url 'launch:landing_page' %}">Clique aqui</a>
+          </div>
+
+          <h3 class="footer-classes__group__header__subtitle text-green font-highlighted fw-800">Cronograma <span class="break">de aulas</span></h3>
+        </div>
+
+        <div class="footer-classes__group__links">
+
+          {% if 'cpl1' in opened_cpls %}
+            <div class="footer-classes__group__links__item footer-classes__group__links__item--active footer-classes__group__links__item--next">
+                <span class="footer-classes__group__links__item__button footer-classes__group__links__item__button--active text-uppercase">Dia 13/04</span>
+                <h3 class="footer-classes__group__links__item__title font-highlighted fw-400 text-green">Aula 01</h3>
+                <h4 class="footer-classes__group__links__item__subtitle font-highlighted fw-700 text-blue">Tudo o que você precisa para começar a programar</h4>
             </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row text-center">
-            <div class="col justify-content-center col-lg-8 offset-lg-2">
-                <div class="mt-5 font-weight-bold">
-                    <h2>
-                        <span class="ec ec-arrow-down-small"></span>
-                        Deixe seu Comentário! 
-                        <span class="ec ec-arrow-down-small"></span>
-                    </h2>
-                </div>
-                
-                <div class="mt-5">
-                    <a class='btn btn-lg btn-primary font-weight-bold text-light mb-5'
-                       href='https://t.me/ProgramadorProfissional' target='_blank'>
-                        <i class="fa fa-telegram" aria-hidden="true"></i> Entrar para o canal no Telegram!
-                    </a>
-                </div>
-                <script async defer crossorigin="anonymous"
-                        src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v4.0&appId=828510970515986&autoLogAppEvents=1"></script>
-                <div class="mb-5">
-                    <div class="fb-comments"
-                         data-href="https://www.facebook.com/pythonprobr/posts/1551609431645519" data-width="100%">
-                    </div>
-                </div>
+          {% else %}
+            <div class="footer-classes__group__links__item">
+                <span class="footer-classes__group__links__item__button text-uppercase">Dia 13/04</span>
+                <h3 class="footer-classes__group__links__item__title font-highlighted fw-400 text-green">Aula 01</h3>
+                <h4 class="footer-classes__group__links__item__subtitle font-highlighted fw-700 text-light-gray">Tudo o que você precisa para começar a programar</h4>
             </div>
+          {% endif %}
+          
+          {% if 'cpl2' in opened_cpls %}
+            <div class="footer-classes__group__links__item footer-classes__group__links__item--active footer-classes__group__links__item--next">
+                <span class="footer-classes__group__links__item__button footer-classes__group__links__item__button--active text-uppercase">Dia 14/04</span>
+                <h3 class="footer-classes__group__links__item__title font-highlighted fw-400 text-green">Aula 02</h3>
+                <h4 class="footer-classes__group__links__item__subtitle font-highlighted fw-700 text-blue">Fundamentos da Programação Procedural</h4>
+            </div>
+          {% else %}
+            <div class="footer-classes__group__links__item">
+                <span class="footer-classes__group__links__item__button text-uppercase">Dia 14/04</span>
+                <h3 class="footer-classes__group__links__item__title font-highlighted fw-400 text-green">Aula 02</h3>
+                <h4 class="footer-classes__group__links__item__subtitle font-highlighted fw-700 text-light-gray">Fundamentos da Programação Procedural</h4>
+            </div>
+          {% endif %}
+          
+          {% if 'cpl3' in opened_cpls %}
+            <div class="footer-classes__group__links__item footer-classes__group__links__item--active footer-classes__group__links__item--next">
+                <span class="footer-classes__group__links__item__button footer-classes__group__links__item__button--active text-uppercase">Dia 15/04</span>
+                <h3 class="footer-classes__group__links__item__title font-highlighted fw-400 text-green">Aula 03</h3>
+                <h4 class="footer-classes__group__links__item__subtitle font-highlighted fw-700 text-blue">Descobrindo o Mundo da Orientação a Objeto</h4>
+            </div>
+          {% else %}
+            <div class="footer-classes__group__links__item">
+                <span class="footer-classes__group__links__item__button text-uppercase">Dia 15/04</span>
+                <h3 class="footer-classes__group__links__item__title font-highlighted fw-400 text-green">Aula 03</h3>
+                <h4 class="footer-classes__group__links__item__subtitle font-highlighted fw-700 text-light-gray">Descobrindo o Mundo da Orientação a Objeto</h4>
+            </div>
+          {% endif %}
+          
+          {% if 'cpl4' in opened_cpls %}
+            <div class="footer-classes__group__links__item footer-classes__group__links__item--last">
+                <span class="footer-classes__group__links__item__button footer-classes__group__links__item__button--active text-uppercase">Dia 16/04</span>
+                <h3 class="footer-classes__group__links__item__title font-highlighted fw-400 text-green">Aula 04</h3>
+                <h4 class="footer-classes__group__links__item__subtitle font-highlighted fw-700 text-blue">A técnica Matadora para Conseguir uma Vaga</h4>
+            </div>
+          {% else %}
+            <div class="footer-classes__group__links__item footer-classes__group__links__item--last">
+                <span class="footer-classes__group__links__item__button text-uppercase">Dia 16/04</span>
+                <h3 class="footer-classes__group__links__item__title font-highlighted fw-400 text-green">Aula 04</h3>
+                <h4 class="footer-classes__group__links__item__subtitle font-highlighted fw-700 text-light-gray">A técnica Matadora para Conseguir uma Vaga</h4>
+            </div>
+          {% endif %}
         </div>
-    </div>
-    <div class="bg-primary text-white">
-        <div class="container pt-5 pb-5">
-            {% include 'core/social_proof.html' %}
-        </div>
-    </div>
-{% endblock body %}
+      </div>
+
+      <img class="footer-classes__renzo-mobile" src="{% static 'img/spp/footer-classes/renzo-mobile.jpg' %}" alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Python Pro. Imagem pequena">
+
+      <div class="footer-classes__group__copyright">
+        <p class="footer-classes__group__copyright__title fw-700 text-uppercase text-copyright">&copy; Python Pro. 2020 Todos os direitos reservados.</p>
+      </div>
+
+      <img class="footer-classes__renzo-desktop" src="{% static 'img/spp/footer-classes/renzo-desktop.png' %}" alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Python Pro. Imagem grande">
+    </footer>
+  </main>
+
+  <script src="{% static 'js/spp/jquery.min.js' %}"></script>
+  <script src="{% static 'js/spp/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'js/spp/magnific-popup.min.js' %}"></script>
+
+  <script>
+    $(document).ready(function(){
+      $('.owl-carousel').owlCarousel({
+        autoPlay: 3000,
+        loop: true,
+        margin: 10,
+        responsiveClass: true,
+        dots: true,
+        responsive:{
+          0:{
+            items: 1,
+            nav: true
+          },
+          600:{
+            items: 3,
+            nav: false
+          },
+          1000:{
+            items: 3,
+            nav: true,
+          }
+        }
+      })
+    });
+  </script>
+
+  <script>
+    $('.popup-vimeo').magnificPopup({
+      src: 'https://vimeo.com/398972182',
+      type: 'iframe'
+    });
+  </script>
+{% endblock %}
+
+
+{% block extrabody %}
+    <script src="{% static 'js/spp/jquery.min.js' %}"></script>
+    <script src="{% static 'js/spp/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/spp/magnific-popup.min.js' %}"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('.owl-carousel').owlCarousel({
+                autoPlay: 3000,
+                loop: true,
+                margin: 10,
+                responsiveClass: true,
+                dots: true,
+                responsive:{
+                0:{
+                    items: 1,
+                    nav: true
+                },
+                600:{
+                    items: 3,
+                    nav: false
+                },
+                1000:{
+                    items: 3,
+                    nav: true,
+                }
+                }
+            })
+        });
+    </script>
+
+    <script>
+        $('.popup-vimeo').magnificPopup({
+        src: 'https://vimeo.com/398972182',
+        type: 'iframe'
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% load static %}
+
+<div class="navbar-classes__group__links">
+    {% if 'cpl1' in opened_cpls %}
+        <a class="navbar-classes__group__links__item navbar-classes__group__links__item--active fw-700" href="{% url 'launch:cpl1' %}" rel="noopener noreferrer">
+        <img class="navbar-classes__group__links__item__icon" src="{% static 'svg/spp/white-camera-icon.svg' %}" alt="Ícone de uma câmera com fundo transparente e bordas brancas">
+        Aula 01
+        <div class="navbar-classes__group__links__item__live">
+            <span class="text-uppercase fw-700">No ar</span>
+        </div>
+        </a>
+    {% else %}
+        <a class="navbar-classes__group__links__item fw-700" href="aula-2.html" rel="noopener noreferrer">
+        <img class="navbar-classes__group__links__item__icon" src="{% static 'svg/spp/green-camera-icon.svg' %}" alt="Ícone de uma câmera com fundo transparente e bordas na cor verde abacate">
+        Aula 01 - 13/04
+        </a>
+    {% endif %}
+
+
+    {% if 'cpl2' in opened_cpls %}
+        <a class="navbar-classes__group__links__item navbar-classes__group__links__item--active fw-700" href="{% url 'launch:cpl2' %}" rel="noopener noreferrer">
+        <img class="navbar-classes__group__links__item__icon" src="{% static 'svg/spp/white-camera-icon.svg' %}" alt="Ícone de uma câmera com fundo transparente e bordas brancas">
+        Aula 02
+        <div class="navbar-classes__group__links__item__live">
+            <span class="text-uppercase fw-700">No ar</span>
+        </div>
+        </a>
+    {% else %}
+        <a class="navbar-classes__group__links__item fw-700" href="aula-2.html" rel="noopener noreferrer">
+        <img class="navbar-classes__group__links__item__icon" src="{% static 'svg/spp/green-camera-icon.svg' %}" alt="Ícone de uma câmera com fundo transparente e bordas na cor verde abacate">
+        Aula 02 - 14/04
+        </a>
+    {% endif %}
+
+    
+    {% if 'cpl3' in opened_cpls %}
+        <a class="navbar-classes__group__links__item navbar-classes__group__links__item--active fw-700" href="{% url 'launch:cpl3' %}" rel="noopener noreferrer">
+        <img class="navbar-classes__group__links__item__icon" src="{% static 'svg/spp/white-camera-icon.svg' %}" alt="Ícone de uma câmera com fundo transparente e bordas brancas">
+        Aula 03
+        <div class="navbar-classes__group__links__item__live">
+            <span class="text-uppercase fw-700">No ar</span>
+        </div>
+        </a>
+    {% else %}
+        <a class="navbar-classes__group__links__item fw-700" href="aula-2.html" rel="noopener noreferrer">
+        <img class="navbar-classes__group__links__item__icon" src="{% static 'svg/spp/green-camera-icon.svg' %}" alt="Ícone de uma câmera com fundo transparente e bordas na cor verde abacate">
+        Aula 03 - 15/04
+        </a>
+    {% endif %}
+    
+    
+    {% if 'cpl4' in opened_cpls %}
+        <a class="navbar-classes__group__links__item navbar-classes__group__links__item--active fw-700" href="{% url 'launch:cpl4' %}" rel="noopener noreferrer">
+        <img class="navbar-classes__group__links__item__icon" src="{% static 'svg/spp/white-camera-icon.svg' %}" alt="Ícone de uma câmera com fundo transparente e bordas brancas">
+        Aula 04
+        <div class="navbar-classes__group__links__item__live">
+            <span class="text-uppercase fw-700">No ar</span>
+        </div>
+        </a>
+    {% else %}
+        <a class="navbar-classes__group__links__item fw-700" href="aula-2.html" rel="noopener noreferrer">
+        <img class="navbar-classes__group__links__item__icon" src="{% static 'svg/spp/green-camera-icon.svg' %}" alt="Ícone de uma câmera com fundo transparente e bordas na cor verde abacate">
+        Aula 04 - 16/04
+        </a>
+    {% endif %}
+</div>

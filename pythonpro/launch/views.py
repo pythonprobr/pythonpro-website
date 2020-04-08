@@ -1,8 +1,6 @@
 import os
-from datetime import datetime
 
 from django.conf import settings
-from django.utils import timezone
 from django.shortcuts import redirect, render
 from django.views.static import serve
 from django.urls import reverse
@@ -12,12 +10,12 @@ from pythonpro.cohorts.facade import find_most_recent_cohort
 from pythonpro.domain import user_facade
 from pythonpro.launch.forms import LeadForm
 from pythonpro.email_marketing import facade as email_marketing_facade
-
-LAUNCH_STATUS_PPL = 0
-LAUNCH_STATUS_CPL1 = 1
-LAUNCH_STATUS_CPL2 = 2
-LAUNCH_STATUS_CPL3 = 3
-LAUNCH_STATUS_OPEN_CART = 4
+from pythonpro.launch.facade import (
+    get_launch_status,
+    get_opened_cpls,
+    LAUNCH_STATUS_OPEN_CART,
+    LAUNCH_STATUS_PPL
+)
 
 
 def landing_page(request):
@@ -60,62 +58,89 @@ def ty(request):
 def cpl1(request):
     user = request.user
     visit_function = user_facade.visit_cpl1
-    video_id = 'oPsK7uEq-gU'
-    description = 'Primeira Aula da Semana do Programador Profissional'
-    return _render_cpl(description, request, 'Primeira Aula', user, video_id, visit_function)
+    video_id = 'Xls9-5DnNLc'
+    video_id_next_class = 'qTugLQeCn54'
+    description = (
+        'Nesta aula você você vai aprender como instalar o Python em seu sistema operacional, '
+        'editar código e fazer pequenos testes no console.'
+    )
+    title = 'AULA #1: Tudo o que você precisa para começar a programar'
+    return _render_cpl(
+        description, request, title, user, video_id, visit_function, video_id_next_class
+    )
 
 
 def cpl2(request):
     user = request.user
     visit_function = user_facade.visit_cpl2
-    video_id = 'wQG1dQgw78Q'
-    description = 'Segunda Aula da Semana do Programador Profissional'
-    return _render_cpl(description, request, 'Segunda Aula', user, video_id, visit_function)
+    video_id = 'qTugLQeCn54'
+    video_id_next_class = 'pEj16gPFbpk'
+    title = 'AULA #2: Os Fundamentos da PROGRAMAÇÃO PROCEDURAL'
+    description = (
+        'Nesta aula você vai aprender programação procedural. Esse paradigma consiste em'
+        ' você definir a resolução de um problema, passo a passo, de forma linear. Funci'
+        'ona como uma receita culinária, onde cada etapa é definida exatamente uma depoi'
+        's da outra.'
+    )
+    return _render_cpl(
+        description, request, title, user, video_id, visit_function, video_id_next_class
+    )
 
 
 def cpl3(request):
     user = request.user
     visit_function = user_facade.visit_cpl3
-    video_id = 'v8boGknyB1E'
-    description = 'Terceira Aula da Semana do Programador Profissional'
-    return _render_cpl(description, request, 'Terceira Aula', user, video_id, visit_function)
+    video_id = 'pEj16gPFbpk'
+    video_id_next_class = 'tTjFK4x0Qb8'
+    title = 'AULA #3: Descobrindo o Mundo da ORIENTAÇÃO A OBJETO'
+    description = (
+        'Depois de aprender o paradigma procedural na seção anterior chega hora de conhecer '
+        'outro: a Orientação a Objetos (OO). Você vai aprender sobre classes e seus componen'
+        'tes, herança e utilizar esses conceitos para implementar o jogo Python Birds. Como '
+        'toda mudança de paradigma, demora um tempo para se acostumar, mas é importante apre'
+        'nder bem OO porque ela utilizada em inúmeras bibliotecas e frameworks.'
+    )
+    return _render_cpl(
+        description, request, title, user, video_id, visit_function, video_id_next_class
+    )
 
 
-def _render_cpl(description, request, title, user, video_id, visit_function):
+def cpl4(request):
+    user = request.user
+    visit_function = user_facade.visit_cpl3
+    video_id = 'tTjFK4x0Qb8'
+    title = 'AULA #4: A técnica Matadora para CONSEGUIR UMA VAGA + Resumão'
+    description = (
+        'Chegou o grande dia! Nesta aula você vai aprender uma técnica matadora para conseguir '
+        'sua primeira oportunidade como Programador Profissional. Além disso, eu vou dar todas '
+        'as instruções para você se matricular no Curso Python Pro, e, por fim, vou fazer um re'
+        'sumão da Semana do Programador Profissional.'
+    )
+    return _render_cpl(description, request, title, user, video_id, visit_function, video_id)
+
+
+def _render_cpl(description, request, title, user, video_id, visit_function, video_id_next_class=None):
     if user.is_authenticated:
         visit_function(user, request.GET.get('utm_source', 'unknown'))
 
-    launch_status = _get_launch_status()
+    launch_status = get_launch_status()
     if launch_status == LAUNCH_STATUS_PPL and not request.GET.get('debug'):
         return redirect(reverse('launch:landing_page'))
 
-    if launch_status > LAUNCH_STATUS_CPL3 and not request.GET.get('debug'):
+    if launch_status == LAUNCH_STATUS_OPEN_CART and not request.GET.get('debug'):
         return redirect(reverse('member_landing_page'))
 
     ctx = {
         'data_href': f'https://{build_absolute_uri(request.path)}',
         'video_id': video_id,
+        'video_id_next_class': video_id_next_class,
         'title': title,
         'description': description,
         'launch_status': launch_status,
+        'opened_cpls': get_opened_cpls(),
+        'DEBUG': settings.DEBUG,
     }
     return render(request, 'launch/cpl.html', ctx)
-
-
-def _get_launch_status():
-    if timezone.now() < timezone.make_aware(datetime(2019, 10, 28)):
-        return LAUNCH_STATUS_PPL
-
-    if timezone.now() < timezone.make_aware(datetime(2019, 10, 30)):
-        return LAUNCH_STATUS_CPL1
-
-    if timezone.now() < timezone.make_aware(datetime(2019, 11, 1)):
-        return LAUNCH_STATUS_CPL2
-
-    if timezone.now() < timezone.make_aware(datetime(2019, 11, 4)):
-        return LAUNCH_STATUS_CPL3
-
-    return LAUNCH_STATUS_OPEN_CART
 
 
 def onesignal_sdk_worker(request):

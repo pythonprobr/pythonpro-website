@@ -2,7 +2,7 @@ import pytest
 from django.urls import reverse
 
 from pythonpro.domain.user_facade import find_user_interactions
-from pythonpro.launch.facade import LAUNCH_STATUS_OPEN_CART, LAUNCH_STATUS_CPL3
+from pythonpro.launch.facade import LAUNCH_STATUS_OPEN_CART, LAUNCH_STATUS_CPL4
 
 
 @pytest.fixture
@@ -19,7 +19,7 @@ def launch_status_as_mock(mocker):
 
 @pytest.fixture
 def resp(client, tag_as_mock, launch_status_as_mock):
-    return client.get(reverse('launch:cpl3'), secure=True)
+    return client.get(reverse('launch:cpl4'), secure=True)
 
 
 def test_status_code(resp):
@@ -46,13 +46,13 @@ def test_email_marketing_tag(resp_with_user, logged_user, tag_as_mock):
 @pytest.fixture
 def launch_status_as_mock_open(mocker):
     return mocker.patch(
-        'pythonpro.launch.views.get_launch_status', return_value=LAUNCH_STATUS_CPL3
+        'pythonpro.launch.views.get_launch_status', return_value=LAUNCH_STATUS_CPL4
     )
 
 
 @pytest.fixture
 def resp_open(client, tag_as_mock, launch_status_as_mock_open):
-    return client.get(reverse('launch:cpl3'), secure=True)
+    return client.get(reverse('launch:cpl4'), secure=True)
 
 
 def test_open_status_code(resp_open):
