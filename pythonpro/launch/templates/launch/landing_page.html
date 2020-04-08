@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="A Semana do Programador Profissional é um evento gratuito onde vou te mostrar o passo a passo que vai te dar acesso a um mercado que paga altos salários e milhares de vagas em aberto!">
   <meta name="author" content="Renzo Nuccitelli">
-  <title>INSCRIÇÕES ABERTAS! Semana do Programador Profissional</title>
+  <title>{% block title %}INSCRIÇÕES ABERTAS! Semana do Programador Profissional{% endblock %}</title>
   
   <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/spp/apple-touch-icon.png' %}">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/spp/favicon-32x32.png' %}">
@@ -18,7 +18,7 @@
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="theme-color" content="#ffffff">
   <meta name="format-detection" content="telephone=no">
-  <link href="{% static 'css/spp/custom.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/spp/custom.css' %}" rel="stylesheet">
   <link href="{% static 'css/spp/normalize.min.css' %}" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,700,800,900&display=swap" rel="stylesheet">
@@ -48,8 +48,11 @@
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','{{GOOGLE_TAG_MANAGER_ID}}');</script>
   {#     End Google Tag Manager#}
+
+  {% block extrahead %}{% endblock extrahead %}
 </head>
 <body>
+  {% block body %}
   <nav class="navbar">
     <img class="navbar__icon" src="{% static 'svg/spp/logo-python-pro.svg' %}" alt="Logo Python Pro">
   </nav>
@@ -190,5 +193,7 @@
   </main>
 
   <script src="{% static 'js/spp/countdown.min.js' %}"></script>
+  {% endblock %}
+  {% block extrabody %}{% endblock extrabody %}
 </body>
 </html>
