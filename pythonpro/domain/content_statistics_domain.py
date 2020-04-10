@@ -127,8 +127,8 @@ def _calculate_modules_statistics(modules, user):
     for topic in all_topics:
         topic.progress = calculate_progression(topic)
         topic.topics_count = 1
-        watched_to_end = topic.progress > 0.99
-        spent_half_time_watching = topic.total_watched_time * 2 > topic.duration
+        watched_to_end = topic.progress >= 0.8
+        spent_half_time_watching = topic.total_watched_time * 3 >= topic.duration
         topic.finished_topics_count = 1 if (watched_to_end and spent_half_time_watching) else 0
     contents_with_children_property_name = [
         (all_chapters, 'topics'),

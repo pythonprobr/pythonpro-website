@@ -46,8 +46,8 @@ def _interactions(topics, logged_user, total_watched_time, max_watched_time):
                 user=logged_user,
                 topic=t,
                 topic_duration=TOPIC_DURATION,
-                total_watched_time=total_watched_time,
-                max_watched_time=max_watched_time
+                total_watched_time=total_watched_time // 3 + 1,  # User can watch in 3x speed
+                max_watched_time=max_watched_time * 0.8,  # user can miss 20 %
             )
         )
     return models
