@@ -1221,6 +1221,9 @@
         </div>
     </div>
     <script type="application/javascript">
+
+    initCountDown(new Date({{promotion_end_date_milliseconds}}).getTime());
+
     let phoneInput = document.getElementById('id_phone');
         phoneInput.addEventListener('input', function (e) {
             var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
