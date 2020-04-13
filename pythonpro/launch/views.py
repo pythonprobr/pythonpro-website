@@ -45,7 +45,7 @@ def lead_form(request):
             first_name,
             email,
             f'turma-{find_most_recent_cohort().slug}-semana-do-programador')
-    return redirect(reverse('launch:ty'))
+    return redirect(reverse('launch:cpl1'))
 
 
 def ty(request):
