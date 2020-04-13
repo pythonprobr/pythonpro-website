@@ -598,7 +598,11 @@
             <h3 class="summary-main__group__price__title fw-800 text-uppercase text-blue font-highlighted">Tenha acesso a tudo isso por apenas
                 {{ no_discount_item_config.max_installments}}x de {{ no_discount_item_config.max_installment_amount_after_interest|cents_to_brl }}</h3>
             <h4 class="summary-main__group__price__subtitle fw-400">(ou apenas {{ no_discount_item_config.price|cents_to_brl }} se você comprar à vista)</h4>
-            {% if has_first_day_discount or has_first_day_discount %}
+            {% if not user.is_authenticated %}
+{#               TODO: Moa, isso aqui que tem que ajusar#}
+                Se você comprou o Pytools, <a class="btn btn-warning" href="{{ login_url }}">Faça Login</a> para ganhar um desconto.
+            {% endif %}
+            {% if has_first_day_discount or has_client_discount %}
             <h5 class="summary-main__group__price__description text-uppercase fw-800 font-highlighted text-blue">Mas calma! Você tem direito a <span class="text-uppercase">descontos</span>!</h5>
             {%  if has_first_day_discount %}
             <div class="summary-main__group__price__group summary-main__group__price__group--top">
@@ -649,7 +653,7 @@
         <section class="countdown countdown-main">
         <div class="countdown__group">
             <div class="countdown-main__group">
-            <h2 class="countdown-main__group__title text-uppercase text-white fw-800"><span class="text-red">Aproveite!</span> Essa promoção vai expirar em breve.</h2>
+            <h2 class="countdown-main__group__title text-uppercase text-white fw-800"><span class="text-red">Aproveite!</span> {% if has_first_day_discount %}Essa promoção{% else %}A inscrição{% endif %} vai expirar em breve.</h2>
             </div>
 
             <div class="countdown__group__numbers">

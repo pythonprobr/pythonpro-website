@@ -85,7 +85,7 @@ def test_client_without_first_day_discount(client_with_client, logged_user, tag_
     assert resp.context['first_day_discount'] == 0
     assert resp.context['has_first_day_discount'] is False
     assert resp.context['has_client_discount'] is True
-    dj_assert_contains(resp, 'R$ 1.897,00')
+    dj_assert_contains(resp, 'R$ 189,57')
 
 
 def test_client_with_first_day_discount(client_with_client, logged_user, tag_as_mock, freezer):
@@ -97,4 +97,4 @@ def test_client_with_first_day_discount(client_with_client, logged_user, tag_as_
     assert resp.context['first_day_discount'] == 40000
     assert resp.context['has_first_day_discount'] is True
     assert resp.context['has_client_discount'] is True
-    dj_assert_contains(resp, 'R$ 1.497,00')
+    dj_assert_contains(resp, 'R$ 149,60')
