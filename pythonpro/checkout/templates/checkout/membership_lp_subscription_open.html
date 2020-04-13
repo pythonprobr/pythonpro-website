@@ -595,11 +595,12 @@
             </div>
 
             <div class="summary-main__group__price">
-            <h3 class="summary-main__group__price__title fw-800 text-uppercase text-blue font-highlighted">Tenha acesso a tudo isso por apenas 12x de R$ 199,60</h3>
-            <h4 class="summary-main__group__price__subtitle fw-400">(ou apenas R$ 1.997,00 se você comprar à vista)</h4>
-
+            <h3 class="summary-main__group__price__title fw-800 text-uppercase text-blue font-highlighted">Tenha acesso a tudo isso por apenas
+                {{ no_discount_item_config.max_installments}}x de {{ no_discount_item_config.max_installment_amount_after_interest|cents_to_brl }}</h3>
+            <h4 class="summary-main__group__price__subtitle fw-400">(ou apenas {{ no_discount_item_config.price|cents_to_brl }} se você comprar à vista)</h4>
+            {% if has_first_day_discount or has_first_day_discount %}
             <h5 class="summary-main__group__price__description text-uppercase fw-800 font-highlighted text-blue">Mas calma! Você tem direito a <span class="text-uppercase">descontos</span>!</h5>
-
+            {%  if has_first_day_discount %}
             <div class="summary-main__group__price__group summary-main__group__price__group--top">
                 <div class="summary-main__group__price__group__info">
                 <img class="summary-main__group__price__group__info__icon" src="{% static '/img/spp/summary-main/summary-price-icon.jpg' %}" alt="Ícone com símbolo de porcentagem com fundo transparente e bordas verdes">
@@ -607,10 +608,13 @@
                 </div>
 
                 <div class="summary-main__group__price__group__value">
-                <p class="summary-main__group__price__group__value__title fw-700 text-uppercase text-blue font-highlighted">R$ 400,00</p>
+                <p class="summary-main__group__price__group__value__title fw-700 text-uppercase text-blue font-highlighted">{{ first_day_discount| cents_to_brl}}</p>
                 <img class="summary-main__group__price__group__value__icon" src="{% static '/svg/spp/x-price-icon.svg' %}" alt="Imagem de um 'X' na cor vermelha">
                 </div>
             </div>
+            {% endif %}
+            {% if has_client_discount %}
+
 
             <div class="summary-main__group__price__group">
                 <div class="summary-main__group__price__group__info">
@@ -619,10 +623,11 @@
                 </div>
 
                 <div class="summary-main__group__price__group__value">
-                <p class="summary-main__group__price__group__value__title fw-700 text-uppercase text-blue font-highlighted">R$ 100,00</p>
+                <p class="summary-main__group__price__group__value__title fw-700 text-uppercase text-blue font-highlighted">{{ client_discount| cents_to_brl}}</p>
                 <img class="summary-main__group__price__group__value__icon" src="{% static '/svg/spp/x-price-icon.svg' %}" alt="Imagem de um 'X' na cor vermelha">
                 </div>
             </div>
+            {% endif %}
 
             <div class="summary-main__group__price__group summary-main__group__price__group--bottom">
                 <div class="summary-main__group__price__group__info">
@@ -630,11 +635,11 @@
                 </div>
 
                 <div class="summary-main__group__price__group__value">
-                <p class="summary-main__group__price__group__value__final fw-800 text-uppercase text-green font-highlighted"><small>12x R$ </small>149,70!</p>
+                <p class="summary-main__group__price__group__value__final fw-800 text-uppercase text-green font-highlighted"><small>{{ payment_item_config.max_installments }}x </small>{{ payment_item_config.max_installment_amount_after_interest|cents_to_brl }}</p>
                 </div>
             </div>
             </div>
-
+            {% endif %}
             <div class="header-main__group__button">
             <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer" data-toggle="modal" data-target="#modal-waiting-capture">Sim, eu quero me tornar um profissional!</a>
             </div>
