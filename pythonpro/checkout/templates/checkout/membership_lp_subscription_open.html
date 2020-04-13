@@ -1,5 +1,7 @@
 {% extends "launch/landing_page.html" %}
 {% load static %}
+{% load django_pagarme %}
+{% load bootstrap4 %}
 
 {% block title %}INSCRIÇÕES ABERTAS! Curso Python Pro{% endblock %}
 
@@ -23,7 +25,7 @@
         </div>
 
         <div class="header-main__group__button">
-            <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer">Sim, eu quero me tornar um profissional!</a>
+            <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer" data-toggle="modal" data-target="#modal-waiting-capture">Sim, eu quero me tornar um profissional!</a>
         </div>
         </div>
 
@@ -467,7 +469,7 @@
 
             <a class="content-main__group__button main-transition text-uppercase text-white fw-800 font-highlighted" href="" target="blank">Compre aqui</a>
             <!-- <div class="header-main__group__button"> -->
-            <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer">Sim, eu quero me tornar um profissional!</a>
+            <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer" data-toggle="modal" data-target="#modal-waiting-capture">Sim, eu quero me tornar um profissional!</a>
             <!-- </div> -->
         </div>
         </section>
@@ -634,7 +636,7 @@
             </div>
 
             <div class="header-main__group__button">
-            <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer">Sim, eu quero me tornar um profissional!</a>
+            <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer" data-toggle="modal" data-target="#modal-waiting-capture">Sim, eu quero me tornar um profissional!</a>
             </div>
         </div>
         </section>
@@ -1114,7 +1116,7 @@
             </div>
 
             <div class="header-main__group__button">
-            <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer">Sim, eu quero me tornar um profissional!</a>
+            <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer" data-toggle="modal" data-target="#modal-waiting-capture">Sim, eu quero me tornar um profissional!</a>
             </div>
         </div>
         </section>
@@ -1196,12 +1198,44 @@
         <img class="footer__group__detail-right-desktop" src="{% static '/img/spp/footer/renzo-nuccitelli-footer-desktop.png' %}" alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
     </footer>
 
-    <script src="{% static '/js/spp/jquery.min.js' %}"></script>
+{#    <script src="{% static '/js/spp/jquery.min.js' %}"></script>#}
     <script src="{% static '/js/spp/owl.carousel.min.js' %}"></script>
     <script src="{% static '/js/spp/magnific-popup.min.js' %}"></script>
     <script src="{% static '/js/spp/countdown.js' %}"></script>
 
-    <script>
+    <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Formulário de Inscrição</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="contact_form" action="{% url 'django_pagarme:contact_info' slug=payment_item_config.slug %}" method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form contact_form %}
+                    <button id="submit_button" type="submit" disabled="disabled" class="btn btn-success">Pagar</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="application/javascript">
+    let phoneInput = document.getElementById('id_phone');
+        phoneInput.addEventListener('input', function (e) {
+            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+        });
+
+        let submitButton = document.getElementById('submit_button');
+        document.getElementById('contact_form').addEventListener('input', function (e) {
+            if (phoneInput.value.search(/\(\d\d\) \d\d\d\d\d-\d\d\d\d/) === 0) {
+                submitButton.removeAttribute('disabled');
+            } else {
+                submitButton.setAttribute('disabled', 'disabled');
+            }
+        });
+
         $(document).ready(function(){
         $('.owl-carousel').owlCarousel({
             autoPlay: 3000,
@@ -1225,9 +1259,7 @@
             }
         })
         });
-    </script>
 
-    <script>
         $('.popup-vimeo').magnificPopup({
         src: 'https://vimeo.com/398972182',
         type: 'iframe'
