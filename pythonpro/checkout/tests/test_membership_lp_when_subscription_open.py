@@ -51,7 +51,7 @@ def test_no_user_with_first_day_discount(resp_no_user_before_discount):
     assert resp_no_user_before_discount.context['first_day_discount'] == 40000
     assert resp_no_user_before_discount.context['has_first_day_discount'] is True
     assert resp_no_user_before_discount.context['has_client_discount'] is False
-    dj_assert_contains(resp_no_user_before_discount, 'R$ 1.597,00')
+    dj_assert_contains(resp_no_user_before_discount, 'R$ 159,59')
 
 
 @pytest.fixture

@@ -144,5 +144,6 @@ def membership_lp(request):
         'first_day_discount': first_day_discount,
         'promotion_end_date': promotion_end_date,
         'promotion_end_date_milliseconds': promotion_end_date_milliseconds,
+        'no_discount_item_config': no_discount_item_config,
     }
     return render(request, 'checkout/membership_lp_subscription_open.html', context)
