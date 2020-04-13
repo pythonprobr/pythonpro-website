@@ -30,7 +30,7 @@
 
       <div class="header-classes__group__video">
         <iframe class="header-classes__group__video__item" src="https://www.youtube.com/embed/{{ video_id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <iframe class="header-classes__group__video__chat" src="https://www.youtube.com/live_chat?v={{ video_id }}&embed_domain={% if DEBUG %}localhost{% else %}python.pro.br{% endif %}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe class="header-classes__group__video__chat" src="https://www.youtube.com/live_chat?v={{ video_id }}&embed_domain={% if DEBUG %}localhost{% else %}www.python.pro.br{% endif %}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         <img class="header-classes__group__video__detail" src="{% static 'img/spp/countdown/countdown-detail.png' %}" alt="Pequenos círculos na cor amarela formando um quadrado">
       </div>
     </div>
