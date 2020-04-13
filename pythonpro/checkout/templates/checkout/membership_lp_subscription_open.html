@@ -1,965 +1,1237 @@
-{% extends 'core/base_without_nav.html' %}
+{% extends "launch/landing_page.html" %}
 {% load static %}
-{% load django_pagarme %}
-{% load bootstrap4 %}
-{% block title %}Curso de Python Completo!{% endblock %}
-{% block description %}Curso Completo de Python voltado para quem quer entrar no mercado de
-    tecnologia!{% endblock %}
-{% block head %}
-    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
 
-    <style>
-        @font-face {
-            font-family: 'Gilroy-Bold';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Bold ☞'), url('{% static "fonts/Gilroy-Bold.woff" %}') format('woff');
-        }
+{% block title %}INSCRIÇÕES ABERTAS! Curso Python Pro{% endblock %}
 
-        @font-face {
-            font-family: 'Gilroy-Heavy';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Heavy ☞'), url('{% static "fonts/Gilroy-Heavy.woff" %}') format('woff');
-        }
+{% block extrahead %}
+    <link href="{% static 'css/spp/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/spp/owl.theme.default.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/spp/magnific-popup.min.css' %}" rel="stylesheet">
+{% endblock %}
 
-        @font-face {
-            font-family: 'Gilroy-Light';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Light ☞'), url('{% static "fonts/Gilroy-Light.woff" %}') format('woff');
-        }
-
-        @font-face {
-            font-family: 'Gilroy-Medium';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Medium ☞'), url('{% static "fonts/Gilroy-Medium.woff" %}') format('woff');
-        }
-
-        @font-face {
-            font-family: 'Gilroy-Regular';
-            font-style: normal;
-            font-weight: normal;
-            src: local('Gilroy-Regular ☞'), url('{% static "fonts/Gilroy-Regular.woff" %}') format('woff');
-        }
-
-        .embed-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            max-width: 100%;
-        }
-
-        .embed-container iframe, .embed-container object, .embed-container embed {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .topic {
-            margin-left: 20px;
-        }
-
-        h2.countdown {
-            font-size: 50pt !important;
-            color: #AF1B3F !important;
-        }
-
-    </style>
-    <link rel="stylesheet" href="{% static 'css/client.css' %}"/>
-{% endblock head %}
 {% block body %}
-
     {% include 'payments/_whatsapp_widget.html' %}
+    <header class="header-main">
+        <div class="header-main__group text-center">
+        <h1 class="header-main__group__title text-uppercase fw-800 font-highlighted">Saiba como ter acesso a um mercado que paga altos salários e tem milhares de vagas em aberto!</h1>
+        <h2 class="header-main__group__subtitle fw-300">Assista o vídeo abaixo e descubra como ir de 0 a 100 com Python e se tornar um programador profissional em questão de meses!</h2>
+
+        <div class="header-main__group__video">
+            <iframe class="header-main__group__video__item" src="https://www.youtube.com/embed/JhrI4F99CqI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+            <img class="header-main__group__video__detail" src="{% static '/img/spp/header/detail-video-header-main.png' %}" alt="Detalhes com pequenos círculos brancos juntos formando um quadrado">
+        </div>
+
+        <div class="header-main__group__button">
+            <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer">Sim, eu quero me tornar um profissional!</a>
+        </div>
+        </div>
+
+        <div class="header-main__green"></div>
+    </header>
+
+    <main role="main">
+        <section class="method-main">
+        <div class="method-main__group">
+            <h2 class="method-main__group__title fw-300 text-blue text-uppercase font-highlighted">Conheça o método que vai te levar de <span class="fw-800">0 a 100 na linguagem Python e te transformar em um programador profissional. <span class="text-green">Tudo isso em pouco tempo!</span></span></h2>
+
+            <div class="method-main__boxes">
+            <div class="method-main__boxes__item">
+                <span class="method-main__boxes__item__number fw-100 text-green font-highlighted">01</span>
+                <h3 class="method-main__boxes__item__title text-uppercase font-highlighted fw-700 text-blue">Um problema real para ser resolvido</h3>
+                <p class="method-main__boxes__item__description fw-400">Eu vou te apresentar um problema real para que você resolva.</p>
+                <p class="method-main__boxes__item__description fw-400">Nesta turma eu vou te ensinar como fazer uma integração de um sistema já construído com um meio de pagamento online.</p>
+            </div>
+
+            <div class="method-main__boxes__item">
+                <span class="method-main__boxes__item__number fw-100 text-green font-highlighted">02</span>
+                <h3 class="method-main__boxes__item__title method-main__boxes__item__title--2 text-uppercase font-highlighted fw-700 text-blue">Começar a programar para resolver esse problema</h3>
+                <p class="method-main__boxes__item__description fw-400">Eu vou abrir meu notebook, compartilhar minha tela com você e ir te mostrando, passo a passo, como vamos fazer para construir, juntos, essa integração.</p>
+                <p class="method-main__boxes__item__description fw-400">Além disso, você vai colocar a mão na massa e repetir tudo o que eu te ensinei.</p>
+            </div>
+
+            <div class="method-main__boxes__item">
+                <span class="method-main__boxes__item__number fw-100 text-green font-highlighted">03</span>
+                <h3 class="method-main__boxes__item__title method-main__boxes__item__title--3 text-uppercase font-highlighted fw-700 text-blue">Interação com colegas programadores para ajudar nas dúvidas que vão surgir</h3>
+                <p class="method-main__boxes__item__description fw-400">Conforme você for programando, as dúvidas vão surgir. Aqui você vai aprender a como sanar essas dúvidas.</p>
+                <p class="method-main__boxes__item__description fw-400">Você vai procurar na internet por pessoas que já tiveram a mesma dúvida que você, vai também procurar no nosso fórum e, caso não ache, vai colocar sua dúvida por lá e eu, minha equipe e antigos alunos vamos te ajudar!</p>
+            </div>
+            </div>
+        </div>
+        </section>
+
+        <section class="people-main">
+        <div class="people-main__group">
+            <div class="people-main__group__content">
+            <h2 class="people-main__group__content__title text-uppercase text-blue font-highlighted">8 Aulas ao vivo em 3 meses de curso</h2>
+            <h3 class="people-main__group__content__subtitle fw-300">Durante todas essas aulas eu vou te acompanhar para que você consiga passar por todo o conteúdo do curso e se preparar para se tornar um programador profissional.</h3>
+            <h4 class="people-main__group__content__description fw-400 text-green">Além disso teremos 4 palestras, também ao vivo, que abordam assuntos relacionados ao mercado de programação.</h4>
+            </div>
+
+            <div class="people-main__group__cards">
+            <div class="people-main__group__cards__item">
+                <div class="people-main__group__cards__item__image">
+                <img class="people-main__group__cards__item__image__item" src="{% static '/img/spp/people-main/isaac-ferreira.jpg' %}" alt="Isaac Ferreira">
+
+                <img class="people-main__group__cards__item__image__detail" src="{% static '/img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
+                </div>
+
+                <div class="people-main__group__cards__item__content">
+                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Isaac <span class="break text-green">Ferreira</span></h4>
+                <p class="people-main__group__cards__item__content__description fw-300">Durante todas essas aulas eu vou te acompanhar para que você consiga passar por todo o conteúdo do curso e se preparar para se tornar um programador profissional.</p>
+                </div>
+            </div>
+
+            <div class="people-main__group__cards__item">
+                <div class="people-main__group__cards__item__image">
+                <img class="people-main__group__cards__item__image__item" src="{% static '/img/spp/people-main/vicente-marcal.jpg' %}" alt="Vicente Marçal">
+
+                <img class="people-main__group__cards__item__image__detail" src="{% static '/img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
+                </div>
+
+                <div class="people-main__group__cards__item__content">
+                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Vicente <span class="break text-green">Marçal</span></h4>
+                <p class="people-main__group__cards__item__content__description fw-300">Compartilhando sua jornada para se tornar programação depois dos 40 alunos já tendo uma carreira como professor universitário em filosofia.</p>
+                </div>
+            </div>
+
+            <div class="people-main__group__cards__item">
+                <div class="people-main__group__cards__item__image">
+                <img class="people-main__group__cards__item__image__item" src="{% static '/img/spp/people-main/eric-gomes.jpg' %}" alt="Eric Gomes">
+
+                <img class="people-main__group__cards__item__image__detail" src="{% static '/img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
+                </div>
+
+                <div class="people-main__group__cards__item__content">
+                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Eric <span class="break text-green">Gomes</span></h4>
+                <p class="people-main__group__cards__item__content__description fw-300">Irá abordar os aspectos da gestão de projetos que todo dev precisa conhecer para gerar valor para o negócio e manter seu crescimento profissional.</p>
+                </div>
+            </div>
+
+            <div class="people-main__group__cards__item">
+                <div class="people-main__group__cards__item__image">
+                <img class="people-main__group__cards__item__image__item" src="{% static '/img/spp/people-main/luiz-vital.jpg' %}" alt="Luiz Vital">
+
+                <img class="people-main__group__cards__item__image__detail" src="{% static '/img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
+                </div>
+
+                <div class="people-main__group__cards__item__content">
+                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Luiz <span class="break text-green">Vital</span></h4>
+                <p class="people-main__group__cards__item__content__description fw-300">Contando os desafios de empreender com Django e Dados Geográficos para fazer o SIGEF, sistema de certificação fundiária do Brasil. Fundador da Necto Systems.</p>
+                </div>
+            </div>
+            </div>
+
+            <div class="testimonials-classes__group__people testimonials-classes__group__people--mobile owl-carousel">
+            <div class="people-main__group__cards__item">
+                <div class="people-main__group__cards__item__image">
+                <img class="people-main__group__cards__item__image__item" src="{% static '/img/spp/people-main/isaac-ferreira.jpg' %}" alt="Isaac Ferreira">
+
+                <img class="people-main__group__cards__item__image__detail" src="{% static '/img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
+                </div>
+
+                <div class="people-main__group__cards__item__content">
+                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Isaac <span class="break text-green">Ferreira</span></h4>
+                <p class="people-main__group__cards__item__content__description fw-300">Durante todas essas aulas eu vou te acompanhar para que você consiga passar por todo o conteúdo do curso e se preparar para se tornar um programador profissional.</p>
+                </div>
+            </div>
+
+            <div class="people-main__group__cards__item">
+                <div class="people-main__group__cards__item__image">
+                <img class="people-main__group__cards__item__image__item" src="{% static '/img/spp/people-main/vicente-marcal.jpg' %}" alt="Vicente Marçal">
+
+                <img class="people-main__group__cards__item__image__detail" src="{% static '/img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
+                </div>
+
+                <div class="people-main__group__cards__item__content">
+                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Vicente <span class="break text-green">Marçal</span></h4>
+                <p class="people-main__group__cards__item__content__description fw-300">Compartilhando sua jornada para se tornar programação depois dos 40 alunos já tendo uma carreira como professor universitário em filosofia.</p>
+                </div>
+            </div>
+
+            <div class="people-main__group__cards__item">
+                <div class="people-main__group__cards__item__image">
+                <img class="people-main__group__cards__item__image__item" src="{% static '/img/spp/people-main/eric-gomes.jpg' %}" alt="Eric Gomes">
+
+                <img class="people-main__group__cards__item__image__detail" src="{% static '/img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
+                </div>
+
+                <div class="people-main__group__cards__item__content">
+                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Eric <span class="break text-green">Gomes</span></h4>
+                <p class="people-main__group__cards__item__content__description fw-300">Irá abordar os aspectos da gestão de projetos que todo dev precisa conhecer para gerar valor para o negócio e manter seu crescimento profissional.</p>
+                </div>
+            </div>
+
+            <div class="people-main__group__cards__item">
+                <div class="people-main__group__cards__item__image">
+                <img class="people-main__group__cards__item__image__item" src="{% static '/img/spp/people-main/luiz-vital.jpg' %}" alt="Luiz Vital">
+
+                <img class="people-main__group__cards__item__image__detail" src="{% static '/img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
+                </div>
+
+                <div class="people-main__group__cards__item__content">
+                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Luiz <span class="break text-green">Vital</span></h4>
+                <p class="people-main__group__cards__item__content__description fw-300">Contando os desafios de empreender com Django e Dados Geográficos para fazer o SIGEF, sistema de certificação fundiária do Brasil. Fundador da Necto Systems.</p>
+                </div>
+            </div>
+            </div>
+
+            <div class="people-main__group__bonus">
+            <div class="people-main__group__bonus__item">
+                <div class="people-main__group__bonus__item__circle">
+                <img src="{% static '/img/spp/people-main/access-icon.jpg' %}" alt="Ícone de um cadeado com fundo transparente e bordas brancas">
+                </div>
+
+                <h5 class="people-main__group__bonus__item__title fw-700 text-uppercase text-white font-highlighted">Acesso completo e irrestrito ao fórum de dúvidas</h5>
+            </div>
+
+            <div class="people-main__group__bonus__item">
+                <div class="people-main__group__bonus__item__circle">
+                <img src="{% static '/img/spp/people-main/certificate-icon.jpg' %}" alt="Ícone de um certificado com fundo transparente e bordas brancas">
+                </div>
+
+                <h5 class="people-main__group__bonus__item__title fw-700 text-uppercase text-white font-highlighted">Certificado de conclusão de curso</h5>
+            </div>
+            </div>
+
+            <h6 class="people-main__group__disclaimer fw-300 text-blue text-uppercase">Além das aulas Ao Vivo, você terá acesso a <span class="text-green fw-800">6 cursos completos</span> <span class="fw-800">que explicam, do básico ao avançado, como ir de 0 a 100 com o Python!</span></h6>
+        </div>
+        </section>
+
+        <section class="content-main">
+        <div class="content-main__detail-left"></div>
+        <div class="content-main__detail-right"></div>
+
+        <div class="content-main__group">
+            <div class="row">
+            <div class="col">
+                <div class="tabs">
+                <div class="tab">
+                    <div class="tab-detail"></div>
+                    <input type="checkbox" id="content1" checked>
+                    <label class="tab-label main-transition text-uppercase font-highlighted fw-800" for="content1">Fundamentos do Python</label>
+                    <div class="tab-content main-transition">
+                    <div class="tab-content__group">
+                        <div class="tab-content__group__description">
+                        <h2 class="tab-content__group__description__title fw-700 font-highlighted text-uppercase text-blue">Descrição</h2>
+                        <p class="tab-content__group__description__description fw-300">No curso Python Birds você vai aprender como o Python é maravilhoso. Você irá aprender os conceitos básicos da programação e entender como é fácil e rápido programar com essa linguagem.</p>
+                        <p class="tab-content__group__description__description fw-300">E o melhor de tudo, tudo isso dentro de um cenário real: Você vai aprender Python criando uma versão simplificada do jogo Angry Birds!</p>
+                        </div>
+
+                        <div class="tab-content__group__disclaimer">
+                        <h2 class="tab-content__group__disclaimer__title fw-700 font-highlighted text-uppercase text-blue">Ementa</h2>
+
+                        <div class="tab-content__group__disclaimer__row">
+                            <div class="tab-content__group__disclaimer__1">
+                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Programação Procedural</h3>
+                            <ul>
+                                <li>Introdução</li>
+                                <li>Tipos Básicos</li>
+                                <li>Containers e Iteração</li>
+                                <li>Modularização</li>
+                            </ul>
+                            </div>
     
-    <div class='bg-primary'>
-        <div class="container">
-            <div class="row">
-                <div class="col hero text-center">
-                    <h1 class='text-light'>
-                        Matrículas Abertas para o <br />
-                        <b>Curso PYTHON PRO!</b>
-                    </h1>
-
-                    <div class='row'>
-                        <div class='col-sm-8 offset-sm-2'>
-                            <p class='text-light mb-5 mt-3'>
-                                Assista o vídeo abaixo e descubra como <b>ir de 0 a 100 com Python</b> e se
-                                tornar um <b>programador profissional em questão de meses!</b>
-                            </p>
+                            <div class="tab-content__group__disclaimer__2">
+                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Orientação a Objetos</h3>
+                            <ul>
+                                <li>Classe e Composição</li>
+                                <li>Herança</li>
+                            </ul>
+                            </div>
+                        </div>
                         </div>
                     </div>
-
-                    <div class="embed-container mt-2">
-                        <iframe id="topic-iframe" src="https://player.vimeo.com/video/369973567" width="640"
-                                height="360"
-                                frameborder="0"
-                                webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                    </div>
-
-                    <div class='d-none d-sm-block d-md-block'>
-                        <button class="cta initiate-checkout btn btn-warning mt-3" data-toggle="modal" data-target="#modal-waiting-capture">
-                            SIM! Eu quero ser um <b class='initiate-checkout'>PROGRAMADOR PROFISSIONAL!</b>
-                        </button>
-                    </div>
-
-                    <div class='text-center d-block d-lg-none d-xl-none'>
-                        <button class="cta-mobile initiate-checkout btn btn-warning mt-3" data-toggle="modal" data-target="#modal-waiting-capture">
-                            SIM! Eu quero ser um <br /><b class='initiate-checkout'>PROGRAMADOR PROFISSIONAL!</b>
-                        </button>
                     </div>
                 </div>
 
-            </div>
-        </div>
-    </div>
-
-    <div>
-        <div class="container">
-            <div class="row">
-                <div class="col mb-5 mt-5">
-                    <h2 class='font-weight-bold mb-5'>Olá! Eu me chamo Renzo Nuccitelli,</h2>
-
-                    <div class='text-center d-block d-lg-none d-xl-none'>
-                        <img src='{% static 'img/instructors/renzo-nuccitelli-300.jpeg' %}' class="img-fluid"
-                             width="300px" alt="Foto de Renzo Nuccitelli"/>
-                    </div>
-
-                    <img src='{% static 'img/instructors/renzo-nuccitelli-300.jpeg' %}'
-                         class="img-fluid float-right ml-3 mb-3 d-none d-sm-none d-md-block" width="300px"
-                         alt="Foto de Renzo Nuccitelli"/>
-
-                    <p>
-                        Aqui é o Renzo Nuccitelli, e hoje é o dia que eu vou te mostrar como
-                        você vai fazer para <b>se tornar um programador profissional em pouco tempo!</b>
-                    </p>
-
-                    <p>
-
-                        Sim, eu sei que isso pode parecer bom demais para ser verdade.
-                        <b>Mas eu te garanto que isso é totalmente possível!</b>
-                    </p>
-
-                    <p class='topic'>
-                        <span class="ec ec-white-check-mark"></span>
-                        Foi com o método que eu vou te apresentar que eu consegui ganhar um bom
-                        salário logo nos meus primeiros anos como profissional.
-                    </p>
-                    <p class='topic'>
-                        <span class="ec ec-white-check-mark"></span>
-                        <b class='highlight'>
-                            Foi com esse método que eu consegui ganhar mais de R$ 10 mil reais por mês
-                            com menos de 5 anos de profissão.
-                        </b>
-                    </p>
-                    <p class='topic'>
-                        <span class="ec ec-white-check-mark"></span>
-                        Foi com esse método que eu consegui um emprego na maior empresa de software
-                        aberto do mundo, a Red Hat.
-                    </p>
-
-                    <p>
-                        E, depois que eu comecei a ensinar este método,
-                        <b>muitos dos meus alunos também tiveram sucesso.</b>
-                    </p>
-
-                    <p>
-                        Na semana passada eu realizei um evento online chamado <b>"A semana do programador
-                        Profissional"</b>.
-                    </p>
-
-                    <p>
-                        Neste evento eu publiquei uma série de vídeos e aulas onde eu mostrei o método que eu uso com
-                        meus alunos para que eles aprendam como programar de maneira profissional de uma forma rápida e
-                        efetiva.
-                    </p>
-
-                    <p>
-                        No final da Semana do Programador eu anunciei que iria <b>abrir as vagas para o curso Python
-                        Pro</b>.
-                    </p>
-                    <p>
-                        É lá que eu ensino, com todos os detalhes, o caminho para você <b>ir de 0 a 100 com a linguagem
-                        Python e se tornar um programador profissional em pouco tempo.</b>
-                    </p>
-
-                    <p>
-                        Tudo isso, claro, com o meu acompanhamento pessoal e da minha equipe.
-                    </p>
-
-                    <p>
-                        Mas agora você deve estar pensando...
-                    </p>
-
-                    <p>
-                        <b class='mb-3 mt-3 highlight'>
-                            Renzo, como funciona esse método?
-                        </b>
-                    </p>
-
-                    <p>
-                        Conforme eu falei no vídeo, o método é baseado em três pilares:
-                    </p>
-
-                    <h3 class='mb-5 mt-5 font-weight-bold'>
-                        Pilar 1: Um problema real para ser resolvido
-                    </h3>
-
-                    <p>
-                        Eu vou te apresentar um problema real para que você resolva.
-                    </p>
-
-                    <p>
-                        Nesta turma eu vou te ensinar como fazer uma integração de um sistema já construído com um meio
-                        de pagamento online.
-                    </p>
-
-                    <h3 class='mb-5 mt-5 font-weight-bold'>
-                        Pilar 2: Começar a programar para resolver esse problema
-                    </h3>
-
-                    <p>
-                        Eu vou abrir meu notebook, compartilhar minha tela com você e ir te mostrando, passo a passo,
-                        como vamos fazer para construir, juntos, essa integração.
-                    </p>
-
-                    <p>
-                        Além disso, você vai colocar a mão na massa e repetir tudo o que eu te ensinei.
-                    </p>
-
-                    <h3 class='mb-5 mt-5 font-weight-bold'>
-                        Pilar 3: Interação com colegas programadores para ajudar nas dúvidas que vão surgir
-                    </h3>
-
-                    <p>
-                        Conforme você for programando, as dúvidas vão surgir. Aqui você vai aprender a como sanar essas
-                        dúvidas.
-                    </p>
-
-                    <p>
-                        Você vai procurar na internet por pessoas que já tiveram a mesma dúvida que você, vai também
-                        procurar no nosso fórum e, caso não ache, vai colocar sua dúvida por lá e eu, minha equipe e
-                        antigos alunos vamos te ajudar!
-                    </p>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class='bg-primary'>
-        <div class="container">
-            <div class="row text-light">
-                <div class="col mt-5 mb-5">
-                    <u><h2 class='text-center text-uppercase font-weight-bold'>
-                        Este é o Python Pro!
-
-                    </h2></u>
-                    <h4 class='text-center'>
-                        O curso que vai te ajudar a se um programador profissional em pouco tempo!
-                        <span class="ec ec-sunglasses"></span>
-                    </h4>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div>
-        <div class="container">
-            <div class="row">
-                <div class="col mb-5 mt-5">
-                    <h2 class=''>
-                        <b>8 aulas ao vivo em três meses de curso!</b>
-                    </h2>
-                    <p>
-                        Paralelo às nossas aulas ao vivo, você terá acesso aos 6 cursos que
-                        compõem a formação Python Pro.
-                    </p>
-
-                    <p>
-                        <b>Juntos, eles somam mais de 250 aulas gravadas.</b>
-                    </p>
-
-                    <h3 class='font-weight-bold mt-5'>
-                        <span class="ec ec-snake"></span>
-                        Python Birds
-                    </h3>
-
-                    <p>
-                        No curso Python Birds você vai aprender como o Python é maravilhoso.
-                    </p>
-
-                    <p>
-                        Você irá aprender os conceitos básicos da programação e entender como é
-                        fácil e rápido programar com essa linguagem.
-                    </p>
-
-                    <p>
-                        E o melhor de tudo, tudo isso dentro de um cenário real: <b>Você vai aprender Python
-                        criando uma versão simplificada do jogo Angry Birds!</b>
-                    </p>
-
-                    <h3 class='font-weight-bold mt-5'>
-                        <span class="ec ec-snake"></span>
-                        PyTools
-                    </h3>
-
-                    <p>
-                        No curso PyTools você vai aprender como equipes de programadores trabalham e
-                        colaboram entre si.
-                        <b>Assim, você vai poder finalmente ter a capacidade de ser um deles!</b>
-                    </p>
-
-                    <p>
-                        Você vai aprender a trabalhar com a ferramenta que todo mundo usa para
-                        versionar código e contribuir com projetos de desenvolvimento de software: o Git.
-                    </p>
-
-                    <p>
-                        Você também vai aprender como desenvolver utilizando testes automatizados.
-                        Assim você terá um <b>software que não tenha bugs</b> e que seja simples
-                        de adicionar novas funcionalidades.
-                    </p>
-
-                    <p>
-                        Você vai aprender como manter o ambiente do seu projeto totalmente
-                        organizado e replicado. Assim, seu software vai funcionar na sua máquina
-                        <b>e também no servidor de produção!</b>
-                    </p>
-
-                    <h3 class='font-weight-bold mt-5'>
-                        <span class="ec ec-snake"></span>
-                        Django
-                    </h3>
-
-                    <p>
-                        No curso de Django, você vai aprender a utilizar o
-                        <b>framework mais utilizado da linguagem Python, o Django!</b>
-                    </p>
-                    <p>
-                        O Django é um framework que vai te ajudar a construir sistemas web de
-                        uma forma simples, rápida, segura e escalável.
-                    </p>
-                    <p>
-                        O Django é um dos pioneiros do conceito "Don't Repeat Yourself", que,
-                        em português significa "Não se repita".
-                        Você vai construir sistemas poderosos com poucas linhas,
-                        pois o Django se responsabiliza para <b>você não precisar repetir código!</b>
-                    </p>
-
-                    <h3 class='font-weight-bold mt-5'>
-                        <span class="ec ec-snake"></span>
-                        Objetos Pythônicos
-                    </h3>
-
-                    <p>
-                        No curso Objetos Pythônicos você vai se aprofundar nas características que
-                        tornam <b>o Python a melhor linguagem de programação para quem quer ser produtivo com
-                        qualidade.</b>
-                    </p>
-
-                    <p>
-                        Você vai aprender mais sobre com o Python lida com conceitos de
-                        programação orientada a objeto e programação funcional.
-                    </p>
-
-                    <h3 class='font-weight-bold mt-5'>
-                        <span class="ec ec-snake"></span>
-                        Python para Pythonistas
-                    </h3>
-
-                    <p>
-                        No curso Python para Pythonistas, você vai desvendar módulos avançados da linguagem.
-                    </p>
-                    <p>
-                        São conceitos que, em geral, são utilizados em diversos frameworks.
-                        Você vai entender como o Python funciona de verdade e poder utilizar
-                        <b>todo o seu poder para construir aplicações simples e poderosas.</b>
-                    </p>
-
-                    <h3 class='font-weight-bold mt-5'>
-                        <span class="ec ec-snake"></span>
-                        Python Patterns
-                    </h3>
-
-                    <p class='mb-5'>
-                        Com o curso Python Patterns você vai desvendar módulos avançados da
-                        linguagem, em geral utilizados em diversos frameworks.
-                    </p>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class='bg-secondary'>
-        <div class="container">
-            <div class="row">
-                <div class="col mt-5 mb-5">
-                    <h3><b>E tem mais... </b></h3>
-
-                    <h2 class='mt-5 mb-5'>
-                        Nesta turma do Python Pro teremos <b>4 webinários com profissionais
-                        renomados do mercado de programação</b>.
-                    </h2>
-
-                    <img src="{% static 'img/fabricio_avatar.jpg' %}" class="rounded float-left mr-3"
-                         alt="Foto de Fabricio Aguiar" width="200px" height="200px">
-
-                    <h4 class='font-weight-bold mt-5'>
-                        De 0 a Engenheiro na Red Hat em 22 meses!
-                    </h4>
-                    <p>
-                        <span class="ec ec-bust-in-silhouette"></span>
-                        <b>Fabrício Aguiar</b>
-                    </p>
-
-                    <p>
-                        Ele vai contar como ele saiu do zero e conseguiu se tornar um engenheiro de
-                        software na maior empresa Open Source do mundo, a Red Hat.
-                        <b>Detalhe: tudo isso em apenas 22 meses.</b>
-                    </p>
-
-                    <div class="clearfix mb-5"></div>
-
-                    <img src="{% static 'img/moacir.jpg' %}" class="rounded float-left mr-3" alt="Foto de Moacir Moda"
-                         width="200px" height="200px">
-
-                    <h4 class='font-weight-bold mt-5'>
-                        Os cuidados não-técnicos para você se tornar um programador profissional
-                    </h4>
-                    <p>
-                        <span class="ec ec-bust-in-silhouette"></span>
-                        <b>Moacir Moda</b>
-                    </p>
-
-                    <p>
-                        Ele vai falar sobre os desafios não técnicos de ser um programador freelancer.
-                    </p>
-
-                    <div class="clearfix mb-5"></div>
-
-                    <img src="{% static 'img/FabioTelles.jpeg' %}" class="rounded float-left mr-3"
-                         alt="Foto de Fabio Telles" width="200px" height="200px">
-
-                    <h4 class='font-weight-bold mt-5'>
-                        5 coisas que deveríamos saber sobre PostreSQL
-                    </h4>
-                    <p>
-                        <span class="ec ec-bust-in-silhouette"></span>
-                        <b>Fábio Telles</b>
-                    </p>
-
-                    <p>
-                        Ele vai nos contar sobre 5 coisas importantíssimas que devemos saber sobre
-                        o banco de dados open-source mais importante da atualidade, o PostgreSQL.
-                    </p>
-
-                    <div class="clearfix mb-5"></div>
-
-                    <img src="{% static 'img/Bruno_Rocha.jpg' %}" class="rounded float-left mr-3"
-                         alt="Foto de Bruno Rocha" width="200px" height="200px">
-
-                    <h4 class='font-weight-bold mt-5'>
-                        O que é Qualidade de Software?
-                    </h4>
-                    <p>
-                        <span class="ec ec-bust-in-silhouette"></span>
-                        <b>Bruno Rocha</b>
-                    </p>
-
-                    <p>
-                        Finalizando com chave de ouro, teremos o webinário do patrono desta
-                        turma do Python Pro. Bruno Rocha, engenheiro de qualidade na Red Hat,
-                        com mais de 15 anos de experiência, vai contar pra gente os 3 principais
-                        tipos de qualidade em um projeto de Software.
-                    </p>
-
-                    <div class="clearfix mb-5"></div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class='bg-gray'>
-        <div class="container">
-            <div class="row">
-                <div class="col mt-5 mb-5">
-                    <h2 class='font-weight-bold'>Veja como será o processo de aprendizado:</h2>
-
-                    <div class='row'>
-                        <div class='col-md learning-box text-center'>
-                            <p><span class="icon ec ec-satellite"></span></p>
-                            <h4 class='font-weight-bold'>CURSO 100% ONLINE</h4>
-                            <p>
-                                Assista de qualquer lugar que quiser. Do seu computador, do seu
-                                tablet ou mesmo do seu celular. Basta ter acesso a Internet.
-                            </p>
+                <div class="tab">
+                    <div class="tab-detail"></div>
+                    <input type="checkbox" id="content2" checked>
+                    <label class="tab-label main-transition text-uppercase font-highlighted fw-800" for="content2">Ferramentas de Desenvolvimento de Software</label>
+                    <div class="tab-content main-transition">
+                    <div class="tab-content__group">
+                        <div class="tab-content__group__description">
+                        <h2 class="tab-content__group__description__title fw-700 font-highlighted text-uppercase text-blue">Descrição</h2>
+                        <p class="tab-content__group__description__description fw-300">No curso PyTools você vai aprender como equipes de programadores trabalham e colaboram entre si. Assim, você vai poder finalmente ter a capacidade de ser um deles!</p>
+                        <p class="tab-content__group__description__description fw-300">Você vai aprender a trabalhar com a ferramenta que todo mundo usa para versionar código e contribuir com projetos de desenvolvimento de software: o Git.</p>
+                        <p class="tab-content__group__description__description fw-300">Você também vai aprender como desenvolver utilizando testes automatizados. Assim você terá um software que não tenha bugs e que seja simples de adicionar novas funcionalidades.</p>
+                        <p class="tab-content__group__description__description fw-300">Você vai aprender como manter o ambiente do seu projeto totalmente organizado e replicado. Assim, seu software vai funcionar na sua máquina e também no servidor de produção!</p>
                         </div>
 
-                        <div class='col-md learning-box text-center'>
-                            <p><span class="ec ec-desktop-computer"></span></p>
-                            <h4 class='font-weight-bold'>250 VÍDEO AULAS</h4>
-                            <p>
-                                Aulas práticas, objetivas, direto ao ponto e sem enrolação.
-                                Seu tempo é valioso!
-                            </p>
+                        <div class="tab-content__group__disclaimer">
+                        <h2 class="tab-content__group__disclaimer__title fw-700 font-highlighted text-uppercase text-blue">Ementa</h2>
+
+                        <div class="tab-content__group__disclaimer__row">
+                            <div class="tab-content__group__disclaimer__1">
+                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Criação de objetos</h3>
+                            <ul>
+                                <li>Afinando o Machado - Git</li>
+                                <li>Isolando o Ambiente</li>
+                                <li>Gestão de Dependências</li>
+                                <li>Publicação do Pacote</li>
+                            </ul>
+    
+                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Pienv</h3>
+                            <ul>
+                                <li>Instalação e Princípios Básicos</li>
+                                <li>Atualizando Projeto Legado</li>
+                            </ul>
+                            </div>
+    
+                            <div class="tab-content__group__disclaimer__2">
+                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Testes automáticos</h3>
+                            <ul>
+                                <li>Framework Pytest</li>
+                                <li>Pytest Features</li>
+                                <li>Injeção de Dependências</li>
+                            </ul>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <div class="tab-detail"></div>
+                    <input type="checkbox" id="content3" checked>
+                    <label class="tab-label main-transition text-uppercase font-highlighted fw-800" for="content3">Framework Django</label>
+                    <div class="tab-content main-transition">
+                    <div class="tab-content__group">
+                        <div class="tab-content__group__description">
+                        <h2 class="tab-content__group__description__title fw-700 font-highlighted text-uppercase text-blue">Descrição</h2>
+                        <p class="tab-content__group__description__description fw-300">No curso de Django, você vai aprender a utilizar o framework mais utilizado da linguagem Python, o Django!</p>
+                        <p class="tab-content__group__description__description fw-300">O Django é um framework que vai te ajudar a construir sistemas web de uma forma simples, rápida, segura e escalável.</p>
+                        <p class="tab-content__group__description__description fw-300">O Django é um dos pioneiros do conceito "Don't Repeat Yourself", que, em português significa "Não se repita". Você vai construir sistemas poderosos com poucas linhas de código, pois o Django se responsabiliza para você não precisar repetir código!</p>
                         </div>
 
-                        <div class='col-md learning-box text-center'>
-                            <p><span class="ec ec-older-man"></span></p>
-                            <h4 class='font-weight-bold'>ACESSO VITALÍCIO</h4>
-                            <p>
-                                Você terá acesso ao curso para sempre, inclusive a todas as
-                                atualizações! Poderá assistir todas as aulas quantas vezes quiser.
-                            </p>
+                        <div class="tab-content__group__disclaimer">
+                        <h2 class="tab-content__group__disclaimer__title fw-700 font-highlighted text-uppercase text-blue">Ementa</h2>
+
+                        <div class="tab-content__group__disclaimer__row">
+                            <div class="tab-content__group__disclaimer__1">
+                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Twelve Factor App</h3>
+                            <ul>
+                                <li>Entrega Contínua</li>
+                                <li>Configurações de Projeto</li>
+                                <li>Arquivos Estáticos e Upload de Arquivos</li>
+                                <li>Migrações e Customização de Usuário</li>
+                                <li>Backup, Debug, Sentry e Conclusão</li>
+                            </ul>
+
+                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Autenticação de Usuários</h3>
+                            <ul>
+                                <li>Autenticação e Autorização</li>
+                            </ul>
+                            </div>
+
+                            <div class="tab-content__group__disclaimer__2">
+                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Frontend e E-mails</h3>
+                            <ul>
+                                <li>Landing Page</li>
+                                <li>Integrações Simples</li>
+                                <li>HTTP e Templates</li>
+                            </ul>
+
+                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Banco de Dados</h3>
+                            <ul>
+                                <li>Instalação e Fundamentos</li>
+                                <li>Testes com Banco de Dados</li>
+                                <li>Criação de App de Módulos de Aulas</li>
+                                <li>Relacionamento Muitos para Um</li>
+                                <li>Como Escapar das Armadilhas do ORM</li>
+                                <li>Relacionamento de Muitos para Muitos</li>
+                            </ul>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <div class="tab-detail"></div>
+                    <input type="checkbox" id="content4" checked>
+                    <label class="tab-label main-transition text-uppercase font-highlighted fw-800" for="content4">Objetos Pythônicos</label>
+                    <div class="tab-content main-transition">
+                    <div class="tab-content__group">
+                        <div class="tab-content__group__description">
+                        <h2 class="tab-content__group__description__title fw-700 font-highlighted text-uppercase text-blue">Descrição</h2>
+                        <p class="tab-content__group__description__description fw-300">No curso Objetos Pythônicos você vai se aprofundar nas características que tornam o Python a melhor linguagem de programação para quem quer ser produtivo com qualidade.</p>
+                        <p class="tab-content__group__description__description fw-300">Você vai aprender mais sobre com o Python lida com conceitos de programação orientada a objeto e programação funcional.</p>
                         </div>
 
+                        <div class="tab-content__group__disclaimer">
+                        <h2 class="tab-content__group__disclaimer__title fw-700 font-highlighted text-uppercase text-blue">Ementa</h2>
+
+                        <div class="tab-content__group__disclaimer__row">
+                            <div class="tab-content__group__disclaimer__1">
+                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Programação Funcional</h3>
+                            <ul>
+                                <li>Função como Objeto</li>
+                                <li>Decorator</li>
+                            </ul>
+                            </div>
+    
+                            <div class="tab-content__group__disclaimer__2">
+                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Orientação a objetos Pythonica</h3>
+                            <ul>
+                                <li>Interfaces</li>
+                                <li>Protocolos</li>
+                                <li>Bibliotecas</li>
+                                <li>Herança Múltiplas</li>
+                                <li>Aliasing</li>
+                                <li>Protocolo de Sequência</li>
+                                <li>Métodos Mágicos</li>
+                                <li>Class Based Views</li>
+                            </ul>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
+
+                <div class="tab">
+                    <div class="tab-detail"></div>
+                    <input type="checkbox" id="content5" checked>
+                    <label class="tab-label main-transition text-uppercase font-highlighted fw-800" for="content5">Python para Pythonistas</label>
+                    <div class="tab-content main-transition">
+                    <div class="tab-content__group">
+                        <div class="tab-content__group__description">
+                        <h2 class="tab-content__group__description__title fw-700 font-highlighted text-uppercase text-blue">Descrição</h2>
+                        <p class="tab-content__group__description__description fw-300">No curso Python para Pythonistas, você vai desvendar módulos avançados da linguagem.</p>
+                        <p class="tab-content__group__description__description fw-300">São conceitos que, em geral, são utilizados em diversos frameworks. Você vai entender como o Python funciona de verdade e poder utilizar todo o seu poder para construir aplicações simples e poderosas.</p>
+                        </div>
+
+                        <div class="tab-content__group__disclaimer">
+                        <h2 class="tab-content__group__disclaimer__title fw-700 font-highlighted text-uppercase text-blue">Ementa</h2>
+
+                        <div class="tab-content__group__disclaimer__row">
+                            <div class="tab-content__group__disclaimer__1">
+                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Programação Assincrona</h3>
+                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Metaprogramação</h3>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <div class="tab-detail"></div>
+                    <input type="checkbox" id="content6" checked>
+                    <label class="tab-label main-transition text-uppercase font-highlighted fw-800" for="content6">Python Patterns</label>
+                    <div class="tab-content main-transition">
+                    <div class="tab-content__group">
+                        <div class="tab-content__group__description">
+                        <h2 class="tab-content__group__description__title fw-700 font-highlighted text-uppercase text-blue">Descrição</h2>
+                        <p class="tab-content__group__description__description fw-300">Com o curso Python Patterns você vai desvendar módulos avançados da linguagem, em geral utilizados em diversos frameworks.</p>
+                        </div>
+
+                        <div class="tab-content__group__disclaimer">
+                        <h2 class="tab-content__group__disclaimer__title fw-700 font-highlighted text-uppercase text-blue">Ementa</h2>
+
+                        <div class="tab-content__group__disclaimer__row">
+                            <div class="tab-content__group__disclaimer__1">
+                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Programação Funcional</h3>
+                            <ul>
+                                <li>Motivação</li>
+                                <li>Facade</li>
+                                <li>Embrulho</li>
+                                <li>Singleton</li>
+                                <li>Borg</li>
+                                <li>Adapter</li>
+                            </ul>
+                            </div>
+
+                            <div class="tab-content__group__disclaimer__2">
+                            <ul class="tab-content__group__disclaimer__2--last">
+                                <li>Template Method</li>
+                                <li>Composite</li>
+                                <li>Strategy Clássico</li>
+                                <li>Flyweight e NullObject</li>
+                                <li>Strategy Funcional</li>
+                                <li>Decorator</li>
+                            </ul>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+
+            <a class="content-main__group__button main-transition text-uppercase text-white fw-800 font-highlighted" href="" target="blank">Compre aqui</a>
+            <!-- <div class="header-main__group__button"> -->
+            <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer">Sim, eu quero me tornar um profissional!</a>
+            <!-- </div> -->
+        </div>
+        </section>
+
+        <section class="interview-main">
+        <div class="interview-main__group">
+            <img class="interview-main__group__image" src="{% static '/img/spp/interview-main/interview-icon.png' %}" alt="Ícone de um microfone com fundo transparente e bordas verdes">
+            <h2 class="interview-main__group__title fw-800 text-uppercase font-highlighted">Além disso, você também terá acesso ao nosso curso <span class="text-white">Como passar em entrevistas técnicas</span></h2>
+            <p class="interview-main__group__description fw-400 text-white">Neste curso eu vou te mostrar o passo a passo para você mandar bem nas entrevistas de grandes empresas. Eu vou te ensinar como se portar em todo o processo, desde como montar o seu currículo, até a resolução dos exercícios técnicos, onde eu mostro como resolver os testes mais comuns neste tipo de entrevista.</p>
+        </div>
+        </section>
+
+        <section class="experience-main">
+        <div class="experience-main__group">
+            <h2 class="experience-main__group__title fw-300 font-highlighted text-blue text-uppercase">Como será a sua <span class="text-green fw-800">experiência?</span></h2>
+
+            <div class="experience-main__group__box">
+            <div class="experience-main__group__box__item">
+                <h3 class="experience-main__group__box__item__title fw-800 font-highlighted text-blue text-uppercase">Curso 100% online</h3>
+                <p class="experience-main__group__box__item__description fw-400">Assista de qualquer lugar que quiser. Do seu computador, do seu tablet ou mesmo do seu celular. Basta ter acesso a Internet.</p>
+            </div>
+
+            <div class="experience-main__group__box__item">
+                <h3 class="experience-main__group__box__item__title fw-800 font-highlighted text-blue text-uppercase">Mais de 300 vídeoaulas</h3>
+                <p class="experience-main__group__box__item__description fw-400">Seu tempo é valioso e o nosso objetivo é que você se transforme em um profissional o mais rápido possível! As aulas são práticas, objetivas, direto ao ponto e sem enrolação.</p>
+            </div>
+
+            <div class="experience-main__group__box__item">
+                <h3 class="experience-main__group__box__item__title fw-800 font-highlighted text-blue text-uppercase">Acesso vitalício</h3>
+                <p class="experience-main__group__box__item__description fw-400">Você terá acesso ao curso para sempre, inclusive a todas as atualizações! Poderá assistir todas as aulas quantas vezes quiser.</p>
+            </div>
             </div>
         </div>
-    </div>
+        </section>
 
+        <section class="summary-main">
+        <div class="summary-main__group">
+            <h3 class="summary-main__group__subtitle text-blue text-uppercase font-highlighted fw-800">Em resumo...</h3>
 
-    <div class='bg-secondary'>
-        <div class="container">
+            <div class="summary-main__group__cards">
+            <div class="summary-main__group__cards__item">
+                <div class="summary-main__group__cards__item__circle">
+                <img class="summary-main__group__cards__item__circle__item" src="{% static '/img/spp/summary-main/summary-card-1.png' %}" alt="Ícone com logo do Python com fundo transparente e bordas brancas">
+                </div>
+
+                <h3 class="summary-main__group__cards__item__title text-uppercase text-blue font-highlighted fw-700">6 cursos da formação Python Pro</h3>
+            </div>
+
+            <div class="summary-main__group__cards__item">
+                <div class="summary-main__group__cards__item__circle">
+                <img class="summary-main__group__cards__item__circle__item" src="{% static '/img/spp/summary-main/summary-card-2.png' %}" alt="Ícone de um microfone com fundo transparente e bordas brancas">
+                </div>
+
+                <h3 class="summary-main__group__cards__item__title text-uppercase text-blue font-highlighted fw-700">Curso de Entrevista Técnica</h3>
+            </div>
+
+            <div class="summary-main__group__cards__item">
+                <div class="summary-main__group__cards__item__circle">
+                <img class="summary-main__group__cards__item__circle__item" src="{% static '/img/spp/summary-main/summary-card-3.png' %}" alt="Ícone de um 'play' de vídeo com fundo transparente e bordas brancas">
+                </div>
+
+                <h3 class="summary-main__group__cards__item__title text-uppercase text-blue font-highlighted fw-700">8 Aulas ao vivo</h3>
+            </div>
+
+            <div class="summary-main__group__cards__item">
+                <div class="summary-main__group__cards__item__circle">
+                <img class="summary-main__group__cards__item__circle__item" src="{% static '/img/spp/summary-main/summary-card-3.png' %}" alt="Ícone de um 'play' de vídeo com fundo transparente e bordas brancas">
+                </div>
+
+                <h3 class="summary-main__group__cards__item__title text-uppercase text-blue font-highlighted fw-700">4 Webinários</h3>
+            </div>
+            </div>
+
+            <div class="summary-main__group__bonus">
+            <h3 class="summary-main__group__bonus__title text-uppercase text-blue fw-800 font-highlighted">E além dos itens acima, tenho mais <span class="text-green">3 bônus para você!</span></h3>
+
+            <div class="summary-main__group__bonus__cards">
+                <div class="summary-main__group__bonus__cards__item">
+                <div class="summary-main__group__bonus__cards__item__image">
+                    <img class="summary-main__group__bonus__cards__item__image__mobile" src="{% static '/img/spp/summary-main/bonus-1-mobile.jpg' %}" alt="Monitor de iMac com Renzo na tela (imagem para mobile)">
+                    <img class="summary-main__group__bonus__cards__item__image__desktop" src="{% static '/img/spp/summary-main/bonus-1-desktop.jpg' %}" alt="Monitor de iMac com Renzo na tela (imagem para desktop)">
+                </div>
+
+                <div class="summary-main__group__bonus__cards__item__content">
+                    <h4 class="summary-main__group__bonus__cards__item__content__title text-uppercase text-blue fw-800 font-highlighted">Acesso a todos os webinários das turmas passadas</h4>
+                    <p class="summary-main__group__bonus__cards__item__content__description fw-400">Tem material muito bom ali no meio que vai te ajudar bastante a acelerar seu processo de se tornar um programador profissional. Foi por isso que eu decidi liberar esse bônus.</p>
+                    <p class="summary-main__group__bonus__cards__item__content__description fw-400">Eu poderia cobrar, tranquilamente, R$ 99 reais por cada webinário desses. Mas, nessa turma, você terá os 9 webinários de graça!</p>
+                    <span class="summary-main__group__bonus__cards__item__content__price fw-700"><strike>R$ 891,00</strike></span>
+                    <span class="summary-main__group__bonus__cards__item__content__information fw-700 text-uppercase text-green break">Grátis</span>
+                </div>
+                </div>
+
+                <div class="summary-main__group__bonus__cards__item">
+                <div class="summary-main__group__bonus__cards__item__image summary-main__group__bonus__cards__item__image--2">
+                    <img class="summary-main__group__bonus__cards__item__image__mobile" src="{% static '/img/spp/summary-main/bonus-2-mobile.jpg' %}" alt="Mão direita de uma pessoa segurando um iPhone com logo de Telegram na tela (imagem para mobile)">
+                    <img class="summary-main__group__bonus__cards__item__image__desktop" src="{% static '/img/spp/summary-main/bonus-2-desktop.jpg' %}" alt="Mão direita de uma pessoa segurando um iPhone com logo de Telegram na tela (imagem para desktop)">
+                </div>
+
+                <div class="summary-main__group__bonus__cards__item__content">
+                    <h4 class="summary-main__group__bonus__cards__item__content__title text-uppercase text-blue fw-800 font-highlighted">Acesso vitalício ao grupo de discussão no Telegram</h4>
+                    <p class="summary-main__group__bonus__cards__item__content__description fw-400">Hoje temos centenas de programadores dos mais variados níveis discutindo diariamente sobre tecnologia naquele grupo. Vai ser a sua oportunidade de ficar amigo de uma turma muito fera.</p>
+                    <p class="summary-main__group__bonus__cards__item__content__description fw-400">Eu já pensei em cobrar por essa participação. O preço que tinha decidido era de R$ 29,90/mês. Mas eu decidi liberar como bônus. Ou seja, você terá um bônus de, pelo menos, R$ 358,00/ano, totalmente de graça.</p>
+                    <span class="summary-main__group__bonus__cards__item__content__price fw-700"><strike>R$ 358,00</strike></span>
+                    <span class="summary-main__group__bonus__cards__item__content__information fw-700 text-uppercase text-green break">Grátis</span>
+                </div>
+                </div>
+
+                <div class="summary-main__group__bonus__cards__item">
+                <div class="summary-main__group__bonus__cards__item__image">
+                    <img class="summary-main__group__bonus__cards__item__image__mobile" src="{% static '/img/spp/summary-main/bonus-3-mobile.jpg' %}" alt="Mão esquerda de uma pessoa segurando um iPhone com 3 thumbnails de vídeos do renzo na tela (imagem para mobile)">
+                    <img class="summary-main__group__bonus__cards__item__image__desktop" src="{% static '/img/spp/summary-main/bonus-3-desktop.jpg' %}" alt="Mão esquerda de uma pessoa segurando um iPhone com 3 thumbnails de vídeos do renzo na tela (imagem para desktop)">
+                </div>
+
+                <div class="summary-main__group__bonus__cards__item__content">
+                    <h4 class="summary-main__group__bonus__cards__item__content__title text-uppercase text-blue fw-800 font-highlighted">Acesso a todas as aulas das turmas passadas para você</h4>
+                    <p class="summary-main__group__bonus__cards__item__content__description fw-400">Você terá acesso a todo o conteúdo que foi passado em todas as turmas do Python Pro. Isso inclui as aulas e os arquivos dos projetos!</p>
+                    <p class="summary-main__group__bonus__cards__item__content__description fw-400">Eu poderia cobrar, tranquilamente, R$ 1.500,00 só por este acesso. Mas resolvi te dar como bônus para te provar como eu estou comprometido com o seu sucesso! Somente estes bônus já valem quase muito mais que o curso!</p>
+                    <span class="summary-main__group__bonus__cards__item__content__price fw-700"><strike>R$ 891,00</strike></span>
+                    <span class="summary-main__group__bonus__cards__item__content__information fw-700 text-uppercase text-green break">Grátis</span>
+                </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="summary-main__group__price">
+            <h3 class="summary-main__group__price__title fw-800 text-uppercase text-blue font-highlighted">Tenha acesso a tudo isso por apenas 12x de R$ 199,60</h3>
+            <h4 class="summary-main__group__price__subtitle fw-400">(ou apenas R$ 1.997,00 se você comprar à vista)</h4>
+
+            <h5 class="summary-main__group__price__description text-uppercase fw-800 font-highlighted text-blue">Mas calma! Você tem direito a <span class="text-uppercase">descontos</span>!</h5>
+
+            <div class="summary-main__group__price__group summary-main__group__price__group--top">
+                <div class="summary-main__group__price__group__info">
+                <img class="summary-main__group__price__group__info__icon" src="{% static '/img/spp/summary-main/summary-price-icon.jpg' %}" alt="Ícone com símbolo de porcentagem com fundo transparente e bordas verdes">
+                <h6 class="summary-main__group__price__group__info__title fw-700 text-uppercase text-blue font-highlighted">Promoção do primeiro dia</h6>
+                </div>
+
+                <div class="summary-main__group__price__group__value">
+                <p class="summary-main__group__price__group__value__title fw-700 text-uppercase text-blue font-highlighted">R$ 400,00</p>
+                <img class="summary-main__group__price__group__value__icon" src="{% static '/svg/spp/x-price-icon.svg' %}" alt="Imagem de um 'X' na cor vermelha">
+                </div>
+            </div>
+
+            <div class="summary-main__group__price__group">
+                <div class="summary-main__group__price__group__info">
+                <img class="summary-main__group__price__group__info__icon" src="{% static '/img/spp/summary-main/summary-price-icon.jpg' %}" alt="Ícone com símbolo de porcentagem com fundo transparente e bordas verdes">
+                <h6 class="summary-main__group__price__group__info__title fw-700 text-uppercase text-blue font-highlighted">Promoção para quem é cliente PyTools</h6>
+                </div>
+
+                <div class="summary-main__group__price__group__value">
+                <p class="summary-main__group__price__group__value__title fw-700 text-uppercase text-blue font-highlighted">R$ 100,00</p>
+                <img class="summary-main__group__price__group__value__icon" src="{% static '/svg/spp/x-price-icon.svg' %}" alt="Imagem de um 'X' na cor vermelha">
+                </div>
+            </div>
+
+            <div class="summary-main__group__price__group summary-main__group__price__group--bottom">
+                <div class="summary-main__group__price__group__info">
+                <h6 class="summary-main__group__price__group__info__title fw-700 text-uppercase text-green font-highlighted">Preço final</h6>
+                </div>
+
+                <div class="summary-main__group__price__group__value">
+                <p class="summary-main__group__price__group__value__final fw-800 text-uppercase text-green font-highlighted"><small>12x R$ </small>149,70!</p>
+                </div>
+            </div>
+            </div>
+
+            <div class="header-main__group__button">
+            <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer">Sim, eu quero me tornar um profissional!</a>
+            </div>
+        </div>
+        </section>
+
+        <section class="countdown countdown-main">
+        <div class="countdown__group">
+            <div class="countdown-main__group">
+            <h2 class="countdown-main__group__title text-uppercase text-white fw-800"><span class="text-red">Aproveite!</span> Essa promoção vai expirar em breve.</h2>
+            </div>
+
+            <div class="countdown__group__numbers">
+            <div class="countdown__group__numbers__item">
+                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted days"></span>
+                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Dias</span>
+            </div>
+
+            <div class="countdown__group__numbers__item">
+                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted hours"></span>
+                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Horas</span>
+            </div>
+
+            <div class="countdown__group__numbers__item">
+                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted minutes"></span>
+                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Minutos</span>
+            </div>
+
+            <div class="countdown__group__numbers__item">
+                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted seconds"></span>
+                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Segundos</span>
+            </div>
+            </div>
+        </div>
+        </section>
+
+        <section class="garantee-main">
+        <div class="garantee-main__group">
+            <img class="garantee-main__group__badge" src="{% static '/img/spp/garantee-main/garantee-badge.png' %}" alt="Imagem de um badge escrito 'Garantia de 30 dias'">
+
+            <h2 class="garantee-main__group__title text-white text-uppercase fw-800 font-highlighted">"Mas e se eu não gostar do curso?"</h2>
+
+            <div class="garantee-main__group__description">
+            <p class="garantee-main__group__description__item text-white fw-400">Você terá acesso a todo o conteúdo que foi passado em todas as turmas do Python Pro. Isso inclui as aulas e os arquivos dos projetos!</p>
+            <p class="garantee-main__group__description__item text-white fw-400">Eu poderia cobrar, tranquilamente, R$ 1.500,00 só por este acesso. Mas resolvi te dar como bônus para te provar como eu estou comprometido com o seu sucesso! Somente estes bônus já valem quase muito mais que o curso!</p>
+            </div>
+        </div>
+        </section>
+
+        <section class="testimonials-classes testimonials-classes--main">
+        <div class="testimonials-classes__group">
+            <h2 class="testimonials-classes__group__title text-blue fw-700 font-highlighted text-uppercase text-center">Já são vários alunos transformados</h2>
+
+            <div class="testimonials-classes__group__people testimonials-classes__group__people--mobile owl-carousel">
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=p-ZNsU9KLVkoM">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-1.jpg' %}" alt="Card do vídeo 1 - Isaac Ferreira">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=SwGDBRrjyf0">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-2.jpg' %}" alt="Card do vídeo 2 - Diego Sorrilha">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=p-ZNgfS9Ohwac">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-3.jpg' %}" alt="Card do vídeo 3 - Marcelo Del Fiore">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=Qg8LmM2Sfxg">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-4.jpg' %}" alt="Card do vídeo 4 - Evento">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=0HP2nS44Ip4">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-5.jpg' %}" alt="Card do vídeo 5 - Alison Américo">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=TtlB4E7_MZM">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-6.jpg' %}" alt="Card do vídeo 6 - Tiago Cordeiro">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=avyZ4WjluEo">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-7.jpg' %}" alt="Card do vídeo 7  - Vinicius Mesel">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=p-7b3LYxXPc">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 8 - Fabrício Aguiar">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=SvM33abGWMw">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 9 - Pablo">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=LgosbGSJ5fI">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 10 - Paulo">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=nUZGmihUy1o">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 11 - Jorge Luiz">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=B82STg6siYA">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 12 - Marcelo Andrioli">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=uWokzyDsWsQ">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 13 - Marcos Vinícius">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=OU8mLyjX-y0">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 14 - Carlos Augusto Moreno">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=90lX76GH2y0">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 15">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=COUA7lbKZn8">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 16">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=OfFN_WjTYqM">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 17 - Alison Américo">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=i-P3S6sTOzA">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 18 - Charles Tenório">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=faruwyQcbWY">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 19 - Elisa">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=EzxzGFQXQYQ">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 20 - Ronaldo Oliveira">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=3S22WWkOJRo">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 21 - Rafinha Ramos">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=VSW4SY395Mo">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 22 - Régis Santos">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=NXqsyoWalO8">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 23 - Ricardo Portela">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=Fpq-T9lApho">
+                <img src="{% static '/img/spp/thumbs-testimonials/thumb-8.jpg' %}" alt="Card do vídeo 24">
+            </a>
+        </div>
+
+        <div class="testimonials-classes__group__people testimonials-classes__group__people--desktop">
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=Fpq-T9lApho">
+                <img src="{% static '/img/social-proof/tanio.png' %}" alt="Card do vídeo 1 - Tanio">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=ZNsU9KLVkoM&">
+                <img src="{% static '/img/social-proof/isaac.webp' %}" alt="Card do vídeo 24 - Isaac Ferreira">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=p-7b3LYxXPc">
+                <img src="{% static '/img/social-proof/fabricio.webp' %}" alt="Card do vídeo 8 - Fabrício Aguiar">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=SvM33abGWMw">
+                <img src="{% static '/img/social-proof/pablo.png' %}" alt="Card do vídeo 9 - Pablo">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=EzxzGFQXQYQ">
+                <img src="{% static '/img/social-proof/ronaldo-oliveira.png' %}" alt="Card do vídeo 20 - Ronaldo Oliveira">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=i-P3S6sTOzA">
+                <img src="{% static '/img/social-proof/charles-tenorio.png' %}" alt="Card do vídeo 18 - Charles Tenório">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=B82STg6siYA">
+                <img src="{% static '/img/social-proof/marcelo-andreoli.png' %}" alt="Card do vídeo 12 - Marcelo Andrioli">
+            </a>
+            
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=OfFN_WjTYqM">
+                <img src="{% static '/img/social-proof/alisson-americo-1.png' %}" alt="Card do vídeo 17 - Alison Américo">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=90lX76GH2y0">
+                <img src="{% static '/img/social-proof/guido-percu.png' %}" alt="Card do vídeo 4 - Guido Percú">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=LgosbGSJ5fI">
+                <img src="{% static '/img/social-proof/paulo.png' %}" alt="Card do vídeo 10 - Paulo">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=nUZGmihUy1o">
+                <img src="{% static '/img/social-proof/jorge-plautz.png' %}" alt="Card do vídeo 11 - Jorge Luiz">
+            </a>
+            
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=SwGDBRrjyf0">
+                <img src="{% static '/img/social-proof/diego.webp' %}" alt="Card do vídeo 2 - Diego Sorrilha">
+            </a>        
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=uWokzyDsWsQ">
+                <img src="{% static '/img/social-proof/marcus-vinicius.png' %}" alt="Card do vídeo 13 - Marcos Vinícius">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=OU8mLyjX-y0">
+                <img src="{% static '/img/social-proof/carlos-augusto.png' %}" alt="Card do vídeo 14 - Carlos Augusto Moreno">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=COUA7lbKZn8">
+                <img src="{% static '/img/social-proof/jasiel.png' %}" alt="Card do vídeo 15 - Jasiel">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=5FAditPNynA">
+                <img src="{% static '/img/social-proof/vinicius-assef.png' %}" alt="Card do vídeo 16 - Vinicius Assef">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=ZNgfS9Ohwac">
+                <img src="{% static '/img/social-proof/marcelo.webp' %}" alt="Card do vídeo 3 - Marcelo Del Fiore">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=TtlB4E7_MZM">
+                <img src="{% static '/img/social-proof/ferrabras.webp' %}" alt="Card do vídeo 6 - Tiago Cordeiro">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=faruwyQcbWY">
+                <img src="{% static '/img/social-proof/maria-elisa.png' %}" alt="Card do vídeo 19 - Elisa">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=0HP2nS44Ip4">
+                <img src="{% static '/img/social-proof/alysson.webp' %}" alt="Card do vídeo 5 - Alison Américo">
+            </a>            
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=3S22WWkOJRo">
+                <img src="{% static '/img/social-proof/rafael-ramos.png' %}" alt="Card do vídeo 21 - Rafinha Ramos">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=VSW4SY395Mo">
+                <img src="{% static '/img/social-proof/regis-silva.png' %}" alt="Card do vídeo 22 - Régis Silva">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=NXqsyoWalO8">
+                <img src="{% static '/img/social-proof/ricardo-portela.png' %}" alt="Card do vídeo 23 - Ricardo Portela">
+            </a>
+
+            <a class="testimonials-classes__group__people__link popup-vimeo main-transition" href="https://www.youtube.com/watch?v=avyZ4WjluEo">
+                <img src="{% static '/img/social-proof/vinicius.webp' %}" alt="Card do vídeo 7 - Vinicius Mesel">
+            </a>
+            </div>
+        </div>
+        </section>
+
+        <section class="renzo renzo--main">
+        <img class="renzo__img__mobile" src="{% static '/img/spp/renzo-main/renzo-nuccitelli-mobile.png' %}" alt="Renzo Nuccitelli com braços cruzados, olhando para foto. Fundo verde abacate com códigos escritos em branco. Imagem pequena">
+        <img class="renzo__img__desktop" src="{% static '/img/spp/renzo/about-renzo-nuccitelli-desktop.png' %}" alt="Renzo Nuccitelli com braços cruzados, olhando para foto. Fundo verde abacate com códigos escritos em branco. Imagem grande">
+
+        <div class="renzo__group">
+            <span class="renzo__group__about text-uppercase text-green fw-700">Conheça o professor</span>
+            <h2 class="renzo__group__title fw-400 text-gray"><span class="text-blue text-uppercase font-highlighted fw-900">Olá! Eu me chamo</span> <span class="text-green text-uppercase font-highlighted fw-900">Renzo Nuccitelli,</h2>
+            <div class="scroll-bar">
+            <h3 class="renzo__group__description renzo__group__description text-gray fw-400"><span class="text-green">Sou programador há 13 anos.</span> Já fui diretor de tecnologia em duas empresas e também trabalhei na maior empresa de software aberto do mundo, a Red Hat. Também já fui consultor de diversas outras empresas, como o Hotel Urbano.</h3>
+            <h3 class="renzo__group__description renzo__group__description text-gray fw-400">Já palestrei em diversos enventos de tecnologia, como Python Brasil, GDG, Agile Vale e muitos outros.</h3>
+            <h4 class="renzo__group__description text-green fw-400">Meu sonho sempre foi que as pessoas pudessem construir as mesmas oportunidades que construí...</h4>
+            <h4 class="renzo__group__description text-gray fw-400">Sou Engenheiro de Computação formado pelo ITA. Especialista em programação web.</h4>
+            <h4 class="renzo__group__description text-gray fw-400">Fui Diretor de Tecnologia na startup de educação QMagico e Pricez, onde estruturei os times de tecnologia e todo Processo de desenvolvimento.</h4>
+            <h4 class="renzo__group__description text-gray fw-400">Sou apaixonado por dar aulas, fui professor da Fatec durante 4 anos onde ministrou as matérias de "Orientação a Objetos" e "Aplicações para Internet", "Estrutura de Dados" e "Javascript". Já palestrou em eventos como Pycon US, Google Developer Bus, DevFest, Rupy e Python Brasil.</h4>
+            <h4 class="renzo__group__description text-gray fw-400">Especialista em teste automáticos, fui Engenheiro de Qualidade Senior na Red Hat durante 2 anos.</h4>
+            </div>
+        </div>
+        </section>
+
+        <section class="faq-main">
+        <div class="faq-main__group">
+            <h2 class="faq-main__group__title text-uppercase text-blue fw-800 font-highlighted">Ficou com alguma dúvida?</h2>
+            <h3 class="faq-main__group__subtitle fw-300">As perguntas mais comuns estão listadas aqui embaixo. Caso você não encontre sua dúvida respondida, clique no botão ali no canto direito e fale com o nosso suporte.</h3>
+
             <div class="row">
-                <div class="col mt-5 mb-5">
-                    <h3><b>E tem mais... </b></h3>
-
-                    <h2 class='mb-5'>
-                        Além dos 6 cursos da formação Python Pro, do curso de entrevista técnica,
-                        das 8 aulas ao vivo e dos 4 webinários, eu preparei mais
-                        <b><u>três bônus pra você!</u></b>
-                    </h2>
-
-                    <h4 class='font-weight-bold mt-5'>
-                        <span class="ec ec-desktop-computer"></span>
-                        Eu vou liberar o acesso a todos os webinários das turmas passadas.
-                    </h4>
-
-                    <p>
-                        Tem material muito bom ali no meio que vai te ajudar bastante a acelerar
-                        seu processo de se tornar um programador profissional.
-
-                        Foi por isso que eu decidi liberar esse bônus.
-                    </p>
-
-                    <p class='mb-5'>
-                        Eu poderia cobrar, tranquilamente, R$ 99 reais por cada webinário desses.
-                        Mas, nessa turma, você terá os 9 webinários <b>de <strike>R$ 891,00</strike> por R$ 0,00, de
-                        graça!</b>
-                    </p>
-
-                    <h4 class='font-weight-bold mt-5'>
-                        <span class="ec ec-mega"></span>
-                        Eu vou liberar um acesso vitalício ao grupo de discussão no Telegram.
-                    </h4>
-
-                    <p>
-                        Hoje temos centenas de programadores dos mais variados níveis discutindo
-                        diariamente sobre tecnologia naquele grupo. Vai ser a sua oportunidade de ficar amigo de uma
-                        turma muito fera.
-                    </p>
-
-                    <p>
-                        Eu já pensei em cobrar por essa participação.
-                        O preço que tinha decidido era de R$ 29,90/mês.
-                        Mas eu decidi liberar como bônus.
-                        Ou seja, você terá um bônus de, pelo menos, <b><strike>R$ 358,00/ano</strike>, totalmente de
-                        graça.</b>
-                    </p>
-
-                    <h4 class='font-weight-bold mt-5'>
-                        <span class="ec ec-desktop-computer"></span>
-                        Eu vou liberar o acesso a todas as aulas das turmas passadas para você.
-                    </h4>
-
-                    <p>
-                        Você terá acesso a todo o conteúdo que foi passado em todas as turmas do Python Pro.
-                        Isso inclui as aulas e os arquivos dos projetos!
-                    </p>
-
-                    <p>
-                        Eu poderia cobrar, tranquilamente, R$ 1.500,00 só por este acesso.
-                        Mas resolvi te dar como bônus para te provar como eu estou comprometido com o seu sucesso!
-                        Somente estes bônus já valem quase muito mais que o curso!
-                        <b>De <strike>R$ 1500</strike> por R$ 0,00!</b>
-                    </p>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class='bg-primary'>
-        <div class="container">
-            <div class="row text-center text-light">
-
-                <div class='col mb-5 mt-5'>
-                    <h2 class='font-weight-bold'>HOJE, VOCÊ TERÁ ACESSO AO CURSO POR APENAS:</h2>
-                    <p class='price'>
-                        <b>12x </b>
-                        <b class='real'> {{ payment_item_config.max_installment_amount_after_interest|cents_to_brl }}</b>
-                    </p>
-
-                    <p class='a-vista'>
-                        <i class=''>(ou apenas <b>{{ payment_item_config.price|cents_to_brl }}</b> se você comprar à vista)</i>
-                    </p>
-
-                    {% if has_first_day_discount %}
-                       {# TODO MOACIR #}
-
-                        <h1>Desconto primeiro dia {{first_day_discount|cents_to_brl}}</h1>
-                       {{ promotion_end_date }}
-                {% endif %}
-                    {% if has_client_discount %}
-                        <p class='a-vista'>
-                            <b>Lembre-se, você está tendo R$ {{ client_discount|cents_to_brl }} de desconto porque já é
-                                aluno
-                                do curso PyTools.</b>
-                        </p>
-                    {% else %}
-                        <p>Caso você tenha comprado o módulo Pytools, <a href="{{ login_url }}" class="btn btn-warning">Acesse
-                            sua
-                            conta &raquo;</a> para ganhar um desconto.</p>
-                    {% endif %}
-
-                    <div class='text-center d-none d-sm-block d-md-block'>
-                        <button class="cta initiate-checkout btn btn-warning mt-10" data-toggle="modal" data-target="#modal-waiting-capture">
-                            SIM! Eu quero ser um <b class='initiate-checkout'>PROGRAMADOR PROFISSIONAL!</b>
-                        </button>
-                    </div>
-
-                    <div class='text-center d-block d-lg-none d-xl-none'>
-                        <button class="cta-mobile initiate-checkout btn btn-warning mt-10" data-toggle="modal" data-target="#modal-waiting-capture">
-                            SIM! Eu quero ser um <br /><b class='initiate-checkout'>PROGRAMADOR PROFISSIONAL!</b>
-                        </button>
-                    </div>
-
-                    <div class="mt-3">
-                        <img src='{% static "img/compra-segura-1.png" %}' width='250px' alt="Imagem Compra Segura"/>
+            <div class="col">
+                <div class="tabs">
+                <div class="tab">
+                    <input type="checkbox" id="faq1">
+                    <label class="tab-label main-transition" for="faq1">É possível parcelar o valor no boleto?</label>
+                    <div class="tab-content main-transition">
+                    <p>Infelizmente não. Só é possível pagar o valor parcelado através de cartão de crédito.</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class='bg-black'>
-        <div class="container">
-            <div class="row">
-                <div class="col mb-5 mt-5">
-                    <h2 class='text-light font-weight-bold mb-5 text-center'>
-                        Aproveite! Essa promoção vai expirar em breve!
-                    </h2>
-
-                    <h2 class='demo countdown text-light font-weight-bold text-center'></h2>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div>
-        <div class="container">
-            <div class="row">
-                <div class="col mb-5 mt-5">
-                    <h2 class='font-weight-bold mb-5'>"Mas e se eu não gostar do curso?"</h2>
-                    <p>
-                        Como falei antes, <b>o meu objetivo é formar profissionais.</b>
-                    </p>
-
-                    <p>
-                        Não quero simplesmente ensinar, eu quero fazer você aprender.
-                    </p>
-
-                    <p>
-                        Por isso, em todos os meus cursos eu tenho uma cláusula que se chama
-                        <b>CLÁUSULA DA FELICIDADE GARANTIDA.</b>
-                    </p>
-
-                    <p>
-                        Funciona basicamente assim:
-                    </p>
-
-                    <p>
-                        Se, por qualquer motivo, você não gostar do curso,
-                        <b class='highlight'>eu vou devolver seu dinheiro sem nenhum tipo de questionamento!</b>
-                    </p>
-
-                    <p>
-                        Se você não gostar da minha didática,
-                        se você não conseguir colocar em prática o que eu vou te ensinar
-                        (por qualquer motivo), até se você não gostar da cor da minha camiseta,
-                        eu devolvo seu dinheiro na hora.
-                    </p>
-
-                    <p>
-                        É só você me enviar um email.
-                    </p>
-
-                    <p>
-                        <i>Só não esquece de fazer isso nos primeiros 30 dias depois da compra, ok?</i>
-                    </p>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class='bg-secondary'>
-        <div class="container">
-            <div class="row">
-                <div class="col mt-5 mb-5">
-                    <h3 class='mb-5'><b>
-                        Já são vários alunos transformados!
-                        <span class="ec ec-heart-eyes"></span>
-                        <span class="ec ec-heart-eyes"></span>
-                    </b>
-                    </h3>
-                    <div class='social-proof'>
-                        {% include 'core/social_proof.html' %}
+                <div class="tab">
+                    <input type="checkbox" id="faq2">
+                    <label class="tab-label main-transition" for="faq2">Vou receber alguma coisa na minha casa?</label>
+                    <div class="tab-content main-transition">
+                    <p>Não. Você não receberá nada na sua casa. O conteúdo das aulas são 100% online e podem ser acessados do computador, tablet ou celular.</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-
-    <div class=''>
-        <div class="container">
-            <div class="row">
-                <div class="col mt-5 mb-5">
-                    <h2 class='mb-5 font-weight-bold'>
-                        Saiba quem serão seus instrutores:
-                    </h2>
-
-                    <div class='instructors'>
-                        {% include 'core/instructors.html' %}
+                <div class="tab">
+                    <input type="checkbox" id="faq3">
+                    <label class="tab-label main-transition" for="faq3">Os meus dados pessoais e os dados do meu cartão de crédito estão seguros?</label>
+                    <div class="tab-content main-transition">
+                    <p>Sim. Toda a transação é realizada pela plataforma 100% segura do Pagarme. Todos os seus dados são confidenciais e criptografados, impedindo qualquer tipo de fraude ou roubo de dados.</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class=''>
-        <div class="container">
-            <div class="row">
-                <div class="col mt-5 mb-5">
-                    <h2 class='mb-5 font-weight-bold'>
-                        Ficou com alguma dúvida?? Então dá uma olhadinha aqui embaixo...
-                    </h2>
-
-                    <h4 class='mt-5'>
-                        <span class="ec ec-speech-balloon"></span>
-                        É possível parcelar o valor no boleto?
-                    </h4>
-
-                    <p class='mb-5'>
-                        Infelizmente não. Só é possível pagar o valor parcelado através
-                        de cartão de crédito.
-                    </p>
-
-                    <h4 class='mt-5'>
-                        <span class="ec ec-speech-balloon"></span>
-                        Vou receber alguma coisa na minha casa?
-                    </h4>
-
-                    <p class='mb-5'>
-                        Não. Você não receberá nada na sua casa. O conteúdo das aulas são
-                        100% online e podem ser acessados do computador, tablet ou celular.
-                    </p>
-
-                    <h4 class='mt-5'>
-                        <span class="ec ec-speech-balloon"></span>
-                        Os meus dados pessoais e os dados do meu cartão de crédito estão seguros?
-                    </h4>
-
-                    <p class='mb-5'>
-                        Sim. Toda a transação é realizada pela plataforma 100% segura do Pagarme.
-                        Todos os seus dados são confidenciais e criptografados, impedindo qualquer
-                        tipo de fraude ou roubo de dados.
-                    </p>
-
-                    <h4 class='mt-5'>
-                        <span class="ec ec-speech-balloon"></span>
-                        Preciso de ajuda, com quem eu falo?
-                    </h4>
-
-                    <p class='mb-5'>
-                        Qualquer dúvida pode entrar em contato através do email
-                        {{ DEFAULT_FROM_EMAIL }}.
-                    </p>
-
-                    <h4 class='mt-5'>
-                        <span class="ec ec-speech-balloon"></span>
-                        Como eu receberei meu acesso as vídeo-aulas?
-                    </h4>
-
-                    <p>
-                        Se você pagar por boleto, o pagamento vai demorar até 3 dias úteis para
-                        cair em nosso sistema, depois que vc realizar o pagamento.
-
-                        Depois do pagamento confirmado, você receberá um e-mail
-                        automático para poder acessar todo conteúdo.
-                    </p>
-
-                    <p class='mb-5'>
-                        Caso você pague no cartão, o sistema já contabilizará a venda e
-                        você receberá esse e-mail em questão de minutos.
-                    </p>
-
-                    <h4 class='mt-5'>
-                        <span class="ec ec-speech-balloon"></span>
-                        O que acontece caso eu não me adapte às aulas ou não goste do curso?
-                    </h4>
-
-                    <p>
-                        Eu devolvo 100% do seu dinheiro. Eu resolvi colocar uma garantia
-                        incondicional de 30 dias a sua disposição.
-                    </p>
-
-                    <p class='mb-5'>
-                        Isso significa que você poderá comprar o curso agora mesmo, consumir todas as
-                        aulas e se em até 30 dias você desistir, basta mandar um e-mail para mim que
-                        eu devolvo 100% do seu investimento.
-                    </p>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class='bg-primary'>
-        <div class="container">
-            <div class="row text-center text-light">
-
-                <div class='col mb-5 mt-5'>
-                    <h2 class='font-weight-bold'>HOJE, VOCÊ TERÁ ACESSO AO CURSO POR APENAS:</h2>
-                    <p class='price'>
-                        <b>12x </b>
-                        <b class='real'>{{ payment_item_config.max_installment_amount_after_interest|cents_to_brl }}</b>
-                    </p>
-
-                    <p class='a-vista'>
-                        <i class=''>(ou apenas <b>{{ payment_item_config.price|cents_to_brl }}</b> se você comprar à vista)</i>
-                    </p>
-
-                    {% if has_client_discount %}
-                        <p class='a-vista'>
-                            <b>Lembre-se, você está tendo R$ {{ client_discount|cents_to_brl }} de desconto porque já é
-                                aluno
-                                do curso PyTools.</b>
-                        </p>
-                    {% else %}
-                        <p>Caso você tenha comprado o módulo Pytools, <a href="{{ login_url }}" class="btn btn-warning">Acesse
-                            sua
-                            conta &raquo;</a> para ganhar um desconto.</p>
-                    {% endif %}
-
-                    <div class='text-center d-none d-sm-block d-md-block'>
-                        <button class="cta initiate-checkout btn btn-warning mt-10" data-toggle="modal" data-target="#modal-waiting-capture">
-                            SIM! Eu quero ser um <b class='initiate-checkout'>PROGRAMADOR PROFISSIONAL!</b>
-                        </button>
-                    </div>
-
-                    <div class='text-center d-block d-lg-none d-xl-none'>
-                        <button class="cta-mobile initiate-checkout btn btn-warning mt-10" data-toggle="modal" data-target="#modal-waiting-capture">
-                            SIM! Eu quero ser um <br /><b class='initiate-checkout'>PROGRAMADOR PROFISSIONAL!</b>
-                        </button>
-                    </div>
-
-                    <div class="mt-3">
-                        <img src='{% static "img/compra-segura-1.png" %}' width='250px' alt="Imagem Compra Segura"/>
+                <div class="tab">
+                    <input type="checkbox" id="faq4">
+                    <label class="tab-label main-transition" for="faq4">Preciso de ajuda, com quem eu falo?</label>
+                    <div class="tab-content main-transition">
+                    <p>Entre em contato com o nosso suporte através do email suporte@python.pro.br, ou do WhatsApp +55 84 99491-4414, ou através do Telegram no @suporte_pythonpro</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class='bg-black'>
-        <div class="container">
-            <div class="row">
-                <div class="col mb-5 mt-5">
-                    <h2 class='text-light font-weight-bold mb-5 text-center'>
-                        Aproveite! Essa promoção vai expirar em breve!
-                    </h2>
+                <div class="tab">
+                    <input type="checkbox" id="faq5">
+                    <label class="tab-label main-transition" for="faq5">Como eu receberei meu acesso as vídeo-aulas?</label>
+                    <div class="tab-content main-transition">
+                    <p>Se você pagar por boleto, o pagamento vai demorar até 3 dias úteis para cair em nosso sistema, depois que vc realizar o pagamento. Depois do pagamento confirmado, você receberá um e-mail automático para poder acessar todo conteúdo.</p>
+                    <p>Caso você pague no cartão, o sistema já contabilizará a venda e você receberá esse e-mail em questão de minutos.</p>
+                    </div>
+                </div>
 
-                    <h2 class='demo countdown text-light font-weight-bold text-center'></h2>
+                <div class="tab">
+                    <input type="checkbox" id="faq6">
+                    <label class="tab-label main-transition" for="faq6">O que acontece caso eu não me adapte às aulas ou não goste do curso?</label>
+                    <div class="tab-content main-transition">
+                    <p>Eu devolvo 100% do seu dinheiro. Eu resolvi colocar uma garantia incondicional de 30 dias a sua disposição.</p>
+                    <p>Isso significa que você poderá comprar o curso agora mesmo, consumir todas as aulas e se em até 30 dias você desistir, basta mandar um e-mail para mim que eu devolvo 100% do seu investimento.</p>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <input type="checkbox" id="faq7">
+                    <label class="tab-label main-transition" for="faq7">Moro no exterior e não consigo pagar o curso via meio de pagamento tradicional, o que faço?</label>
+                    <div class="tab-content main-transition">
+                    <p>Entre em contato com o nosso suporte através do email suporte@python.pro.br, ou do WhatsApp +55 84 99491-4414</p>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <input type="checkbox" id="faq8">
+                    <label class="tab-label main-transition" for="faq8">E se eu não conseguir entrar para o mercado de trabalho</label>
+                    <div class="tab-content main-transition">
+                    <p>Realmente não há garantia de que você consiga uma vaga depois de fazer o curso. Entretanto, vários alunos que não sabiam programar e se dedicaram conseguiram.</p>
+                    <p>Você está disposto a se dedicar? Se sim, as chances de você conseguir uma vaga serão muito maiores. Agora, existe uma coisa que é 100% de verdade: se você não se dedicar e não fazer nada, você não será contratado.</p>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <input type="checkbox" id="faq9">
+                    <label class="tab-label main-transition" for="faq9">Não tenho agenda para acompanhar as aulas ao vivo, melhor esperar?</label>
+                    <div class="tab-content main-transition">
+                    <p>Todas aulas são gravadas para você ver e rever quando quiser. Além disso o acesso ao curso e a plataforma é vitalício. Então, você pode começar os estudos agora e acompanhar as aulas ao vivo através das gravações, além de poder participar (ao vivo, inclusive) de todas as próximas.</p>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <input type="checkbox" id="faq10">
+                    <label class="tab-label main-transition" for="faq10">É necessário diploma para conseguir uma vaga?</label>
+                    <div class="tab-content main-transition">
+                    <p>A área de tecnologia não é regulamentada, portanto não há necessidade formação superior para poder atuar. Existem, inclusive, várias pessoas atuando sem diploma.</p>
+                    <p>Além disso a faculdade demora muito e não te prepara para o mercado. No curso o estudo será mais prático e objetivo, dirigido para os assuntos que as empresas realmente valorizam.</p>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <input type="checkbox" id="faq11">
+                    <label class="tab-label main-transition" for="faq11">Eu tenho pouco tempo disponível, ainda sim vou conseguir fazer o curso?</label>
+                    <div class="tab-content main-transition">
+                    <p>Fizemos o acesso vitalício ao material justamente para você ajustar o curso à sua vida, e não ao contrário. Então você vai poder avançar em sua velocidade, mesmo que tenha pouco tempo para estudar.</p>
+                    <p>Como o estudo é focado no mercado, vc vai ter conteúdo curado para chegar mais rápido nas vagas do que por um caminho tradicional (faculdade).</p>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <input type="checkbox" id="faq12">
+                    <label class="tab-label main-transition" for="faq12">Existem plataformas com cursos mais baratos, porquê investir no Python Pro?</label>
+                    <div class="tab-content main-transition">
+                    <p>Plataformas não apresentam um caminho completo e organizado de conceitos necessários para atuar no mercado.</p>
+                    <p>Além disso os instrutores não acompanham o aluno na caminhada, retirando dúvidas rapidamente e até ajudando em projetos e problemas reais.</p>
+                    <p>Também não dão acesso a uma comunidade pronta para ajudar, onde normalmente são abertas as primeiras portas no setor.</p>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <input type="checkbox" id="faq13">
+                    <label class="tab-label main-transition" for="faq13">Ainda não sou da área de tecnologia. Consigo mudar de área?</label>
+                    <div class="tab-content main-transition">
+                    <p>Sim! Temos diversos alunos que conseguiram. Já vi professor de antropologia, professor de filosofia, vendedor, dono de supermercado e advogado virarem programadores.</p>
+                    <p>Qualquer um pode aprender a programar!</p>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <input type="checkbox" id="faq14">
+                    <label class="tab-label main-transition" for="faq14">Tenho idade avançada, consigo aprender a programar? Contratam pessoas mais velhas?</label>
+                    <div class="tab-content main-transition">
+                    <p>Sim. Um de nossos alunos era professor de filosofia e, aos 48 anos, aprendeu a programar e se colocou no mercado, inclusive, hoje, trabalhando para o exterior e ganhando em dólar.</p>
+                    <p>Temos aluno funcionário público aposentado aprendendo também. E o esquema de trabalho como PJ ou na forma de freela/projetos permite que mercado não tenha medo por conta dos custos de se contratar uma pessoa mais velha. O importante é gerar valor!</p>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <input type="checkbox" id="faq15">
+                    <label class="tab-label main-transition" for="faq15">Já sei programar, o curso acrescenta em alguma coisa?</label>
+                    <div class="tab-content main-transition">
+                    <p>Temos módulos avançados, como "Objetos Pythônicos", "Python Patterns" e "Python para Pythonistas", que, com certeza, irão acrescentar muito ao seu know-how técnico da linguagem.</p>
+                    <p>Além disso, temos uma forte comunidade composta de pessoas com muita experiência em diversas áreas. Elas te ajudam no dia a dia tanto com questões técnicas, quanto com questões não-técnicas como dicas de negociação salarial, malícia de mercado e dicas de oportunidades novas de trabalho, incluindo na gringa.</p>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <input type="checkbox" id="faq16">
+                    <label class="tab-label main-transition" for="faq16">Quero trabalhar no exterior, o curso ajuda?</label>
+                    <div class="tab-content main-transition">
+                    <p>Nesse caso o primeiro requisito é inglês. O curso não ensina a língua mas o bônus Curso de Entrevistas Técnicas apresenta os macetes para se preparar para processos seletivos gringos, além de apresentar estratégia para montar currículo visando uma carreira internacional. Já temos um aluno trabalhando na Red Hat que foi preparado para entrevista aqui dentro do curso. Temos outros dois alunos trabalhando para empresa americana HiVelocity.</p>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <input type="checkbox" id="faq17">
+                    <label class="tab-label main-transition" for="faq17">O curso emite certificado?</label>
+                    <div class="tab-content main-transition">
+                    <p>Sim, todos os nossos cursos são modularizados e cada módulo representa um certificado específico a ser emitido com os dados de desempenho do acompanhamento das aulas pelo aluno. Ao se logar no módulo do curso o aluno tem acesso a um Dashboard, onde pode acompanhar o desempenho e o avanço dos estudos. O sistema vai consolidando o seu avanço e seu certificado vai sendo construído conforme o andamento dos estudos. O próprio aluno pode gerar o seu certificado em seu Dashboard de acompanhamento.</p>
+                    </div>
+                </div>
+
+                <div class="tab">
+                    <input type="checkbox" id="faq18">
+                    <label class="tab-label main-transition" for="faq18">Onde e como ocorrem os encontros?</label>
+                    <div class="tab-content main-transition">
+                    <p>São lives do Youtube, inclusive você pode ver todo o histórico de vídeos aqui: <a href="https://www.youtube.com/user/renzonuccitelli/featured" target="_blank">https://www.youtube.com/user/renzonuccitelli/featured</a>. Toda terça às 18 horas respondemos as dúvidas de nossos alunos e essa live é chamada de Plantão de Dúvidas Python PRO. Às sextas feiras, às 8 horas da manhã, implantamos funcionalidades em um sistema real, a própria plataforma Python PRO. Todas as lives são encontros virtuais, ao vivo, e com participação ativa dos alunos, convidados e da audiência do YouTube em geral. Convido a se inscrever e acionar o sininho para ser notificado de cada vídeo que postamos lá.</p>
+                    </div>
+                </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Formulário de Inscrição</h5>
-                </div>
-                <div class="modal-body">
-                    <form id="contact_form" action="{% url 'django_pagarme:contact_info' slug=payment_item_config.slug %}" method="post">
-                    {% csrf_token %}
-                    {% bootstrap_form contact_form %}
-                    <button id="submit_button" type="submit" disabled="disabled" class="btn btn-success">Pagar</button>
-                </form>
-                </div>
             </div>
         </div>
-    </div>
-    <script type="application/javascript">
-        let phoneInput = document.getElementById('id_phone');
-        phoneInput.addEventListener('input', function (e) {
-            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
-            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
-        });
+        </section>
 
-        let submitButton = document.getElementById('submit_button');
-        document.getElementById('contact_form').addEventListener('input', function (e) {
-            if (phoneInput.value.search(/\(\d\d\) \d\d\d\d\d-\d\d\d\d/) === 0) {
-                submitButton.removeAttribute('disabled');
-            } else {
-                submitButton.setAttribute('disabled', 'disabled');
+        <section class="summary-main summary-main--secondary">
+        <div class="summary-main__group">
+            <div class="summary-main__group__price">
+            <h3 class="summary-main__group__price__title fw-800 text-uppercase text-blue font-highlighted">Tenha acesso a tudo isso por apenas 12x de R$ 199,60</h3>
+            <h4 class="summary-main__group__price__subtitle fw-400">(ou apenas R$ 1.997,00 se você comprar à vista)</h4>
+
+            <h5 class="summary-main__group__price__description text-uppercase fw-800 font-highlighted text-blue">Mas calma! Você tem direito a <span class="text-uppercase">descontos</span>!</h5>
+
+            <div class="summary-main__group__price__group summary-main__group__price__group--top">
+                <div class="summary-main__group__price__group__info">
+                <img class="summary-main__group__price__group__info__icon" src="{% static '/img/spp/summary-main/summary-price-icon.jpg' %}" alt="Ícone com símbolo de porcentagem com fundo transparente e bordas verdes">
+                <h6 class="summary-main__group__price__group__info__title fw-700 text-uppercase text-blue font-highlighted">Promoção do primeiro dia</h6>
+                </div>
+
+                <div class="summary-main__group__price__group__value">
+                <p class="summary-main__group__price__group__value__title fw-700 text-uppercase text-blue font-highlighted">R$ 400,00</p>
+                <img class="summary-main__group__price__group__value__icon" src="{% static '/svg/spp/x-price-icon.svg' %}" alt="Imagem de um 'X' na cor vermelha">
+                </div>
+            </div>
+
+            <div class="summary-main__group__price__group">
+                <div class="summary-main__group__price__group__info">
+                <img class="summary-main__group__price__group__info__icon" src="{% static '/img/spp/summary-main/summary-price-icon.jpg' %}" alt="Ícone com símbolo de porcentagem com fundo transparente e bordas verdes">
+                <h6 class="summary-main__group__price__group__info__title fw-700 text-uppercase text-blue font-highlighted">Promoção para quem é cliente PyTools</h6>
+                </div>
+
+                <div class="summary-main__group__price__group__value">
+                <p class="summary-main__group__price__group__value__title fw-700 text-uppercase text-blue font-highlighted">R$ 100,00</p>
+                <img class="summary-main__group__price__group__value__icon" src="{% static '/svg/spp/x-price-icon.svg' %}" alt="Imagem de um 'X' na cor vermelha">
+                </div>
+            </div>
+
+            <div class="summary-main__group__price__group summary-main__group__price__group--bottom">
+                <div class="summary-main__group__price__group__info">
+                <h6 class="summary-main__group__price__group__info__title fw-700 text-uppercase text-green font-highlighted">Preço final</h6>
+                </div>
+
+                <div class="summary-main__group__price__group__value">
+                <p class="summary-main__group__price__group__value__final fw-800 text-uppercase text-green font-highlighted"><small>12x R$ </small>149,70!</p>
+                </div>
+            </div>
+            </div>
+
+            <div class="header-main__group__button">
+            <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer">Sim, eu quero me tornar um profissional!</a>
+            </div>
+        </div>
+        </section>
+
+        <section class="countdown countdown-main countdown-main--secondary">
+        <div class="countdown__group">
+            <div class="countdown-main__group">
+            <h2 class="countdown-main__group__title text-uppercase text-white fw-800"><span class="text-red">Aproveite!</span> Essa promoção vai expirar em breve.</h2>
+            </div>
+
+            <div class="countdown__group__numbers">
+            <div class="countdown__group__numbers__item">
+                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted days"></span>
+                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Dias</span>
+            </div>
+
+            <div class="countdown__group__numbers__item">
+                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted hours"></span>
+                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Horas</span>
+            </div>
+
+            <div class="countdown__group__numbers__item">
+                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted minutes"></span>
+                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Minutos</span>
+            </div>
+
+            <div class="countdown__group__numbers__item">
+                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted seconds"></span>
+                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Segundos</span>
+            </div>
+            </div>
+        </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__group">
+        <img class="footer__group__detail-left-desktop" src="{% static '/img/spp/footer/detail-top-footer.png' %}" alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
+        <div class="footer__group__header">
+            <img class="footer__group__header__logo" src="{% static '/svg/spp/logo-python-pro.svg' %}" alt="Logo Python Pro">
+        </div>
+    
+        <div class="footer__group__content">
+            <div class="footer__group__content__item">
+            <img class="footer__group__content__item__icon" src="{% static '/img/spp/footer/phone.jpg' %}" alt="Ícone de um telefone na cor verde abacate">
+            <div>
+                <h4 class="footer__group__content__item__title fw-700 text-blue text-uppercase">Ligue para gente</h4>
+                <p class="footer__group__content__item__description fw-300 text-gray">+55 84 99419-4414</p>
+            </div>
+            </div>
+    
+            <div class="footer__group__content__item">
+            <img class="footer__group__content__item__icon" src="{% static '/img/spp/footer/email.jpg' %}" alt="Ícone de um envelope na cor verde abacate">
+            <div>
+                <h4 class="footer__group__content__item__title fw-700 text-blue text-uppercase">Envie um e-mail</h4>
+                <p class="footer__group__content__item__description fw-300 text-gray">suporte@python.pro.br</p>
+            </div>
+            </div>
+    
+            <div class="footer__group__content__item">
+            <img class="footer__group__content__item__icon" src="{% static '/img/spp/footer/cpnj.jpg' %}" alt="Ícone de um globo na cor verde abacate">
+            <div>
+                <h4 class="footer__group__content__item__title fw-700 text-blue text-uppercase">CNPJ</h4>
+                <p class="footer__group__content__item__description fw-300 text-gray">31.080.715/0001-25</p>
+            </div>
+            </div>
+        </div>
+    
+        <img class="footer__renzo-mobile" src="{% static '/img/spp/footer/renzo-nuccitelli-footer.jpg' %}" alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Python Pro. Imagem pequena">
+    
+        <img class="footer__group__detail" src="{% static '/img/spp/footer/footer-group-detail.jpg' %}" alt="Pequenos círculos na cor verde abacate formando um retângulo">
+        </div>
+    
+        <div class="footer__copyright">
+        <p class="footer__copyright__title fw-700 text-uppercase text-copyright">&copy; Python Pro. 2020 Todos os direitos reservados.</p>
+        <img class="footer__copyright__renzo-desktop" src="" alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Python Pro. Imagem grande">
+        </div>
+    
+        <img class="footer__group__detail-right-desktop" src="{% static '/img/spp/footer/renzo-nuccitelli-footer-desktop.png' %}" alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
+    </footer>
+
+    <script src="{% static '/js/spp/jquery.min.js' %}"></script>
+    <script src="{% static '/js/spp/owl.carousel.min.js' %}"></script>
+    <script src="{% static '/js/spp/magnific-popup.min.js' %}"></script>
+    <script src="{% static '/js/spp/countdown.js' %}"></script>
+
+    <script>
+        $(document).ready(function(){
+        $('.owl-carousel').owlCarousel({
+            autoPlay: 3000,
+            loop: true,
+            margin: 10,
+            responsiveClass: true,
+            dots: true,
+            responsive:{
+            0:{
+                items: 1,
+                nav: true
+            },
+            600:{
+                items: 3,
+                nav: false
+            },
+            1000:{
+                items: 3,
+                nav: true,
             }
-        });
-
-        // Set the date we're counting down to
-        var countDownDate = new Date({{promotion_end_date_milliseconds}}).getTime();
-
-        // Update the count down every 1 second
-        var x = setInterval(function () {
-
-            // Get today's date and time
-            var now = new Date().getTime();
-
-            // Find the distance between now and the count down date
-            var distance = countDownDate - now;
-
-            // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            // Display the result in the element with id="demo"
-            $(".countdown").html(days + "D " + hours + "H " + minutes + "M " + seconds + "S ");
-
-            // If the count down is finished, write some text
-            if (distance < 0) {
-                clearInterval(x);
-                $(".countdown").html("ACABOU!!!");
             }
-        }, 1000);
+        })
+        });
+    </script>
+
+    <script>
+        $('.popup-vimeo').magnificPopup({
+        src: 'https://vimeo.com/398972182',
+        type: 'iframe'
+        });
     </script>
 
 {% endblock body %}
