@@ -1,26 +1,26 @@
 const second = 1000,
-  minute = second * 60,
-  hour = minute * 60,
-  day = hour * 24;
+    minute = second * 60,
+    hour = minute * 60,
+    day = hour * 24;
 
-let countDown = new Date('Apr 17, 2020 11:59:59').getTime(),
-  x = setInterval(function () {
+let countDown = new Date('Apr 16, 2020 23:59:59').getTime(),
+  x = setInterval(function() {
 
-    let now = new Date().getTime(),
-      distance = countDown - now;
+  let now = new Date().getTime(),
+    distance = countDown - now;
 
     document.getElementsByClassName('days')[0].innerText = Math.floor(distance / (day)),
-      document.getElementsByClassName('days')[1].innerText = Math.floor(distance / (day)),
-      document.getElementsByClassName('hours')[0].innerText = Math.floor((distance % (day)) / (hour)),
-      document.getElementsByClassName('hours')[1].innerText = Math.floor((distance % (day)) / (hour)),
-      document.getElementsByClassName('minutes')[0].innerText = Math.floor((distance % (hour)) / (minute)),
-      document.getElementsByClassName('minutes')[1].innerText = Math.floor((distance % (hour)) / (minute)),
-      document.getElementsByClassName('seconds')[0].innerText = Math.floor((distance % (minute)) / second),
-      document.getElementsByClassName('seconds')[1].innerText = Math.floor((distance % (minute)) / second);
+    document.getElementsByClassName('days')[1].innerText = Math.floor(distance / (day)),
+    document.getElementsByClassName('hours')[0].innerText = Math.floor((distance % (day)) / (hour)),
+    document.getElementsByClassName('hours')[1].innerText = Math.floor((distance % (day)) / (hour)),
+    document.getElementsByClassName('minutes')[0].innerText = Math.floor((distance % (hour)) / (minute)),
+    document.getElementsByClassName('minutes')[1].innerText = Math.floor((distance % (hour)) / (minute)),
+    document.getElementsByClassName('seconds')[0].innerText = Math.floor((distance % (minute)) / second),
+    document.getElementsByClassName('seconds')[1].innerText = Math.floor((distance % (minute)) / second);
 
-    if (distance < 0) {
-      clearInterval(x);
-      'Tempo esgotado!';
-    }
+  if (distance < 0) {
+    clearInterval(x);
+    'Tempo esgotado!';
+  }
 
-  }, second)
+}, second)
