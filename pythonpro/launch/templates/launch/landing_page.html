@@ -18,10 +18,9 @@
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="theme-color" content="#ffffff">
   <meta name="format-detection" content="telephone=no">
+
   <link href="{% static 'css/spp/custom.css' %}" rel="stylesheet">
   <link href="{% static 'css/spp/normalize.min.css' %}" rel="stylesheet">
- <link rel="stylesheet" href="{% static 'css/custom.css' %}"/>
-    <link rel="stylesheet" href="{% static 'css/default.css' %}"/>
 
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,700,800,900&display=swap" rel="stylesheet">
@@ -37,8 +36,7 @@
   <meta property="og:site_name" content="Descubra o caminho para se tornar um programador profissional em pouco tempo" />
   <meta property="og:description" content="A Semana do Programador Profissional é um evento gratuito onde vou te mostrar o passo a passo que vai te dar acesso a um mercado que paga altos salários e milhares de vagas em aberto!" />
   <meta property="og:image" content="{% static 'img/spp/card-python-pro.png' %}" />
-    <script type="application/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-    <script type="application/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
   <script src="{% static 'js/sentry.5.3.0.min.js' %}" crossorigin="anonymous"></script>
   <script type="application/javascript">
       Sentry.init({ dsn: '{{ SENTRY_DSN }}' });
