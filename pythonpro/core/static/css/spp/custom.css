@@ -4727,7 +4727,54 @@ h1 {
     padding: 24px 60px 24px 24px;
   }
 
-  .faq-main .tab .tab-label::after {
-    top: 28px;
-  }
+
+/* MODAL PAYMENT */
+.faq-mai.summary-main__group__price__login {
+    margin: 30px 10px -10px 10px;
+    font-size: 17px;
+    line-height: 1.6;
+    padding-bottom: 24px;
+    color: #6C8498;
+}
+
+#modal-waiting-capture .modal-content {
+    border-radius: 0;
+    background-color: #F9F9F9;
+}
+
+#modal-waiting-capture .modal-content p, 
+#modal-waiting-capture .modal-content label {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #6C8498;
+}
+
+#modal-waiting-capture .modal-content p {
+    margin: 10px 0 20px 0;
+}
+
+#modal-waiting-capture .modal-content input,
+#modal-waiting-capture .modal-content button {
+    border-radius: 0;
+}
+
+#modal-waiting-capture .modal-content input::-webkit-input-placeholder { /* Edge */
+    color: #c0c0c0;
+}
+
+#modal-waiting-capture .modal-content input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #c0c0c0;
+}
+
+#modal-waiting-capture .modal-content input::placeholder {
+    color: #c0c0c0;
+}
+#modal-waiting-capture .modal-content button {
+    background-color: #FFCE0B;
+    font-weight: bold;
+}
+
+.tab .tab-label::after {
+  top: 28px;
 }
