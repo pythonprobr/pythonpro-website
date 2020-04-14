@@ -1,18 +1,68 @@
 {% extends 'core/base_without_nav.html' %}
 {% load django_pagarme %}
+{% load static %}
 {% block title %}Checkout Pagarme{% endblock %}
 {% block description %}Checkout seguro via ambiente Pagarme{% endblock %}
 {% block head %}
     <!-- SCRIPT PAGAR.ME -->
     <script src="//assets.pagar.me/checkout/1.1.0/checkout.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+        }
+        #pagarme-checkout-close-link {
+            display: none;
+        }
+        h1 {
+            margin: 50px 0 0 0;
+        }
+        h3 {
+            margin: 50px 0;
+        }
+        p, h2 {
+            font-size: 12pt;
+            color: #666;
+        }
+        p {
+            font-size: 10pt;
+            margin-bottom: 30x;
+        }
+    </style>
+    <script>
+        setTimeout(function(){
+            document.getElementById("waiting-text").style.display = "none"; 
+        }, 5000);
+    </script>
 {% endblock head %}
 
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col">
-                <h1>{{ payment_item.name }}</h1>
-                <h2>Formas de pagamento</h2>
+            <div class="col-sm col-md-8 offset-md-2">
+                <h1>Pagamento Python Pro</h1>
+                <h2>(pagamento: {{ payment_item.name }})</h2>
+
+                <h3 id='waiting-text'>
+                    Aguarde um momento que estamos estabelecendo conexão com os servidores do serviço
+                    de pagamento Pagarme...
+                    <br><img src="{% static 'img/3.gif' %}" />
+                </h3>
+                <p>
+                </p>
+                <p>
+                    Esta é a página de pagamento dos produtos da plataforma Python Pro. Este ambiente
+                    é totalmente seguro e o pagamento é processado pelo gateway de pagamento Pagarme,
+                    um dos mais seguros e conceituados do mercado.
+                </p>
+                <p>
+                    Clique no botão "Pagar com Pagarme" para finalizar sua matrícula.
+                </p>
+                <p>
+                    Precisa de ajuda? Fale com nosso suporte através do número <a href='tel:5584994194414'>+55 84 99419-4414</a>,
+                    tanto por telefone quanto por <a href='https://wa.me/5584994194414' target="_blank">WhatsApp</a>.
+                </p>
+                {% comment %} <h2>Formas de pagamento</h2>
                 <ul>
                     {% for installments, amount, installment_amount in payment_item.payment_plans %}
                         {% if installments == 1 %}
@@ -22,7 +72,8 @@
                                 de {{ installment_amount|cents_to_brl }}. Apenas no cartão de crédito</li>
                         {% endif %}
                     {% endfor %}
-                </ul>
+                </ul> {% endcomment %}
+                <a class="btn btn-secondary" href="javascript:window.history.back();">Voltar</a>
                 <button class="btn btn-success pay-button">Pagar com Pagarme</button>
                 {% show_pagarme payment_item customer open_modal %}
             </div>
