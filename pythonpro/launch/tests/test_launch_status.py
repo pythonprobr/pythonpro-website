@@ -36,7 +36,7 @@ def test_should_return_launch_status_cpl1_on_mon_late(mocker):
 def test_should_return_launch_status_cpl2_on_tue_early(mocker):
     fake_today = timezone.make_aware(datetime(2020, 4, 14))
     mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
-    assert get_launch_status() == LAUNCH_STATUS_CPL2
+    assert get_launch_status() == LAUNCH_STATUS_CPL1
 
 
 def test_should_return_launch_status_cpl2_on_tue_late(mocker):
@@ -48,7 +48,7 @@ def test_should_return_launch_status_cpl2_on_tue_late(mocker):
 def test_should_return_launch_status_cpl3_on_wed_early(mocker):
     fake_today = timezone.make_aware(datetime(2020, 4, 15))
     mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
-    assert get_launch_status() == LAUNCH_STATUS_CPL3
+    assert get_launch_status() == LAUNCH_STATUS_CPL2
 
 
 def test_should_return_launch_status_cpl3_on_wed_late(mocker):
@@ -60,7 +60,7 @@ def test_should_return_launch_status_cpl3_on_wed_late(mocker):
 def test_should_return_launch_status_cpl4_on_thu_early(mocker):
     fake_today = timezone.make_aware(datetime(2020, 4, 16))
     mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
-    assert get_launch_status() == LAUNCH_STATUS_CPL4
+    assert get_launch_status() == LAUNCH_STATUS_CPL3
 
 
 def test_should_return_launch_status_open_cart_after_last_class_start(mocker):
