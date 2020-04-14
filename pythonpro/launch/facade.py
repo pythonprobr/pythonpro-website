@@ -18,7 +18,7 @@ def _get_first_class_start():
 
 
 def _get_second_class_start():
-    return _get_first_class_start() + timedelta(days=1)
+    return _get_first_class_start() + timedelta(days=1) + timedelta(hours=20)
 
 
 def _get_third_class_start():
@@ -30,11 +30,11 @@ def _get_fourth_class_start():
 
 
 def _get_open_cart_start():
-    return _get_fourth_class_start() + timedelta(hours=20)
+    return _get_fourth_class_start()
 
 
 def _get_open_cart_end():
-    return _get_fourth_class_start() + timedelta(days=6)
+    return _get_fourth_class_start() + timedelta(days=5, hours=4)
 
 
 def get_launch_status():
