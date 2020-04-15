@@ -11,6 +11,20 @@
     <link href="{% static 'css/spp/magnific-popup.min.css' %}" rel="stylesheet">
 {% endblock %}
 
+{% block meta %}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="https://www.python.pro.br/inscricao" />
+  <meta name="twitter:title" content="SAIBA COMO TER ACESSO A UM MERCADO QUE PAGA ALTOS SALÁRIOS E TEM MILHARES DE VAGAS EM ABERTO!" />
+  <meta name="twitter:description" content="Assista o vídeo e descubra como ir de 0 a 100 com Python e se tornar um programador profissional em questão de meses!" />
+  <meta property="twitter:image" content="{% static 'img/spp/card-python-pro.png' %}" />
+  <meta property="og:url" content="https://www.python.pro.br/inscricao" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="SAIBA COMO TER ACESSO A UM MERCADO QUE PAGA ALTOS SALÁRIOS E TEM MILHARES DE VAGAS EM ABERTO!" />
+  <meta property="og:site_name" content="SAIBA COMO TER ACESSO A UM MERCADO QUE PAGA ALTOS SALÁRIOS E TEM MILHARES DE VAGAS EM ABERTO!" />
+  <meta property="og:description" content="Assista o vídeo e descubra como ir de 0 a 100 com Python e se tornar um programador profissional em questão de meses!" />
+  <meta property="og:image" content="{% static 'img/spp/card-python-pro.png' %}" />
+  {% endblock %}
+
 {% block body %}
     {% include 'payments/_whatsapp_widget.html' %}
     <header class="header-main">
