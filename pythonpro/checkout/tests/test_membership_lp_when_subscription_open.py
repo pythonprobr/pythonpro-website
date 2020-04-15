@@ -52,6 +52,8 @@ def test_no_user_with_first_day_discount(resp_no_user_before_discount):
     assert resp_no_user_before_discount.context['has_first_day_discount'] is True
     assert resp_no_user_before_discount.context['has_client_discount'] is False
     dj_assert_contains(resp_no_user_before_discount, 'R$ 159,59')
+    discount_video = 'https://www.youtube.com/embed/0rzm6NjyoSw'
+    dj_assert_contains(resp_no_user_before_discount, discount_video)
 
 
 @pytest.fixture
@@ -85,6 +87,8 @@ def test_client_without_first_day_discount(client_with_client, logged_user, tag_
     assert resp.context['first_day_discount'] == 0
     assert resp.context['has_first_day_discount'] is False
     assert resp.context['has_client_discount'] is True
+    no_discount_video = 'https://www.youtube.com/embed/n0oarz2HyS0'
+    dj_assert_contains(resp, no_discount_video)
     dj_assert_contains(resp, 'R$ 189,57')
 
 
