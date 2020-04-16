@@ -4,7 +4,7 @@ from django.utils import timezone
 
 discount_datetime_limit = timezone.make_aware(datetime(2020, 4, 17, 12, 0, 0))
 launch_datetime_finish = timezone.make_aware(datetime(2020, 4, 21, 23, 59, 59))
-launch_datetime_begin = timezone.make_aware(datetime(2020, 4, 16, 20, 00, 00))
+launch_datetime_begin = timezone.make_aware(datetime(2020, 4, 16, 10, 00, 00))
 
 
 def is_launch_open():
