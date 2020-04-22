@@ -1,9 +1,10 @@
 from django.shortcuts import render
 
-# Create your views here.
 from pythonpro.redirector.models import Redirect
+from pythonpro.redirector.facade import get_redirect_url
 
 
 def redirect(request, slug: str):
-    ctx = {'redirect': Redirect.objects.values('url').get(slug=slug)}
+    redirect = Redirect.objects.get(slug=slug)
+    ctx = {'url': get_redirect_url(redirect)}
     return render(request, 'redirector/redirect.html', ctx)
