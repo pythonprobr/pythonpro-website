@@ -2,9 +2,7 @@ import pytest
 from django.urls import reverse
 from model_mommy import mommy
 
-from pythonpro.django_assertions import dj_assert_contains
 from pythonpro.redirector.models import Redirect
-from pythonpro.redirector.facade import get_redirect_url
 
 
 @pytest.fixture
