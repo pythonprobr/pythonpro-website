@@ -27,4 +27,3 @@ def test_status_code_should_return_200(resp):
 
 def test_should_redirect_js_contains_redirect_url(resp, redirect):
     dj_assert_contains(resp, f'window.location.replace("{redirect.url}")')
-

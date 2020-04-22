@@ -34,7 +34,14 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(default=django.utils.timezone.now, verbose_name='Criado em')),
                 ('updated', models.DateTimeField(auto_now=True, verbose_name='Alterado em')),
                 ('url', models.URLField()),
-                ('redirect', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='links', to='redirector.Redirect')),
+                (
+                    'redirect',
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name='links',
+                        to='redirector.Redirect'
+                    )
+                ),
             ],
         ),
     ]
