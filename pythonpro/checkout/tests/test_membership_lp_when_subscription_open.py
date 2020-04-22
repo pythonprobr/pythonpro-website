@@ -87,7 +87,7 @@ def test_client_without_first_day_discount(client_with_client, logged_user, tag_
     assert resp.context['first_day_discount'] == 0
     assert resp.context['has_first_day_discount'] is False
     assert resp.context['has_client_discount'] is True
-    no_discount_video = 'https://www.youtube.com/embed/n0oarz2HyS0'
+    no_discount_video = 'https://www.youtube.com/embed/g-C_5oUCz2A'
     dj_assert_contains(resp, no_discount_video)
     dj_assert_contains(resp, 'R$ 189,57')
 
