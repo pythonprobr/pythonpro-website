@@ -8,6 +8,7 @@ class Redirect(models.Model):
     updated = models.DateTimeField("Alterado em", auto_now=True)
     slug = models.SlugField(primary_key=True)
     url = models.URLField(null=True, blank=True)
+    use_javascript = models.BooleanField(default=False)
 
 
 class RedirectLink(models.Model):
