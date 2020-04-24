@@ -216,11 +216,10 @@
         },
         "django-pagarme": {
             "hashes": [
-                "sha256:27a7d63050127d73f1ed35eb1ed5792d2efe534277a653dfa9e38a798e0530e9",
-                "sha256:eaf18ded26f80ce4c08227602fc3055acba244717d935f2ee4cf763be7c2d899"
+                "sha256:e514fd6e77104d93131c6b90ef9613c91b375eae707270668d991539069e372f",
+                "sha256:e524286c921baf352780308fba900d1e4d2f8932a3083cc411f5f757c1e4b60b"
             ],
-            "index": "pypi",
-            "version": "==0.7"
+            "version": "==0.8"
         },
         "django-phonenumber-field": {
             "extras": [
