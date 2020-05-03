@@ -43,6 +43,7 @@ pytest-freezegun = "*"
 pytest-mock = "*"
 pytest = "*"
 django-test-migrations = "*"
+towncrier = "*"
 
 [requires]
 python_version = "3.8"
