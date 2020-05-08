@@ -661,11 +661,10 @@
         },
         "django-test-migrations": {
             "hashes": [
-                "sha256:4ca2c1fadfbc2d078a3868f015c23968f03cfab7ca27339de7275365223a51cb",
-                "sha256:bb4c20f7dd7ec2c589f400042aafb0d4d5a8d4add5a0b54b9ab43a00b7a6b736"
+                "sha256:3aa2e705d71ede19571c354144b8fdef60348a57aa7bc9225cfea1d4eecf2bff",
+                "sha256:fa0c32942abf0447d7b146eefd7404abdc3d1d543f394efe56a48d1c8299fac4"
             ],
-            "index": "pypi",
-            "version": "==0.2.0"
+            "version": "==0.3.0"
         },
         "entrypoints": {
             "hashes": [
