@@ -13,3 +13,4 @@ def is_launch_open():
 
 def is_launch_first_day_discount():
     return is_launch_open() and (timezone.now() < discount_datetime_limit)
+

@@ -1,13 +1,15 @@
 import time
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.http import urlencode
 from django.utils.timezone import now
 from django_pagarme import facade
 
 from pythonpro.checkout import facade as checkout_facade
+from pythonpro.checkout import forms as checkout_forms
+from pythonpro.checkout.forms import WaitingForm
 from pythonpro.core.facade import is_client
 from pythonpro.domain import user_facade
 from pythonpro.payments import facade as payment_facade
@@ -81,6 +83,22 @@ def pytools_oto_lp(request):
 
 def membership_lp(request):
     user = request.user
+
+    if request.method == 'POST':
+        form = WaitingForm(request.POST)
+        if form.is_valid():
+            source = request.GET.get('utm_source', default='unknown')
+            data = form.cleaned_data
+            if user.is_authenticated:
+                user_facade.subscribe_to_waiting_list(request.user, data['phone'], source)
+            else:
+                user_facade.subscribe_anonymous_user_to_waiting_list(
+                    data['email'], data['first_name'], data['phone'], source
+                )
+            return redirect(reverse('checkout:waiting_list_ty'))
+        else:
+            return render(request, 'checkout/membership_lp_subscription_closed.html', {'form': form})
+
     if user.is_authenticated:
         user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
 
@@ -89,7 +107,8 @@ def membership_lp(request):
     should_show_closed_subscription_page = not (is_debug or checkout_facade.is_launch_open())
 
     if should_show_closed_subscription_page:
-        return render(request, 'checkout/membership_lp_subscription_closed.html')
+        form = checkout_forms.WaitingForm()
+        return render(request, 'checkout/membership_lp_subscription_closed.html', {'form': form})
 
     has_client_discount = False
 
@@ -147,3 +166,7 @@ def membership_lp(request):
         'no_discount_item_config': no_discount_item_config,
     }
     return render(request, 'checkout/membership_lp_subscription_open.html', context)
+
+
+def waiting_list_ty(request):
+    return render(request, 'checkout/waiting_list_ty.html', {'email': request.user.email})
