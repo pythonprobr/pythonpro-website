@@ -28,7 +28,7 @@ def test_status_code(resp):
 
 
 def test_subscription_link_is_present(resp):
-    dj_assert_contains(resp, reverse('payments:waiting_list_ty'))
+    dj_assert_contains(resp, reverse('checkout:membership_lp'))
 
 
 @pytest.fixture
@@ -40,10 +40,6 @@ def resp_no_user(client, freezer):
 
 def test_no_user_status_code(resp_no_user):
     assert resp_no_user.status_code == 200
-
-
-def test_no_user_waiting_list_link(resp_no_user):
-    dj_assert_contains(resp_no_user, reverse('payments:waiting_list_ty'))
 
 
 def test_no_tagging(resp_no_user, tag_as_mock):

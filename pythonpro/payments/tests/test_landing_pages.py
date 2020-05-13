@@ -18,12 +18,19 @@ def anonymous_client_lp_resp(client, mocker):
     assert tag_as.call_count == 0
 
 
-def test_logged_status_code(client_lp_resp):
-    assert client_lp_resp.status_code == 200
-
-
-def test_anonymous_access_status_code(anonymous_client_lp_resp):
-    assert anonymous_client_lp_resp.status_code == 200
+# TODO: Remove when Pytools is erased
+# def test_logged_status_code(client_lp_resp):
+#     assert client_lp_resp.status_code == 200
+#
+#
+# def test_anonymous_access_status_code(anonymous_client_lp_resp):
+#     assert anonymous_client_lp_resp.status_code == 200
+# def test_logged_status_code(client_lp_resp):
+#     assert client_lp_resp.status_code == 200
+#
+#
+# def test_anonymous_access_status_code(anonymous_client_lp_resp):
+#     assert anonymous_client_lp_resp.status_code == 200
 
 
 @pytest.fixture

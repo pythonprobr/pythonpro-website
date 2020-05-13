@@ -276,12 +276,6 @@ def client_landing_page_do(request):
         })
 
 
-@login_required
-def waiting_list_ty(request):
-    user_facade.subscribe_to_waiting_list(request.user, source=request.GET.get('utm_source', default='unknown'))
-    return render(request, 'payments/waiting_list_ty.html', {'email': request.user.email})
-
-
 @csrf_exempt
 def membership_notification(request, user_id: int):
     if request.method != 'POST':
