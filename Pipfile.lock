@@ -208,11 +208,10 @@
         },
         "django-ordered-model": {
             "hashes": [
-                "sha256:0931f498008f91a00a32c4e0ae08a662ef608a1092bf6e6ec9af9b1a83f08acf",
-                "sha256:abf0d963f7e607a994baf6bc300e50af647b3d243c3e592c6cc8f8b924b6d427"
+                "sha256:29af6624cf3505daaf0df00e2df1d0726dd777b95e08f304d5ad0264092aa934",
+                "sha256:d867166ed4dd12501139e119cbbc5b4d19798a3e72740aef0af4879ba97102cf"
             ],
-            "index": "pypi",
-            "version": "==3.3.0"
+            "version": "==3.4.1"
         },
         "django-pagarme": {
             "hashes": [
