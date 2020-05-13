@@ -28,7 +28,8 @@ __all__ = [
     'register_lead', 'force_register_client', 'promote_client', 'activate_user', 'find_user_interactions',
     'visit_client_landing_page', 'visit_member_landing_page', 'run_pytools_promotion_campaign', 'click_client_checkout',
     'client_generated_boleto', 'promote_member', 'find_user_by_email', 'find_user_by_id', 'force_register_lead',
-    'subscribe_to_waiting_list', 'force_register_member', 'click_member_checkout'
+    'subscribe_to_waiting_list', 'force_register_member', 'click_member_checkout',
+    'subscribe_anonymous_user_to_waiting_list'
 ]
 
 CLIENT_BOLETO_TAG = 'client-boleto'
@@ -306,15 +307,35 @@ def member_generated_boleto(user):
     _core_facade.member_generated_boleto(user, None)
 
 
-def subscribe_to_waiting_list(user: _User, source: str) -> None:
+def subscribe_to_waiting_list(user: _User, phone: str, source: str) -> None:
     """
     Subscribe user to waiting list
     :param user:
+    :param phone:
     :param source:
     :return:
     """
     _core_facade.subscribe_to_waiting_list(user, source)
-    _email_marketing_facade.tag_as.delay(user.email, user.id, 'lista-de-espera')
+    _email_marketing_facade.create_or_update_with_no_role.delay(
+        user.first_name, user.email, user.id, 'lista-de-espera', phone=phone
+    )
+
+
+def subscribe_anonymous_user_to_waiting_list(email: str, name: str, phone: str, source: str) -> None:
+    """
+    Subscribe anonymous user to waiting list
+    :param email:
+    :param name:
+    :param phone:
+    :param source:
+    :return:
+    """
+    try:
+        user = _core_facade.find_user_by_email(email)
+    except _User.DoesNotExist:
+        _email_marketing_facade.create_or_update_with_no_role.delay(name, email, 'lista-de-espera', phone=phone)
+    else:
+        subscribe_to_waiting_list(user, phone, source)
 
 
 def activate_user(user: _User, source: str) -> None:
