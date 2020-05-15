@@ -38,8 +38,8 @@ def register_lead(first_name: str, email: str, source: str = 'unknown') -> _User
     """
     Create a new user on the system generation a random password.
     An Welcome email is sent to the user informing his password with the link to change it.
-    User is also registered on Mailchimp and subscribed to LeadWorkflow and is not registered on system in case api call
-    fails
+    User is also registered on Email Marketing and subscribed to LeadWorkflow and is not registered on system in case
+    api call fails
 
     :param first_name: User's first name
     :param email: User's email
@@ -65,7 +65,7 @@ def force_register_lead(first_name: str, email: str, source: str = 'unknown') ->
     """
     Create a new user on the system generation a random password.
     An Welcome email is sent to the user informing his password with the link to change it.
-    User is also registered on Mailchimp. But she will be registeres even if api call fails
+    User is also registered on Email Marketing. But she will be registeres even if api call fails
     :param first_name: User's first name
     :param email: User's email
     :param source: source of User traffic
@@ -84,7 +84,7 @@ def force_register_client(first_name: str, email: str, source: str = 'unknown') 
     """
     Create a new user on the system generation a random password or update existing one based on email.
     An Welcome email is sent to the user informing his password with the link to change it.
-    User is also registered on Mailchimp. But she will be registered even if api call fails
+    User is also registered on Email Marketing. But she will be registered even if api call fails
     :param first_name: User's first name
     :param email: User's email
     :param source: source of User traffic
@@ -103,7 +103,7 @@ def force_register_member(first_name, email, source='unknown'):
     """
     Create a new user on the system generation a random password or update existing one based on email.
     An Welcome email is sent to the user informing his password with the link to change it.
-    User is also registered on Mailchimp. But she will be registered even if api call fails
+    User is also registered on Email Marketing. But she will be registered even if api call fails
     :param first_name: User's first name
     :param email: User's email
     :param source: source of User traffic
@@ -123,7 +123,7 @@ def force_register_member(first_name, email, source='unknown'):
 
 def promote_member(user: _User, source: str) -> _User:
     """
-    Promote a user to Member role and change it's role on Mailchimp. Will not fail in case API call fails.
+    Promote a user to Member role and change it's role on Email Marketing. Will not fail in case API call fails.
     Email welcome email is sent to user
     :param source: source of traffic
     :param user:
@@ -154,9 +154,38 @@ def promote_member(user: _User, source: str) -> _User:
     return user
 
 
+def promote_webdev(user: _User, source: str) -> _User:
+    """
+    Promote a user to Webdev role and change it's role on Email Marketing. Will not fail in case API call fails.
+    Email welcome email is sent to user
+    :param source: source of traffic
+    :param user:
+    :return:
+    """
+    _core_facade.promote_to_webdev(user, source)
+    sync_user_on_discourse(user)
+    try:
+        _email_marketing_facade.create_or_update_webdev(user.first_name, user.email, id=user.id)
+    except _ActiveCampaignError:
+        pass
+    email_msg = render_to_string(
+        'checkout/webdev_email.txt',
+        {
+            'user': user,
+        }
+    )
+    _send_mail(
+        'Inscrição no Curso Webdev Django realizada! Confira o link com detalhes.',
+        email_msg,
+        _settings.DEFAULT_FROM_EMAIL,
+        [user.email]
+    )
+    return user
+
+
 def promote_client(user: _User, source: str) -> None:
     """
-    Promote a user to Client role and change it's role on Mailchimp. Will not fail in case API call fails.
+    Promote a user to Client role and change it's role on Email Marketing. Will not fail in case API call fails.
     Email welcome email is sent to user
     :param source: source of traffic
     :param user:

@@ -54,7 +54,7 @@ membership_slugs = pytest.mark.parametrize(
 
 
 @membership_slugs
-def test_member_history(resp, client_with_user, valid_data, slug, logged_user):
+def test_member_history(client_with_user, valid_data, slug, logged_user):
     make_post(client_with_user, valid_data, slug)
     interactions = core_facade.find_user_interactions(logged_user)
     assert [i.category for i in interactions] == [UserInteraction.MEMBER_CHECKOUT_FORM]
@@ -82,3 +82,19 @@ def test_invalid_data(client, slug):
     resp = make_post(client, dct, slug)
     assert resp.status_code == 400
     dj_assert_template_used('django_pagarme/contact_form_errors.html')
+
+
+webdev_slugs = pytest.mark.parametrize(
+    'slug',
+    [
+        'webdev-oto',
+        'webdev',
+    ]
+)
+
+
+@webdev_slugs
+def test_webdev_history(client_with_user, valid_data, slug, logged_user):
+    make_post(client_with_user, valid_data, slug)
+    interactions = core_facade.find_user_interactions(logged_user)
+    assert [i.category for i in interactions] == [UserInteraction.WEBDEV_CHECKOUT_FORM]

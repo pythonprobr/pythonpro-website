@@ -7,12 +7,14 @@ from django_pagarme.models import PagarmeFormConfig, PagarmeItemConfig
 # Workaround since module beginning with number can't be imported in regular way
 
 migration_module = import_module('pythonpro.checkout.migrations.0001_payment_setup')
+webdev_migration_module = import_module('pythonpro.checkout.migrations.0002_webdev_setup')
 
 
 @pytest.fixture(autouse=True)
 def execute_migration(db, pytestconfig):
     if pytestconfig.known_args_namespace.nomigrations:
         migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
+        webdev_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
 
 
 @pytest.fixture(autouse=True)
@@ -36,3 +38,8 @@ def pytools_item(execute_migration):
 @pytest.fixture
 def membership_item(execute_migration, cohort):
     return facade.find_payment_item_config('membership')
+
+
+@pytest.fixture
+def webdev_item(execute_migration):
+    return facade.find_payment_item_config('webdev-oto')

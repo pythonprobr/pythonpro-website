@@ -98,6 +98,22 @@ def promote_to_member(user: User, source: str) -> None:
     UserInteraction(category=UserInteraction.BECOME_MEMBER, source=source, user=user).save()
     assign_role(user, 'member')
     remove_role(user, 'lead')
+    remove_role(user, 'webdev')
+    remove_role(user, 'client')
+
+
+def promote_to_webdev(user: User, source: str) -> None:
+    """
+    Promote a user do webdev. Raises exception in case user is a member
+    :param user:
+    """
+    if has_role(user, 'member'):
+        raise UserRoleException('User is already a member')
+    if has_role(user, 'webdev'):
+        raise UserRoleException('User is already a webdev')
+    UserInteraction(category=UserInteraction.BECOME_WEBDEV, source=source, user=user).save()
+    assign_role(user, 'webdev')
+    remove_role(user, 'lead')
     remove_role(user, 'client')
 
 
@@ -162,6 +178,10 @@ def member_checkout_form(user: User, source='unknown'):
     return UserInteraction(category=UserInteraction.MEMBER_CHECKOUT_FORM, source=source, user=user).save()
 
 
+def webdev_checkout_form(user: User, source='unknown'):
+    return UserInteraction(category=UserInteraction.WEBDEV_CHECKOUT_FORM, source=source, user=user).save()
+
+
 def member_checkout(user: User, source='unknown'):
     return UserInteraction(category=UserInteraction.MEMBER_CHECKOUT, source=source, user=user).save()
 
@@ -184,3 +204,7 @@ def is_lead(user: User):
 
 def is_member(user: User):
     return has_role(user, 'member')
+
+
+def is_webdev(user: User):
+    return has_role(user, 'webdev')

@@ -38,6 +38,13 @@ def client_with_lead(client, django_user_model, logged_user):
 
 
 @pytest.fixture
+def client_with_webdev(client, django_user_model, logged_user):
+    assign_role(logged_user, 'webdev')
+    client.force_login(logged_user)
+    return client
+
+
+@pytest.fixture
 def client_with_member(client, django_user_model, logged_user):
     assign_role(logged_user, 'member')
     client.force_login(logged_user)

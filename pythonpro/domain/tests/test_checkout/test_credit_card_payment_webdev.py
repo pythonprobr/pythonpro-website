@@ -21,10 +21,10 @@ TOKEN = 'test_transaction_aJx9ibUmRqYcQrrUaNtQ3arTO4tF1z'
 
 
 @pytest.fixture
-def create_or_update_member_mock(mocker):
+def create_or_update_webdev_mock(mocker):
     return mocker.patch(
-        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_member.delay',
-        side_effect=email_marketing_facade.create_or_update_member
+        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_webdev.delay',
+        side_effect=email_marketing_facade.create_or_update_webdev
     )
 
 
@@ -48,13 +48,13 @@ def payment_handler_task_mock(mocker):
 
 @pytest.fixture
 def resp(client, pagarme_responses, payment_handler_task_mock, create_or_update_lead_mock,
-         create_or_update_member_mock):
+         create_or_update_webdev_mock):
     return client.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN}), secure=True)
 
 
-def test_status_code(resp, membership_item):
+def test_status_code(resp, webdev_item):
     assert resp.status_code == 302
-    assert resp.url == reverse('django_pagarme:thanks', kwargs={'slug': membership_item.slug})
+    assert resp.url == reverse('django_pagarme:thanks', kwargs={'slug': webdev_item.slug})
 
 
 def test_user_is_created(resp, django_user_model):
@@ -62,16 +62,10 @@ def test_user_is_created(resp, django_user_model):
     assert User.objects.exists()
 
 
-def test_user_is_member(resp, django_user_model):
+def test_user_is_webdev(resp, django_user_model):
     User = django_user_model
     user = User.objects.first()
-    assert core_facade.is_member(user)
-
-
-def test_user_is_subscribed_to_cohort(resp, django_user_model, cohort):
-    User = django_user_model
-    user = User.objects.first()
-    assert cohort.students.first() == user
+    assert core_facade.is_webdev(user)
 
 
 def test_payment_linked_with_created_user(resp, django_user_model):
@@ -88,8 +82,8 @@ def resp_logged_user(client_with_user, pagarme_responses, payment_handler_task_m
     return client_with_user.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN}), secure=True)
 
 
-def test_logged_user_become_member(resp_logged_user, logged_user):
-    assert core_facade.is_member(logged_user)
+def test_logged_user_become_webdev(resp_logged_user, logged_user):
+    assert core_facade.is_webdev(logged_user)
 
 
 def test_payment_linked_with_logged_user(resp_logged_user, logged_user):
@@ -97,19 +91,15 @@ def test_payment_linked_with_logged_user(resp_logged_user, logged_user):
     assert logged_user == payment.user
 
 
-def test_logged_user_is_subscribed_to_cohort(resp_logged_user, logged_user, cohort):
-    assert cohort.students.first() == logged_user
-
-
 @pytest.fixture
-def transaction_json(membership_item):
+def transaction_json(webdev_item):
     return {
         'object': 'transaction', 'status': 'authorized', 'refuse_reason': None, 'status_reason': 'antifraud',
         'acquirer_response_code': '0000', 'acquirer_name': 'pagarme', 'acquirer_id': '5cdec7071458b442125d940b',
         'authorization_code': '727706', 'soft_descriptor': None, 'tid': TRANSACTION_ID, 'nsu': TRANSACTION_ID,
         'date_created': '2020-01-21T01:10:13.015Z', 'date_updated': '2020-01-21T01:10:13.339Z',
-        'amount': membership_item.price,
-        'authorized_amount': membership_item.price, 'paid_amount': 0, 'refunded_amount': 0, 'installments': 1,
+        'amount': webdev_item.price,
+        'authorized_amount': webdev_item.price, 'paid_amount': 0, 'refunded_amount': 0, 'installments': 1,
         'id': TRANSACTION_ID, 'cost': 70,
         'card_holder_name': 'Bar Baz', 'card_last_digits': '1111', 'card_first_digits': '411111', 'card_brand': 'visa',
         'card_pin_mode': None, 'card_magstripe_fallback': False, 'cvm_pin': False, 'postback_url': None,
@@ -117,9 +107,9 @@ def transaction_json(membership_item):
         'boleto_barcode': None, 'boleto_expiration_date': None, 'referer': 'encryption_key', 'ip': '177.27.238.139',
         'items': [{
             'object': 'item',
-            'id': f'{membership_item.slug}',
-            'title': f'{membership_item.name}',
-            'unit_price': membership_item.price,
+            'id': f'{webdev_item.slug}',
+            'title': f'{webdev_item.name}',
+            'unit_price': webdev_item.price,
             'quantity': 1, 'category': None, 'tangible': False, 'venue': None, 'date': None
         }], 'card': {
             'object': 'card', 'id': 'card_ck5n7vtbi010or36dojq96sb1', 'date_created': '2020-01-21T01:45:57.294Z',
@@ -131,14 +121,14 @@ def transaction_json(membership_item):
 
 
 @pytest.fixture
-def captura_json(membership_item):
+def captura_json(webdev_item):
     return {
         'object': 'transaction', 'status': 'paid', 'refuse_reason': None, 'status_reason': 'acquirer',
         'acquirer_response_code': '0000', 'acquirer_name': 'pagarme', 'acquirer_id': '5cdec7071458b442125d940b',
         'authorization_code': '408324', 'soft_descriptor': None, 'tid': TRANSACTION_ID, 'nsu': TRANSACTION_ID,
         'date_created': '2020-01-21T01:45:57.309Z', 'date_updated': '2020-01-21T01:47:27.105Z', 'amount': 8000,
-        'authorized_amount': membership_item.price,
-        'paid_amount': membership_item.price, 'refunded_amount': 0,
+        'authorized_amount': webdev_item.price,
+        'paid_amount': webdev_item.price, 'refunded_amount': 0,
         'installments': 1,
         'id': TRANSACTION_ID,
         'cost': 100,
@@ -165,9 +155,9 @@ def captura_json(membership_item):
         }, 'shipping': None,
         'items': [{
             'object': 'item',
-            'id': f'{membership_item.slug}',
-            'title': f'{membership_item.name}',
-            'unit_price': membership_item.price,
+            'id': f'{webdev_item.slug}',
+            'title': f'{webdev_item.name}',
+            'unit_price': webdev_item.price,
             'quantity': 1, 'category': None, 'tangible': False, 'venue': None, 'date': None
         }], 'card': {
             'object': 'card', 'id': 'card_ck5n7vtbi010or36dojq96sb1', 'date_created': '2020-01-21T01:45:57.294Z',
