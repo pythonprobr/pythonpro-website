@@ -241,3 +241,75 @@ def resp_member_accessing_client_content(client_with_member, topic_client, djang
 
 def test_member_access_client_content(resp_member_accessing_client_content):
     dj_assert_template_used(resp_member_accessing_client_content, 'topics/topic_detail.html')
+
+
+@pytest.fixture
+def module_webdev(db):
+    return mommy.make(Module, slug='django')
+
+
+@pytest.fixture
+def section_webdev(module_webdev):
+    return mommy.make(Section, module=module_webdev)
+
+
+@pytest.fixture
+def chapter_webdev(section_webdev):
+    return mommy.make(Chapter, section=section_webdev)
+
+
+@pytest.fixture
+def topic_webdev(chapter_webdev):
+    return mommy.make(Topic, chapter=chapter_webdev)
+
+
+@pytest.fixture
+def resp_lead_accesing_webdev_content(client_with_lead, topic_webdev, django_user_model, mocker, logged_user):
+    return client_with_lead.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_webdev.module_slug(), 'topic_slug': topic_webdev.slug}),
+        secure=True)
+
+
+def test_lead_hitting_webdev_landing_page(resp_lead_accesing_webdev_content):
+    assert resp_lead_accesing_webdev_content.status_code == 302
+    # TODO: Change after creating WebDev landing page
+    assert resp_lead_accesing_webdev_content.url == reverse('checkout:membership_lp')
+
+
+@pytest.fixture
+def resp_client_accessing_webdev_content(client_with_client, topic_webdev, django_user_model, client_with_lead=None):
+    return client_with_client.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_webdev.module_slug(), 'topic_slug': topic_webdev.slug}),
+        secure=True)
+
+
+def test_client_hitting_webdev_landing_page(resp_client_accessing_webdev_content):
+    assert resp_client_accessing_webdev_content.status_code == 302
+    # TODO: Change after creating WebDev landing page
+    assert resp_client_accessing_webdev_content.url == reverse('checkout:membership_lp')
+
+
+@pytest.fixture
+def resp_member_accessing_webdev_content(client_with_member, topic_webdev, django_user_model):
+    return client_with_member.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_webdev.module_slug(), 'topic_slug': topic_webdev.slug}),
+        secure=True)
+
+
+def test_member_access_webdev_content(resp_member_accessing_webdev_content):
+    dj_assert_template_used(resp_member_accessing_webdev_content, 'topics/topic_detail.html')
+
+
+@pytest.fixture
+def resp_webdev_accessing_webdev_content(client_with_webdev, topic_webdev, django_user_model):
+    return client_with_webdev.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_webdev.module_slug(), 'topic_slug': topic_webdev.slug}),
+        secure=True)
+
+
+def test_webdev_access_webdev_content(resp_webdev_accessing_webdev_content):
+    dj_assert_template_used(resp_webdev_accessing_webdev_content, 'topics/topic_detail.html')

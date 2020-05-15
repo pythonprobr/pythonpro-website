@@ -10,8 +10,9 @@ _roles_cache = None
 _LEAD = 'lead'
 _CLIENT = 'client'
 _MEMBER = 'member'
+_WEBDEV = 'webdev'
 
-_ROLES = {_LEAD, _CLIENT, _MEMBER}
+_ROLES = {_LEAD, _CLIENT, _MEMBER, _WEBDEV}
 
 
 @shared_task()
@@ -32,6 +33,11 @@ def create_or_update_client(name: str, email: str, *tags, id='0', phone=None):
 @shared_task()
 def create_or_update_member(name: str, email: str, *tags, id='0', phone=None):
     return _create_or_update(name, email, _MEMBER, *tags, id=id, phone=phone)
+
+
+@shared_task()
+def create_or_update_webdev(name: str, email: str, *tags, id='0', phone=None):
+    return _create_or_update(name, email, _WEBDEV, *tags, id=id, phone=phone)
 
 
 def _normalise_id(id):

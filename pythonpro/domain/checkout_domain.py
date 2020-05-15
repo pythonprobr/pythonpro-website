@@ -9,11 +9,13 @@ from pythonpro.email_marketing import facade as email_marketing_facade
 __all__ = ['contact_info_listener', 'user_factory', 'payment_handler_task', 'payment_change_handler']
 
 
-def contact_info_listener(name, email, phone, payment_item_slug, user=None):
+def contact_info_listener(name: str, email: str, phone: str, payment_item_slug: str, user=None):
     if (user is not None) and user.is_authenticated:
         user_id = user.id
-        if 'membership' in payment_item_slug:
+        if payment_item_slug.startswith('membership'):
             core_facade.member_checkout_form(user)
+        elif payment_item_slug.startswith('webdev'):
+            core_facade.webdev_checkout_form(user)
     else:
         user_id = None
     email_marketing_facade.create_or_update_with_no_role.delay(
@@ -47,11 +49,13 @@ def payment_handler_task(payment_id):
         email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-boleto')
 
 
-def _promote(user, slug):
-    if 'membership' in slug:
-        user_facade.promote_member(user, 'unknow')
+def _promote(user, slug: str):
+    if slug.startswith('membership'):
+        user_facade.promote_member(user, 'unknown')
+    elif slug.startswith('webdev'):
+        user_facade.promote_webdev(user, 'unknown')
     else:
-        raise ValueError(f'{slug} should contain pytools or membership')
+        raise ValueError(f'{slug} should contain webdev or membership')
 
 
 def payment_change_handler(payment_id):

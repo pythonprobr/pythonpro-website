@@ -6,12 +6,14 @@ from django_pagarme.models import PagarmeFormConfig, PagarmeItemConfig
 
 # Workaround since module beginning with number can't be imported in regular way
 migration_module = import_module('pythonpro.checkout.migrations.0001_payment_setup')
+webdev_migration_module = import_module('pythonpro.checkout.migrations.0002_webdev_setup')
 
 
 @pytest.fixture(autouse=True)
 def execute_migration(db, pytestconfig):
     if pytestconfig.known_args_namespace.nomigrations:
         migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
+        webdev_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
 
 
 def test_config_creation():
@@ -145,7 +147,7 @@ def test_item_membership_for_client_first_day():
            )
 
 
-def test_item_membership__first_day():
+def test_item_membership_first_day():
     config = PagarmeFormConfig.objects.first()
     item_config = facade.find_payment_item_config('membership-first-day')
     assert (
@@ -158,6 +160,42 @@ def test_item_membership__first_day():
                'Inscricão Turma Python Pro 400 R Off',
                'membership-first-day',
                159700,
+               False,
+               config
+           )
+
+
+def test_item_webdev_oto():
+    config = PagarmeFormConfig.objects.first()
+    item_config = facade.find_payment_item_config('webdev-oto')
+    assert (
+               item_config.name,
+               item_config.slug,
+               item_config.price,
+               item_config.tangible,
+               item_config.default_config,
+           ) == (
+               'Webdev Django 50% de Desconto',
+               'webdev-oto',
+               49700,
+               False,
+               config
+           )
+
+
+def test_item_webdev():
+    config = PagarmeFormConfig.objects.first()
+    item_config = facade.find_payment_item_config('webdev')
+    assert (
+               item_config.name,
+               item_config.slug,
+               item_config.price,
+               item_config.tangible,
+               item_config.default_config,
+           ) == (
+               'Webdev Django',
+               'webdev',
+               99700,
                False,
                config
            )

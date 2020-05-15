@@ -90,6 +90,8 @@ class UserInteraction(models.Model):
     MEMBER_BOLETO = 'MEMBER_BOLETO'
     WAITING_LIST = 'WAITING_LIST'
     BECOME_MEMBER = 'BECOME_MEMBER'
+    WEBDEV_CHECKOUT_FORM = 'WEBDEV_CHECKOUT_FORM'
+    BECOME_WEBDEV = 'BECOME_WEBDEV'
     LAUNCH_LP = 'LAUNCH_LP'
     LAUNCH_SUBSCRIPTION = 'LAUNCH_SUBSCRIPTION'
     CPL1 = 'CPL1'
@@ -112,9 +114,11 @@ class UserInteraction(models.Model):
                 (MEMBER_LP, 'User visited Member Landing Page'),
                 (MEMBER_CHECKOUT, 'User clicked on Member checkout Button'),
                 (MEMBER_CHECKOUT_FORM, 'User Filled Member Checkout form'),
+                (WEBDEV_CHECKOUT_FORM, 'User Filled Webdev Checkout form'),
                 (MEMBER_BOLETO, 'User generate Member Boleto'),
                 (WAITING_LIST, 'User subscribed to Waiting List'),
                 (BECOME_MEMBER, 'User Become Member'),
+                (BECOME_WEBDEV, 'User Become Webdev'),
                 (LAUNCH_LP, 'User visited Launch Landing Page'),
                 (LAUNCH_SUBSCRIPTION, 'User subscribed to launch'),
                 (CPL1, 'User Visited CPL1'),
