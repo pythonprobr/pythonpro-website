@@ -61,7 +61,6 @@ def sitemap(request):
     named_views = [
         'core:index',
         'core:lead_landing',
-        'checkout:pytools_lp',
         'member_landing_page',
         'core:podcast',
         'core:tech_talks',
@@ -164,7 +163,7 @@ def programmer_week_ty(request):
     return render(request, 'core/lead_landing_page.html', context={'form': UserSignupForm()})
 
 
-def _lead_form(request, redirect_to_OTO=True, *args, **kwargs):
+def _lead_form(request, *args, **kwargs):
     if request.method == 'GET':
         form = UserSignupForm()
         return render(request, 'core/lead_form_errors.html', context={'form': form})
@@ -179,11 +178,7 @@ def _lead_form(request, redirect_to_OTO=True, *args, **kwargs):
         return render(request, 'core/lead_form_errors.html', context={'form': e.form}, status=400)
 
     login(request, user)
-
-    if redirect_to_OTO:
-        return redirect(reverse('payments:client_landing_page_oto'))
-    else:
-        return redirect(reverse('core:thanks'))
+    return redirect(reverse('core:thanks'))
 
 
 def lead_form(request):

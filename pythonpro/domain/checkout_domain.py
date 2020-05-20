@@ -12,9 +12,7 @@ __all__ = ['contact_info_listener', 'user_factory', 'payment_handler_task', 'pay
 def contact_info_listener(name, email, phone, payment_item_slug, user=None):
     if (user is not None) and user.is_authenticated:
         user_id = user.id
-        if 'pytools' in payment_item_slug:
-            core_facade.client_checkout_form(user, 'unknown')
-        elif 'membership' in payment_item_slug:
+        if 'membership' in payment_item_slug:
             core_facade.member_checkout_form(user)
     else:
         user_id = None
@@ -50,9 +48,7 @@ def payment_handler_task(payment_id):
 
 
 def _promote(user, slug):
-    if 'pytools' in slug:
-        user_facade.promote_client(user, 'unknow')
-    elif 'membership' in slug:
+    if 'membership' in slug:
         user_facade.promote_member(user, 'unknow')
     else:
         raise ValueError(f'{slug} should contain pytools or membership')

@@ -26,10 +26,9 @@ UserCreationException = _core_facade.UserCreationException  # exposing exception
 
 __all__ = [
     'register_lead', 'force_register_client', 'promote_client', 'activate_user', 'find_user_interactions',
-    'visit_client_landing_page', 'visit_member_landing_page', 'run_pytools_promotion_campaign', 'click_client_checkout',
-    'client_generated_boleto', 'promote_member', 'find_user_by_email', 'find_user_by_id', 'force_register_lead',
-    'subscribe_to_waiting_list', 'force_register_member', 'click_member_checkout',
-    'subscribe_anonymous_user_to_waiting_list'
+    'visit_member_landing_page', 'run_pytools_promotion_campaign', 'promote_member', 'find_user_by_email',
+    'find_user_by_id', 'force_register_lead', 'subscribe_to_waiting_list', 'force_register_member',
+    'click_member_checkout', 'subscribe_anonymous_user_to_waiting_list'
 ]
 
 CLIENT_BOLETO_TAG = 'client-boleto'
@@ -231,17 +230,6 @@ def run_pytools_promotion_campaign() -> int:
     return len(promotion_users)
 
 
-def visit_client_landing_page(user: _User, source: str) -> None:
-    """
-    Marke user as visited client landing page
-    :param source: string containing source of traffic
-    :param user:
-    :return:
-    """
-    _core_facade.visit_client_landing_page(user, source)
-    _email_marketing_facade.tag_as.delay(user.email, user.id, 'potential-client')
-
-
 def visit_member_landing_page(user, source):
     """
     Mark user as visited member landing page
@@ -281,26 +269,6 @@ def click_member_checkout(user):
     """
     _core_facade.member_checkout(user, None)
     _email_marketing_facade.tag_as.delay(user.email, user.id, 'member-checkout')
-
-
-def click_client_checkout(user: _User):
-    """
-    Mark user as visited client landing page
-    :param user:
-    :return:
-    """
-    _core_facade.client_checkout(user, None)
-    _email_marketing_facade.tag_as.delay(user.email, user.id, 'client-checkout')
-
-
-def client_generated_boleto(user):
-    """
-        Mark user as visited generated boleto
-        :param user:
-        :return:
-        """
-    _email_marketing_facade.tag_as.delay(user.email, user.id, CLIENT_BOLETO_TAG)
-    _core_facade.client_generated_boleto(user, None)
 
 
 def member_generated_boleto(user):
