@@ -21,7 +21,8 @@ from django.contrib.auth.views import (
     PasswordResetDoneView,
     PasswordResetView,
 )
-from django.urls import include, path
+from django.urls import include, path, reverse_lazy
+from django.views.generic.base import RedirectView
 
 from pythonpro.payments import views as payments_views
 
@@ -50,6 +51,22 @@ urlpatterns = [
     path('inscricao', payments_views.member_landing_page, name='member_landing_page'),
     path('pre-inscricao', payments_views.meteoric_landing_page, name='meteoric_landing_page'),
 
+    # unused pages
+    path(
+        'curso-de-python-intermediario-oto',
+        RedirectView.as_view(url=reverse_lazy('member_landing_page')),
+        name='client_landing_page_oto'
+    ),
+    path(
+        'curso-de-python-intermediario-do',
+        RedirectView.as_view(url=reverse_lazy('member_landing_page')),
+        name='client_landing_page_do'
+    ),
+    path(
+        'curso-de-python-intermediario',
+        RedirectView.as_view(url=reverse_lazy('member_landing_page')),
+        name='client_landing_page'
+    ),
 ]
 
 if not settings.AWS_ACCESS_KEY_ID:
