@@ -219,11 +219,6 @@ def resp_lead_accesing_client_content(client_with_lead, topic_client, django_use
         secure=True)
 
 
-def test_lead_hitting_client_landing_page(resp_lead_accesing_client_content):
-    assert resp_lead_accesing_client_content.status_code == 302
-    assert resp_lead_accesing_client_content.url == reverse('checkout:pytools_lp')
-
-
 @pytest.fixture
 def resp_client_accessing_client_content(client_with_client, topic_client, django_user_model, client_with_lead=None):
     return client_with_client.get(

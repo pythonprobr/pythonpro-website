@@ -8,9 +8,6 @@ from pythonpro.django_assertions import dj_assert_template_used
 all_slugs = pytest.mark.parametrize(
     'slug',
     [
-        'pytools',
-        'pytools-oto',
-        'pytools-done',
         'membership',
         'membership-client',
         'membership-client-first-day',
@@ -43,23 +40,6 @@ def make_post(client, contact_info, slug):
 def test_status_code(resp, client, valid_data, slug):
     resp = make_post(client, valid_data, slug)
     assert resp.status_code == 302
-
-
-pytools_slugs = pytest.mark.parametrize(
-    'slug',
-    [
-        'pytools',
-        'pytools-oto',
-        'pytools-done',
-    ]
-)
-
-
-@pytools_slugs
-def test_client_history(resp, client_with_user, valid_data, slug, logged_user):
-    make_post(client_with_user, valid_data, slug)
-    interactions = core_facade.find_user_interactions(logged_user)
-    assert [i.category for i in interactions] == [UserInteraction.CLIENT_CHECKOUT_FORM]
 
 
 membership_slugs = pytest.mark.parametrize(

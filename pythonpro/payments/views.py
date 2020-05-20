@@ -1,16 +1,9 @@
-from datetime import datetime, timedelta
-
-import pytz
 from django.conf import settings
-from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.core import mail
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse
-from django.shortcuts import redirect, render
-from django.template.loader import render_to_string
+from django.shortcuts import render
 from django.urls import reverse
 from django.utils.http import urlencode
-from django.utils.timezone import make_aware, now
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView
 
@@ -18,9 +11,7 @@ from pythonpro.cohorts import facade as cohorts_facade
 from pythonpro.core.facade import UserRoleException
 from pythonpro.domain import membership_domain, user_facade
 from pythonpro.payments import facade as payment_facade
-from pythonpro.payments.facade import (PYTOOLS_DO_PRICE, PYTOOLS_PRICE,
-                                       PYTOOLS_PROMOTION_PRICE,
-                                       PagarmeNotPaidTransaction)
+from pythonpro.payments.facade import PagarmeNotPaidTransaction
 
 
 def thanks(request):
@@ -41,37 +32,6 @@ def member_capture(request):
     return JsonResponse(dct)
 
 
-@csrf_exempt
-def pytools_capture(request):
-    if request.method != 'POST':
-        return
-    user = request.user
-    user_creation = user.date_joined if user.is_authenticated else now()
-    pagarme_resp = payment_facade.pytools_capture(request.POST['token'], user_creation)
-    customer = pagarme_resp['customer']
-    customer_email = customer['email']
-    source = request.GET.get('utm_source', default='unknown')
-    customer_first_name = customer['name'].split()[0]
-    payment_method = pagarme_resp['payment_method']
-    if payment_method == 'credit_card':
-        if user.is_authenticated:
-            _promote_client(user, request)
-        else:
-            user_facade.force_register_client(customer_first_name, customer_email, source)
-        dct = {'redirect_url': reverse('payments:pytools_thanks')}
-    elif payment_method == 'boleto':
-        if not user.is_authenticated:
-            user = user_facade.force_register_lead(customer_first_name, customer_email, source)
-            login(request, user)
-        user_facade.client_generated_boleto(user)
-        path = reverse('payments:pytools_boleto')
-        qs = urlencode(_extract_boleto_params(pagarme_resp))
-        dct = {'redirect_url': f'{path}?{qs}'}
-    else:
-        raise ValueError(f'Invalid payment method {payment_method}')
-    return JsonResponse(dct)
-
-
 @login_required
 @csrf_exempt
 def member_checkout(request):
@@ -86,20 +46,6 @@ def member_checkout(request):
     return JsonResponse({'client-checkout': 'ok'})
 
 
-@login_required
-@csrf_exempt
-def client_checkout(request):
-    """
-    Track user who clicked on client LP Checkout button
-    :param request:
-    :return:
-    """
-    if request.method != 'POST':
-        return
-    user_facade.click_client_checkout(request.user)
-    return JsonResponse({'client-checkout': 'ok'})
-
-
 def _promote_client(user, request):
     user_facade.promote_client(user, source=request.GET.get('utm_source', default='unknown'))
 
@@ -109,23 +55,6 @@ def _promote_client_and_remove_tag_boleto(user, request):
         user_facade.promote_client_and_remove_boleto_tag(user, source=request.GET.get('utm_source', default='unknown'))
     except UserRoleException:
         pass  # No need to handle since user can be a client due to active marketing
-
-
-def pytools_thanks(request):
-    return render(request, 'payments/pytools_thanks.html')
-
-
-@login_required
-def pytools_boleto(request):
-    dct = request.GET
-    boleto_params = _extract_boleto_params(dct)
-    user = request.user
-    mail_context = {'user': user}
-    mail_context.update(boleto_params)
-    body = render_to_string('payments/pytools_boleto_email.txt', context=mail_context, request=request)
-    subject = 'Boleto curso Pytools'
-    mail.send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [user.email])
-    return render(request, 'payments/pytools_boleto.html', context=boleto_params)
 
 
 def membership_boleto(request):
@@ -200,80 +129,6 @@ def _render_launch_page(is_launch_open, request, template_closed_launch, templat
     else:
         template = template_closed_launch
         return render(request, template, {})
-
-
-def client_landing_page(request):
-    user = request.user
-    if user.is_authenticated:
-        user_facade.visit_client_landing_page(user, source=request.GET.get('utm_source', default='unknown'))
-        notification_url = reverse('payments:pagarme_notification', kwargs={'user_id': user.id})
-    else:
-        notification_url = reverse('payments:pagarme_anonymous_notification')
-    user_creation = user.date_joined if user.is_authenticated else now()
-    is_promotion_season = payment_facade.is_on_pytools_promotion_season(user_creation)
-    price = PYTOOLS_PROMOTION_PRICE if is_promotion_season else PYTOOLS_PRICE
-    price_float = price / 100
-    price_installment = (price // 10) / 100
-    _, promotion_end_date = payment_facade.calculate_pytools_promotion_interval()
-    return render(
-        request,
-        'payments/client_landing_page.html', {
-            'PAGARME_CRYPTO_KEY': settings.PAGARME_CRYPTO_KEY,
-            'price': price,
-            'price_float': price_float,
-            'price_installment': price_installment,
-            'is_promotion_season': is_promotion_season,
-            'promotion_end_date': promotion_end_date,
-            'notification_url': request.build_absolute_uri(notification_url),
-            'is_promotion_expired': False,
-        })
-
-
-def client_landing_page_oto(request):
-    return redirect(reverse('checkout:pytools_oto_lp'), permanent=True)
-
-
-def client_landing_page_do(request):
-    notification_url = ""
-    is_debug = request.GET.get('debug') is not None
-
-    user = request.user
-    # if not user.is_authenticated and not is_debug:
-    #     return HttpResponseRedirect(reverse('checkout:pytools_lp'))
-
-    notification_url = ""
-    if not is_debug and user.is_authenticated:
-        notification_url = reverse('payments:pagarme_notification', kwargs={'user_id': user.id})
-
-    price = PYTOOLS_DO_PRICE
-    price_float = price / 100
-    price_installment = (price // 10) / 100
-
-    countdown_limit = request.session.get('DO_countdown_limit')
-    if countdown_limit is None:
-        countdown_limit = now() + timedelta(days=3)
-
-        countdown_limit_str = countdown_limit.strftime('%Y-%m-%d-%H-%M-%S')
-        request.session['DO_countdown_limit'] = countdown_limit_str
-    else:
-        countdown_limit = datetime.strptime(countdown_limit, '%Y-%m-%d-%H-%M-%S')
-        countdown_limit = make_aware(countdown_limit, timezone=pytz.utc)
-
-    is_promotion_expired = True
-    if request.GET.get('debug') is not None or countdown_limit >= now():
-        is_promotion_expired = False
-
-    return render(
-        request,
-        'payments/client_landing_page_do.html', {
-            'PAGARME_CRYPTO_KEY': settings.PAGARME_CRYPTO_KEY,
-            'price': price,
-            'price_float': price_float,
-            'price_installment': price_installment,
-            'notification_url': request.build_absolute_uri(notification_url),
-            'countdown_limit': countdown_limit,
-            'is_promotion_expired': is_promotion_expired,
-        })
 
 
 @csrf_exempt
