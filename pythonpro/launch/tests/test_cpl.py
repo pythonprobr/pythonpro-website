@@ -27,7 +27,7 @@ def test_cpl_video_is_present(resp_on_cpl1_on_air):
 
 
 def test_facebook_comments_is_present(resp_on_cpl1_on_air):
-    dj_assert_contains(resp_on_cpl1_on_air, f'www.facebook.com/v4.0/plugins/comments.php')
+    dj_assert_contains(resp_on_cpl1_on_air, 'www.facebook.com/v4.0/plugins/comments.php')
 
 
 def test_should_return_cpl1_on_air_in_navbar(resp_on_cpl1_on_air):
