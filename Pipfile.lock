@@ -102,10 +102,10 @@
         },
         "codecov": {
             "hashes": [
-                "sha256:520ab0ef447d695a9f71e83f9fa65eedbd2d6d1022ff88836e27b9eb82fbdc7b"
+                "sha256:2ebd639d8f621aabcce399e475b0302e436cb7e00e7724d1b2224bbf3f215a0c",
+                "sha256:e20e9fd7e530da14a22245862beb43a9fce9a6b998d9bf196c44d0207817b236"
             ],
-            "index": "pypi",
-            "version": "==2.1.1"
+            "version": "==2.1.3"
         },
         "collectfast": {
             "hashes": [
