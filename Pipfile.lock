@@ -383,10 +383,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:7b1800f581289711e24d8aa80f09a71ef7591a92e725b73d9cc58a4f7757de2d",
-                "sha256:c3c632f68dc71f6b5a00d3cbd5729286b62e3d90d10fea3ffdd87c9ce066de88"
+                "sha256:071ff1c6830233e57a1821d6dbb702c2d841a72fe4c9e6b6f087d566b532533e",
+                "sha256:ddf2f33ccb221b16fe25a022978e45d25a7c31c2ad5c506ab92a640001d85847"
             ],
-            "version": "==8.12.3"
+            "version": "==8.12.4"
         },
         "pickleshare": {
             "hashes": [
