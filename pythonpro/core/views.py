@@ -178,7 +178,7 @@ def _lead_form(request, *args, **kwargs):
         return render(request, 'core/lead_form_errors.html', context={'form': e.form}, status=400)
 
     login(request, user)
-    return redirect(reverse('core:thanks'))
+    return redirect(reverse('payments:webdev_landing_page'))
 
 
 def lead_form(request):

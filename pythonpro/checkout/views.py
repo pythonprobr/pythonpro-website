@@ -101,3 +101,20 @@ def membership_lp(request):
 
 def waiting_list_ty(request):
     return render(request, 'checkout/waiting_list_ty.html', {'email': request.user.email})
+
+
+def webdev_landing_page(request):
+    no_discount_item_config = facade.find_payment_item_config('webdev')
+    payment_item_config = facade.find_payment_item_config('webdev-oto')
+    user = request.user
+    if user.is_authenticated:
+        data = {'name': user.first_name, 'email': user.email}
+        form = facade.ContactForm(data)
+    else:
+        form = facade.ContactForm()
+
+    ctx = {
+        'payment_item_config': payment_item_config,
+        'contact_form': form,
+    }
+    return render(request, 'checkout/webdev_landing_page.html', ctx)

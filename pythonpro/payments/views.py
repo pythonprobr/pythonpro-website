@@ -187,3 +187,5 @@ def membership_anonymous_notification(request):
     )
 
     return HttpResponse('')
+
+

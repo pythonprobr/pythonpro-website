@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.urls import path, reverse_lazy
-from django.views.generic.base import RedirectView
+from django.views.generic import RedirectView
 
 from pythonpro.payments import views
 
