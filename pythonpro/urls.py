@@ -25,6 +25,7 @@ from django.urls import include, path, reverse_lazy
 from django.views.generic.base import RedirectView
 
 from pythonpro.payments import views as payments_views
+from pythonpro.checkout import views as checkout_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -50,6 +51,7 @@ urlpatterns = [
     path('checkout/', include('django_pagarme.urls')),
     path('inscricao', payments_views.member_landing_page, name='member_landing_page'),
     path('pre-inscricao', payments_views.meteoric_landing_page, name='meteoric_landing_page'),
+    path('curso-desenvolvimento-web-django', checkout_views.webdev_landing_page, name='webdev_landing_page'),
 
     # unused pages
     path(
