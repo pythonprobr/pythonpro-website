@@ -233,10 +233,9 @@
         },
         "django-role-permissions": {
             "hashes": [
-                "sha256:c00fc15f67e63cbf5514b95caeb369d6094fe94d75b14c3afc1bb4963babd1fc"
+                "sha256:ec0e5ab0cc75f58b19ada048e1428e79d3dad393764a945e8a19eea84ba8c43b"
             ],
-            "index": "pypi",
-            "version": "==2.2.1"
+            "version": "==3.0.0"
         },
         "django-s3-folder-storage": {
             "hashes": [
