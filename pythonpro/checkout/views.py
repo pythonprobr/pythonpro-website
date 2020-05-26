@@ -1,5 +1,7 @@
 import time
+from datetime import timedelta
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.http import urlencode
@@ -103,8 +105,8 @@ def waiting_list_ty(request):
     return render(request, 'checkout/waiting_list_ty.html', {'email': request.user.email})
 
 
-def webdev_landing_page(request):
-    no_discount_item_config = facade.find_payment_item_config('webdev')
+@login_required
+def webdev_landing_page_oto(request):
     payment_item_config = facade.find_payment_item_config('webdev-oto')
     user = request.user
     if user.is_authenticated:
@@ -116,5 +118,6 @@ def webdev_landing_page(request):
     ctx = {
         'payment_item_config': payment_item_config,
         'contact_form': form,
+        'countdown_limit': request.user.date_joined + timedelta(seconds=30 * 60)
     }
-    return render(request, 'checkout/webdev_landing_page.html', ctx)
+    return render(request, 'checkout/webdev_landing_page_oto.html', ctx)

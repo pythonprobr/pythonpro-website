@@ -271,7 +271,7 @@ def resp_lead_accesing_webdev_content(client_with_lead, topic_webdev, django_use
         secure=True)
 
 
-def test_lead_hitting_webdev_landing_page(resp_lead_accesing_webdev_content):
+def test_lead_hitting_webdev_landing_page_oto(resp_lead_accesing_webdev_content):
     assert resp_lead_accesing_webdev_content.status_code == 302
     # TODO: Change after creating WebDev landing page
     assert resp_lead_accesing_webdev_content.url == reverse('checkout:membership_lp')
@@ -285,7 +285,7 @@ def resp_client_accessing_webdev_content(client_with_client, topic_webdev, djang
         secure=True)
 
 
-def test_client_hitting_webdev_landing_page(resp_client_accessing_webdev_content):
+def test_client_hitting_webdev_landing_page_oto(resp_client_accessing_webdev_content):
     assert resp_client_accessing_webdev_content.status_code == 302
     # TODO: Change after creating WebDev landing page
     assert resp_client_accessing_webdev_content.url == reverse('checkout:membership_lp')
