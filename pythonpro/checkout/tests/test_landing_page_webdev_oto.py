@@ -4,8 +4,8 @@ from django.urls import reverse
 
 
 @pytest.fixture
-def resp(client, db):
-    return client.get(reverse('webdev_landing_page'), secure=True)
+def resp(client_with_lead, db):
+    return client_with_lead.get(reverse('webdev_landing_page_oto'), secure=True)
 
 
 def test_should_page_exists(resp):

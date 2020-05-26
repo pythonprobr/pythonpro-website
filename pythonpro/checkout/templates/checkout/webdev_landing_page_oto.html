@@ -2,6 +2,7 @@
 {% load bootstrap4 %}
 {% load static %}
 {% load django_pagarme %}
+{% load tz %}
 
 {% block title %}MATRÍCULA REALIZADA!{% endblock %}
 {% block description %}Curso de Python Grátis. Aprenda a programar de forma rápida, fácil e simples!{% endblock %}
@@ -14,19 +15,19 @@
                 <div class="col hero">
                     
                     <div class='desktop d-none d-sm-block d-md-block'>
-                        <h1 class='font-weight-bold text-light'>Sua matrícula foi realizada!</h1>
+                        <h1 class='font-weight-bold text-light'><u>SUA MATRÍCULA FOI REALIZADA!</u></h1>
                         <p class='mb-5 text-light title-sub'>
-                            Assista o vídeo abaixo para saber como acessar os vídeos do Curso Grátis.
+                            Assista o vídeo abaixo para saber como acessar os vídeos do curso grátis.
                         </p>
-                        <iframe width="100%" height='523px' src="https://www.youtube.com/embed/0rzm6NjyoSw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe width="100%" height='523px' src="https://www.youtube.com/embed/I7ki8XTdkw4?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
 
                     <div class='mobile d-block d-lg-none d-xl-none'>
-                        <h1 class='font-weight-bold text-light'>Sua matrícula foi realizada!</h1>
+                        <h1 class='font-weight-bold text-light'><u>SUA MATRÍCULA FOI REALIZADA!</u></h1>
                         <p class='mb-5 text-light title-sub'>
-                            Assista o vídeo abaixo para saber como acessar os vídeos do Curso Grátis.
+                            Assista o vídeo abaixo para saber como acessar os vídeos do curso grátis.
                         </p>
-                        <iframe width="100%" height='208px' src="https://www.youtube.com/embed/0rzm6NjyoSw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe width="100%" height='208px' src="https://www.youtube.com/embed/I7ki8XTdkw4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
 
@@ -36,7 +37,7 @@
     {% endblock %}
 
     {% block second_block %}
-    <div>
+    <div class='show-after' style="display: none">
         <div class="container">
 
             <div class='desktop d-none d-sm-block d-md-block'>
@@ -136,7 +137,53 @@
         </div>
     </div>
 
-        <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
+    {% block countdown %}
+        <div class='bg-black show-after' style="display: none">
+            <div class="container">
+                <div class="row text-light text-center">
+                    <div class="col mb-5 mt-5">
+                        {% if not is_promotion_expired %}
+                            <h2 class='font-weight-bold mb-5'>
+                                PRESTE ATENÇÃO: Essa promoção vai expirar em breve!
+                            </h2>
+
+                            <p>
+                                Esta oferta estará disponível apenas durante 30 minutos,
+                                contando a partir do momento do seu cadastro no Python Birds.</b>
+                            </p>
+                            
+                            <p>
+                                Ou seja, <b>você só possui esta chance de adquirir o Django Pro com 50% de desconto. </b>
+                                Quando o relógio abaixo chegar a zero, <b>a sua chance acabou.</b>
+                            </p>
+
+                            <h2 class='demo countdown text-light font-weight-bold text-center'></h2>
+                        
+                        {% else %}
+                        
+                            <h2 class='font-weight-bold mb-5' style='font-size: 30pt'>
+                                <u>Infelizmente a promoção se encerrou...</u>
+                            </h2>
+
+                            <div class='initiate-checkout d-none d-sm-block d-md-block mt-5 mb-5'>
+                                <a href='/pagamento/curso-de-python-intermediario' class="cta btn btn-warning initiate-checkout mt-10">
+                                    <b>Comprar o PyTools pelo preço normal</b>
+                                </a>
+                            </div>
+
+                            <div class='initiate-checkout d-block d-lg-none d-xl-none  mt-5 mb-5'>
+                                <a href='/pagamento/curso-de-python-intermediario' class="cta-mobile btn initiate-checkout btn-warning mt-10">
+                                    <b>Comprar o PyTools pelo preço normal</b>
+                                </a >
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -178,13 +225,63 @@
                 submitButton.setAttribute('disabled', 'disabled');
             }
         });
+
+        function showIt() {
+            var all = document.getElementsByClassName("show-after")
+            for (var i = 0; i < all.length; i++) {
+                all[i].style.display = "block";
+            }
+        }
+        setTimeout("showIt()", {% if request.GET.debug %}1{% else %}90{% endif %} * 1000);
+
+        {% localtime on %}
+            // Set the date we're counting down to
+            var countDownDate = new Date("{{ countdown_limit|date:"m/d/Y H:i:s" }}").getTime();
+        {% endlocaltime %}
+
+        // Update the count down every 1 second
+        var x = setInterval(function () {
+
+            // Get today's date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            if(hours < 10) {
+                hours = "0" + hours 
+            }
+
+            if(minutes < 10) {
+                minutes = "0" + minutes 
+            }
+            
+            if(seconds < 10) {
+                seconds = "0" + seconds 
+            }
+
+            // Display the result in the element with id="demo"
+            $(".countdown").html(hours + ":" + minutes + ":" + seconds);
+
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                $(".countdown").html("ACABOU!!!");
+            }
+        }, 1000);
     </script>
 
 
     {% endblock %}
 
     {% block testimonials %}
-    <div class='bg-secondary'>
+    <div style="display: none" class='bg-secondary show-after'>
         <div class="container">
             <div class="row">
                 <div class="col mt-5 mb-5">
@@ -316,6 +413,12 @@
         .mobile .cta-compra {
             padding: 20px 40px;
             font-size: 14pt;
+        }
+        .bg-black .text-light h2 {
+            color: #C33149 !important;
+        }
+        .bg-black .text-light .countdown {
+            font-size: 60pt;
         }
     </style>
 
