@@ -31,6 +31,7 @@ django-bootstrap4 = "*"
 celery = "*"
 redis = "*"
 django-pagarme = "*"
+inflection = "*"
 
 [dev-packages]
 faker = "*"
