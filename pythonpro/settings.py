@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'pythonpro.analytics',
     'pythonpro.checkout',
     'pythonpro.redirector',
+    'pythonpro.pages',
     'rolepermissions',
     'ordered_model',
     'django.contrib.admin',

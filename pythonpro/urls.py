@@ -48,6 +48,7 @@ urlpatterns = [
     path('', include('pythonpro.core.urls')),
     path('', include('pythonpro.checkout.urls')),
     path('r/', include('pythonpro.redirector.urls')),
+    path('p/', include('pythonpro.pages.urls')),
     path('checkout/', include('django_pagarme.urls')),
     path('inscricao', payments_views.member_landing_page, name='member_landing_page'),
     path('pre-inscricao', payments_views.meteoric_landing_page, name='meteoric_landing_page'),
