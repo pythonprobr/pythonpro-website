@@ -35,6 +35,8 @@ def user_factory(pagarme_transaction):
 
 django_pagarme_facade.set_user_factory(user_factory)
 
+GENERATED_BOLETO_TAG = 'generated-boleto'
+
 
 @shared_task()
 def payment_handler_task(payment_id):
@@ -43,6 +45,8 @@ def payment_handler_task(payment_id):
     slug = payment.first_item_slug()
     if status == django_pagarme_facade.PAID:
         user = payment.user
+        if payment.payment_method == django_pagarme_facade.BOLETO:
+            email_marketing_facade.remove_tags.delay(user.email, user.id, f'{slug}-boleto')
         _promote(user, slug)
     elif status == django_pagarme_facade.WAITING_PAYMENT:
         user = payment.user
