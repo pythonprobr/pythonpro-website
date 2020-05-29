@@ -45,8 +45,10 @@ def tag_as_mock(mocker):
 
 
 @pytest.fixture
-def resp(client, pagarme_responses, create_or_update_lead_mock, payment_handler_task_mock, tag_as_mock):
-    return client.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN}), secure=True)
+def resp(client, pagarme_responses, create_or_update_lead_mock, payment_handler_task_mock, tag_as_mock,
+         membership_item):
+    return client.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': membership_item.slug}),
+                      secure=True)
 
 
 def test_status_code(resp):
@@ -80,8 +82,11 @@ def test_created_user_tagged_with_boleto(resp, django_user_model, tag_as_mock, p
 # Tests user logged
 
 @pytest.fixture
-def resp_logged_user(client_with_lead, pagarme_responses, payment_handler_task_mock, tag_as_mock):
-    return client_with_lead.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN}), secure=True)
+def resp_logged_user(client_with_lead, pagarme_responses, payment_handler_task_mock, tag_as_mock, membership_item):
+    return client_with_lead.get(
+        reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': membership_item.slug}),
+        secure=True
+    )
 
 
 def test_logged_user_become_lead(resp_logged_user, logged_user):
