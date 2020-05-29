@@ -65,18 +65,17 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:1bdab4f87ff39d5aab59b0aae69965bf604fa5608984c673877f4c62c1f16240",
-                "sha256:2b4924ccc1603d562969b9f3c8c74ff4a1f3bdbafe857c990422c73d8e2e229e"
+                "sha256:c774003dc13d6de74b5e19d2b84d625da4456e64bd97f44baa1fcf40d808d29a"
             ],
             "index": "pypi",
-            "version": "==1.13.18"
+            "version": "==1.13.19"
         },
         "botocore": {
             "hashes": [
-                "sha256:93574cf95a64c71d35c12c93a23f6214cf2f4b461be3bda3a436381cbe126a84",
-                "sha256:e65eb27cae262a510e335bc0c0e286e9e42381b1da0aafaa79fa13c1d8d74a95"
+                "sha256:5cb537e7a4cf2d59a2a8dfbbc8e14ec3bc5b640eb81a1bf3bb0523c0a75e6b1b",
+                "sha256:7b8b1f082665c8670b9aa70143ee527c5d04939fe027a63ac5958359be20ccb0"
             ],
-            "version": "==1.16.18"
+            "version": "==1.16.19"
         },
         "celery": {
             "hashes": [
@@ -215,11 +214,11 @@
         },
         "django-pagarme": {
             "hashes": [
-                "sha256:e514fd6e77104d93131c6b90ef9613c91b375eae707270668d991539069e372f",
-                "sha256:e524286c921baf352780308fba900d1e4d2f8932a3083cc411f5f757c1e4b60b"
+                "sha256:90363e9c80e80e385f88ec5f7233eb5f87c2adf1cb096037543f87d2f4376097",
+                "sha256:ba19da5d204693f3524d7379aa8598ea366cf81013b1bb6ac8e30d1c8ac7194e"
             ],
             "index": "pypi",
-            "version": "==0.8"
+            "version": "==0.9"
         },
         "django-phonenumber-field": {
             "extras": [
