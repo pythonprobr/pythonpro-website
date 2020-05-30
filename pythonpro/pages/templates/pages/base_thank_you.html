@@ -1,0 +1,94 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}Insrição Realizada!{% endblock %}
+{% block description %}{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class='bg-primary'>
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col hero">
+                        <h1 class='font-weight-bold text-light mb-4'>
+                            INSCRIÇÃO REALIZADA COM SUCESSO!
+                        </h1>
+                        
+                        <h4 class='text-light'>
+                            <b>Corra para o seu email!</b>
+                            <br>Eu mandei todas as instruções sobre o webinário por lá.
+                        </h4>                    
+                        
+                        <h4 class='text-light mt-5'>
+                            Te vejo na aula!
+                        </h4>                    
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class='offset-md-2 col-md-8 col-sm-12'>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock content %}
+
+    <div class=''>
+        <div class="container">
+            <div class="row text-center">
+                <div class='col mt-5'>
+                    <h4>PASSO 1</h4>
+                    <h3><b>SE INSCREVA NO MEU<br>CANAL DO YOUTUBE</b></h3>
+
+                    <p>
+                        Lá no meu canal tem conteúdo de primeira sendo publicado todo santo dia
+                        (ou pelo menos quase rs). Clique no botão abaixo para se inscrever. Ah, não
+                        esquece também de ativar o sininho.
+                    </p>
+                    
+                    <p>
+                        <a href='https://www.youtube.com/channel/UCGjx62365UJ8XTWU_5GZC-g/?sub_confirmation=1' target='_blank' class='btn btn-share btn-yt'>Me Inscrever no Canal</a>
+                    </p>
+                </div>
+                
+                <div class='col mt-5'>
+                    <h4>PASSO 2</h4>
+                    <h3><b>ME SIGA NO <br>INSTAGRAM</b></h3>
+
+                    <p>
+                        Lá no meu perfil do Instagram eu respondo diariamente perguntas sobre 
+                        Python, carreira, desenvolvimento de software e tudo mais o que é ligado
+                        a profissão de desenvolvimento de software.
+                    </p>
+                    
+                    <p>
+                        <a href='http://instagram.com/renzoprobr' target='_blank' class='btn btn-share btn-ig'>Seguir no Instagram</a>
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block styles %}{{block.super}}
+    <style>
+        .btn-share {
+            color: #fff;
+            text-transform: uppercase;
+            padding: 10px 20px;
+        }
+        .btn-ig {
+            background-color: #ff1779 !important;
+            color: #fff;
+        }
+        .btn-yt {
+            background-color: #c4302b !important;
+            border-color: #c4302b;
+        }
+    </style>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
