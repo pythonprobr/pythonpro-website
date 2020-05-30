@@ -37,3 +37,12 @@ class CarreiraProLandingPage(BaseLandingPageView):
 
 class CarreiraProThankYouPage(BaseThankYouView):
     pass
+
+
+class DsWebinarLandingPage(BaseLandingPageView):
+    success_url = reverse_lazy('pages:ds_webinar_thank_you_page')
+    email_marketing_tag = 'webinario-data-science'
+
+
+class DsWebinarThankYouPage(BaseThankYouView):
+    pass

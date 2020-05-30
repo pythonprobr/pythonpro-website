@@ -1,0 +1,134 @@
+{% extends 'pages/base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block title %}Aulão de Data Science! Inscreva-se Grátis!{% endblock %}
+{% block description %}{% endblock %}
+
+{% block content %}
+    <div class='bg-secondary'>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col hero">
+                    <h1 class='font-weight-bold mb-4'>
+                        O caminho mais rápido para iniciar no mundo da Ciência de Dados 
+                        <u>e poder aplicar para vagas que pagam até R$ 15 mil de salário!</u>
+                    </h1>
+                    
+                    <h4 class='' id="topo">
+                        Workshop Online e Gratuito.
+                    </h4>                    
+
+                    <h4 class=''>
+                        <b class='text-uppercase'>Dia 10/06 às 20h, Horário de Brasília</b>
+                    </h4>                    
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class='offset-md-2 col-md-8 col-sm-12'>
+                    
+                    <span class=' font-weight-bold' style='font-size: 16pt'>Preencha o formulário:</span>
+                    <form method="POST" class='mb-5 text-center'>
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+
+                        <button type='submit' class='btn btn-warning text-center cta'>
+                            <b>CONFIRMAR MINHA INSCRIÇÃO!</b>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='mt-5'>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2 class='font-weight-bold text-center mb-5'>
+                        DESCUBRA O QUE FAZER PARA PASSAR NOS PROCESSOS SELETIVOS <u>MAIS CONCORRIDOS
+                        DO MERCADO...</u>
+                    </h2>
+                    
+                    <p>
+                        Você sabia que existe uma profissão que foi eleita a profissão mais sexy do 
+                        século XXI, por Harvard? Sabia que essa profissão tem salários que podem 
+                        chegar até R$ 15 mil reais por mês?
+                    </p>
+                    
+                    <p>
+                        Se você ainda não matou a charada, eu estou falando da profissão <b>Cientista de Dados.</b>
+                    </p>
+
+                    <p>
+                        Essa é a profissão do momento! <b class='highlight'>Existe uma demanda tão grande por cientistas 
+                        de dados que até mesmo durante a maior crise dos últimos tempos, 
+                        as empresas continuam contratando novos cientistas todos os dias...</b>
+                    </p>
+
+                    <p>
+                        Agora, sabia que existe um caminho rápido para iniciar neste profissão?
+                    </p>
+
+                    <p>
+                        No dia 10/06, as 20h, eu vou fazer uma aula ao vivo e gratuita onde vou 
+                        <b>te ensinar o caminho mais rápido para iniciar no mundo da 
+                        Ciência de Dados e poder aplicar para vagas que pagam até R$ 15k de salário.</b>.
+                    </p>
+                    <p>
+                        <a href="#topo" class='btn btn-warning text-center cta'>
+                            <b>Quero me Inscrever!</b>
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <script type="application/javascript">
+
+    let phoneInput = document.getElementById('id_phone');
+        phoneInput.addEventListener('input', function (e) {
+            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+        });
+
+        let submitButton = document.getElementById('submit_button');
+        document.getElementById('contact_form').addEventListener('input', function (e) {
+            if (phoneInput.value.search(/\(\d\d\) \d\d\d\d\d-\d\d\d\d/) === 0) {
+                submitButton.removeAttribute('disabled');
+            } else {
+                submitButton.setAttribute('disabled', 'disabled');
+            }
+        });
+    </script>
+{% endblock content %}
+
+{% block footer %}
+    <div class=''>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5 text-center">
+                    <i>
+                        {% now "Y" %} Python Pro. Todos os direitos reservados. <br>
+                        CNPJ: 31.080.715/0001-25<br>
+                        +55 84 99419-4414 - {{ DEFAULT_FROM_EMAIL }}
+                    </i>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock  %}
+
+{% block styles %}
+    {{ block.super }}
+    <style>
+
+        
+    </style>
+
+{% endblock %}
