@@ -58,6 +58,8 @@ def _promote(user, slug: str):
         user_facade.promote_member(user, 'unknown')
     elif slug.startswith('webdev'):
         user_facade.promote_webdev(user, 'unknown')
+    elif slug.startswith('data-science'):
+        user_facade.promote_data_scientist(user, 'unknown')
     else:
         raise ValueError(f'{slug} should contain webdev or membership')
 

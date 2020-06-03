@@ -45,3 +45,8 @@ def membership_item(execute_migration, cohort):
 @pytest.fixture
 def webdev_item(execute_migration):
     return facade.find_payment_item_config('webdev-oto')
+
+
+@pytest.fixture
+def data_science_item(execute_migration):
+    return facade.find_payment_item_config('data-science')
