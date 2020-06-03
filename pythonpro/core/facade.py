@@ -117,6 +117,11 @@ def promote_to_webdev(user: User, source: str) -> None:
     remove_role(user, 'client')
 
 
+def promote_to_data_scientist(user, source):
+    UserInteraction(category=UserInteraction.BECOME_DATA_SCIENTIST, source=source, user=user).save()
+    assign_role(user, 'data_scientist')
+
+
 def visit_launch_landing_page(user: User, source: str):
     return UserInteraction(category=UserInteraction.LAUNCH_LP, source=source, user=user).save()
 
@@ -208,3 +213,7 @@ def is_member(user: User):
 
 def is_webdev(user: User):
     return has_role(user, 'webdev')
+
+
+def is_data_scientist(user):
+    return has_role(user, 'data_scientist')

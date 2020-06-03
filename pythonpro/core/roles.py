@@ -11,6 +11,17 @@ class Lead(AbstractUserRole):
     }
 
 
+watch_cientist_modules = 'watch_cientist_modules'
+
+
+class DataScientist(AbstractUserRole):
+    available_permissions = {
+        access_forum: True,
+        watch_lead_modules: True,
+        watch_cientist_modules: True,
+    }
+
+
 watch_client_modules = 'watch_client_modules'
 
 

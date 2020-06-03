@@ -53,7 +53,7 @@ class UserAdmin(RolePermissionsUserAdminMixin, admin.ModelAdmin):
     search_fields = ('first_name', 'email')
     ordering = ('first_name',)
     filter_horizontal = ('groups', 'user_permissions',)
-    actions = ['make_client', 'make_webdev', 'make_member', ]
+    actions = ['make_client', 'make_webdev', 'make_member', 'make_data_scientist']
 
     def make_client(self, request, queryset):
         from pythonpro.domain import user_facade
@@ -68,6 +68,14 @@ class UserAdmin(RolePermissionsUserAdminMixin, admin.ModelAdmin):
         for user in queryset:
             try:
                 user_facade.promote_webdev(user, 'django_admin')
+            except UserRoleException:
+                pass  # No need to handle on admin
+
+    def make_data_scientist(self, request, queryset):
+        from pythonpro.domain import user_facade
+        for user in queryset:
+            try:
+                user_facade.promote_data_scientist(user, 'django_admin')
             except UserRoleException:
                 pass  # No need to handle on admin
 
