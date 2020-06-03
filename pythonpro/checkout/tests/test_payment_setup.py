@@ -199,3 +199,21 @@ def test_item_webdev():
                False,
                config
            )
+
+
+def test_item_data_science():
+    config = PagarmeFormConfig.objects.first()
+    item_config = facade.find_payment_item_config('data-science')
+    assert (
+               item_config.name,
+               item_config.slug,
+               item_config.price,
+               item_config.tangible,
+               item_config.default_config,
+           ) == (
+               'Ciência de Dados',
+               'data-science',
+               49700,
+               False,
+               config
+           )
