@@ -618,16 +618,6 @@
         </div>
     </div>
 
-    
-
-
-
-
-
-
-
-
-
     <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -650,27 +640,6 @@
         </div>
     </div>
 
-{% endblock body %}
-
-{% block footer %}
-    <div class=''>
-        <div class="container">
-            <div class="row">
-                <div class="col mt-5 mb-5 text-center">
-                    <i>
-                        {% now "Y" %} Python Pro. Todos os direitos reservados. <br>
-                        CNPJ: 31.080.715/0001-25<br>
-                        +55 84 99419-4414 - {{ DEFAULT_FROM_EMAIL }}
-                    </i>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    
-{% endblock  %}
-
-{% block scripts %}{{ block.super }}
     <script type="application/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script type="application/javascript">
@@ -690,7 +659,24 @@
             }
         });
     </script>
-{% endblock %}
+
+{% endblock body %}
+
+{% block footer %}
+    <div class=''>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5 text-center">
+                    <i>
+                        {% now "Y" %} Python Pro. Todos os direitos reservados. <br>
+                        CNPJ: 31.080.715/0001-25<br>
+                        +55 84 99419-4414 - {{ DEFAULT_FROM_EMAIL }}
+                    </i>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock  %}
 
 {% block styles %}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
