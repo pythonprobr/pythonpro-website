@@ -121,3 +121,20 @@ def webdev_landing_page_oto(request):
         'countdown_limit': request.user.date_joined + timedelta(seconds=30 * 60)
     }
     return render(request, 'checkout/webdev_landing_page_oto.html', ctx)
+
+
+def webdev_landing_page(request):
+    payment_item_config = facade.find_payment_item_config('webdev')
+
+    user = request.user
+    if user.is_authenticated:
+        data = {'name': user.first_name, 'email': user.email, 'phone': ''}
+        form = facade.ContactForm(data)
+    else:
+        form = facade.ContactForm()
+
+    ctx = {
+        'payment_item_config': payment_item_config,
+        'contact_form': form,
+    }
+    return render(request, 'checkout/webdev_landing_page.html', ctx)
