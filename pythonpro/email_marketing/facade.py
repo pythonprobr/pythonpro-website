@@ -11,8 +11,12 @@ _LEAD = 'lead'
 _CLIENT = 'client'
 _MEMBER = 'member'
 _WEBDEV = 'webdev'
+_DATA_SCIENTIST = 'data-scientist'
 
-_ROLES = {_LEAD, _CLIENT, _MEMBER, _WEBDEV}
+_PYTHON_PRO_ROLES = {_LEAD, _CLIENT, _MEMBER, _WEBDEV}
+
+_ALL_ROLES = set(_PYTHON_PRO_ROLES)
+_ALL_ROLES.add(_DATA_SCIENTIST)
 
 
 @shared_task()
@@ -23,6 +27,11 @@ def create_or_update_with_no_role(name: str, email: str, *tags, id='0', phone=No
 @shared_task()
 def create_or_update_lead(name: str, email: str, *tags, id='0', phone=None):
     return _create_or_update(name, email, _LEAD, *tags, id=id, phone=phone)
+
+
+@shared_task()
+def create_or_update_data_scientist(name: str, email: str, *tags, id='0', phone=None):
+    return _create_or_update(name, email, _DATA_SCIENTIST, *tags, id=id, phone=phone)
 
 
 @shared_task()
@@ -97,13 +106,17 @@ def grant_role(email, id, role: str):
     if settings.ACTIVE_CAMPAIGN_TURNED_ON is False:
         return
     role = role.lower()
-    if role not in _ROLES:
-        raise ValueError(f'Role {role} must be one of {_ROLES}')
 
-    roles_to_remove = set(_ROLES)
-    roles_to_remove.remove(role)
-    role_to_grant = role.capitalize()
-    roles_to_remove = map(str.capitalize, roles_to_remove)
+    if role not in _ALL_ROLES:
+        raise ValueError(f'Role {role} must be one of {_PYTHON_PRO_ROLES}')
+    if role == _DATA_SCIENTIST:
+        roles_to_remove = set()
+        role_to_grant = role.capitalize()
+    elif role in _PYTHON_PRO_ROLES:
+        roles_to_remove = set(_PYTHON_PRO_ROLES)
+        roles_to_remove.remove(role)
+        role_to_grant = role.capitalize()
+        roles_to_remove = map(str.capitalize, roles_to_remove)
 
     try:
         user_data = {'id': _find_active_campaign_contact_id(id)}
@@ -113,9 +126,10 @@ def grant_role(email, id, role: str):
     role_to_grant_data.update(user_data)
     _client.contacts.add_tag(role_to_grant_data)
 
-    roles_to_remove_data = _build_tags_array([roles_to_remove])
-    roles_to_remove_data.update(user_data)
-    _client.contacts.remove_tag(roles_to_remove_data)
+    if roles_to_remove:
+        roles_to_remove_data = _build_tags_array(roles_to_remove)
+        roles_to_remove_data.update(user_data)
+        _client.contacts.remove_tag(roles_to_remove_data)
 
 
 @shared_task()
@@ -172,3 +186,5 @@ if __name__ == '__main__':
     # grant_role('renzo@python.pro.br', 1, 'client')
     # grant_role('renzo@python.pro.br', 2, 'member')
     print(_find_active_campaign_contact_id(1))
+
+

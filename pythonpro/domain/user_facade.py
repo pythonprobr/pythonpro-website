@@ -182,6 +182,34 @@ def promote_webdev(user: _User, source: str) -> _User:
     )
     return user
 
+def promote_data_scientist(user: _User, source: str) -> _User:
+    """
+    Promote a user to DataScientist role and change it's role on Email Marketing. Will not fail in case API call fails.
+    Email welcome email is sent to user
+    :param source: source of traffic
+    :param user:
+    :return:
+    """
+    _core_facade.promote_to_data_scientist(user, source)
+    sync_user_on_discourse(user)
+    try:
+        _email_marketing_facade.create_or_update_data_scientist(user.first_name, user.email, id=user.id)
+    except _ActiveCampaignError:
+        pass
+    email_msg = render_to_string(
+        'checkout/data_scientist_email.txt',
+        {
+            'user': user,
+        }
+    )
+    _send_mail(
+        'Inscrição no Ciência de Dados realizada! Confira o link com detalhes.',
+        email_msg,
+        _settings.DEFAULT_FROM_EMAIL,
+        [user.email]
+    )
+    return user
+
 
 def promote_client(user: _User, source: str) -> None:
     """
@@ -413,3 +441,5 @@ def sync_user_on_discourse(user_or_id):
     }
 
     requests.post(url, data={'sso': sso_payload, 'sig': signature}, headers=headers)
+
+

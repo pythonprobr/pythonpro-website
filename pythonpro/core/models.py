@@ -69,6 +69,8 @@ class UserInteraction(models.Model):
     Class representing User important interactions on platform. The goal is to extract metrics about user behaviour
     """
 
+
+
     class Meta:
         indexes = [
             models.Index(fields=['user', 'creation']),
@@ -77,6 +79,7 @@ class UserInteraction(models.Model):
         verbose_name = 'Histórico de Usuário'
         verbose_name_plural = 'Históricos de Usuários'
 
+    BECOME_DATA_SCIENTIST = 'BECOME_DATA_SCIENTIST'
     BECOME_LEAD = 'BECOME_LEAD'
     ACTIVATED = 'ACTIVATED'
     CLIENT_LP = 'CLIENT_LP'
@@ -124,6 +127,7 @@ class UserInteraction(models.Model):
                 (CPL1, 'User Visited CPL1'),
                 (CPL2, 'User Visited CPL2'),
                 (CPL3, 'User Visited CPL3'),
+                (BECOME_DATA_SCIENTIST, 'User Become Data Scientist'),
             )
         )
     )
