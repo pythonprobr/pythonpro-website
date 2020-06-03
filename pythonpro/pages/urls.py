@@ -25,4 +25,9 @@ urlpatterns = [
         views.DsWebinarThankYouPage.as_view(),
         name='ds_webinar_thank_you_page'
     ),
+    path(
+        'lead-onboarding',
+        views.LeadsOnboardingPage.as_view(),
+        name='leads_onboarding_page'
+    ),
 ]

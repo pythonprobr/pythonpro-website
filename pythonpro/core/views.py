@@ -109,7 +109,7 @@ profile_email = login_required(_ProfileUpdateEmail.as_view())
 
 class _ProfileChangePassword(PasswordChangeView):
     template_name = 'core/profile_password.html'
-    success_url = reverse_lazy('core:index')
+    success_url = reverse_lazy('pages:leads_onboarding_page')
 
 
 profile_password = _ProfileChangePassword.as_view()
