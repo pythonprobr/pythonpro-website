@@ -46,3 +46,7 @@ class DsWebinarLandingPage(BaseLandingPageView):
 
 class DsWebinarThankYouPage(BaseThankYouView):
     pass
+
+
+class LeadsOnboardingPage(BaseThankYouView):
+    pass
