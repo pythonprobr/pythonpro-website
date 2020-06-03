@@ -8,6 +8,7 @@ from django_pagarme.models import PagarmeFormConfig, PagarmeItemConfig
 
 migration_module = import_module('pythonpro.checkout.migrations.0001_payment_setup')
 webdev_migration_module = import_module('pythonpro.checkout.migrations.0002_webdev_setup')
+data_science_migration_module = import_module('pythonpro.checkout.migrations.0003_data_science_setup')
 
 
 @pytest.fixture(autouse=True)
@@ -15,6 +16,7 @@ def execute_migration(db, pytestconfig):
     if pytestconfig.known_args_namespace.nomigrations:
         migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
         webdev_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
+        data_science_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
 
 
 @pytest.fixture(autouse=True)
