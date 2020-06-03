@@ -28,7 +28,7 @@ django-extensions = "*"
 activecampaign-python = {git = "https://github.com/renzon/activecampaign-python.git",ref = "last-v1-api"}
 codecov = "*"
 django-bootstrap4 = "*"
-celery = "*"
+celery = "==4.4.3"
 redis = "*"
 django-pagarme = "*"
 inflection = "*"
