@@ -18,7 +18,7 @@
     "default": {
         "activecampaign-python": {
             "git": "https://github.com/renzon/activecampaign-python.git",
-            "ref": "6192c56113390c1f12e421e88e932a9ba5abcb36"
+            "ref": "6d5e1213d11fec2638c8553a4ba1ede26639641e"
         },
         "amqp": {
             "hashes": [
@@ -65,18 +65,18 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:9f556ab7124aac29ce64d0dcc2219c14960c5faaee8fe7aef1fd9cf8577b6426",
-                "sha256:fd0800a3acda1dc15ac4675123f15efb160dc05467df3e19489b3245ea8f689d"
+                "sha256:bcaa88b2f81b88741c47da52f3414c876236700441df87b6198f860e6a200d6f",
+                "sha256:e974e7a3bbdbd6a73ffc07bea5fa0c0744a5a8b87dcca94702597176e3de465e"
             ],
             "index": "pypi",
-            "version": "==1.13.22"
+            "version": "==1.13.23"
         },
         "botocore": {
             "hashes": [
-                "sha256:5df4dc49392922dc23042333187ca33686552ae5a901e91d0bc4140c4226995c",
-                "sha256:eb077e2da1654558c9d97888a2e0710b92cc3162a6641959545451e1a21eea8a"
+                "sha256:5831068c9b49b4c91b0733e0ec784a7733d8732359d73c67a07a0b0868433cae",
+                "sha256:7778957bdc9a25dd33bb4383ebd6d45a8570a2cbff03d1edf430fdacec2b7437"
             ],
-            "version": "==1.16.22"
+            "version": "==1.16.23"
         },
         "celery": {
             "hashes": [
@@ -392,10 +392,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:071ff1c6830233e57a1821d6dbb702c2d841a72fe4c9e6b6f087d566b532533e",
-                "sha256:ddf2f33ccb221b16fe25a022978e45d25a7c31c2ad5c506ab92a640001d85847"
+                "sha256:6e1d31d8a5ad1fe280c3f7ba5b9c08da82245d59946ee06856712ef704f59e19",
+                "sha256:7e101c2d0be6ead83e2706c355aaba236df97e9a7b78aed5bda5d4b0eee11178"
             ],
-            "version": "==8.12.4"
+            "version": "==8.12.5"
         },
         "pickleshare": {
             "hashes": [
@@ -797,11 +797,11 @@
         },
         "pytest-mock": {
             "hashes": [
-                "sha256:997729451dfc36b851a9accf675488c7020beccda15e11c75632ee3d1b1ccd71",
-                "sha256:ce610831cedeff5331f4e2fc453a5dd65384303f680ab34bee2c6533855b431c"
+                "sha256:636e792f7dd9e2c80657e174c04bf7aa92672350090736d82e97e92ce8f68737",
+                "sha256:a9fedba70e37acf016238bb2293f2652ce19985ceb245bbd3d7f3e4032667402"
             ],
             "index": "pypi",
-            "version": "==3.1.0"
+            "version": "==3.1.1"
         },
         "python-dateutil": {
             "hashes": [
