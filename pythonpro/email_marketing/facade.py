@@ -66,14 +66,13 @@ def _create_or_update(name: str, email: str, role: str, *tags, id='0', phone=Non
     if settings.ACTIVE_CAMPAIGN_TURNED_ON is False:
         return
     prospect_list_id = _get_lists()['Prospects']
-    id = _normalise_id(id)
     tags = list(tags)
+    id = _normalise_id(id)
 
     data = {
         'email': email,
         'first_name': name.split()[0],
         'tags': ','.join(tags),
-        'field[%PYTHONPRO_ID%]': id,
         f'p[{prospect_list_id}]': prospect_list_id,
         'status': '1',
     }
@@ -82,6 +81,7 @@ def _create_or_update(name: str, email: str, role: str, *tags, id='0', phone=Non
     if id == _normalise_id('0'):
         contact = _client.contacts.create_contact(data)
     else:
+        data['field[%PYTHONPRO_ID%]'] = id
         try:
             contact_id = _find_active_campaign_contact_id(id)
         except ActiveCampaignError:
@@ -91,6 +91,8 @@ def _create_or_update(name: str, email: str, role: str, *tags, id='0', phone=Non
             contact = _client.contacts.edit_contact(data)
     if role:
         grant_role(email, id, role)
+    usuarios_ativos_list_id = _get_lists()['Usuários Ativos']
+    _client.contacts.update_list_status(usuarios_ativos_list_id, contact['subscriber_id'], 1)
     return contact
 
 
@@ -141,6 +143,10 @@ def tag_as(email: str, id: int, *tags):
         data['id'] = _find_active_campaign_contact_id(id)
     except ActiveCampaignError:
         data['email'] = email
+    else:
+        # Activating users all the time she is tagged
+        usuarios_ativos_list_id = _get_lists()['Usuários Ativos']
+        _client.contacts.update_list_status(usuarios_ativos_list_id, data['id'], 1)
     return _client.contacts.add_tag(data)
 
 

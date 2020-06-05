@@ -36,6 +36,7 @@ def test_lists(resps):
     lists = facade._get_lists()
     assert lists == {
         'Python Pro': '1', 'Python Birds': '2', 'Pytools': '3', 'Prospects': '4', 'Plantão de Dúvidas': '5',
+        'Usuários Ativos': '12'
     }
 
 
@@ -69,6 +70,13 @@ def resps_user_not_found(setup_active_settings):
             ),
             json=_user_editon_ok, status=200
         )
+        r.add(
+            r.POST,
+            (
+                'https://foo.pythonhosted.com/api/3/contactLists'
+            ),
+            json=_user_editon_ok, status=200
+        )
 
         yield r
 
@@ -76,8 +84,8 @@ def resps_user_not_found(setup_active_settings):
 def test_client_creation_user_not_found(resps_user_not_found, grant_role_mock):
     facade.create_or_update_client('Renzo Nuccitelli', 'renzo@python.pro.br', 'turma', id=1)
     body_payload = (
-        'email=renzo%40python.pro.br&first_name=Renzo&tags=turma&field%5B%25'
-        'PYTHONPRO_ID%25%5D=0000000001&p%5B4%5D=4&status=1'
+        'email=renzo%40python.pro.br&first_name=Renzo&tags=turma&p%5B4%5D=4&status=1'
+        '&field%5B%25PYTHONPRO_ID%25%5D=0000000001'
     )
     assert resps_user_not_found.calls[2].request.body == body_payload
 
@@ -120,6 +128,13 @@ def resps_user_found(setup_active_settings):
             ),
             json=_user_editon_ok, status=200
         )
+        r.add(
+            r.POST,
+            (
+                'https://foo.pythonhosted.com/api/3/contactLists'
+            ),
+            json=_user_editon_ok, status=200
+        )
 
         yield r
 
@@ -127,8 +142,8 @@ def resps_user_found(setup_active_settings):
 def test_client_creation_user_found(resps_user_found, grant_role_mock):
     facade.create_or_update_client('Renzo Nuccitelli', 'renzo@python.pro.br', 'turma', id=1)
     body_payload = (
-        'email=renzo%40python.pro.br&first_name=Renzo&tags=turma&field%5B%25'
-        'PYTHONPRO_ID%25%5D=0000000001&p%5B4%5D=4&status=1&id=1'
+        'email=renzo%40python.pro.br&first_name=Renzo&tags=turma&p%5B4%5D=4&status=1'
+        '&field%5B%25PYTHONPRO_ID%25%5D=0000000001&id=1'
     )
     assert resps_user_found.calls[2].request.body == body_payload
 
@@ -157,6 +172,13 @@ def resps_two_users_found(setup_active_settings):
             ),
             json=_user_editon_ok, status=200
         )
+        r.add(
+            r.POST,
+            (
+                'https://foo.pythonhosted.com/api/3/contactLists'
+            ),
+            json=_user_editon_ok, status=200
+        )
 
         yield r
 
@@ -164,8 +186,8 @@ def resps_two_users_found(setup_active_settings):
 def test_client_creation_two_users_found(resps_two_users_found, grant_role_mock):
     facade.create_or_update_client('Renzo Nuccitelli', 'renzo@python.pro.br', 'turma', id=1)
     body_payload = (
-        'email=renzo%40python.pro.br&first_name=Renzo&tags=turma&field%5B%25'
-        'PYTHONPRO_ID%25%5D=0000000001&p%5B4%5D=4&status=1'
+        'email=renzo%40python.pro.br&first_name=Renzo&tags=turma&p%5B4%5D=4&status=1'
+        '&field%5B%25PYTHONPRO_ID%25%5D=0000000001'
     )
     assert resps_two_users_found.calls[2].request.body == body_payload
 
@@ -247,6 +269,10 @@ _lists = {
     },
     '4': {
         'id': '5', 'name': 'Plantão de Dúvidas', 'cdate': '2019-12-06 15:28:51', 'private': '0', 'userid': '1',
+        'subscriber_count': 0
+    },
+    '5': {
+        'id': '12', 'name': 'Usuários Ativos', 'cdate': '2020-06-06 15:28:51', 'private': '0', 'userid': '1',
         'subscriber_count': 0
     },
     'result_code': 1,
