@@ -126,8 +126,25 @@
 {% block styles %}
     {{ block.super }}
     <style>
-
-        
+        @media only screen and (min-device-width : 320px) and (max-device-width : 1024px) {
+            .hero h1 {
+                font-size: 20pt;
+            }
+            .hero h4 {
+                font-size: 14pt;
+            }
+            .cta {
+                font-size: 14pt !important;
+            }
+            h2 {
+                font-size: 18pt;
+            }
+            p {
+                font-size: 12pt;
+            }
+        }
     </style>
 
 {% endblock %}
+
+{% block scripts %}{% endblock %}
