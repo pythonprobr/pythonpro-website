@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "477b4f0d8269bbae5cf872dcd1a435522e1532c1e127b2226ff8b1c3562ccb7e"
+            "sha256": "e29a5f04b4965414b241a65287d5f296cf2fe55b7a63360ef29f60cd1b3baf4a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -17,6 +17,7 @@
     },
     "default": {
         "activecampaign-python": {
+            "editable": true,
             "git": "https://github.com/renzon/activecampaign-python.git",
             "ref": "24bc427b7ffdef039c1eb9f5f5218fc5f16ba4ee"
         },
