@@ -25,7 +25,7 @@ pagarme-python = "*"
 sentry-sdk = "*"
 python-dateutil = "*"
 django-extensions = "*"
-activecampaign-python = {git = "https://github.com/renzon/activecampaign-python.git",ref = "update-list"}
+activecampaign-python = {editable = true,git = "https://github.com/renzon/activecampaign-python.git",ref = "update-list"}
 codecov = "*"
 django-bootstrap4 = "*"
 celery = "*"
