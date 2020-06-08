@@ -18,7 +18,7 @@
     "default": {
         "activecampaign-python": {
             "git": "https://github.com/renzon/activecampaign-python.git",
-            "ref": "6d5e1213d11fec2638c8553a4ba1ede26639641e"
+            "ref": "24bc427b7ffdef039c1eb9f5f5218fc5f16ba4ee"
         },
         "amqp": {
             "hashes": [
