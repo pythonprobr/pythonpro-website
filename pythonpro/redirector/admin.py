@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 
 from pythonpro.redirector.models import Redirect, RedirectLink
 
@@ -12,6 +13,16 @@ class RedirectLinkAdmin(admin.TabularInline):
 
 @admin.register(Redirect)
 class RedirectorAdmin(admin.ModelAdmin):
-    list_display = 'slug url'.split()
+    list_display = ['slug', 'created', 'get_redirect_link']
+    list_filter = ['use_javascript', 'created']
     inlines = (RedirectLinkAdmin, )
     exclude = ['created', 'updated']
+    ordering = ['-created']
+
+    def get_redirect_link(self, obj):
+        return format_html(
+            f"""<a href='{obj.get_absolute_url()}' class="button" target='_blank'>
+                Link Gerado
+            </a>""")
+
+    get_redirect_link.short_description = 'Links'
