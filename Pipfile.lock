@@ -103,11 +103,11 @@
         },
         "codecov": {
             "hashes": [
-                "sha256:7378c4bec1809dde64031bf7d76c95266b0e6d60cfcd1d6a16ce96bfb6360ac3",
-                "sha256:bf30a41f65e747b159e2a749d1f9c92042d358bba0905fd94d3def3a368e592c"
+                "sha256:5bf4e752844566087c287cb7c43522210c28ac5db089005966109f58cbcbe135",
+                "sha256:770efd88c8e2aed346a1bc1a4ead8a055593278b1039c589273dda247d03c9dd",
+                "sha256:d1e44c6563014ad17235c74d9be3ecce053a7bebcea919ee5909265a71bb26e3"
             ],
-            "index": "pypi",
-            "version": "==2.1.4"
+            "version": "==2.1.6"
         },
         "collectfast": {
             "hashes": [
