@@ -7,20 +7,20 @@
 </div>
 <div class="row">
     <div class="col-12 col-md mb-4">
-        <a href='#' class='img-testimonial' data-toggle='modal' 
-            data-target="#idModalTestimonial" data-youtube-id="p-7b3LYxXPc">
-            <img src='{% static 'img/social-proof/fabricio.webp' %}' class='img-fluid lazy'>
+        <a href='#' class='img-testimonial' data-toggle='modal'
+            data-target="#idModalTestimonial" data-youtube-id="Fpq-T9lApho">
+            <img src='{% static 'img/social-proof/tanio.png' %}' class='img-fluid lazy'>
         </a>
     </div>
 
     <div class="col-12 col-md mb-4">
-        <a href='#' class='img-testimonial' data-toggle='modal' 
+        <a href='#' class='img-testimonial' data-toggle='modal'
             data-target="#idModalTestimonial" data-youtube-id="Qg8LmM2Sfxg">
             <img src='{% static 'img/social-proof/testando-o-mercado.webp' %}' class='img-fluid lazy'>
         </a>
     </div>
     <div class="col-12 col-md mb-4">
-        <a href='#' class='img-testimonial' data-toggle='modal' 
+        <a href='#' class='img-testimonial' data-toggle='modal'
             data-target="#idModalTestimonial" data-youtube-id="TtlB4E7_MZM">
             <img src='{% static 'img/social-proof/ferrabras.webp' %}' class='img-fluid lazy'>
         </a>
@@ -29,19 +29,19 @@
 
 <div class="row">
     <div class="col-12 col-md mb-4">
-        <a href='#' class='img-testimonial' data-toggle='modal' 
+        <a href='#' class='img-testimonial' data-toggle='modal'
             data-target="#idModalTestimonial" data-youtube-id="ZNsU9KLVkoM">
             <img src='{% static 'img/social-proof/isaac.webp' %}' class='img-fluid lazy'>
         </a>
     </div>
     <div class="col-12 col-md mb-4">
-        <a href='#' class='img-testimonial' data-toggle='modal' 
+        <a href='#' class='img-testimonial' data-toggle='modal'
             data-target="#idModalTestimonial" data-youtube-id="0HP2nS44Ip4">
             <img src='{% static 'img/social-proof/alysson.webp' %}' class='img-fluid lazy'>
         </a>
     </div>
     <div class="col-12 col-md mb-4">
-        <a href='#' class='img-testimonial' data-toggle='modal' 
+        <a href='#' class='img-testimonial' data-toggle='modal'
             data-target="#idModalTestimonial" data-youtube-id="ZNgfS9Ohwac">
             <img src='{% static 'img/social-proof/marcelo.webp' %}' class='img-fluid lazy'>
         </a>
@@ -50,19 +50,19 @@
 
 <div class="row">
     <div class="col-12 col-md mb-4">
-        <a href='#' class='img-testimonial' data-toggle='modal' 
+        <a href='#' class='img-testimonial' data-toggle='modal'
             data-target="#idModalTestimonial" data-youtube-id="SwGDBRrjyf0">
             <img src='{% static 'img/social-proof/diego.webp' %}' class='img-fluid lazy'>
         </a>
     </div>
     <div class="col-12 col-md mb-4">
-        <a href='#' class='img-testimonial' data-toggle='modal' 
+        <a href='#' class='img-testimonial' data-toggle='modal'
             data-target="#idModalTestimonial" data-youtube-id="avyZ4WjluEo">
             <img src='{% static 'img/social-proof/vinicius.webp' %}' class='img-fluid lazy'>
         </a>
     </div>
     <div class="col-12 col-md mb-4">
-        <a href='#' class='img-testimonial' data-toggle='modal' 
+        <a href='#' class='img-testimonial' data-toggle='modal'
             data-target="#idModalTestimonial" data-youtube-id="J4uv2lk_rZ0">
             <img src='{% static 'img/social-proof/vicente.webp' %}' class='img-fluid lazy'>
         </a>
@@ -71,19 +71,19 @@
 
 <div class="row">
     {% comment %} <div class="col-12 col-md mb-4">
-        <a href='#' class='img-testimonial' data-toggle='modal' 
+        <a href='#' class='img-testimonial' data-toggle='modal'
             data-target="#idModalTestimonial" data-youtube-id="3g0g4atd858">
             <img src='{% static 'img/social-proof/fabricio.webp' %}' class='img-fluid lazy'>
         </a>
     </div> {% endcomment %}
     {% comment %} <div class="col-12 col-md mb-4">
-        <a href='#' class='img-testimonial' data-toggle='modal' 
+        <a href='#' class='img-testimonial' data-toggle='modal'
             data-target="#idModalTestimonial" data-youtube-id="tICJmFSxuJg">
             <img src='{% static 'img/social-proof/fabricio.webp' %}' class='img-fluid lazy'>
         </a>
     </div>
     <div class="col-12 col-md mb-4">
-        <a href='#' class='img-testimonial' data-toggle='modal' 
+        <a href='#' class='img-testimonial' data-toggle='modal'
             data-target="#idModalTestimonial" data-youtube-id="CSuz1aYsaic">
             <img src='{% static 'img/social-proof/fabricio.webp' %}' class='img-fluid lazy'>
         </a>
@@ -106,10 +106,10 @@
         $(".img-testimonial").click(function(el) {
             var youtube_id = $(this).data('youtube-id');
             var url = "https://www.youtube.com/embed/"+ youtube_id +"?rel=0&showinfo=0&autoplay=1 "
-            
+
             $("#youtubeTestimonialEmbed").attr('src', url)
         });
-        
+
         $('#idModalTestimonial').on('hide.bs.modal', function (event) {
             $("#youtubeTestimonialEmbed").attr('src', '')
         })
