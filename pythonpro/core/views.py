@@ -171,6 +171,7 @@ def _lead_form(request, *args, **kwargs):
     source = request.GET.get('utm_source', default='unknown')
     first_name = request.POST.get('first_name')
     email = request.POST.get('email')
+    offer_tag = kwargs.get('offer_tag', 'offer-funnel-0')
 
     try:
         user = user_facade.register_lead(first_name, email, source)
@@ -178,18 +179,20 @@ def _lead_form(request, *args, **kwargs):
         return render(request, 'core/lead_form_errors.html', context={'form': e.form}, status=400)
 
     login(request, user)
+    user_facade._email_marketing_facade.tag_as.delay(email, offer_tag)
 
     if kwargs.get('redirect_to_OTO') is False:
         return redirect(reverse('core:thanks'))
+
     return redirect(reverse('webdev_landing_page_oto'))
 
 
 def lead_form(request):
-    return _lead_form(request)
+    return _lead_form(request, redirect_to_OTO=True, offer_tag='offer-funnel-0')
 
 
 def lead_form_with_no_offer(request):
-    return _lead_form(request, redirect_to_OTO=False)
+    return _lead_form(request, redirect_to_OTO=False, offer_tag='offer-funnel-1')
 
 
 def linktree(request):
