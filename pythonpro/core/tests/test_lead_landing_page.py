@@ -1,4 +1,4 @@
-from unittest.mock import Mock, call
+from unittest.mock import Mock, call, ANY
 
 import pytest
 from django.urls import reverse
@@ -38,7 +38,12 @@ def email(fake):
 
 
 @pytest.fixture
-def resp_lead_creation(client, db, fake: Faker, create_lead_mock, email):
+def tag_as_mock(mocker):
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.tag_as.delay')
+
+
+@pytest.fixture
+def resp_lead_creation(tag_as_mock, client, db, fake: Faker, create_lead_mock, email):
     return client.post(
         reverse('core:lead_form') + '?utm_source=facebook',
         data={
@@ -64,7 +69,7 @@ def test_email_error_subscribing_with_email_variation(resp_lead_creation, email:
 
 
 @pytest.fixture
-def resp_email_upper_case(client, db, fake: Faker, create_lead_mock, email):
+def resp_email_upper_case(tag_as_mock, client, db, fake: Faker, create_lead_mock, email):
     email = email.upper()
     return client.post(
         reverse('core:lead_form') + '?utm_source=facebook',
@@ -120,7 +125,7 @@ def test_lead_created_interaction(resp_lead_creation, django_user_model):
 
 
 @pytest.fixture
-def resp_lead_creation_without_source(client, db, fake: Faker, create_lead_mock):
+def resp_lead_creation_without_source(tag_as_mock, client, db, fake: Faker, create_lead_mock):
     return client.post(
         reverse('core:lead_form'),
         data={
@@ -198,7 +203,7 @@ def test_should_use_lead_form_with_OTO(resp):
 
 
 @pytest.fixture
-def resp_lead_creation_with_no_offer(client, db, fake: Faker, create_lead_mock, email):
+def resp_lead_creation_with_no_offer(tag_as_mock, client, db, fake: Faker, create_lead_mock, email):
     return client.post(
         reverse('core:lead_form_with_no_offer'),
         data={
@@ -215,3 +220,11 @@ def test_should_redirect_to_one_time_offer(resp_lead_creation):
 
 def test_should_redirect_to_thanks_page_direclty(resp_lead_creation_with_no_offer):
     assert resp_lead_creation_with_no_offer['Location'] == reverse('core:thanks')
+
+
+def test_should_tag_as_default_offer(tag_as_mock, resp_lead_creation):
+    assert call(ANY, 'offer-funnel-0') in tag_as_mock.call_args_list
+
+
+def test_should_tag_as_offer_funnel_1(tag_as_mock, resp_lead_creation_with_no_offer):
+    assert call(ANY, 'offer-funnel-1') in tag_as_mock.call_args_list
