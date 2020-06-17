@@ -80,6 +80,12 @@ class LeadForm(UserSignupForm):
         model = User
         fields = ('first_name', 'email')
 
+    first_name = forms.CharField(
+        label=str(), widget=forms.TextInput(attrs={'placeholder': 'Qual Seu Nome?'})
+    )
+    email = forms.EmailField(
+        label=str(), widget=forms.EmailInput(attrs={'placeholder': 'Qual seu MELHOR e-mail?'})
+    )
     source = forms.CharField(widget=forms.HiddenInput())
     password1 = forms.CharField(widget=forms.HiddenInput())
     password2 = forms.CharField(widget=forms.HiddenInput())
