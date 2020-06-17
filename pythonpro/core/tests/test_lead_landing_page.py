@@ -193,12 +193,12 @@ def test_should_has_a_lite_version(client):
 
 def test_should_use_lead_form_with_no_offer(client):
     resp = client.get(reverse('core:lead_landing_with_no_offer'), secure=True)
-    dj_assert_not_contains(resp, reverse('core:lead_form') + '">')
+    dj_assert_not_contains(resp, reverse('core:lead_form') + '"')
     dj_assert_contains(resp, reverse('core:lead_form_with_no_offer'))
 
 
 def test_should_use_lead_form_with_OTO(resp):
-    dj_assert_contains(resp, reverse('core:lead_form') + '">')
+    dj_assert_contains(resp, reverse('core:lead_form'))
     dj_assert_not_contains(resp, reverse('core:lead_form_with_no_offer'))
 
 
