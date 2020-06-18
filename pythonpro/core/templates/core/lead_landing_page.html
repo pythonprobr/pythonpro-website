@@ -43,45 +43,11 @@
   <meta property="og:image" content="{% static 'img/python-birds/card-python-de-graca.png' %}" />
 {% endblock %}
 
-
-{% block scripts %}{{ block.super }}
+{% block scripts %}
   <script src="{% static 'js/python-birds/jquery.min.js' %}"></script>
   <script src="{% static 'js/python-birds/owl.carousel.min.js' %}"></script>
   <script src="{% static 'js/python-birds/magnific-popup.min.js' %}"></script>
   <script src="{% static 'js/python-birds/main.js' %}"></script>
-
-  <script>
-    $(document).ready(function(){
-      $('.owl-carousel').owlCarousel({
-        autoPlay: 3000,
-        loop: true,
-        margin: 10,
-        responsiveClass: true,
-        dots: true,
-        responsive:{
-          0:{
-            items: 1,
-            nav: true
-          },
-          600:{
-            items: 3,
-            nav: false
-          },
-          1000:{
-            items: 3,
-            nav: true,
-          }
-        }
-      })
-    });
-  </script>
-
-  <script>
-    $('.popup-vimeo').magnificPopup({
-      src: 'https://vimeo.com/398972182',
-      type: 'iframe'
-    });
-  </script>
 {% endblock %}
 
 {% block body %}
