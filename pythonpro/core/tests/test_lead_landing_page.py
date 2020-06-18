@@ -1,4 +1,4 @@
-from unittest.mock import Mock, call
+from unittest.mock import Mock, call, ANY
 
 import pytest
 from django.urls import reverse
@@ -150,8 +150,8 @@ def test_user_has_role(resp_lead_creation, django_user_model):
 def test_user_created_as_lead_on_email_marketing(resp_lead_creation, django_user_model, create_lead_mock: Mock):
     user = django_user_model.objects.first()
     calls = [
-        call(user.first_name, user.email, 'offer-funnel-0'),
-        call(user.first_name, user.email, 'offer-funnel-0', id=user.id)
+        call(user.first_name, user.email, 'offer-funnel-0', 'utm_source=facebook'),
+        call(user.first_name, user.email, 'offer-funnel-0', 'utm_source=facebook', id=user.id)
     ]
     create_lead_mock.assert_has_calls(calls)
 
@@ -218,3 +218,75 @@ def test_should_redirect_to_one_time_offer(resp_lead_creation):
 
 def test_should_redirect_to_thanks_page_direclty(resp_lead_creation_with_no_offer):
     assert resp_lead_creation_with_no_offer['Location'] == reverse('core:thanks')
+
+
+@pytest.fixture
+def qs_with_utms():
+    return (
+        "?utm_source=facebook-ads"
+        "&utm_medium=trafego-pago"
+        "&utm_campaign=a00f00"
+        "&utm_content=content"
+        "&utm_term=term"
+        "&fbclid=584954"
+    )
+
+
+@pytest.fixture
+def url_with_utms(qs_with_utms):
+    return reverse('core:lead_form_with_no_offer') + qs_with_utms
+
+
+@pytest.fixture
+def resp_lead_creation_with_utms(client, db, fake: Faker, create_lead_mock, email, url_with_utms):
+    return client.post(
+        url_with_utms,
+        data={
+            'first_name': fake.name(),
+            'email': email,
+        },
+        secure=True
+    )
+
+
+def test_should_send_utms_to_email_marketing_as_tags(create_lead_mock, resp_lead_creation_with_utms):
+    calls = [
+        call(
+            ANY,
+            ANY,
+            'offer-funnel-1',
+            "utm_source=facebook-ads",
+            "utm_medium=trafego-pago",
+            "utm_campaign=a00f00",
+            "utm_content=content",
+            "utm_term=term"
+        ),
+        call(
+            ANY,
+            ANY,
+            'offer-funnel-1',
+            "utm_source=facebook-ads",
+            "utm_medium=trafego-pago",
+            "utm_campaign=a00f00",
+            "utm_content=content",
+            "utm_term=term",
+            id=ANY
+        )
+    ]
+    create_lead_mock.assert_has_calls(calls)
+
+
+def test_should_not_send_other_params_than_utms_to_email_marketing_as_tags(
+    create_lead_mock, resp_lead_creation_with_utms
+):
+    for current_call in create_lead_mock.call_args_list:
+        assert 'fbclid=584954' not in current_call
+
+
+@pytest.fixture
+def resp_with_utm(client, qs_with_utms):
+    return client.get(reverse('core:lead_landing') + qs_with_utms, secure=True)
+
+
+def test_should_send_utms_to_form_action(qs_with_utms, resp_with_utm):
+    dj_assert_contains(resp_with_utm, qs_with_utms)

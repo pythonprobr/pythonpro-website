@@ -73,7 +73,7 @@
           <h4 class="text-white fw-500">Preencha o formulário e tenha acesso <span class="text-uppercase">grátis</span>.
           </h4>
 
-          <form method="POST" action="{{ form_action }}{% if request.GET.utm_source %}?utm_source={{ request.GET.utm_source }}{% endif %}" class="header__group__form__item">
+          <form method="POST" action="{% autoescape off %}{{ form_action }}{% endautoescape %}" class="header__group__form__item">
             {% csrf_token %}
             {% bootstrap_form form %}
             <div class="header__group__form__item__div">
