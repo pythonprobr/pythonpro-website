@@ -43,7 +43,9 @@
   <meta property="og:image" content="{% static 'img/python-birds/card-python-de-graca.png' %}" />
 {% endblock %}
 
-{% block scripts %}
+{% block scripts %}{% endblock %}
+{% block bottom_scripts %}
+  {% include 'core/_scripts.html' %}
   <script src="{% static 'js/python-birds/jquery.min.js' %}"></script>
   <script src="{% static 'js/python-birds/owl.carousel.min.js' %}"></script>
   <script src="{% static 'js/python-birds/magnific-popup.min.js' %}"></script>
