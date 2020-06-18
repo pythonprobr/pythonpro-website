@@ -124,6 +124,7 @@ waiting_list = _WaitingListView.as_view()
 
 def _lead_landing(request, template_name='core/lead_landing_page.html', form_action=None):
     form_action = reverse('core:lead_form') if form_action is None else form_action
+    form_action = f"{form_action}?{request.GET.urlencode(safe='&')}"
     return render(request, template_name, context={'form': LeadForm(), 'form_action': form_action})
 
 
@@ -171,10 +172,13 @@ def _lead_form(request, *args, **kwargs):
     source = request.GET.get('utm_source', default='unknown')
     first_name = request.POST.get('first_name')
     email = request.POST.get('email')
-    offer_tag = kwargs.get('offer_tag', 'offer-funnel-0')
+    tags = [kwargs.get('offer_tag', 'offer-funnel-0')]
+    for key, value in request.GET.items():
+        if key.startswith('utm_'):
+            tags.append(f"{key}={value}")
 
     try:
-        user = user_facade.register_lead(first_name, email, source, tags=[offer_tag])
+        user = user_facade.register_lead(first_name, email, source, tags=tags)
     except user_facade.UserCreationException as e:
         return render(request, 'core/lead_form_errors.html', context={'form': e.form}, status=400)
 
