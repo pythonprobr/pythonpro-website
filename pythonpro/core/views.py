@@ -174,12 +174,11 @@ def _lead_form(request, *args, **kwargs):
     offer_tag = kwargs.get('offer_tag', 'offer-funnel-0')
 
     try:
-        user = user_facade.register_lead(first_name, email, source)
+        user = user_facade.register_lead(first_name, email, source, tags=[offer_tag])
     except user_facade.UserCreationException as e:
         return render(request, 'core/lead_form_errors.html', context={'form': e.form}, status=400)
 
     login(request, user)
-    user_facade._email_marketing_facade.tag_as.delay(email, offer_tag)
 
     if kwargs.get('redirect_to_OTO') is False:
         return redirect(reverse('core:thanks'))
