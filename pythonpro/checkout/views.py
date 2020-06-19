@@ -70,7 +70,7 @@ def membership_lp(request):
         payment_item_config = client_discount_item_config
         client_discount = no_discount_item_config.price - client_discount_item_config.price - first_day_discount
 
-    login_url = reverse('login')
+    login_url = reverse('two_factor:login')
     redirect_path = reverse('checkout:membership_lp')
     qs = urlencode({'utm_source': request.GET.get('utm_source', 'unknown')})
     redirect_url = f'{redirect_path}?{qs}'

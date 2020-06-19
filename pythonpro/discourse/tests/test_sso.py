@@ -139,5 +139,5 @@ def test_user_not_logged_status_code(client):
 def test_user_not_logged(client):
     discourse_path = reverse('discourse:sso')
     response = client.get(discourse_path, secure=True)
-    login_path = reverse('login')
+    login_path = reverse('two_factor:login')
     assert response.url == f'{login_path}?next={discourse_path}'

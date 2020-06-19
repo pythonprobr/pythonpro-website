@@ -111,7 +111,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </ul>
         {% else %}
             <a class="btn btn-light my-2 my-sm-0"
-               href="{% url 'login' %}?next={% url 'dashboard:home' %}">Entrar</a>
+               href="{% url 'two_factor:login' %}?next={% url 'dashboard:home' %}">Entrar</a>
         {% endif %}
     </div>
 </nav>

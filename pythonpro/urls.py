@@ -17,19 +17,19 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import (
-    LoginView, LogoutView, PasswordResetCompleteView, PasswordResetConfirmView,
+    LogoutView, PasswordResetCompleteView, PasswordResetConfirmView,
     PasswordResetDoneView,
     PasswordResetView,
 )
 from django.urls import include, path, reverse_lazy
 from django.views.generic.base import RedirectView
+from two_factor.urls import urlpatterns as tf_urls
 
-from pythonpro.payments import views as payments_views
 from pythonpro.checkout import views as checkout_views
+from pythonpro.payments import views as payments_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('conta/login/', LoginView.as_view(), name='login'),
     path('conta/logout/', LogoutView.as_view(), name='logout'),
     path('conta/reiniciar_senha', PasswordResetView.as_view(), name='password_reset'),
     path('conta/reiniciar_senha/ok', PasswordResetDoneView.as_view(), name='password_reset_done'),
@@ -44,6 +44,7 @@ urlpatterns = [
     path('pagamento/', include('pythonpro.payments.urls')),
     path('turmas/', include('pythonpro.cohorts.urls')),
     path('dashboard/', include('pythonpro.dashboard.urls')),
+    path('', include(tf_urls)),
     path('', include('pythonpro.launch.urls')),
     path('', include('pythonpro.core.urls')),
     path('', include('pythonpro.checkout.urls')),

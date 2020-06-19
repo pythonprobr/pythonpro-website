@@ -40,7 +40,6 @@ PAGARME_API_KEY = config('PAGARME_API_KEY')
 CHAVE_PAGARME_API_PRIVADA = PAGARME_API_KEY
 CHAVE_PAGARME_CRIPTOGRAFIA_PUBLICA = PAGARME_CRYPTO_KEY
 
-
 PAGSEGURO_PAYMENT_PLAN = config('PAGSEGURO_PAYMENT_PLAN')
 
 # Email Configuration
@@ -57,7 +56,10 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 # Login Config
 
 LOGIN_REDIRECT_URL = LOGOUT_REDIRECT_URL = '/'
-LOGIN_URL = 'login'
+LOGIN_URL = 'two_factor:login'
+
+# 2FA Configs
+TWO_FACTOR_PATCH_ADMIN = True
 
 # Application definition
 
@@ -87,6 +89,10 @@ INSTALLED_APPS = [
     'bootstrap4',
     'django_pagarme',
     'phonenumber_field',
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'two_factor',
 ]
 
 MIDDLEWARE = [
@@ -97,6 +103,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'pythonpro.analytics.middleware.AnalyticsMiddleware',
