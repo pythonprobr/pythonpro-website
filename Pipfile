@@ -32,6 +32,7 @@ celery = "*"
 redis = "*"
 django-pagarme = "*"
 inflection = "*"
+django-two-factor-auth = "*"
 
 [dev-packages]
 faker = "*"

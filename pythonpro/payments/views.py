@@ -103,7 +103,7 @@ def _render_launch_page(is_launch_open, request, template_closed_launch, templat
         full_price_float = price_float + discount_float
         price_installment = (price // 10) / 100
         full_price_installment = full_price_float // 10
-        login_url = reverse('login')
+        login_url = reverse('two_factor:login')
         redirect_path = reverse(redirect_path_name)
         qs = urlencode({'utm_source': request.GET.get('utm_source', 'unknown')})
         redirect_url = f'{redirect_path}?{qs}'
