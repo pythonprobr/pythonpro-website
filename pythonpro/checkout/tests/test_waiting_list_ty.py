@@ -30,7 +30,7 @@ def resp(subscription_closed, client_with_lead, logged_user, create_or_update_wi
 
 def test_logged_user_updated(resp, logged_user, create_or_update_with_no_role_mock):
     create_or_update_with_no_role_mock.assert_called_once_with(
-        logged_user.first_name, logged_user.email, logged_user.id, 'lista-de-espera', phone=logged_user.phone
+        logged_user.first_name, logged_user.email, 'lista-de-espera', id=logged_user.id, phone=logged_user.phone
     )
 
 
@@ -57,7 +57,7 @@ def resp_anonymous_user_existing_email(subscription_closed, client, logged_user,
 def test_anonymous_user_existing_email_updated(resp_anonymous_user_existing_email, logged_user,
                                                create_or_update_with_no_role_mock):
     create_or_update_with_no_role_mock.assert_called_once_with(
-        logged_user.first_name, logged_user.email, logged_user.id, 'lista-de-espera', phone=logged_user.phone
+        logged_user.first_name, logged_user.email, 'lista-de-espera', id=logged_user.id, phone=logged_user.phone
     )
 
 
