@@ -61,7 +61,7 @@ def _promote(user, slug: str):
     elif slug.startswith('data-science'):
         user_facade.promote_data_scientist(user, 'unknown')
     else:
-        raise ValueError(f'{slug} should contain webdev or membership')
+        raise ValueError(f'{slug} should contain webdev or membership or data-science')
 
 
 def payment_change_handler(payment_id):

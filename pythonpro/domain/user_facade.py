@@ -343,7 +343,7 @@ def subscribe_to_waiting_list(user: _User, phone: str, source: str) -> None:
     """
     _core_facade.subscribe_to_waiting_list(user, source)
     _email_marketing_facade.create_or_update_with_no_role.delay(
-        user.first_name, user.email, user.id, 'lista-de-espera', phone=phone
+        user.first_name, user.email, 'lista-de-espera', id=user.id, phone=phone
     )
 
 
