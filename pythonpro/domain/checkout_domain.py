@@ -42,14 +42,15 @@ GENERATED_BOLETO_TAG = 'generated-boleto'
 def payment_handler_task(payment_id):
     payment = django_pagarme_facade.find_payment(payment_id)
     status = payment.status()
-    slug = payment.first_item_slug()
     if status == django_pagarme_facade.PAID:
+        slug = payment.first_item_slug()
         user = payment.user
         if payment.payment_method == django_pagarme_facade.BOLETO:
             email_marketing_facade.remove_tags.delay(user.email, user.id, f'{slug}-boleto')
         _promote(user, slug)
     elif status == django_pagarme_facade.WAITING_PAYMENT:
         user = payment.user
+        slug = payment.first_item_slug()
         email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-boleto')
 
 
