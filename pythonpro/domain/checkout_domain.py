@@ -41,17 +41,20 @@ GENERATED_BOLETO_TAG = 'generated-boleto'
 @shared_task()
 def payment_handler_task(payment_id):
     payment = django_pagarme_facade.find_payment(payment_id)
-    status = payment.status()
-    if status == django_pagarme_facade.PAID:
+    try:
         slug = payment.first_item_slug()
-        user = payment.user
-        if payment.payment_method == django_pagarme_facade.BOLETO:
-            email_marketing_facade.remove_tags.delay(user.email, user.id, f'{slug}-boleto')
-        _promote(user, slug)
-    elif status == django_pagarme_facade.WAITING_PAYMENT:
-        user = payment.user
-        slug = payment.first_item_slug()
-        email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-boleto')
+    except django_pagarme_facade.PagarmePaymentItemDoesNotExist:
+        pass  # no need to handle payment with no Item
+    else:
+        status = payment.status()
+        if status == django_pagarme_facade.PAID:
+            user = payment.user
+            if payment.payment_method == django_pagarme_facade.BOLETO:
+                email_marketing_facade.remove_tags.delay(user.email, user.id, f'{slug}-boleto')
+            _promote(user, slug)
+        elif status == django_pagarme_facade.WAITING_PAYMENT:
+            user = payment.user
+            email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-boleto')
 
 
 def _promote(user, slug: str):
