@@ -61,6 +61,15 @@ LOGIN_URL = 'two_factor:login'
 # 2FA Configs
 TWO_FACTOR_PATCH_ADMIN = True
 
+# Recaptch credentials
+has_captch_config = config('RECAPTCHA_PUBLIC_KEY')
+if has_captch_config:
+    RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY')
+    RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
+    RECAPTCHA_REQUIRED_SCORE = 0.85
+else:
+    SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -76,6 +85,7 @@ INSTALLED_APPS = [
     'pythonpro.checkout',
     'pythonpro.redirector',
     'pythonpro.pages',
+    'captcha',
     'rolepermissions',
     'ordered_model',
     'django.contrib.admin',

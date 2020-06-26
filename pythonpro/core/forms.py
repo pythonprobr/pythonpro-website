@@ -1,7 +1,9 @@
 from collections import ChainMap
 
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
 from django.core.exceptions import ValidationError
 from django.forms import CharField, ModelForm
 from django.utils.translation import gettext_lazy as _
@@ -93,3 +95,7 @@ class LeadForm(UserSignupForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['email'].widget.attrs.pop("autofocus", None)
+
+
+class PythonProResetForm(PasswordResetForm):
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)

@@ -33,6 +33,7 @@ redis = "*"
 django-pagarme = "*"
 inflection = "*"
 django-two-factor-auth = "*"
+django-recaptcha = "*"
 
 [dev-packages]
 faker = "*"

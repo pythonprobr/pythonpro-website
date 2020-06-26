@@ -13,25 +13,26 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import (
     LogoutView, PasswordResetCompleteView, PasswordResetConfirmView,
     PasswordResetDoneView,
-    PasswordResetView,
 )
 from django.urls import include, path, reverse_lazy
 from django.views.generic.base import RedirectView
 from two_factor.urls import urlpatterns as tf_urls
 
 from pythonpro.checkout import views as checkout_views
+from pythonpro.core import views as core_views
 from pythonpro.payments import views as payments_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('conta/logout/', LogoutView.as_view(), name='logout'),
-    path('conta/reiniciar_senha', PasswordResetView.as_view(), name='password_reset'),
+    path('conta/reiniciar_senha', core_views.password_reset, name='password_reset'),
     path('conta/reiniciar_senha/ok', PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('conta/reiniciar/<uidb64>/<token>/', PasswordResetConfirmView.as_view(),
          name='password_reset_confirm'),

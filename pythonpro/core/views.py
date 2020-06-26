@@ -2,14 +2,14 @@ from django.conf import settings
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import SetPasswordForm
-from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.views import PasswordChangeView, PasswordResetView
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 from django_sitemaps import Sitemap
 from rolepermissions.checkers import has_role
 
-from pythonpro.core.forms import LeadForm, UserEmailForm, UserSignupForm
+from pythonpro.core.forms import LeadForm, UserEmailForm, UserSignupForm, PythonProResetForm
 from pythonpro.core.models import User
 from pythonpro.domain import user_facade
 
@@ -200,3 +200,10 @@ def lead_form_with_no_offer(request):
 
 def linktree(request):
     return render(request, 'core/linktree.html', {})
+
+
+class _PythonProResetView(PasswordResetView):
+    form_class = PythonProResetForm
+
+
+password_reset = _PythonProResetView.as_view()
