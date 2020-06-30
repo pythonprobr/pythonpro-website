@@ -12,14 +12,13 @@
     <div class='bg-primary'>
         <div class="container">
             <div class="row text-center">
-                <div class="col hero">
-                    
+                <div class="col hero">{% block hero %}
                     <div class='desktop d-none d-sm-block d-md-block'>
                         <h1 class='font-weight-bold text-light'><u>SUA MATRÍCULA FOI REALIZADA!</u></h1>
                         <p class='mb-5 text-light title-sub'>
                             Assista o vídeo abaixo para saber como acessar os vídeos do curso grátis.
                         </p>
-                        <iframe width="100%" height='523px' src="https://www.youtube.com/embed/I7ki8XTdkw4?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe width="100%" height='523px' src="https://www.youtube.com/embed/Fx8KxGIJOL4?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
 
                     <div class='mobile d-block d-lg-none d-xl-none'>
@@ -27,10 +26,9 @@
                         <p class='mb-5 text-light title-sub'>
                             Assista o vídeo abaixo para saber como acessar os vídeos do curso grátis.
                         </p>
-                        <iframe width="100%" height='208px' src="https://www.youtube.com/embed/I7ki8XTdkw4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe width="100%" height='208px' src="https://www.youtube.com/embed/Fx8KxGIJOL4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                </div>
-
+                {% endblock hero %}</div>
             </div>
         </div>
     </div>
@@ -65,6 +63,7 @@
                     </div>    
                 </div>
 
+                {% if not is_promotion_expired %}
                 <div class="row text-center mb-5">
                     <div class="col">
                         <div class='text-center initiate-checkout d-none d-sm-block d-md-block'>
@@ -75,14 +74,15 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
                 
                 <div class="row mt-5 mb-5 text-center">
                     <div class="col">
-                        <img src='https://inglespdesesperados.com/wp-content/uploads/2018/06/garantia-de-15-dias-ou-seu-dinheiro-de-volta-300x261.png'>    
+                        <img src='{% static "img/garantia.png" %}'>    
                     </div>    
                     
                     <div class="col">
-                        <img src='https://cdnstatic8.com/cursounipre.com.br/wp-content/uploads/2017/04/bannerpagpagarme.png'>    
+                        <img src='{% static "img/banner-pagarme.png" %}'>    
                     </div>    
                 
                 </div>
@@ -113,6 +113,7 @@
                     </div>    
                 </div>
 
+                {% if not is_promotion_expired %}
                 <div class="row text-center mb-5">
                     <div class="col">
                         <div class='text-center initiate-checkout d-block d-lg-none d-xl-none'>
@@ -122,14 +123,15 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
                 
                 <div class="row mt-5 mb-5 text-center">
                     <div class="col">
-                        <img src='https://inglespdesesperados.com/wp-content/uploads/2018/06/garantia-de-15-dias-ou-seu-dinheiro-de-volta-300x261.png'>    
+                        <img src='{% static "img/garantia.png" %}'>    
                     </div>    
                     
                     <div class="col">
-                        <img src='https://cdnstatic8.com/cursounipre.com.br/wp-content/uploads/2017/04/bannerpagpagarme.png'>    
+                        <img src='{% static "img/banner-pagarme.png" %}'>    
                     </div>    
                 
                 </div>
@@ -167,13 +169,13 @@
 
                             <div class='initiate-checkout d-none d-sm-block d-md-block mt-5 mb-5'>
                                 <a href='/pagamento/curso-de-python-intermediario' class="cta btn btn-warning initiate-checkout mt-10">
-                                    <b>Comprar o PyTools pelo preço normal</b>
+                                    <b>Comprar o Django Pro pelo preço normal</b>
                                 </a>
                             </div>
 
                             <div class='initiate-checkout d-block d-lg-none d-xl-none  mt-5 mb-5'>
                                 <a href='/pagamento/curso-de-python-intermediario' class="cta-mobile btn initiate-checkout btn-warning mt-10">
-                                    <b>Comprar o PyTools pelo preço normal</b>
+                                    <b>Comprar o Django Pro pelo preço normal</b>
                                 </a >
                             </div>
                         {% endif %}
@@ -232,7 +234,7 @@
                 all[i].style.display = "block";
             }
         }
-        setTimeout("showIt()", {% if request.GET.debug %}1{% else %}90{% endif %} * 1000);
+        setTimeout("showIt()", {% if request.GET.debug %}1{% else %}{{ seconds_to_show_full_page }}{% endif %} * 1000);
 
         {% localtime on %}
             // Set the date we're counting down to
@@ -266,9 +268,12 @@
                 seconds = "0" + seconds 
             }
 
+            days_in_hours = days * 24
+            hours += days_in_hours
+
             // Display the result in the element with id="demo"
             $(".countdown").html(hours + ":" + minutes + ":" + seconds);
-
+            
             // If the count down is finished, write some text
             if (distance < 0) {
                 clearInterval(x);

@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.http import urlencode
 from django_pagarme import facade
+from django.utils import timezone
 
 from pythonpro.checkout import facade as checkout_facade
 from pythonpro.checkout import forms as checkout_forms
@@ -107,6 +108,17 @@ def waiting_list_ty(request):
 
 @login_required
 def webdev_landing_page_oto(request):
+    template_name = 'checkout/webdev_landing_page_oto.html'
+    return _webdev_landing_page_50_off(request, template_name)
+
+
+@login_required
+def webdev_landing_page_50_off(request):
+    template_name = 'checkout/webdev_landing_page_50_off.html'
+    return _webdev_landing_page_50_off(request, template_name, seconds_to_show_full_page=0)
+
+
+def _webdev_landing_page_50_off(request, template_name, seconds_to_show_full_page=90):
     payment_item_config = facade.find_payment_item_config('webdev-oto')
     user = request.user
     if user.is_authenticated:
@@ -115,12 +127,19 @@ def webdev_landing_page_oto(request):
     else:
         form = facade.ContactForm()
 
+    countdown_limit = request.user.date_joined + timedelta(days=5)
+    is_promotion_expired = timezone.now() > countdown_limit
+    if request.GET.get('debug') is not None:
+        is_promotion_expired = False
+
     ctx = {
         'payment_item_config': payment_item_config,
         'contact_form': form,
-        'countdown_limit': request.user.date_joined + timedelta(seconds=30 * 60)
+        'countdown_limit': countdown_limit,
+        'is_promotion_expired': is_promotion_expired,
+        'seconds_to_show_full_page': seconds_to_show_full_page
     }
-    return render(request, 'checkout/webdev_landing_page_oto.html', ctx)
+    return render(request, template_name, ctx)
 
 
 def webdev_landing_page(request):
