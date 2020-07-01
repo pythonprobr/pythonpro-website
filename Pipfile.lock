@@ -183,11 +183,10 @@
         },
         "django-bootstrap4": {
             "hashes": [
-                "sha256:69a68ecf8d6526c33b4c79b51ac07f3a55d3740c9a126171325133108590fff8",
-                "sha256:b0236cdba9b64f03889cd2555c35586ab645a75260b088429ca98a47e80ef798"
+                "sha256:1c0a931b4245a0dcd5051ea1b244ac130a328374ce8e85254c75eb072a737201",
+                "sha256:32cc0f914ace4cef935c0d3f786dde2a52f0ea1be72153f6e356c0aa8f3925e1"
             ],
-            "index": "pypi",
-            "version": "==2.1.1"
+            "version": "==2.2.0"
         },
         "django-debug-toolbar": {
             "hashes": [
