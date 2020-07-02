@@ -5,7 +5,7 @@ from django.urls import reverse
 
 @pytest.fixture
 def resp(client_with_lead, db):
-    return client_with_lead.get(reverse('webdev_landing_page_oto'), secure=True)
+    return client_with_lead.get(reverse('checkout:webdev_landing_page_oto'), secure=True)
 
 
 def test_should_page_exists(resp):
