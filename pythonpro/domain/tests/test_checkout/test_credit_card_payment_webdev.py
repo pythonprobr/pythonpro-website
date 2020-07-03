@@ -49,7 +49,7 @@ def payment_handler_task_mock(mocker):
 @pytest.fixture
 def resp(client, pagarme_responses, payment_handler_task_mock, create_or_update_lead_mock,
          create_or_update_webdev_mock, webdev_item):
-    return client.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': webdev_item.slug}), secure=True)
+    return client.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': webdev_item.slug}))
 
 
 def test_status_code(resp, webdev_item):

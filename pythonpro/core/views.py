@@ -3,6 +3,7 @@ from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, UpdateView
@@ -11,6 +12,7 @@ from rolepermissions.checkers import has_role
 
 from pythonpro.core.forms import LeadForm, UserEmailForm, UserSignupForm, PythonProResetForm
 from pythonpro.core.models import User
+from pythonpro.core import facade as core_facade
 from pythonpro.domain import user_facade
 
 
@@ -123,6 +125,9 @@ waiting_list = _WaitingListView.as_view()
 
 
 def _lead_landing(request, template_name='core/lead_landing_page.html', form_action=None):
+    user = request.user
+    if user.is_authenticated and not user.is_superuser and core_facade.has_any_webdev_role(user):
+        return HttpResponseRedirect(reverse('dashboard:home'), status=301)
     form_action = reverse('core:lead_form') if form_action is None else form_action
     form_action = f"{form_action}?{request.GET.urlencode(safe='&')}"
     return render(request, template_name, context={'form': LeadForm(), 'form_action': form_action})
@@ -134,6 +139,7 @@ def lead_landing(request):
     :param request:
     :return:
     """
+
     return _lead_landing(request)
 
 
@@ -143,6 +149,7 @@ def lead_landing_lite(request):
     :param request:
     :return:
     """
+
     return _lead_landing(request, template_name='core/lead_landing_lite_page.html')
 
 

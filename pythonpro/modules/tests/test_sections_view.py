@@ -19,7 +19,7 @@ def section(module):
 @pytest.fixture
 def resp_old_path(client_with_lead, section, django_user_model):
     return client_with_lead.get(
-        reverse('sections:detail_old', kwargs={'slug': section.slug}), secure=True)
+        reverse('sections:detail_old', kwargs={'slug': section.slug}))
 
 
 def test_redirect_status_code(resp_old_path):

@@ -14,7 +14,7 @@ def home_resp(client):
 
 def _resp(client):
     """Plain function to avoid _pytest.warning_types.RemovedInPytest4Warning: Fixture "resp" called directly."""
-    return client.get('/', secure=True)
+    return client.get('/')
 
 
 @pytest.fixture
@@ -30,7 +30,7 @@ def test_home_status_code(home_resp):
 
 
 def test_thanks_status_code(client):
-    resp = client.get(reverse('core:thanks'), secure=True)
+    resp = client.get(reverse('core:thanks'))
     assert 200 == resp.status_code
 
 

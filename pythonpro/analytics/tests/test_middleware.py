@@ -18,7 +18,7 @@ def mocked_get_or_create_session(mocked_request_with_analytics, mocker):
 def test_should_execute_get_or_create_session(client,
                                               mocked_get_or_create_session):
 
-    client.get('/', secure=True)
+    client.get('/')
     assert mocked_get_or_create_session.called
 
 
@@ -32,12 +32,12 @@ def mocked_create_pageview(mocked_request_with_analytics, mocker):
 def test_should_execute_create_pageview(client, mocked_get_or_create_session,
                                         mocked_create_pageview):
 
-    client.get('/', secure=True)
+    client.get('/')
     assert mocked_create_pageview.called
 
 
 @pytest.mark.django_db
 def test_should_run_full_process(client):
-    client.get('/curso-de-python-gratis', secure=True)
+    client.get('/curso-de-python-gratis')
     assert UserSession.objects.get()
     assert PageView.objects.get()

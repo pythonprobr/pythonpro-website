@@ -16,7 +16,7 @@ def tag_as_mock(mocker):
 def resp(client, tag_as_mock, freezer, logged_user):
     freezer.move_to(facade.launch_datetime_finish + timedelta(seconds=1))
     client.force_login(logged_user)
-    return client.get(reverse('checkout:membership_lp'), secure=True)
+    return client.get(reverse('checkout:membership_lp'))
 
 
 def test_tag_as_called(resp, logged_user, tag_as_mock):
@@ -34,7 +34,7 @@ def test_subscription_link_is_present(resp):
 @pytest.fixture
 def resp_no_user(client, freezer):
     freezer.move_to(facade.launch_datetime_finish + timedelta(seconds=1))
-    resp = client.get(reverse('checkout:membership_lp'), secure=True)
+    resp = client.get(reverse('checkout:membership_lp'))
     return resp
 
 

@@ -169,7 +169,7 @@ def resps_success():
 @pytest.fixture
 def resp_token_with_no_user(cohort, client, create_or_update_member, create_or_update_lead, resps_success, tag_as_mock):
     data = {'token': 'test_transaction_5ndnWcHEJQX1FPCbEpQpFng90gM5oM', 'payment_method': 'credit_card'}
-    return client.post(reverse('payments:member_capture'), data, secure=True)
+    return client.post(reverse('payments:member_capture'), data)
 
 
 @pytest.fixture(autouse=True)
@@ -189,7 +189,7 @@ def test_user_discourse_sync_with_token(resp_token, django_user_model, sync_user
 @pytest.fixture
 def resp_token(cohort, client_with_lead, logged_user, create_or_update_member, resps_success, tag_as_mock):
     data = {'token': 'test_transaction_5ndnWcHEJQX1FPCbEpQpFng90gM5oM', 'payment_method': 'credit_card'}
-    return client_with_lead.post(reverse('payments:member_capture'), data, secure=True)
+    return client_with_lead.post(reverse('payments:member_capture'), data)
 
 
 def test_email_marketing_update(resp_token, create_or_update_member, logged_user):
@@ -219,7 +219,7 @@ def test_redirect_url(resp_token):
 
 
 def test_ty_status_code(cohort, client):
-    assert client.get(reverse('payments:membership_thanks'), secure=True).status_code == 200
+    assert client.get(reverse('payments:membership_thanks')).status_code == 200
 
 
 def test_user_creation(resp_token_with_no_user, django_user_model):

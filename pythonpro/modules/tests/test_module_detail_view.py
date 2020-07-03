@@ -9,7 +9,7 @@ from pythonpro.modules.models import Chapter, Module, Section
 
 
 def generate_resp(slug, client):
-    return client.get(reverse('modules:detail', kwargs={'slug': slug}), secure=True)
+    return client.get(reverse('modules:detail', kwargs={'slug': slug}))
 
 
 @pytest.fixture
@@ -103,7 +103,7 @@ def resp_with_sections(client_with_lead, sections, python_birds):
 
 def _resp_with_sections(client_with_lead, sections, python_birds):
     """Plain function to avoid _pytest.warning_types.RemovedInPytest4Warning: Fixture "resp" called directly."""
-    return client_with_lead.get(reverse('modules:detail', kwargs={'slug': python_birds.slug}), secure=True)
+    return client_with_lead.get(reverse('modules:detail', kwargs={'slug': python_birds.slug}))
 
 
 def test_section_titles(resp_with_sections, sections):
@@ -141,6 +141,6 @@ def test_chapter_urls(resp_with_chapters, chapters):
 
 def test_enrol_user_tags(python_birds, client_with_lead, mocker, logged_user):
     tag_as = mocker.patch('pythonpro.modules.modules_views.tag_as')
-    resp = client_with_lead.get(reverse('modules:enrol', kwargs={'slug': python_birds.slug}), secure=True)
+    resp = client_with_lead.get(reverse('modules:enrol', kwargs={'slug': python_birds.slug}))
     tag_as.assert_called_once_with(logged_user.email, logged_user.id, python_birds.slug)
     assert resp.status_code == 200

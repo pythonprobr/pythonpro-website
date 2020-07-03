@@ -6,7 +6,7 @@ from pythonpro.django_assertions import dj_assert_contains
 
 @pytest.fixture
 def resp(client):
-    return client.get(reverse('launch:vip_list'), secure=True)
+    return client.get(reverse('launch:vip_list'))
 
 
 def test_status_code(resp):

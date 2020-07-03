@@ -49,7 +49,7 @@ def test_chapter_url_on_section(resp_section, chapters):
 @pytest.fixture
 def resp_old_path(client_with_lead, chapter, django_user_model):
     return client_with_lead.get(
-        reverse('chapters:detail_old', kwargs={'chapter_slug': chapter.slug}), secure=True)
+        reverse('chapters:detail_old', kwargs={'chapter_slug': chapter.slug}))
 
 
 def test_redirect_status_code(resp_old_path):

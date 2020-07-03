@@ -6,12 +6,12 @@ from pythonpro.django_assertions import dj_assert_contains
 
 
 def test_should_return_200_when_load_invite_page(client):
-    resp = client.get(reverse('pages:ds_webinar_landing_page'), secure=True)
+    resp = client.get(reverse('pages:ds_webinar_landing_page'))
     assert resp.status_code == 200
 
 
 def test_should_return_200_when_load_thank_you_page(client):
-    resp = client.get(reverse('pages:ds_webinar_thank_you_page'), secure=True)
+    resp = client.get(reverse('pages:ds_webinar_thank_you_page'))
     assert resp.status_code == 200
 
 

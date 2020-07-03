@@ -155,12 +155,12 @@ def resps_success():
 
 @pytest.fixture
 def resp_token(client_with_lead, logged_user, create_or_update_member, resps_success):
-    return client_with_lead.post(reverse('payments:member_capture'), transaction_data, secure=True)
+    return client_with_lead.post(reverse('payments:member_capture'), transaction_data)
 
 
 @pytest.fixture
 def resp_token_with_no_user(client, create_or_update_member, create_or_update_lead, resps_success, db):
-    return client.post(reverse('payments:member_capture'), transaction_data, secure=True)
+    return client.post(reverse('payments:member_capture'), transaction_data)
 
 
 def test_email_marketing_update(resp_token, create_or_update_member, logged_user):
@@ -250,7 +250,7 @@ def test_client_lead_not_created_on_email_marketing(resp_token_with_no_user, dja
 def resp_existing_user_not_logged(db, client, create_or_update_member, create_or_update_lead, resps_success,
                                   django_user_model):
     mommy.make(django_user_model, email=CUSTOMER_EMAIL)
-    return client.post(reverse('payments:member_capture'), transaction_data, secure=True)
+    return client.post(reverse('payments:member_capture'), transaction_data)
 
 
 def test_existing_user_not_created(resp_existing_user_not_logged, django_user_model):

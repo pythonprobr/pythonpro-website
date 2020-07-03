@@ -27,7 +27,7 @@ def resp_not_logged(client, modules):
 
 
 def _resp_not_logged(client, modules):
-    return client.get(reverse('modules:index'), secure=True)
+    return client.get(reverse('modules:index'))
 
 
 def test_status_code_logged(resp):

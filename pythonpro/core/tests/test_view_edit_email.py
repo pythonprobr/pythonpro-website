@@ -15,7 +15,7 @@ def resp(client: Client):
 
 def _resp(client: Client):
     """Plain function to avoid _pytest.warning_types.RemovedInPytest4Warning: Fixture "resp" called directly."""
-    return client.get(reverse('core:profile_email'), secure=True)
+    return client.get(reverse('core:profile_email'))
 
 
 @pytest.fixture
@@ -61,7 +61,7 @@ def test_edit_email(django_user_model, fake: Faker, user: User, client: Client):
     user.save()
     client.force_login(user)
     email = fake.email()
-    client.post(reverse('core:profile_email'), {'email': email, 'current_password': password}, secure=True)
+    client.post(reverse('core:profile_email'), {'email': email, 'current_password': password})
     assert email == django_user_model.objects.filter(pk=user.pk).get().email
 
 
@@ -71,7 +71,7 @@ def test_not_edit_email_wrong_password(django_user_model, fake: Faker, user: Use
     user.save()
     client.force_login(user)
     old_email = user.email
-    resp = client.post(reverse('core:profile_email'), {'email': fake.email(), 'current_password': 'wrong'}, secure=True)
+    resp = client.post(reverse('core:profile_email'), {'email': fake.email(), 'current_password': 'wrong'})
     assert old_email == django_user_model.objects.filter(pk=user.pk).get().email
     assert 200 == resp.status_code
 
@@ -81,5 +81,5 @@ def test_email_error_msg(fake: Faker, user: User, client: Client):
     user.set_password('password')
     user.save()
     client.force_login(user)
-    resp = client.post(reverse('core:profile_email'), {'email': fake.email(), 'current_password': 'wrong'}, secure=True)
+    resp = client.post(reverse('core:profile_email'), {'email': fake.email(), 'current_password': 'wrong'})
     dj_assert_contains(resp, 'Senha Inválida')

@@ -71,4 +71,12 @@ def turn_active_campaign_on(settings):
     settings.ACTIVE_CAMPAIGN_TURNED_ON = True
 
 
+@pytest.fixture(autouse=True)
+def turn_ssl_rediret_off_for_tests(settings):
+    """
+    There is no need to place secure=True in all client requests
+    """
+    settings.SECURE_SSL_REDIRECT = False
+
+
 pytest_plugins = ['pythonpro.modules.tests.test_topics_view']

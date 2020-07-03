@@ -217,3 +217,7 @@ def is_webdev(user: User):
 
 def is_data_scientist(user):
     return has_role(user, 'data_scientist')
+
+
+def has_any_webdev_role(user):
+    return has_role(user, 'lead client webdev member'.split())
