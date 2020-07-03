@@ -19,7 +19,7 @@ def launch_status_as_mock(mocker):
 
 @pytest.fixture
 def resp(client, tag_as_mock, launch_status_as_mock):
-    return client.get(reverse('launch:cpl1'), secure=True)
+    return client.get(reverse('launch:cpl1'))
 
 
 def test_status_code(resp):
@@ -28,7 +28,7 @@ def test_status_code(resp):
 
 @pytest.fixture
 def resp_with_user(client_with_user, tag_as_mock):
-    return client_with_user.get(reverse('launch:cpl1'), secure=True)
+    return client_with_user.get(reverse('launch:cpl1'))
 
 
 def test_user_interaction(resp_with_user, logged_user):
@@ -44,7 +44,7 @@ def resp_with_user_with_launch_status_open_cart(
         client_with_user, tag_as_mock, launch_status_as_mock
 ):
     launch_status_as_mock.return_value = LAUNCH_STATUS_OPEN_CART
-    return client_with_user.get(reverse('launch:cpl1'), secure=True)
+    return client_with_user.get(reverse('launch:cpl1'))
 
 
 def test_should_redirect_to_subscribe(resp_with_user_with_launch_status_open_cart, resp_with_user):
@@ -56,7 +56,7 @@ def resp_with_user_with_launch_status_ppl(
         client_with_user, tag_as_mock, launch_status_as_mock
 ):
     launch_status_as_mock.return_value = LAUNCH_STATUS_PPL
-    return client_with_user.get(reverse('launch:cpl1'), secure=True)
+    return client_with_user.get(reverse('launch:cpl1'))
 
 
 def test_should_redirect_to_ppl(resp_with_user_with_launch_status_ppl, resp_with_user):

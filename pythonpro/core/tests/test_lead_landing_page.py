@@ -3,8 +3,10 @@ from unittest.mock import Mock, call, ANY
 import pytest
 from django.urls import reverse
 from faker import Faker
+from model_mommy import mommy
 from rolepermissions.checkers import has_role
 from rolepermissions.roles import assign_role, remove_role
+from pytest_django.asserts import assertRedirects
 
 from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.core.models import UserInteraction
@@ -13,7 +15,7 @@ from pythonpro.django_assertions import (dj_assert_contains, dj_assert_not_conta
 
 @pytest.fixture
 def resp(client):
-    return client.get(reverse('core:lead_landing'), secure=True)
+    return client.get(reverse('core:lead_landing'))
 
 
 def test_status_code(resp):
@@ -25,6 +27,49 @@ def test_there_is_no_none_on_landing_page(resp):
     Assert there is no None field on home form
     """
     dj_assert_not_contains(resp, 'value="None"')
+
+
+@pytest.fixture(params='superadmin data_scientist'.split())
+@pytest.mark.django_db
+def superuser(django_user_model, request):
+    role = request.param
+    if role == 'superadmin':
+        return mommy.make(django_user_model, is_superuser=True)
+    data_scientist = mommy.make(django_user_model, is_superuser=False)
+    assign_role(data_scientist, role)
+    return data_scientist
+
+
+@pytest.fixture
+def resp_with_superuser(client, superuser):
+    client.force_login(superuser)
+    return client.get(reverse('core:lead_landing'))
+
+
+def test_superuser_can_access_landing_page(resp_with_superuser):
+    assert resp_with_superuser.status_code == 200
+
+
+@pytest.fixture(params='lead client webdev member'.split())
+@pytest.mark.django_db
+def user_with_webdev_roles(django_user_model, request):
+    role = request.param
+    user = mommy.make(django_user_model, is_superuser=False)
+    assign_role(user, role)
+    return user
+
+
+@pytest.fixture
+def resp_with_user_with_webdev_roles(client, user_with_webdev_roles):
+    client.force_login(user_with_webdev_roles)
+    return client.get(reverse('core:lead_landing'))
+
+
+def test_user_with_webdev_roles_can_access_landing_page(resp_with_user_with_webdev_roles):
+    assertRedirects(resp_with_user_with_webdev_roles, reverse('dashboard:home'), status_code=301,
+                    target_status_code=200)
+    # assert resp_with_user_with_webdev_roles.status_code == 301
+    # assert resp_with_user_with_webdev_roles.url == reverse('dashboard:home')
 
 
 @pytest.fixture
@@ -162,7 +207,7 @@ def test_user_source_was_saved_from_url(resp_lead_creation, django_user_model, c
 
 
 def test_user_was_logged_in(resp_lead_creation, django_user_model, client):
-    response = client.get(reverse('core:lead_change_password'), secure=True)
+    response = client.get(reverse('core:lead_change_password'))
     assert response.status_code == 200
 
 
@@ -176,7 +221,7 @@ def test_only_role_lead_can_change_password(resp_lead_change_pasword, django_use
     assign_role(user, 'member')
     remove_role(user, 'lead')
 
-    response = client.get(reverse('core:lead_change_password'), secure=True)
+    response = client.get(reverse('core:lead_change_password'))
     assert response.status_code == 302
 
 
@@ -185,12 +230,12 @@ def test_should_has_a_normal_version(resp):
 
 
 def test_should_has_a_lite_version(client):
-    resp = client.get(reverse('core:lead_landing_lite'), secure=True)
+    resp = client.get(reverse('core:lead_landing_lite'))
     dj_assert_template_used(resp, 'core/lead_landing_lite_page.html')
 
 
 def test_should_use_lead_form_with_no_offer(client):
-    resp = client.get(reverse('core:lead_landing_with_no_offer'), secure=True)
+    resp = client.get(reverse('core:lead_landing_with_no_offer'))
     dj_assert_not_contains(resp, reverse('core:lead_form') + '"')
     dj_assert_contains(resp, reverse('core:lead_form_with_no_offer'))
 
@@ -277,7 +322,7 @@ def test_should_send_utms_to_email_marketing_as_tags(create_lead_mock, resp_lead
 
 
 def test_should_not_send_other_params_than_utms_to_email_marketing_as_tags(
-    create_lead_mock, resp_lead_creation_with_utms
+        create_lead_mock, resp_lead_creation_with_utms
 ):
     for current_call in create_lead_mock.call_args_list:
         assert 'fbclid=584954' not in current_call
@@ -285,7 +330,7 @@ def test_should_not_send_other_params_than_utms_to_email_marketing_as_tags(
 
 @pytest.fixture
 def resp_with_utm(client, qs_with_utms):
-    return client.get(reverse('core:lead_landing') + qs_with_utms, secure=True)
+    return client.get(reverse('core:lead_landing') + qs_with_utms)
 
 
 def test_should_send_utms_to_form_action(qs_with_utms, resp_with_utm):

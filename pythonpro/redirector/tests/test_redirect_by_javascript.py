@@ -18,7 +18,7 @@ def test_should_redirect_url_in_redirect_object(redirect):
 
 @pytest.fixture
 def resp(client, redirect):
-    return client.get(reverse('redirector:redirect', kwargs={'slug': redirect.slug}), secure=True)
+    return client.get(reverse('redirector:redirect', kwargs={'slug': redirect.slug}))
 
 
 def test_status_code_should_return_200(resp):

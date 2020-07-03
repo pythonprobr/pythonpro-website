@@ -21,12 +21,12 @@ def create_or_update_with_no_role(mocker):
 
 @pytest.fixture
 def resp(client, email, create_or_update_with_no_role, cohort):
-    return client.post(reverse('launch:lead_form'), {'email': email, 'name': 'Moacir'}, secure=True)
+    return client.post(reverse('launch:lead_form'), {'email': email, 'name': 'Moacir'})
 
 
 @pytest.fixture
 def resp_email_upper(client, email_upper, create_or_update_with_no_role, cohort):
-    return client.post(reverse('launch:lead_form'), {'email': email_upper, 'name': 'Moacir'}, secure=True)
+    return client.post(reverse('launch:lead_form'), {'email': email_upper, 'name': 'Moacir'})
 
 
 @pytest.fixture
@@ -50,7 +50,7 @@ def test_email_normalization(resp_email_upper, email, create_or_update_with_no_r
 
 @pytest.fixture
 def resp_with_error(client, invalid_email, create_or_update_with_no_role):
-    return client.post(reverse('launch:lead_form'), {'email': invalid_email, 'name': 'Moacir'}, secure=True)
+    return client.post(reverse('launch:lead_form'), {'email': invalid_email, 'name': 'Moacir'})
 
 
 def test_email_marketing_not_executed_on_error(resp_with_error, create_or_update_with_no_role):
@@ -76,7 +76,7 @@ def test_form_action_is_present(resp_with_error):
 @pytest.fixture
 def resp_with_user(client_with_user, logged_user, cohort, create_or_update_with_no_role):
     return client_with_user.post(
-        reverse('launch:lead_form'), {'email': logged_user.email, 'name': 'Moacir'}, secure=True)
+        reverse('launch:lead_form'), {'email': logged_user.email, 'name': 'Moacir'})
 
 
 def test_user_first_name(resp_with_user, logged_user, create_or_update_with_no_role, cohort):

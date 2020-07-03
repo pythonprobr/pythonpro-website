@@ -19,7 +19,7 @@ def launch_status_as_mock(mocker):
 
 @pytest.fixture
 def resp(client, tag_as_mock, launch_status_as_mock):
-    return client.get(reverse('launch:cpl3'), secure=True)
+    return client.get(reverse('launch:cpl3'))
 
 
 def test_status_code(resp):
@@ -32,7 +32,7 @@ def test_email_marketing_tag_not_called(resp, tag_as_mock):
 
 @pytest.fixture
 def resp_with_user(client_with_user, tag_as_mock):
-    return client_with_user.get(reverse('launch:cpl3'), secure=True)
+    return client_with_user.get(reverse('launch:cpl3'))
 
 
 def test_user_interaction(resp_with_user, logged_user):
@@ -52,7 +52,7 @@ def launch_status_as_mock_open(mocker):
 
 @pytest.fixture
 def resp_open(client, tag_as_mock, launch_status_as_mock_open):
-    return client.get(reverse('launch:cpl3'), secure=True)
+    return client.get(reverse('launch:cpl3'))
 
 
 def test_open_status_code(resp_open):

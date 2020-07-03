@@ -18,7 +18,7 @@ all_slugs = pytest.mark.parametrize(
 
 @all_slugs
 def test_all_slugs_available(client, slug):
-    resp = client.get(reverse('django_pagarme:contact_info', kwargs={'slug': slug}), secure=True)
+    resp = client.get(reverse('django_pagarme:contact_info', kwargs={'slug': slug}))
     assert resp.status_code == 200
 
 
@@ -33,7 +33,7 @@ def valid_data():
 
 
 def make_post(client, contact_info, slug):
-    return client.post(reverse('django_pagarme:contact_info', kwargs={'slug': slug}), contact_info, secure=True)
+    return client.post(reverse('django_pagarme:contact_info', kwargs={'slug': slug}), contact_info)
 
 
 @all_slugs

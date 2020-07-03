@@ -92,7 +92,7 @@ def test_module_duration(resp, logged_user):
 # Tests User has not interaction with topics
 @pytest.fixture
 def resp_user_has_no_interactions(client_with_lead, topics):
-    return client_with_lead.get(reverse('dashboard:home'), secure=True)
+    return client_with_lead.get(reverse('dashboard:home'))
 
 
 def test_module_duration_with_no_interactions(resp_user_has_no_interactions, logged_user, ):

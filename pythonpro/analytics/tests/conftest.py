@@ -10,7 +10,7 @@ from django.test import RequestFactory
 @pytest.fixture
 def pre_request():
     factory = RequestFactory()
-    request = factory.get('/', secure=True)
+    request = factory.get('/')
     request.user = AnonymousUser()
     return request
 

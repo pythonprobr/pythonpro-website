@@ -14,7 +14,7 @@ def resp(client: Client):
 
 def _resp(client):
     """Plain function to avoid _pytest.warning_types.RemovedInPytest4Warning: Fixture "resp" called directly."""
-    return client.get(reverse('core:profile_password'), secure=True)
+    return client.get(reverse('core:profile_password'))
 
 
 @pytest.fixture

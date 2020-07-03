@@ -36,12 +36,12 @@ def test_should_bring_older_link_when_access_is_even(redirect):
 
 @pytest.fixture
 def resp1(client, redirect):
-    return client.get(reverse('redirector:redirect', kwargs={'slug': redirect.slug}), secure=True)
+    return client.get(reverse('redirector:redirect', kwargs={'slug': redirect.slug}))
 
 
 @pytest.fixture
 def resp2(client, redirect):
-    return client.get(reverse('redirector:redirect', kwargs={'slug': redirect.slug}), secure=True)
+    return client.get(reverse('redirector:redirect', kwargs={'slug': redirect.slug}))
 
 
 def test_should_rotate_beetween_links(resp1, resp2):
