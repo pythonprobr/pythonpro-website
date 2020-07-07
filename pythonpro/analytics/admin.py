@@ -23,4 +23,4 @@ class PageViewAdmin(admin.ModelAdmin):
     get_session_user.short_description = 'Usuário'
     get_path.short_description = 'Destino'
     list_display = ['id', 'get_path', 'session', 'get_session_user', 'created']
-    list_filter = ['session__user']
+    search_fields = ['session__user__email']
