@@ -24,11 +24,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
-# Redirect to HTTPS:
-SECURE_SSL_REDIRECT = True
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
+
+# Redirect to HTTPS:
+SECURE_SSL_REDIRECT = not DEBUG
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
@@ -111,7 +111,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.gzip.GZipMiddleware',
-    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -122,13 +121,12 @@ MIDDLEWARE = [
     'pythonpro.analytics.middleware.AnalyticsMiddleware',
 ]
 
-ROLEPERMISSIONS_MODULE = 'pythonpro.core.roles'
-
 if DEBUG:
     INSTALLED_APPS.append('debug_toolbar')
     MIDDLEWARE.insert(2, 'debug_toolbar.middleware.DebugToolbarMiddleware')
     INTERNAL_IPS = ['127.0.0.1']
 
+ROLEPERMISSIONS_MODULE = 'pythonpro.core.roles'
 # Discourse config
 DISCOURSE_BASE_URL = config('DISCOURSE_BASE_URL', default='')
 DISCOURSE_SSO_SECRET = config('DISCOURSE_SSO_SECRET')
