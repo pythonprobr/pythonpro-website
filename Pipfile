@@ -30,10 +30,10 @@ codecov = "*"
 django-bootstrap4 = "*"
 celery = "*"
 redis = "*"
-django-pagarme = "*"
 inflection = "*"
 django-two-factor-auth = "*"
 django-recaptcha = "*"
+django-pagarme = "*"
 
 [dev-packages]
 faker = "*"
