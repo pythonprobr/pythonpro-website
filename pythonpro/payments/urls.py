@@ -15,7 +15,6 @@ urlpatterns = [
     path('membro/boleto/', views.membership_boleto, name='membership_boleto'),
     path('pargarme/notificacao/<int:user_id>', views.pagarme_notification, name='pagarme_notification'),
     path('membership/notification/<int:user_id>', views.membership_notification, name='membership_notification'),
-    path('pargarme/notificacao', views.pagarme_anonymous_notification, name='pagarme_anonymous_notification'),
 
     # unused pages
     path(
