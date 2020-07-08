@@ -2,15 +2,14 @@ import os
 
 from django.conf import settings
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.utils.http import urlencode
 from django.views.static import serve
-from django.urls import reverse
 
 from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.cohorts import facade as cohorts_facade
 from pythonpro.cohorts.facade import find_most_recent_cohort
 from pythonpro.domain import user_facade, membership_domain
-from pythonpro.launch.forms import LeadForm
 from pythonpro.email_marketing import facade as email_marketing_facade
 from pythonpro.launch.facade import (
     get_launch_status,
@@ -18,6 +17,7 @@ from pythonpro.launch.facade import (
     LAUNCH_STATUS_OPEN_CART,
     LAUNCH_STATUS_PPL
 )
+from pythonpro.launch.forms import LeadForm
 
 
 def landing_page(request):
@@ -167,8 +167,6 @@ def member_landing_page(request):
     is_launch_open = settings.SUBSCRIPTIONS_OPEN or request.GET.get('debug')
     return _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch,
                                'member_landing_page')
-
-
 
 
 def _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch, redirect_path_name: str):
