@@ -2,12 +2,14 @@ import os
 
 from django.conf import settings
 from django.shortcuts import redirect, render
+from django.utils.http import urlencode
 from django.views.static import serve
 from django.urls import reverse
 
 from pythonpro.absolute_uri import build_absolute_uri
+from pythonpro.cohorts import facade as cohorts_facade
 from pythonpro.cohorts.facade import find_most_recent_cohort
-from pythonpro.domain import user_facade
+from pythonpro.domain import user_facade, membership_domain
 from pythonpro.launch.forms import LeadForm
 from pythonpro.email_marketing import facade as email_marketing_facade
 from pythonpro.launch.facade import (
@@ -157,3 +159,58 @@ def onesignal_sdk_updater_worker(request):
         'js/spp/OneSignalSDUpdaterKWorker.js',
         document_root=os.path.join(settings.BASE_DIR, 'pythonpro', 'core', 'static')
     )
+
+
+def member_landing_page(request):
+    template_open_launch = 'payments/meteoric_landing_page_open.html'
+    template_closed_launch = 'payments/member_landing_page_subscription_closed.html'
+    is_launch_open = settings.SUBSCRIPTIONS_OPEN or request.GET.get('debug')
+    return _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch,
+                               'member_landing_page')
+
+
+
+
+def _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch, redirect_path_name: str):
+    user = request.user
+    if user.is_authenticated:
+        user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
+        notification_url = reverse('payments:membership_notification', kwargs={'user_id': user.id})
+    else:
+        notification_url = reverse('payments:membership_anonymous_notification')
+    if is_launch_open:
+        template = template_open_launch
+        discount = membership_domain.calculate_discount(user)
+        discount_float = discount / 100
+
+        price = membership_domain.calculate_membership_price(user)
+        price_float = price / 100
+        full_price_float = price_float + discount_float
+        price_installment = (price // 10) / 100
+        full_price_installment = full_price_float // 10
+        login_url = reverse('two_factor:login')
+        redirect_path = reverse(redirect_path_name)
+        qs = urlencode({'utm_source': request.GET.get('utm_source', 'unknown')})
+        redirect_url = f'{redirect_path}?{qs}'
+        qs = urlencode({'next': redirect_url})
+        login_url = f'{login_url}?{qs}'
+        return render(
+            request,
+            template,
+            {
+                'PAGARME_CRYPTO_KEY': settings.PAGARME_CRYPTO_KEY,
+                'price': price,
+                'price_float': price_float,
+                'price_installment': price_installment,
+                'notification_url': request.build_absolute_uri(notification_url),
+                'cohort': cohorts_facade.find_most_recent_cohort(),
+                'has_discount': discount_float > 0,
+                'discount_float': discount_float,
+                'full_price_installment': full_price_installment,
+                'full_price_float': full_price_float,
+                'login_url': login_url,
+            }
+        )
+    else:
+        template = template_closed_launch
+        return render(request, template, {})

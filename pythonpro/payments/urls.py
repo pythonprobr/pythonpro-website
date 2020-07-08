@@ -13,8 +13,6 @@ urlpatterns = [
     path('curso-completo/obrigado/', views.membership_thanks, name='membership_thanks'),
     path('membro/captura/', views.member_capture, name='member_capture'),
     path('membro/boleto/', views.membership_boleto, name='membership_boleto'),
-    path('pargarme/notificacao/<int:user_id>', views.pagarme_notification, name='pagarme_notification'),
-    path('membership/notification/<int:user_id>', views.membership_notification, name='membership_notification'),
 
     # unused pages
     path(
