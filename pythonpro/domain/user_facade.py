@@ -10,7 +10,6 @@ from celery import shared_task
 from django.conf import settings, settings as _settings
 from django.core.mail import send_mail as _send_mail
 from django.template.loader import render_to_string
-from django.urls import reverse
 
 from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.cohorts import facade as _cohorts_facade
@@ -18,15 +17,14 @@ from pythonpro.core import facade as _core_facade
 from pythonpro.core.models import User as _User
 from pythonpro.discourse.facade import MissingDiscourseAPICredentials, generate_sso_payload_and_signature
 from pythonpro.email_marketing import facade as _email_marketing_facade
-from pythonpro.payments import facade as _payments_facade
 
 _logger = Logger(__file__)
 
 UserCreationException = _core_facade.UserCreationException  # exposing exception on Facade
 
 __all__ = [
-    'register_lead', 'force_register_client', 'promote_client', 'activate_user', 'find_user_interactions',
-    'visit_member_landing_page', 'run_pytools_promotion_campaign', 'promote_member', 'find_user_by_email',
+    'register_lead', 'force_register_client', 'activate_user', 'find_user_interactions',
+    'visit_member_landing_page', 'promote_member', 'find_user_by_email',
     'find_user_by_id', 'force_register_lead', 'subscribe_to_waiting_list', 'force_register_member',
     'click_member_checkout', 'subscribe_anonymous_user_to_waiting_list'
 ]
@@ -139,7 +137,7 @@ def promote_member(user: _User, source: str) -> _User:
     except _ActiveCampaignError:
         pass
     email_msg = render_to_string(
-        'payments/membership_email.txt',
+        'launch/membership_email.txt',
         {
             'user': user,
             'cohort_detail_url': build_absolute_uri(cohort.get_absolute_url())
@@ -212,40 +210,6 @@ def promote_data_scientist(user: _User, source: str) -> _User:
     return user
 
 
-def promote_client(user: _User, source: str) -> None:
-    """
-    Promote a user to Client role and change it's role on Email Marketing. Will not fail in case API call fails.
-    Email welcome email is sent to user
-    :param source: source of traffic
-    :param user:
-    :return:
-    """
-    _core_facade.promote_to_client(user, source)
-    sync_user_on_discourse(user)
-    try:
-        _email_marketing_facade.create_or_update_client(user.first_name, user.email, id=user.id)
-    except _ActiveCampaignError:
-        pass
-    email_msg = render_to_string(
-        'payments/pytools_email.txt',
-        {
-            'user': user,
-            'ty_url': build_absolute_uri(reverse('payments:pytools_thanks'))
-        }
-    )
-    _send_mail(
-        'Inscrição no curso Pytools realizada! Confira o link com detalhes.',
-        email_msg,
-        _settings.DEFAULT_FROM_EMAIL,
-        [user.email]
-    )
-
-
-def promote_client_and_remove_boleto_tag(user: _User, source: str = None):
-    promote_client(user, source)
-    _email_marketing_facade.remove_tags(user.email, user.id, CLIENT_BOLETO_TAG)
-
-
 def find_user_by_email(user_email: str) -> _User:
     """
     Find user by her email
@@ -271,21 +235,6 @@ def find_user_interactions(user: _User):
     :return: list of user interactions
     """
     return _core_facade.find_user_interactions(user)
-
-
-def run_pytools_promotion_campaign() -> int:
-    """
-    Run pytools campaign for users registered 7 weeks ago
-    :return: number of user's marked for promotion
-    """
-    begin, end = _payments_facade.calculate_7th_week_before_promotion()
-    promotion_users = _core_facade.find_leads_by_date_joined_interval(begin, end)
-    for user in promotion_users:
-        try:
-            _email_marketing_facade.tag_as(user.email, user.id, 'pytools-promotion')
-        except _ActiveCampaignError:
-            pass
-    return len(promotion_users)
 
 
 def visit_member_landing_page(user, source):

@@ -69,18 +69,18 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:ae57df1fbad7e29954a160d77cbf650d6562eb0d304c1206afa71d914e771a66",
-                "sha256:cbe618d61cb8f75cd9495ea36e69bad7c8984eb11f02ad247be4c9a2eb7eb647"
+                "sha256:1776200c04152dd308e297cd18abb183d93383587dca358a768155507f15965b",
+                "sha256:944c02dbf96dbaf52498acdbea60d4eb2aa717f40a797f86f8d47d8905e02441"
             ],
             "index": "pypi",
-            "version": "==1.14.17"
+            "version": "==1.14.19"
         },
         "botocore": {
             "hashes": [
-                "sha256:5528c04c360019c24f2706ce82872c9ab767a8c581beffdfdaf006cce7499cac",
-                "sha256:d65b5574dad8c221344496352245828d9ffecaa0868199eb04ccd2eb2ff09133"
+                "sha256:4eef7d38de1bee3bb60a66d53a73d47ec5ea30d3d43befa90840ba1d52791971",
+                "sha256:7890e83cd28967f854fd54d6c8bdb009868aec1c31a71dcc82e4577562f1affb"
             ],
-            "version": "==1.17.17"
+            "version": "==1.17.19"
         },
         "celery": {
             "hashes": [
@@ -239,11 +239,11 @@
         },
         "django-pagarme": {
             "hashes": [
-                "sha256:36f3807dba66b3730a377cc64c792436162d08053282f3d6a266c02aa2be4308",
-                "sha256:8f286989d52ce38e668cff67083380cc60bef3b13e575c866699b8ce725e0cda"
+                "sha256:f540bbf3151e7303dd21c92304a5c268121a8715084b0645a5d005cb665c9e0c",
+                "sha256:fcf044eeb8eb580d3cbd6d6d1c74b2c1a907df144ebabc27888d03d1536b6b2f"
             ],
             "index": "pypi",
-            "version": "==0.14"
+            "version": "==0.16"
         },
         "django-phonenumber-field": {
             "extras": [
@@ -295,11 +295,11 @@
         },
         "django-two-factor-auth": {
             "hashes": [
-                "sha256:637bd96e76907d044206c3b038bf4b5eb4769e9e3a4718da755fafc97db38b26",
-                "sha256:f1835e5368448d1b3d826ce7a36c590b3e39cd536523d372cfc5f9fbdc9731f4"
+                "sha256:612adb0dd6e9ed3b4ecd6763f2e3f56358d7b5afb843a3a49994d1d3bc91ffc2",
+                "sha256:8e698d548a5a7c02c7ba343bc5376a7bbdc4e59c20ef13223743fe42fa4a1281"
             ],
             "index": "pypi",
-            "version": "==1.11.0"
+            "version": "==1.12.1"
         },
         "docutils": {
             "hashes": [

@@ -41,7 +41,6 @@ urlpatterns = [
     path('secoes/', include('pythonpro.modules.sections_urls')),
     path('capitulos/', include('pythonpro.modules.chapters_urls')),
     path('topicos/', include('pythonpro.modules.topics_urls')),
-    path('pagamento/', include('pythonpro.payments.urls')),
     path('turmas/', include('pythonpro.cohorts.urls')),
     path('dashboard/', include('pythonpro.dashboard.urls')),
     path('', include(tf_urls)),
