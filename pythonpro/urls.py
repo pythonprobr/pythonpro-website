@@ -27,7 +27,6 @@ from two_factor.urls import urlpatterns as tf_urls
 
 import pythonpro.launch.views
 from pythonpro.core import views as core_views
-from pythonpro.payments import views as payments_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),

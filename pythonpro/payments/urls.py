@@ -11,9 +11,6 @@ urlpatterns = [
     path('curso-de-python-completo', login_required(views.old_member_landing_page), name='member_landing_page'),
     path('membro-checkout', views.member_checkout, name='member_checkout'),
     path('curso-completo/obrigado/', views.membership_thanks, name='membership_thanks'),
-    path('membro/captura/', views.member_capture, name='member_capture'),
-    path('membro/boleto/', views.membership_boleto, name='membership_boleto'),
-
     # unused pages
     path(
         'curso-de-python-intermediario-oto',
