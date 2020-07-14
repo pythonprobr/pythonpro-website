@@ -27,7 +27,9 @@ def test_pagarme_payment_paid_boleto(db, tag_as_mock, remove_tags_mock, promote_
     config = mommy.make(PagarmeItemConfig, payments=[payment])
     checkout_domain.payment_handler_task(payment.id)
     assert tag_as_mock.called is False
-    remove_tags_mock.assert_called_once_with(logged_user.email, logged_user.id, f'{config.slug}-boleto')
+    remove_tags_mock.assert_called_once_with(
+        logged_user.email, logged_user.id, f'{config.slug}-boleto', f'{config.slug}-refused'
+    )
     promote_user_mock.assert_called_once_with(logged_user, config.slug)
 
 
@@ -37,7 +39,9 @@ def test_pagarme_payment_paid_credit_card(db, tag_as_mock, remove_tags_mock, pro
     config = mommy.make(PagarmeItemConfig, payments=[payment])
     checkout_domain.payment_handler_task(payment.id)
     assert tag_as_mock.called is False
-    assert remove_tags_mock.called is False
+    remove_tags_mock.assert_called_once_with(
+        logged_user.email, logged_user.id, f'{config.slug}-refused'
+    )
     promote_user_mock.assert_called_once_with(logged_user, config.slug)
 
 
@@ -58,7 +62,6 @@ def test_pagarme_payment_waiting_payment_boleto(db, tag_as_mock, remove_tags_moc
         facade.AUTHORIZED,
         facade.REFUNDED,
         facade.PENDING_REFUND,
-        facade.REFUSED,
     ]
 )
 def test_pagarme_payment_with_item_but_do_nothing_status(db, tag_as_mock, remove_tags_mock, promote_user_mock, status):
@@ -90,3 +93,13 @@ def test_pagarme_payment_absent_item(db, tag_as_mock, remove_tags_mock, promote_
     assert tag_as_mock.called is False
     assert remove_tags_mock.called is False
     assert promote_user_mock.called is False
+
+
+def test_pagarme_payment_refused(db, tag_as_mock, remove_tags_mock, promote_user_mock, logged_user):
+    payment = mommy.make(PagarmePayment, user=logged_user)
+    mommy.make(PagarmeNotification, status=facade.REFUSED, payment=payment)
+    config = mommy.make(PagarmeItemConfig, payments=[payment])
+    checkout_domain.payment_handler_task(payment.id)
+    assert promote_user_mock.called is False
+    assert remove_tags_mock.called is False
+    tag_as_mock.assert_called_once_with(logged_user.email, logged_user.id, f'{config.slug}-refused')
