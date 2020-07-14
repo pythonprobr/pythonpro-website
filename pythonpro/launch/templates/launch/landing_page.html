@@ -147,22 +147,22 @@
 
         <div class="countdown__group__numbers">
           <div class="countdown__group__numbers__item">
-            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted" id="days"></span>
+            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted days" id="days"></span>
             <span class="countdown__group__numbers__item__description text-uppercase text-green fw-700">Dias</span>
           </div>
 
           <div class="countdown__group__numbers__item">
-            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted" id="hours"></span>
+            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted hours" id="hours"></span>
             <span class="countdown__group__numbers__item__description text-uppercase text-green fw-700">Horas</span>
           </div>
 
           <div class="countdown__group__numbers__item">
-            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted" id="minutes"></span>
+            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted minutes" id="minutes"></span>
             <span class="countdown__group__numbers__item__description text-uppercase text-green fw-700">Minutos</span>
           </div>
 
           <div class="countdown__group__numbers__item">
-            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted" id="seconds"></span>
+            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted seconds" id="seconds"></span>
             <span class="countdown__group__numbers__item__description text-uppercase text-green fw-700">Segundos</span>
           </div>
         </div>
@@ -243,7 +243,10 @@
     </footer>
   </main>
 
-  <script src="{% static 'js/spp/countdown.min.js' %}"></script>
+  <script src="{% static 'js/spp/countdown.js' %}"></script>
+  <script>
+    initCountDown(new Date('Aug 10, 2020 23:59:59').getTime());
+  </script>
   {% endblock %}
   {% block extrabody %}{% endblock extrabody %}
 </body>
