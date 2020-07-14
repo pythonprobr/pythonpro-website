@@ -112,7 +112,9 @@ def test_payment_tag_removed_after_payment(resp_logged_user, webdev_item, remove
     payment = django_pagarme_facade.find_payment_by_transaction(TRANSACTION_ID)
     mommy.make(django_pagarme_facade.PagarmeNotification, status=django_pagarme_facade.PAID, payment=payment)
     checkout_domain.payment_handler_task(payment.id)
-    remove_tags_mock.assert_called_once_with(logged_user.email, logged_user.id, f'{webdev_item.slug}-boleto')
+    remove_tags_mock.assert_called_once_with(
+        logged_user.email, logged_user.id, f'{webdev_item.slug}-boleto', f'{webdev_item.slug}-refused'
+    )
 
 
 @pytest.fixture

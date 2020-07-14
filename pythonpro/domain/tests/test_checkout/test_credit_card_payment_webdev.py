@@ -44,11 +44,16 @@ def payment_handler_task_mock(mocker):
     )
 
 
+@pytest.fixture
+def remove_tags_mock(mocker):
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.remove_tags.delay')
+
+
 # test user not logged
 
 @pytest.fixture
 def resp(client, pagarme_responses, payment_handler_task_mock, create_or_update_lead_mock,
-         create_or_update_webdev_mock, webdev_item):
+         create_or_update_webdev_mock, webdev_item, remove_tags_mock):
     return client.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': webdev_item.slug}))
 
 
@@ -78,7 +83,7 @@ def test_payment_linked_with_created_user(resp, django_user_model):
 # Tests user logged
 
 @pytest.fixture
-def resp_logged_user(client_with_user, pagarme_responses, payment_handler_task_mock, webdev_item):
+def resp_logged_user(client_with_user, pagarme_responses, payment_handler_task_mock, webdev_item, remove_tags_mock):
     return client_with_user.get(
         reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': webdev_item.slug}),
         secure=True

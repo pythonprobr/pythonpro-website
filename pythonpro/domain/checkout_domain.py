@@ -50,8 +50,13 @@ def payment_handler_task(payment_id):
         if status == django_pagarme_facade.PAID:
             user = payment.user
             if payment.payment_method == django_pagarme_facade.BOLETO:
-                email_marketing_facade.remove_tags.delay(user.email, user.id, f'{slug}-boleto')
+                email_marketing_facade.remove_tags.delay(user.email, user.id, f'{slug}-boleto', f'{slug}-refused')
+            else:
+                email_marketing_facade.remove_tags.delay(user.email, user.id, f'{slug}-refused')
             _promote(user, slug)
+        elif status == django_pagarme_facade.REFUSED:
+            user = payment.user
+            email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-refused')
         elif status == django_pagarme_facade.WAITING_PAYMENT:
             user = payment.user
             email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-boleto')
