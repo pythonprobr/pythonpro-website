@@ -126,7 +126,22 @@ def transaction_json(data_science_item):
             'date_updated': '2020-01-21T01:45:57.789Z', 'brand': 'visa', 'holder_name': 'agora captura',
             'first_digits': '411111', 'last_digits': '1111', 'country': 'UNITED STATES',
             'fingerprint': 'cj5bw4cio00000j23jx5l60cq', 'valid': True, 'expiration_date': '1227'
-        }
+        },
+        'customer': {
+            'object': 'customer', 'id': 2601905, 'external_id': 'captura@gmail.com', 'type': 'individual',
+            'country': 'br',
+            'document_number': None, 'document_type': 'cpf', 'name': 'Agora Captura', 'email': 'captura@gmail.com',
+            'phone_numbers': ['+5512997411854'], 'born_at': None, 'birthday': None, 'gender': None,
+            'date_created': '2020-01-21T01:45:57.228Z', 'documents': [
+                {'object': 'document', 'id': 'doc_ck5n7vta0010nr36d01k1zzzw', 'type': 'cpf', 'number': '29770166863'}]
+        }, 'billing': {
+            'object': 'billing', 'id': 1135539, 'name': 'Agora Captura', 'address': {
+                'object': 'address', 'street': 'Rua Bahamas', 'complementary': 'Sem complemento', 'street_number': '56',
+                'neighborhood': 'Cidade Vista Verde', 'city': 'São José dos Campos', 'state': 'SP',
+                'zipcode': '12223770',
+                'country': 'br', 'id': 2559019
+            }
+        }, 'shipping': None,
     }
 
 
