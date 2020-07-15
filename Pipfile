@@ -46,6 +46,7 @@ pytest-mock = "*"
 pytest = "*"
 django-test-migrations = "*"
 model-bakery = "*"
+flower = "*"
 
 [requires]
 python_version = "3.8"
