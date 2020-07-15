@@ -1,4 +1,5 @@
 from functools import lru_cache
+from json.decoder import JSONDecodeError
 
 from activecampaign.client import Client
 from activecampaign.exception import ActiveCampaignError
@@ -18,33 +19,35 @@ _PYTHON_PRO_ROLES = {_LEAD, _CLIENT, _MEMBER, _WEBDEV}
 _ALL_ROLES = set(_PYTHON_PRO_ROLES)
 _ALL_ROLES.add(_DATA_SCIENTIST)
 
+run_until_available = shared_task(autoretry_for=(JSONDecodeError,), retry_backoff=True, max_retries=None)
 
-@shared_task()
+
+@run_until_available
 def create_or_update_with_no_role(name: str, email: str, *tags, id='0', phone=None):
     return _create_or_update(name, email, '', *tags, id=id, phone=phone)
 
 
-@shared_task()
+@run_until_available
 def create_or_update_lead(name: str, email: str, *tags, id='0', phone=None):
     return _create_or_update(name, email, _LEAD, *tags, id=id, phone=phone)
 
 
-@shared_task()
+@run_until_available
 def create_or_update_data_scientist(name: str, email: str, *tags, id='0', phone=None):
     return _create_or_update(name, email, _DATA_SCIENTIST, *tags, id=id, phone=phone)
 
 
-@shared_task()
+@run_until_available
 def create_or_update_client(name: str, email: str, *tags, id='0', phone=None):
     return _create_or_update(name, email, _CLIENT, *tags, id=id, phone=phone)
 
 
-@shared_task()
+@run_until_available
 def create_or_update_member(name: str, email: str, *tags, id='0', phone=None):
     return _create_or_update(name, email, _MEMBER, *tags, id=id, phone=phone)
 
 
-@shared_task()
+@run_until_available
 def create_or_update_webdev(name: str, email: str, *tags, id='0', phone=None):
     return _create_or_update(name, email, _WEBDEV, *tags, id=id, phone=phone)
 
@@ -134,7 +137,7 @@ def grant_role(email, id, role: str):
         _client.contacts.remove_tag(roles_to_remove_data)
 
 
-@shared_task()
+@run_until_available
 def tag_as(email: str, id: int, *tags):
     if settings.ACTIVE_CAMPAIGN_TURNED_ON is False:
         return
@@ -157,7 +160,7 @@ def _build_tags_array(tags) -> dict:
     return {f'tags[{i}]': tag for i, tag in enumerate(tags, start=1)}
 
 
-@shared_task()
+@run_until_available
 def remove_tags(email: str, id: int, *tags):
     if settings.ACTIVE_CAMPAIGN_TURNED_ON is False:
         return
@@ -167,6 +170,17 @@ def remove_tags(email: str, id: int, *tags):
     except ActiveCampaignError:
         data['email'] = email
     return _client.contacts.remove_tag(data)
+
+
+error = 0
+
+
+def ret():
+    global error
+    print(f'try {error}')
+    if error < 20:
+        error += 1
+        raise JSONDecodeError('foo', 'bar', 2)
 
 
 @lru_cache(maxsize=1)
