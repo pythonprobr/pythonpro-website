@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.dashboard.models import TopicInteraction
 from pythonpro.dashboard.templatetags.dashboard_tags import duration
@@ -11,13 +11,13 @@ from pythonpro.modules.models import Chapter, Module, Section, Topic
 # Tests user interacted with all topics
 @pytest.fixture
 def module(db):
-    return mommy.make(Module)
+    return baker.make(Module)
 
 
 @pytest.fixture
 def sections(module):
     models = []
-    models.extend(mommy.make(Section, 2, module=module))
+    models.extend(baker.make(Section, 2, module=module))
     return models
 
 
@@ -25,7 +25,7 @@ def sections(module):
 def chapters(sections):
     models = []
     for s in sections:
-        models.extend(mommy.make(Chapter, 2, section=s))
+        models.extend(baker.make(Chapter, 2, section=s))
     return models
 
 
@@ -36,7 +36,7 @@ TOPIC_DURATION = 100
 def topics(chapters):
     models = []
     for c in chapters:
-        models.extend(mommy.make(Topic, 2, chapter=c, duration=TOPIC_DURATION))
+        models.extend(baker.make(Topic, 2, chapter=c, duration=TOPIC_DURATION))
     return models
 
 
@@ -45,7 +45,7 @@ def interactions(topics, logged_user):
     models = []
     for t in topics:
         models.append(
-            mommy.make(
+            baker.make(
                 TopicInteraction,
                 user=logged_user,
                 topic=t,

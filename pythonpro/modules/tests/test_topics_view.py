@@ -1,7 +1,7 @@
 import pytest
 from django.conf import settings
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_template_used
 from pythonpro.modules.models import Chapter, Module, Section, Topic
@@ -9,27 +9,27 @@ from pythonpro.modules.models import Chapter, Module, Section, Topic
 
 @pytest.fixture
 def module(db):
-    return mommy.make(Module, slug='python-birds')
+    return baker.make(Module, slug='python-birds')
 
 
 @pytest.fixture
 def section(module):
-    return mommy.make(Section, module=module)
+    return baker.make(Section, module=module)
 
 
 @pytest.fixture
 def chapter(section):
-    return mommy.make(Chapter, section=section)
+    return baker.make(Chapter, section=section)
 
 
 @pytest.fixture
 def topics(chapter):
-    return mommy.make(Topic, 2, chapter=chapter)
+    return baker.make(Topic, 2, chapter=chapter)
 
 
 @pytest.fixture
 def topic(chapter):
-    return mommy.make(Topic, chapter=chapter)
+    return baker.make(Topic, chapter=chapter)
 
 
 @pytest.fixture
@@ -120,22 +120,22 @@ def test_breadcrumb_current(resp, topic):
 
 @pytest.fixture
 def module_member(db):
-    return mommy.make(Module, slug='objetos-pythonicos')
+    return baker.make(Module, slug='objetos-pythonicos')
 
 
 @pytest.fixture
 def section_member(module_member):
-    return mommy.make(Section, module=module_member)
+    return baker.make(Section, module=module_member)
 
 
 @pytest.fixture
 def chapter_member(section_member):
-    return mommy.make(Chapter, section=section_member)
+    return baker.make(Chapter, section=section_member)
 
 
 @pytest.fixture
 def topic_member(chapter_member):
-    return mommy.make(Topic, chapter=chapter_member)
+    return baker.make(Topic, chapter=chapter_member)
 
 
 @pytest.fixture
@@ -193,22 +193,22 @@ def test_discourse_url(resp_member, topic):
 
 @pytest.fixture
 def module_client(db):
-    return mommy.make(Module, slug='pytools')
+    return baker.make(Module, slug='pytools')
 
 
 @pytest.fixture
 def section_client(module_client):
-    return mommy.make(Section, module=module_client)
+    return baker.make(Section, module=module_client)
 
 
 @pytest.fixture
 def chapter_client(section_client):
-    return mommy.make(Chapter, section=section_client)
+    return baker.make(Chapter, section=section_client)
 
 
 @pytest.fixture
 def topic_client(chapter_client):
-    return mommy.make(Topic, chapter=chapter_client)
+    return baker.make(Topic, chapter=chapter_client)
 
 
 @pytest.fixture
@@ -245,22 +245,22 @@ def test_member_access_client_content(resp_member_accessing_client_content):
 
 @pytest.fixture
 def module_webdev(db):
-    return mommy.make(Module, slug='django')
+    return baker.make(Module, slug='django')
 
 
 @pytest.fixture
 def section_webdev(module_webdev):
-    return mommy.make(Section, module=module_webdev)
+    return baker.make(Section, module=module_webdev)
 
 
 @pytest.fixture
 def chapter_webdev(section_webdev):
-    return mommy.make(Chapter, section=section_webdev)
+    return baker.make(Chapter, section=section_webdev)
 
 
 @pytest.fixture
 def topic_webdev(chapter_webdev):
-    return mommy.make(Topic, chapter=chapter_webdev)
+    return baker.make(Topic, chapter=chapter_webdev)
 
 
 @pytest.fixture
