@@ -1,6 +1,6 @@
 import pytest
 from faker import Faker
-from model_mommy import mommy
+from model_bakery import baker
 from rolepermissions.roles import assign_role
 
 from pythonpro.cohorts.models import Cohort
@@ -19,7 +19,7 @@ def client_with_user(client, django_user_model, logged_user):
 
 @pytest.fixture
 def logged_user(django_user_model):
-    logged_user = mommy.make(django_user_model)
+    logged_user = baker.make(django_user_model)
     logged_user.email = logged_user.email.lower()
     logged_user.save()
     return logged_user
@@ -27,7 +27,7 @@ def logged_user(django_user_model):
 
 @pytest.fixture
 def cohort(db):
-    return mommy.make(Cohort)
+    return baker.make(Cohort)
 
 
 @pytest.fixture

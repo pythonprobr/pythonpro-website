@@ -1,7 +1,7 @@
 import pytest
 from django.test import Client
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.django_assertions import dj_assert_contains
 
@@ -18,7 +18,7 @@ def _resp(client):
 
 @pytest.fixture
 def user(django_user_model):
-    usr = mommy.make(django_user_model)
+    usr = baker.make(django_user_model)
     return usr
 
 
@@ -59,7 +59,7 @@ def test_edit_password_link(resp_with_user):
 @pytest.fixture
 def user_with_plain_password(django_user_model):
     plain_password = 'senha'
-    u = mommy.make(django_user_model)
+    u = baker.make(django_user_model)
     u.set_password(plain_password)
     u.plain_password = plain_password
     u.save()

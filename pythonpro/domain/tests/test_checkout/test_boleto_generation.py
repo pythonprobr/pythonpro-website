@@ -2,7 +2,7 @@ import pytest
 import responses
 from django.urls import reverse
 from django_pagarme import facade as django_pagarme_facade
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.core import facade as core_facade
 from pythonpro.domain import checkout_domain
@@ -110,7 +110,7 @@ def remove_tags_mock(mocker):
 
 def test_payment_tag_removed_after_payment(resp_logged_user, webdev_item, remove_tags_mock, logged_user):
     payment = django_pagarme_facade.find_payment_by_transaction(TRANSACTION_ID)
-    mommy.make(django_pagarme_facade.PagarmeNotification, status=django_pagarme_facade.PAID, payment=payment)
+    baker.make(django_pagarme_facade.PagarmeNotification, status=django_pagarme_facade.PAID, payment=payment)
     checkout_domain.payment_handler_task(payment.id)
     remove_tags_mock.assert_called_once_with(
         logged_user.email, logged_user.id, f'{webdev_item.slug}-boleto', f'{webdev_item.slug}-refused'

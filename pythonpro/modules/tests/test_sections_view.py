@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.django_assertions import dj_assert_contains
 from pythonpro.modules.models import Module, Section
@@ -8,12 +8,12 @@ from pythonpro.modules.models import Module, Section
 
 @pytest.fixture
 def module():
-    return mommy.make(Module)
+    return baker.make(Module)
 
 
 @pytest.fixture
 def section(module):
-    return mommy.make(Section, slug='procedural', module=module)
+    return baker.make(Section, slug='procedural', module=module)
 
 
 @pytest.fixture
@@ -32,7 +32,7 @@ def test_redirect_url(resp_old_path, section):
 
 @pytest.fixture
 def resp(client, django_user_model, section: Section):
-    user = mommy.make(django_user_model)
+    user = baker.make(django_user_model)
     client.force_login(user)
     return client.get(reverse(
         'modules:section_detail',
