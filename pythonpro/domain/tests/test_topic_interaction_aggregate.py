@@ -6,7 +6,7 @@ import pytz
 from django.urls import reverse
 from django.utils import timezone
 from freezegun import freeze_time
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.dashboard.models import TopicInteraction
 from pythonpro.dashboard.templatetags.dashboard_tags import duration
@@ -17,7 +17,7 @@ from pythonpro.modules.models import Topic
 @pytest.fixture
 def interactions(logged_user, topic):
     with freeze_time("2019-07-22 00:00:00"):
-        first_interaction = mommy.make(
+        first_interaction = baker.make(
             TopicInteraction,
             user=logged_user,
             topic=topic,
@@ -27,7 +27,7 @@ def interactions(logged_user, topic):
         )
 
     with freeze_time("2019-07-22 01:00:00"):
-        second_interaction = mommy.make(
+        second_interaction = baker.make(
             TopicInteraction,
             user=logged_user,
             topic=topic,
@@ -36,7 +36,7 @@ def interactions(logged_user, topic):
             max_watched_time=14
         )
     with freeze_time("2019-07-22 00:30:00"):
-        third_interaction = mommy.make(
+        third_interaction = baker.make(
             TopicInteraction,
             user=logged_user,
             topic=topic,

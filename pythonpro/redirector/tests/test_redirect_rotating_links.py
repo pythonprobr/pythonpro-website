@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.redirector.models import Redirect, RedirectLink
 from pythonpro.redirector.facade import get_redirect_url
@@ -8,9 +8,9 @@ from pythonpro.redirector.facade import get_redirect_url
 
 @pytest.fixture
 def redirect(db):
-    redirect = mommy.make(Redirect)
-    mommy.make(RedirectLink, redirect=redirect)
-    mommy.make(RedirectLink, redirect=redirect)
+    redirect = baker.make(Redirect)
+    baker.make(RedirectLink, redirect=redirect)
+    baker.make(RedirectLink, redirect=redirect)
     return redirect
 
 

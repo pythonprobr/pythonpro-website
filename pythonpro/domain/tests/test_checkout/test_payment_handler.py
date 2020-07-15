@@ -1,7 +1,7 @@
 import pytest
 from django_pagarme import facade
 from django_pagarme.models import PagarmePayment, PagarmeNotification, PagarmeItemConfig
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.domain import checkout_domain
 
@@ -22,9 +22,9 @@ def promote_user_mock(mocker, logged_user):
 
 
 def test_pagarme_payment_paid_boleto(db, tag_as_mock, remove_tags_mock, promote_user_mock, logged_user):
-    payment = mommy.make(PagarmePayment, payment_method=facade.BOLETO, user=logged_user)
-    mommy.make(PagarmeNotification, status=facade.PAID, payment=payment)
-    config = mommy.make(PagarmeItemConfig, payments=[payment])
+    payment = baker.make(PagarmePayment, payment_method=facade.BOLETO, user=logged_user)
+    baker.make(PagarmeNotification, status=facade.PAID, payment=payment)
+    config = baker.make(PagarmeItemConfig, payments=[payment])
     checkout_domain.payment_handler_task(payment.id)
     assert tag_as_mock.called is False
     remove_tags_mock.assert_called_once_with(
@@ -34,9 +34,9 @@ def test_pagarme_payment_paid_boleto(db, tag_as_mock, remove_tags_mock, promote_
 
 
 def test_pagarme_payment_paid_credit_card(db, tag_as_mock, remove_tags_mock, promote_user_mock, logged_user):
-    payment = mommy.make(PagarmePayment, payment_method=facade.CREDIT_CARD, user=logged_user)
-    mommy.make(PagarmeNotification, status=facade.PAID, payment=payment)
-    config = mommy.make(PagarmeItemConfig, payments=[payment])
+    payment = baker.make(PagarmePayment, payment_method=facade.CREDIT_CARD, user=logged_user)
+    baker.make(PagarmeNotification, status=facade.PAID, payment=payment)
+    config = baker.make(PagarmeItemConfig, payments=[payment])
     checkout_domain.payment_handler_task(payment.id)
     assert tag_as_mock.called is False
     remove_tags_mock.assert_called_once_with(
@@ -46,9 +46,9 @@ def test_pagarme_payment_paid_credit_card(db, tag_as_mock, remove_tags_mock, pro
 
 
 def test_pagarme_payment_waiting_payment_boleto(db, tag_as_mock, remove_tags_mock, promote_user_mock, logged_user):
-    payment = mommy.make(PagarmePayment, payment_method=facade.BOLETO, user=logged_user)
-    mommy.make(PagarmeNotification, status=facade.WAITING_PAYMENT, payment=payment)
-    config = mommy.make(PagarmeItemConfig, payments=[payment])
+    payment = baker.make(PagarmePayment, payment_method=facade.BOLETO, user=logged_user)
+    baker.make(PagarmeNotification, status=facade.WAITING_PAYMENT, payment=payment)
+    config = baker.make(PagarmeItemConfig, payments=[payment])
     checkout_domain.payment_handler_task(payment.id)
     assert remove_tags_mock.called is False
     assert promote_user_mock.called is False
@@ -65,9 +65,9 @@ def test_pagarme_payment_waiting_payment_boleto(db, tag_as_mock, remove_tags_moc
     ]
 )
 def test_pagarme_payment_with_item_but_do_nothing_status(db, tag_as_mock, remove_tags_mock, promote_user_mock, status):
-    payment = mommy.make(PagarmePayment)
-    mommy.make(PagarmeNotification, status=status, payment=payment)
-    mommy.make(PagarmeItemConfig, payments=[payment])
+    payment = baker.make(PagarmePayment)
+    baker.make(PagarmeNotification, status=status, payment=payment)
+    baker.make(PagarmeItemConfig, payments=[payment])
     checkout_domain.payment_handler_task(payment.id)
     assert tag_as_mock.called is False
     assert remove_tags_mock.called is False
@@ -87,8 +87,8 @@ def test_pagarme_payment_with_item_but_do_nothing_status(db, tag_as_mock, remove
     ]
 )
 def test_pagarme_payment_absent_item(db, tag_as_mock, remove_tags_mock, promote_user_mock, status):
-    payment = mommy.make(PagarmePayment)
-    mommy.make(PagarmeNotification, status=status, payment=payment)
+    payment = baker.make(PagarmePayment)
+    baker.make(PagarmeNotification, status=status, payment=payment)
     checkout_domain.payment_handler_task(payment.id)
     assert tag_as_mock.called is False
     assert remove_tags_mock.called is False
@@ -96,9 +96,9 @@ def test_pagarme_payment_absent_item(db, tag_as_mock, remove_tags_mock, promote_
 
 
 def test_pagarme_payment_refused(db, tag_as_mock, remove_tags_mock, promote_user_mock, logged_user):
-    payment = mommy.make(PagarmePayment, user=logged_user)
-    mommy.make(PagarmeNotification, status=facade.REFUSED, payment=payment)
-    config = mommy.make(PagarmeItemConfig, payments=[payment])
+    payment = baker.make(PagarmePayment, user=logged_user)
+    baker.make(PagarmeNotification, status=facade.REFUSED, payment=payment)
+    config = baker.make(PagarmeItemConfig, payments=[payment])
     checkout_domain.payment_handler_task(payment.id)
     assert promote_user_mock.called is False
     assert remove_tags_mock.called is False

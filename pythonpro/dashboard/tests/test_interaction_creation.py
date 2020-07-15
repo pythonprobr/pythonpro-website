@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.dashboard.models import TopicInteraction
 from pythonpro.domain import user_facade
@@ -36,7 +36,7 @@ def resp(client_with_lead, topic, logged_user, remove_tags_mock, tag_newly_compl
 
 @pytest.fixture
 def resp_with_interaction(client_with_lead, topic, logged_user, remove_tags_mock, tag_newly_completed_contents_mock):
-    mommy.make(TopicInteraction, user=logged_user, topic=topic)
+    baker.make(TopicInteraction, user=logged_user, topic=topic)
     return client_with_lead.post(
         reverse('dashboard:topic_interaction'),
         data={

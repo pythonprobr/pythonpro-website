@@ -1,7 +1,7 @@
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.cohorts.models import Webinar
 from pythonpro.cohorts.tests.conftest import img_path
@@ -12,7 +12,7 @@ from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contai
 def webinar(cohort) -> Webinar:
     image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
                                content_type='image/png')
-    return mommy.make(Webinar, cohort=cohort, image=image, vimeo_id='1')
+    return baker.make(Webinar, cohort=cohort, image=image, vimeo_id='1')
 
 
 @pytest.fixture

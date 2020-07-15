@@ -1,7 +1,7 @@
 import pytest
 from django.core.management import call_command
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains
 from pythonpro.modules import facade
@@ -16,7 +16,7 @@ def modules(transactional_db):
 
 @pytest.fixture
 def resp(client, django_user_model, modules):
-    user = mommy.make(django_user_model)
+    user = baker.make(django_user_model)
     client.force_login(user)
     return _resp_not_logged(client, modules)
 

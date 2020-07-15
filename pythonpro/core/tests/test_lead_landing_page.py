@@ -3,7 +3,7 @@ from unittest.mock import Mock, call, ANY
 import pytest
 from django.urls import reverse
 from faker import Faker
-from model_mommy import mommy
+from model_bakery import baker
 from rolepermissions.checkers import has_role
 from rolepermissions.roles import assign_role, remove_role
 from pytest_django.asserts import assertRedirects
@@ -34,8 +34,8 @@ def test_there_is_no_none_on_landing_page(resp):
 def superuser(django_user_model, request):
     role = request.param
     if role == 'superadmin':
-        return mommy.make(django_user_model, is_superuser=True)
-    data_scientist = mommy.make(django_user_model, is_superuser=False)
+        return baker.make(django_user_model, is_superuser=True)
+    data_scientist = baker.make(django_user_model, is_superuser=False)
     assign_role(data_scientist, role)
     return data_scientist
 
@@ -54,7 +54,7 @@ def test_superuser_can_access_landing_page(resp_with_superuser):
 @pytest.mark.django_db
 def user_with_webdev_roles(django_user_model, request):
     role = request.param
-    user = mommy.make(django_user_model, is_superuser=False)
+    user = baker.make(django_user_model, is_superuser=False)
     assign_role(user, role)
     return user
 
