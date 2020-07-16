@@ -12,6 +12,7 @@ from pythonpro.modules.models import Content
 _LEAD_MODULES = {'python-birds'}
 _CLIENT_MODULES = {'python-birds', 'pytools'}
 _WEBDEV_MODULES = {'python-birds', 'pytools', 'django'}
+_BOOTCAMPER_MODULES = {'python-birds', 'pytools', 'django', 'entrevistas-tecnicas'}
 
 
 @register_object_checker()
@@ -27,7 +28,3 @@ def access_content(role, user, content: Content) -> bool:
         return True
 
     return False
-
-
-def is_client_content(content: Content):
-    return content.module_slug() in _CLIENT_MODULES
