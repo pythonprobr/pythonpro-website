@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class MailchimpConfig(AppConfig):
+class EmailMarketing(AppConfig):
     name = 'pythonpro.email_marketing'
