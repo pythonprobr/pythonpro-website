@@ -1,21 +1,10 @@
 import pytest
 from django.urls import reverse
 
-all_slugs = pytest.mark.parametrize(
-    'slug',
-    [
-        'pytools',
-        'pytools-oto',
-        'pytools-done',
-        'membership',
-        'membership-client',
-        'membership-client-first-day',
-        'membership-first-day',
-    ]
-)
+from pythonpro.domain.tests.test_checkout.conftest import ALL_PRODUCTS
 
 
-@all_slugs
+@pytest.mark.parametrize('slug', ALL_PRODUCTS)
 def test_all_slugs_available(client, slug):
     resp = client.get(reverse('django_pagarme:pagarme', kwargs={'slug': slug}))
     assert resp.status_code == 200

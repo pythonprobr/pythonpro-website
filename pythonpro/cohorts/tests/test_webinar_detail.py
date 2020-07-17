@@ -16,8 +16,8 @@ def webinar(cohort) -> Webinar:
 
 
 @pytest.fixture
-def resp(client_with_member, webinar: Webinar):
-    return client_with_member.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}))
+def resp(client_with_level_three_roles, webinar: Webinar):
+    return client_with_level_three_roles.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}))
 
 
 def test_logged_user(resp):
@@ -35,10 +35,10 @@ def test_basic_contents(resp, webinar, property_name):
 
 
 @pytest.fixture
-def resp_video_not_recorded(client_with_member, webinar: Webinar):
+def resp_video_not_recorded(client_with_level_three_roles, webinar: Webinar):
     webinar.vimeo_id = ''
     webinar.save()
-    return client_with_member.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}))
+    return client_with_level_three_roles.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}))
 
 
 def test_pending_webinar_msg(resp_video_not_recorded):
@@ -56,20 +56,10 @@ def test_vimeo_player_not_present(resp_video_not_recorded):
 
 
 @pytest.fixture
-def resp_client(client_with_client, webinar: Webinar, mocker, logged_user):
-    return client_with_client.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}))
+def resp_not_level_three(client_with_not_level_three_roles, webinar: Webinar, logged_user):
+    return client_with_not_level_three_roles.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}))
 
 
-def test_webinar_landing_for_client(cohort, resp_client):
-    assert resp_client.status_code == 302
-    assert resp_client.url == reverse('member_landing_page')
-
-
-@pytest.fixture
-def resp_lead(client_with_lead, webinar: Webinar, mocker, logged_user):
-    return client_with_lead.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}))
-
-
-def test_webinar_landing_for_lead(cohort, resp_lead):
-    assert resp_lead.status_code == 302
-    assert resp_lead.url == reverse('member_landing_page')
+def test_webinar_landing_for_client(cohort, resp_not_level_three):
+    assert resp_not_level_three.status_code == 302
+    assert resp_not_level_three.url == reverse('member_landing_page')

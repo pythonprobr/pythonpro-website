@@ -21,10 +21,10 @@ TOKEN = 'test_transaction_aJx9ibUmRqYcQrrUaNtQ3arTO4tF1z'
 
 
 @pytest.fixture
-def create_or_update_data_scientist_mock(mocker):
+def create_or_update_member_mock(mocker):
     return mocker.patch(
-        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_data_scientist.delay',
-        side_effect=email_marketing_facade.create_or_update_data_scientist
+        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_member.delay',
+        side_effect=email_marketing_facade.create_or_update_member
     )
 
 
@@ -49,18 +49,42 @@ def remove_tags_mock(mocker):
     return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.remove_tags.delay')
 
 
+@pytest.fixture
+def sync_on_discourse_mock(mocker):
+    return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse.delay')
+
+
+@pytest.fixture
+def create_or_update_webdev_mock(mocker):
+    return mocker.patch(
+        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_webdev.delay',
+        side_effect=email_marketing_facade.create_or_update_webdev
+    )
+
+
+@pytest.fixture
+def create_or_update_data_scientist_mock(mocker):
+    return mocker.patch(
+        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_data_scientist.delay',
+        side_effect=email_marketing_facade.create_or_update_data_scientist
+    )
+
+
 # test user not logged
 
 @pytest.fixture
 def resp(client, pagarme_responses, payment_handler_task_mock, create_or_update_lead_mock,
-         create_or_update_data_scientist_mock, data_science_item, remove_tags_mock):
-    return client.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': data_science_item.slug}),
-                      secure=True)
+         create_or_update_member_mock, create_or_update_webdev_mock, create_or_update_data_scientist_mock,
+         active_product_item, remove_tags_mock, sync_on_discourse_mock):
+    return client.get(
+        reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': active_product_item.slug}),
+        secure=True
+    )
 
 
-def test_status_code(resp, data_science_item):
+def test_status_code(resp, active_product_item):
     assert resp.status_code == 302
-    assert resp.url == reverse('django_pagarme:thanks', kwargs={'slug': data_science_item.slug})
+    assert resp.url == reverse('django_pagarme:thanks', kwargs={'slug': active_product_item.slug})
 
 
 def test_user_is_created(resp, django_user_model):
@@ -68,10 +92,40 @@ def test_user_is_created(resp, django_user_model):
     assert User.objects.exists()
 
 
-def test_user_is_webdev(resp, django_user_model):
+def test_user_is_member(resp, django_user_model, active_product_item):
     User = django_user_model
     user = User.objects.first()
-    assert core_facade.is_data_scientist(user)
+    slug = active_product_item.slug
+    assert_user_promoted(user, slug)
+
+
+def assert_user_promoted(user, slug):
+    if slug.startswith('membership'):
+        assert core_facade.is_member(user)
+    elif slug.startswith('webdev'):
+        assert core_facade.is_webdev(user)
+    elif slug.startswith('data-science'):
+        assert core_facade.is_data_scientist(user)
+    else:
+        pytest.fail(f'Invalid slug prefix {slug}')
+
+
+def test_user_is_subscribed_to_cohort(resp, django_user_model, cohort, active_product_item):
+    User = django_user_model
+    user = User.objects.first()
+    slug = active_product_item.slug
+    asssert_subscribed_to_cohort(cohort, slug, user)
+
+
+def asssert_subscribed_to_cohort(cohort, slug, user):
+    if not (slug.startswith('webdev') or slug.startswith('data-science')):
+        assert cohort.students.first() == user
+
+
+def test_user_synced_on_discourse(resp, django_user_model, sync_on_discourse_mock):
+    User = django_user_model
+    user = User.objects.first()
+    sync_on_discourse_mock.assert_called_once_with(user.id)
 
 
 def test_payment_linked_with_created_user(resp, django_user_model):
@@ -84,16 +138,17 @@ def test_payment_linked_with_created_user(resp, django_user_model):
 # Tests user logged
 
 @pytest.fixture
-def resp_logged_user(client_with_user, pagarme_responses, payment_handler_task_mock, data_science_item,
-                     remove_tags_mock):
+def resp_logged_user(client_with_user, pagarme_responses, payment_handler_task_mock, active_product_item,
+                     remove_tags_mock,
+                     sync_on_discourse_mock, create_or_update_member_mock, create_or_update_webdev_mock,
+                     create_or_update_data_scientist_mock):
     return client_with_user.get(
-        reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': data_science_item.slug}),
-        secure=True
+        reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': active_product_item.slug})
     )
 
 
-def test_logged_user_become_webdev(resp_logged_user, logged_user):
-    assert core_facade.is_data_scientist(logged_user)
+def test_logged_user_become_member(resp_logged_user, logged_user, active_product_item):
+    assert_user_promoted(logged_user, active_product_item.slug)
 
 
 def test_payment_linked_with_logged_user(resp_logged_user, logged_user):
@@ -101,15 +156,23 @@ def test_payment_linked_with_logged_user(resp_logged_user, logged_user):
     assert logged_user == payment.user
 
 
+def test_logged_user_is_subscribed_to_cohort(resp_logged_user, logged_user, cohort, active_product_item):
+    asssert_subscribed_to_cohort(cohort, active_product_item.slug, logged_user)
+
+
+def test_logged_user_is_synced_on_discourse(resp_logged_user, logged_user, sync_on_discourse_mock):
+    sync_on_discourse_mock.assert_called_once_with(logged_user.id)
+
+
 @pytest.fixture
-def transaction_json(data_science_item):
+def transaction_json(active_product_item):
     return {
         'object': 'transaction', 'status': 'authorized', 'refuse_reason': None, 'status_reason': 'antifraud',
         'acquirer_response_code': '0000', 'acquirer_name': 'pagarme', 'acquirer_id': '5cdec7071458b442125d940b',
         'authorization_code': '727706', 'soft_descriptor': None, 'tid': TRANSACTION_ID, 'nsu': TRANSACTION_ID,
         'date_created': '2020-01-21T01:10:13.015Z', 'date_updated': '2020-01-21T01:10:13.339Z',
-        'amount': data_science_item.price,
-        'authorized_amount': data_science_item.price, 'paid_amount': 0, 'refunded_amount': 0, 'installments': 1,
+        'amount': active_product_item.price,
+        'authorized_amount': active_product_item.price, 'paid_amount': 0, 'refunded_amount': 0, 'installments': 1,
         'id': TRANSACTION_ID, 'cost': 70,
         'card_holder_name': 'Bar Baz', 'card_last_digits': '1111', 'card_first_digits': '411111', 'card_brand': 'visa',
         'card_pin_mode': None, 'card_magstripe_fallback': False, 'cvm_pin': False, 'postback_url': None,
@@ -117,9 +180,9 @@ def transaction_json(data_science_item):
         'boleto_barcode': None, 'boleto_expiration_date': None, 'referer': 'encryption_key', 'ip': '177.27.238.139',
         'items': [{
             'object': 'item',
-            'id': f'{data_science_item.slug}',
-            'title': f'{data_science_item.name}',
-            'unit_price': data_science_item.price,
+            'id': f'{active_product_item.slug}',
+            'title': f'{active_product_item.name}',
+            'unit_price': active_product_item.price,
             'quantity': 1, 'category': None, 'tangible': False, 'venue': None, 'date': None
         }], 'card': {
             'object': 'card', 'id': 'card_ck5n7vtbi010or36dojq96sb1', 'date_created': '2020-01-21T01:45:57.294Z',
@@ -146,14 +209,14 @@ def transaction_json(data_science_item):
 
 
 @pytest.fixture
-def captura_json(data_science_item):
+def captura_json(active_product_item):
     return {
         'object': 'transaction', 'status': 'paid', 'refuse_reason': None, 'status_reason': 'acquirer',
         'acquirer_response_code': '0000', 'acquirer_name': 'pagarme', 'acquirer_id': '5cdec7071458b442125d940b',
         'authorization_code': '408324', 'soft_descriptor': None, 'tid': TRANSACTION_ID, 'nsu': TRANSACTION_ID,
         'date_created': '2020-01-21T01:45:57.309Z', 'date_updated': '2020-01-21T01:47:27.105Z', 'amount': 8000,
-        'authorized_amount': data_science_item.price,
-        'paid_amount': data_science_item.price, 'refunded_amount': 0,
+        'authorized_amount': active_product_item.price,
+        'paid_amount': active_product_item.price, 'refunded_amount': 0,
         'installments': 1,
         'id': TRANSACTION_ID,
         'cost': 100,
@@ -180,9 +243,9 @@ def captura_json(data_science_item):
         }, 'shipping': None,
         'items': [{
             'object': 'item',
-            'id': f'{data_science_item.slug}',
-            'title': f'{data_science_item.name}',
-            'unit_price': data_science_item.price,
+            'id': f'{active_product_item.slug}',
+            'title': f'{active_product_item.name}',
+            'unit_price': active_product_item.price,
             'quantity': 1, 'category': None, 'tangible': False, 'venue': None, 'date': None
         }], 'card': {
             'object': 'card', 'id': 'card_ck5n7vtbi010or36dojq96sb1', 'date_created': '2020-01-21T01:45:57.294Z',

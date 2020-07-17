@@ -10,6 +10,22 @@ migration_module = import_module('pythonpro.checkout.migrations.0001_payment_set
 webdev_migration_module = import_module('pythonpro.checkout.migrations.0002_webdev_setup')
 data_science_migration_module = import_module('pythonpro.checkout.migrations.0003_data_science_setup')
 
+ALL_ACTIVE_PRODUCTS = [
+    'membership',
+    'membership-client',
+    'membership-client-first-day',
+    'membership-first-day',
+    'webdev',
+    'webdev-oto',
+    'data-science',
+]
+ALL_INACTIVE_PRODUCTS = [
+    'pytools',
+    'pytools-oto',
+    'pytools-done',
+]
+ALL_PRODUCTS = ALL_ACTIVE_PRODUCTS + ALL_INACTIVE_PRODUCTS
+
 
 @pytest.fixture(autouse=True)
 def execute_migration(db, pytestconfig):
@@ -32,21 +48,7 @@ def disable_forum_integration(settings):
     settings.DISCOURSE_API_USER = ''
 
 
-@pytest.fixture
-def pytools_item(execute_migration):
-    return facade.find_payment_item_config('pytools')
-
-
-@pytest.fixture
-def membership_item(execute_migration, cohort):
-    return facade.find_payment_item_config('membership')
-
-
-@pytest.fixture
-def webdev_item(execute_migration):
-    return facade.find_payment_item_config('webdev-oto')
-
-
-@pytest.fixture
-def data_science_item(execute_migration):
-    return facade.find_payment_item_config('data-science')
+@pytest.fixture(params=ALL_ACTIVE_PRODUCTS)
+def active_product_item(execute_migration, cohort, request):
+    slug = request.param
+    return facade.find_payment_item_config(slug)

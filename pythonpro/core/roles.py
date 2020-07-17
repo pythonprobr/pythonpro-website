@@ -45,8 +45,22 @@ class Webdev(AbstractUserRole):
     }
 
 
-watch_member_modules = 'watch_member_modules'
+watch_bootcamp_modules = 'watch_bootcamp_modules'
 access_cohorts = 'access_cohorts'
+
+
+class Bootcamper(AbstractUserRole):
+    available_permissions = {
+        access_forum: True,
+        watch_lead_modules: True,
+        watch_client_modules: True,
+        watch_webdev_modules: True,
+        watch_bootcamp_modules: True,
+        access_cohorts: True,
+    }
+
+
+watch_member_modules = 'watch_member_modules'
 
 
 class Member(AbstractUserRole):
@@ -55,6 +69,7 @@ class Member(AbstractUserRole):
         watch_lead_modules: True,
         watch_client_modules: True,
         watch_member_modules: True,
+        watch_bootcamp_modules: True,
         access_cohorts: True,
         access_forum: True,
     }
