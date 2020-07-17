@@ -12,17 +12,121 @@ def fake():
 
 
 @pytest.fixture
-def client_with_user(client, django_user_model, logged_user):
+def client_with_user(client, logged_user):
     client.force_login(logged_user)
     return client
 
 
+_all_roles = set('data_scientist lead client webdev member'.split())
+_advanced_roles = {'member'}
+_level_one_roles = set('client webdev member'.split())
+_level_two_roles = set('webdev member'.split())
+
+
 @pytest.fixture
 def logged_user(django_user_model):
-    logged_user = baker.make(django_user_model)
+    logged_user = baker.make(django_user_model, is_superuser=False)
     logged_user.email = logged_user.email.lower()
     logged_user.save()
     return logged_user
+
+
+@pytest.fixture(params=_all_roles)
+@pytest.mark.django_db
+def pythonpro_role(logged_user, request):
+    role = request.param
+    assign_role(logged_user, role)
+    return logged_user
+
+
+@pytest.fixture
+def client_with_all_roles(client, pythonpro_role):
+    client.force_login(pythonpro_role)
+    return client
+
+
+@pytest.fixture(params=_advanced_roles)
+@pytest.mark.django_db
+def advanced_role(logged_user, request):
+    role = request.param
+    assign_role(logged_user, role)
+    return logged_user
+
+
+@pytest.fixture
+def client_with_advanced_roles(client, advanced_role):
+    client.force_login(advanced_role)
+    return client
+
+
+@pytest.fixture(params=_all_roles - _advanced_roles)
+@pytest.mark.django_db
+def not_advanced_role(logged_user, request):
+    role = request.param
+    assign_role(logged_user, role)
+    return logged_user
+
+
+@pytest.fixture
+def client_with_not_advanced_roles(client, not_advanced_role):
+    client.force_login(not_advanced_role)
+    return client
+
+
+@pytest.fixture(params=_level_one_roles)
+@pytest.mark.django_db
+def level_one_role(logged_user, request):
+    role = request.param
+    assign_role(logged_user, role)
+    return logged_user
+
+
+@pytest.fixture
+def client_with_level_one_roles(client, level_one_role):
+    client.force_login(level_one_role)
+    return client
+
+
+@pytest.fixture(params=_all_roles - _level_one_roles)
+@pytest.mark.django_db
+def not_level_one_role(logged_user, request):
+    role = request.param
+    assign_role(logged_user, role)
+    return logged_user
+
+
+@pytest.fixture
+def client_with_not_level_one_roles(client, not_level_one_role):
+    client.force_login(not_level_one_role)
+    return client
+
+
+@pytest.fixture(params=_level_two_roles)
+@pytest.mark.django_db
+def level_two_role(logged_user, request):
+    role = request.param
+    assign_role(logged_user, role)
+    return logged_user
+
+
+@pytest.fixture
+def client_with_level_two_roles(client, level_two_role):
+    client.force_login(level_two_role)
+    return client
+
+
+@pytest.fixture(params=_all_roles - _level_two_roles)
+@pytest.mark.django_db
+def not_level_two_role(logged_user, request):
+    role = request.param
+    assign_role(logged_user, role)
+    return logged_user
+
+
+@pytest.fixture
+def client_with_not_level_two_roles(client, not_level_two_role):
+    client.force_login(not_level_two_role)
+    return client
 
 
 @pytest.fixture
@@ -31,28 +135,28 @@ def cohort(db):
 
 
 @pytest.fixture
-def client_with_lead(client, django_user_model, logged_user):
+def client_with_lead(client, logged_user):
     assign_role(logged_user, 'lead')
     client.force_login(logged_user)
     return client
 
 
 @pytest.fixture
-def client_with_webdev(client, django_user_model, logged_user):
+def client_with_webdev(client, logged_user):
     assign_role(logged_user, 'webdev')
     client.force_login(logged_user)
     return client
 
 
 @pytest.fixture
-def client_with_member(client, django_user_model, logged_user):
+def client_with_member(client, logged_user):
     assign_role(logged_user, 'member')
     client.force_login(logged_user)
     return client
 
 
 @pytest.fixture
-def client_with_client(client, django_user_model, logged_user):
+def client_with_client(client, logged_user):
     assign_role(logged_user, 'client')
     client.force_login(logged_user)
     return client
