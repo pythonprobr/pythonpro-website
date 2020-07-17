@@ -140,11 +140,6 @@ def resp_lead_change_pasword(resp_lead_creation, client):
 
 
 @pytest.fixture(autouse=True)
-def sync_user(mocker):
-    return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse')
-
-
-@pytest.fixture(autouse=True)
 def sync_user_delay(mocker):
     return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse.delay')
 

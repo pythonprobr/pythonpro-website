@@ -12,9 +12,10 @@ LEAD = 'lead'
 CLIENT = 'client'
 MEMBER = 'member'
 WEBDEV = 'webdev'
+BOOTCAMPER = 'bootcamper'
 DATA_SCIENTIST = 'data-scientist'
 
-_PYTHON_PRO_ROLES = {LEAD, CLIENT, MEMBER, WEBDEV}
+_PYTHON_PRO_ROLES = {LEAD, CLIENT, WEBDEV, BOOTCAMPER, MEMBER}
 
 _ALL_ROLES = set(_PYTHON_PRO_ROLES)
 _ALL_ROLES.add(DATA_SCIENTIST)
@@ -30,6 +31,11 @@ def create_or_update_with_no_role(name: str, email: str, *tags, id='0', phone=No
 @run_until_available
 def create_or_update_lead(name: str, email: str, *tags, id='0', phone=None):
     return create_or_update_user(name, email, LEAD, *tags, id=id, phone=phone)
+
+
+@run_until_available
+def create_or_update_bootcamper(name: str, email: str, *tags, id='0', phone=None):
+    return create_or_update_user(name, email, BOOTCAMPER, *tags, id=id, phone=phone)
 
 
 @run_until_available
