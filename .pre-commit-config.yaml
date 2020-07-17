@@ -1,0 +1,27 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 19.10b0
+    hooks:
+      - id: black
+        name: Black
+        args: ["-S", "--line-length", "120"]
+        language_version: python3.8
+
+  - repo: https://github.com/asottile/reorder_python_imports
+    rev: v2.3.0
+    hooks:
+      - id: reorder-python-imports
+        name: Format Imports
+
+  - repo: local
+    hooks:
+      - id: flake8
+        name: Flake8
+        entry: flake8 --config=.flake8
+        language: python
+
+  - repo: git://github.com/pre-commit/pre-commit-hooks
+    rev: v3.1.0
+    hooks:
+      - id: trailing-whitespace
+      - id: check-merge-conflict

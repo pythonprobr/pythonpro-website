@@ -47,6 +47,7 @@ pytest = "*"
 django-test-migrations = "*"
 model-bakery = "*"
 flower = "*"
+pre-commit = "*"
 
 [requires]
 python_version = "3.8"
