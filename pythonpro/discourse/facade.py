@@ -13,6 +13,7 @@ __all__ = (
     'generate_discourse_login_url',
     'InvalidSOOPayload',
     'MissingDiscourseAPICredentials',
+    'generate_sso_payload_and_signature'
 )
 
 

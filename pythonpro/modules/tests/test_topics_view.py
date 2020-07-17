@@ -257,3 +257,48 @@ def resp_level_two_accessing_webdev_content(client_with_level_two_roles, topic_w
 
 def test_webdev_access_webdev_content(resp_level_two_accessing_webdev_content):
     dj_assert_template_used(resp_level_two_accessing_webdev_content, 'topics/topic_detail.html')
+
+
+@pytest.fixture
+def module_level_three(db):
+    return baker.make(Module, slug='entrevistas-tecnicas')
+
+
+@pytest.fixture
+def section_level_three(module_level_three):
+    return baker.make(Section, module=module_level_three)
+
+
+@pytest.fixture
+def chapter_level_three(section_level_three):
+    return baker.make(Chapter, section=section_level_three)
+
+
+@pytest.fixture
+def topic_level_three(chapter_level_three):
+    return baker.make(Topic, chapter=chapter_level_three)
+
+
+@pytest.fixture
+def resp_not_level_three_accesing_level_three_content(client_with_not_level_three_roles, topic_level_three):
+    return client_with_not_level_three_roles.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_level_three.module_slug(), 'topic_slug': topic_level_three.slug}),
+    )
+
+
+def test_not_level_three_hitting_level_three_landing_page(resp_not_level_three_accesing_level_three_content):
+    assert resp_not_level_three_accesing_level_three_content.status_code == 302
+    assert resp_not_level_three_accesing_level_three_content.url == reverse('member_landing_page')
+
+
+@pytest.fixture
+def resp_level_three_accessing_level_three_content(client_with_level_three_roles, topic_level_three):
+    return client_with_level_three_roles.get(
+        reverse('modules:topic_detail',
+                kwargs={'module_slug': topic_level_three.module_slug(), 'topic_slug': topic_level_three.slug}),
+        secure=True)
+
+
+def test_level_three_access_level_three_content(resp_level_three_accessing_level_three_content):
+    dj_assert_template_used(resp_level_three_accessing_level_three_content, 'topics/topic_detail.html')

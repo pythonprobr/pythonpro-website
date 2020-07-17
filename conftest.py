@@ -17,10 +17,11 @@ def client_with_user(client, logged_user):
     return client
 
 
-_all_roles = set('data_scientist lead client webdev member'.split())
+_all_roles = set('data_scientist lead client webdev bootcamper member'.split())
 _advanced_roles = {'member'}
-_level_one_roles = set('client webdev member'.split())
-_level_two_roles = set('webdev member'.split())
+_level_one_roles = set('client webdev bootcamper member'.split())
+_level_two_roles = set('webdev bootcamper member'.split())
+_level_three_roles = set('bootcamper member'.split())
 
 
 @pytest.fixture
@@ -126,6 +127,34 @@ def not_level_two_role(logged_user, request):
 @pytest.fixture
 def client_with_not_level_two_roles(client, not_level_two_role):
     client.force_login(not_level_two_role)
+    return client
+
+
+@pytest.fixture(params=_level_three_roles)
+@pytest.mark.django_db
+def level_three_role(logged_user, request):
+    role = request.param
+    assign_role(logged_user, role)
+    return logged_user
+
+
+@pytest.fixture
+def client_with_level_three_roles(client, level_three_role):
+    client.force_login(level_three_role)
+    return client
+
+
+@pytest.fixture(params=_all_roles - _level_three_roles)
+@pytest.mark.django_db
+def not_level_three_role(logged_user, request):
+    role = request.param
+    assign_role(logged_user, role)
+    return logged_user
+
+
+@pytest.fixture
+def client_with_not_level_three_roles(client, not_level_three_role):
+    client.force_login(not_level_three_role)
     return client
 
 

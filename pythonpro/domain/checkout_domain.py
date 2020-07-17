@@ -38,7 +38,7 @@ django_pagarme_facade.set_user_factory(user_factory)
 GENERATED_BOLETO_TAG = 'generated-boleto'
 
 
-@shared_task()
+@shared_task
 def payment_handler_task(payment_id):
     payment = django_pagarme_facade.find_payment(payment_id)
     try:

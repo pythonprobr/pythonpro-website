@@ -22,8 +22,8 @@ def live_class(db, cohort, fake) -> LiveClass:
 
 
 @pytest.fixture
-def resp(client_with_member, live_class: LiveClass):
-    return client_with_member.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
+def resp(client_with_level_three_roles, live_class: LiveClass):
+    return client_with_level_three_roles.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
 
 
 def test_logged_user(resp):
@@ -45,10 +45,10 @@ def test_cohort_title(cohort, resp):
 
 
 @pytest.fixture
-def resp_video_not_recorded(client_with_member, live_class: LiveClass):
+def resp_video_not_recorded(client_with_level_three_roles, live_class: LiveClass):
     live_class.vimeo_id = ''
     live_class.save()
-    return client_with_member.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
+    return client_with_level_three_roles.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
 
 
 def test_pending_live_class_msg(resp_video_not_recorded):
@@ -70,25 +70,15 @@ def test_vimeo_player_not_present(resp_video_not_recorded):
     )
 
 
-@pytest.fixture
-def resp_client(client_with_client, live_class: LiveClass, mocker, logged_user):
-    return client_with_client.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
-
-
-def test_live_class_landing_for_client(cohort, resp_client):
-    assert resp_client.status_code == 302
-    assert resp_client.url == reverse('member_landing_page')
-
-
-@pytest.fixture
-def resp_lead(client_with_lead, live_class: LiveClass, mocker, logged_user):
-    return client_with_lead.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
-
-
-def test_live_class_landing_for_lead(cohort, resp_lead):
-    assert resp_lead.status_code == 302
-    assert resp_lead.url == reverse('member_landing_page')
-
-
 def test_cohort_url(cohort: Cohort, resp):
     dj_assert_contains(resp, cohort.get_absolute_url())
+
+
+@pytest.fixture
+def resp_not_level_three(client_with_not_level_three_roles, live_class: LiveClass, logged_user):
+    return client_with_not_level_three_roles.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
+
+
+def test_live_class_landing_for_not_level_three_users(cohort, resp_not_level_three):
+    assert resp_not_level_three.status_code == 302
+    assert resp_not_level_three.url == reverse('member_landing_page')
