@@ -2,7 +2,7 @@ from typing import List
 
 import pytest
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 import pythonpro.domain.content_statistics_domain
 from pythonpro.dashboard.models import TopicInteraction
@@ -13,14 +13,14 @@ from pythonpro.modules.models import Chapter, Module, Section, Topic
 # Tests user interacted with all topics
 @pytest.fixture
 def modules(db):
-    return mommy.make(Module, 2)
+    return baker.make(Module, 2)
 
 
 @pytest.fixture
 def sections(modules):
     models = []
     for m in modules:
-        models.extend(mommy.make(Section, 2, module=m))
+        models.extend(baker.make(Section, 2, module=m))
     return models
 
 
@@ -28,7 +28,7 @@ def sections(modules):
 def chapters(sections):
     models = []
     for s in sections:
-        models.extend(mommy.make(Chapter, 2, section=s))
+        models.extend(baker.make(Chapter, 2, section=s))
     return models
 
 
@@ -39,7 +39,7 @@ TOPIC_DURATION = 100
 def topics(chapters):
     models = []
     for c in chapters:
-        models.extend(mommy.make(Topic, 2, chapter=c, duration=TOPIC_DURATION))
+        models.extend(baker.make(Topic, 2, chapter=c, duration=TOPIC_DURATION))
     return models
 
 
@@ -48,7 +48,7 @@ def interactions(topics, logged_user):
     models = []
     for t in topics:
         models.append(
-            mommy.make(
+            baker.make(
                 TopicInteraction,
                 user=logged_user,
                 topic=t,
@@ -92,7 +92,7 @@ def test_module_duration(resp, logged_user):
 # Tests User has not interaction with topics
 @pytest.fixture
 def resp_user_has_no_interactions(client_with_lead, topics):
-    return client_with_lead.get(reverse('dashboard:home'), secure=True)
+    return client_with_lead.get(reverse('dashboard:home'))
 
 
 def test_module_duration_with_no_interactions(resp_user_has_no_interactions, logged_user, ):

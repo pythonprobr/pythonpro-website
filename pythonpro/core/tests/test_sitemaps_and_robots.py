@@ -5,7 +5,7 @@ from django.urls import reverse
 
 @pytest.fixture
 def resp_sitemap(client: Client, db):
-    return client.get(reverse('core:sitemap'), secure=True)
+    return client.get(reverse('core:sitemap'))
 
 
 def test_sitemap_status_code(resp_sitemap):
@@ -14,7 +14,7 @@ def test_sitemap_status_code(resp_sitemap):
 
 @pytest.fixture
 def resp_robots(client: Client, db):
-    return client.get(reverse('core:robots'), secure=True)
+    return client.get(reverse('core:robots'))
 
 
 def test_robots_status_code(resp_robots):

@@ -9,13 +9,13 @@ from pythonpro.email_marketing import facade as email_marketing_facade
 __all__ = ['contact_info_listener', 'user_factory', 'payment_handler_task', 'payment_change_handler']
 
 
-def contact_info_listener(name, email, phone, payment_item_slug, user=None):
+def contact_info_listener(name: str, email: str, phone: str, payment_item_slug: str, user=None):
     if (user is not None) and user.is_authenticated:
         user_id = user.id
-        if 'pytools' in payment_item_slug:
-            core_facade.client_checkout_form(user, 'unknown')
-        elif 'membership' in payment_item_slug:
+        if payment_item_slug.startswith('membership'):
             core_facade.member_checkout_form(user)
+        elif payment_item_slug.startswith('webdev'):
+            core_facade.webdev_checkout_form(user)
     else:
         user_id = None
     email_marketing_facade.create_or_update_with_no_role.delay(
@@ -35,27 +35,42 @@ def user_factory(pagarme_transaction):
 
 django_pagarme_facade.set_user_factory(user_factory)
 
+GENERATED_BOLETO_TAG = 'generated-boleto'
+
 
 @shared_task()
 def payment_handler_task(payment_id):
     payment = django_pagarme_facade.find_payment(payment_id)
-    status = payment.status()
-    slug = payment.first_item_slug()
-    if status == django_pagarme_facade.PAID:
-        user = payment.user
-        _promote(user, slug)
-    elif status == django_pagarme_facade.WAITING_PAYMENT:
-        user = payment.user
-        email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-boleto')
-
-
-def _promote(user, slug):
-    if 'pytools' in slug:
-        user_facade.promote_client(user, 'unknow')
-    elif 'membership' in slug:
-        user_facade.promote_member(user, 'unknow')
+    try:
+        slug = payment.first_item_slug()
+    except django_pagarme_facade.PagarmePaymentItemDoesNotExist:
+        pass  # no need to handle payment with no Item
     else:
-        raise ValueError(f'{slug} should contain pytools or membership')
+        status = payment.status()
+        if status == django_pagarme_facade.PAID:
+            user = payment.user
+            if payment.payment_method == django_pagarme_facade.BOLETO:
+                email_marketing_facade.remove_tags.delay(user.email, user.id, f'{slug}-boleto', f'{slug}-refused')
+            else:
+                email_marketing_facade.remove_tags.delay(user.email, user.id, f'{slug}-refused')
+            _promote(user, slug)
+        elif status == django_pagarme_facade.REFUSED:
+            user = payment.user
+            email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-refused')
+        elif status == django_pagarme_facade.WAITING_PAYMENT:
+            user = payment.user
+            email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-boleto')
+
+
+def _promote(user, slug: str):
+    if slug.startswith('membership'):
+        user_facade.promote_member(user, 'unknown')
+    elif slug.startswith('webdev'):
+        user_facade.promote_webdev(user, 'unknown')
+    elif slug.startswith('data-science'):
+        user_facade.promote_data_scientist(user, 'unknown')
+    else:
+        raise ValueError(f'{slug} should contain webdev or membership or data-science')
 
 
 def payment_change_handler(payment_id):

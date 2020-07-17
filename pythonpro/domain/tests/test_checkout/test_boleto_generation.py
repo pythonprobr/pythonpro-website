@@ -2,6 +2,7 @@ import pytest
 import responses
 from django.urls import reverse
 from django_pagarme import facade as django_pagarme_facade
+from model_bakery import baker
 
 from pythonpro.core import facade as core_facade
 from pythonpro.domain import checkout_domain
@@ -45,8 +46,10 @@ def tag_as_mock(mocker):
 
 
 @pytest.fixture
-def resp(client, pagarme_responses, create_or_update_lead_mock, payment_handler_task_mock, tag_as_mock):
-    return client.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN}), secure=True)
+def resp(client, pagarme_responses, create_or_update_lead_mock, payment_handler_task_mock, tag_as_mock,
+         membership_item):
+    return client.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': membership_item.slug}),
+                      secure=True)
 
 
 def test_status_code(resp):
@@ -71,17 +74,20 @@ def test_payment_linked_with_created_user(resp, django_user_model):
     assert user == payment.user
 
 
-def test_created_user_tagged_with_boleto(resp, django_user_model, tag_as_mock, pytools_item):
+def test_created_user_tagged_with_boleto(resp, django_user_model, tag_as_mock, webdev_item):
     User = django_user_model
     user = User.objects.first()
-    tag_as_mock.assert_called_once_with(user.email, user.id, f'{pytools_item.slug}-boleto')
+    tag_as_mock.assert_called_once_with(user.email, user.id, f'{webdev_item.slug}-boleto')
 
 
 # Tests user logged
 
 @pytest.fixture
-def resp_logged_user(client_with_lead, pagarme_responses, payment_handler_task_mock, tag_as_mock):
-    return client_with_lead.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN}), secure=True)
+def resp_logged_user(client_with_lead, pagarme_responses, payment_handler_task_mock, tag_as_mock, membership_item):
+    return client_with_lead.get(
+        reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': membership_item.slug}),
+        secure=True
+    )
 
 
 def test_logged_user_become_lead(resp_logged_user, logged_user):
@@ -93,12 +99,26 @@ def test_payment_linked_with_logged_user(resp_logged_user, logged_user):
     assert logged_user == payment.user
 
 
-def test_user_tagged_with_boleto(resp_logged_user, logged_user, tag_as_mock, pytools_item):
-    tag_as_mock.assert_called_once_with(logged_user.email, logged_user.id, f'{pytools_item.slug}-boleto')
+def test_user_tagged_with_boleto(resp_logged_user, logged_user, tag_as_mock, webdev_item):
+    tag_as_mock.assert_called_once_with(logged_user.email, logged_user.id, f'{webdev_item.slug}-boleto')
 
 
 @pytest.fixture
-def transaction_json(pytools_item):
+def remove_tags_mock(mocker):
+    return mocker.patch('pythonpro.domain.checkout_domain.email_marketing_facade.remove_tags.delay')
+
+
+def test_payment_tag_removed_after_payment(resp_logged_user, webdev_item, remove_tags_mock, logged_user):
+    payment = django_pagarme_facade.find_payment_by_transaction(TRANSACTION_ID)
+    baker.make(django_pagarme_facade.PagarmeNotification, status=django_pagarme_facade.PAID, payment=payment)
+    checkout_domain.payment_handler_task(payment.id)
+    remove_tags_mock.assert_called_once_with(
+        logged_user.email, logged_user.id, f'{webdev_item.slug}-boleto', f'{webdev_item.slug}-refused'
+    )
+
+
+@pytest.fixture
+def transaction_json(webdev_item):
     return {
         'object': 'transaction',
         'status': 'authorized',
@@ -113,7 +133,7 @@ def transaction_json(pytools_item):
         'nsu': TRANSACTION_ID,
         'date_created': '2020-03-07T17:04:58.279Z',
         'date_updated': '2020-03-07T17:04:58.502Z',
-        'authorized_amount': pytools_item.price,
+        'authorized_amount': webdev_item.price,
         'paid_amount': 0,
         'refunded_amount': 0,
         'installments': 1,
@@ -181,9 +201,9 @@ def transaction_json(pytools_item):
         'shipping': None,
         'items': [{
             'object': 'item',
-            'id': f'{pytools_item.slug}',
-            'title': f'{pytools_item.name}',
-            'unit_price': pytools_item.price,
+            'id': f'{webdev_item.slug}',
+            'title': f'{webdev_item.name}',
+            'unit_price': webdev_item.price,
             'quantity': 1,
             'category': None,
             'tangible': False,
@@ -211,7 +231,7 @@ def transaction_json(pytools_item):
 
 
 @pytest.fixture
-def captura_json(pytools_item):
+def captura_json(webdev_item):
     return {
         'object': 'transaction',
         'status': 'waiting_payment',
@@ -226,8 +246,8 @@ def captura_json(pytools_item):
         'nsu': TRANSACTION_ID,
         'date_created': '2020-03-07T17:04:58.279Z',
         'date_updated': '2020-03-07T17:11:14.957Z',
-        'amount': pytools_item.price,
-        'authorized_amount': pytools_item.price,
+        'amount': webdev_item.price,
+        'authorized_amount': webdev_item.price,
         'paid_amount': 0,
         'refunded_amount': 0,
         'installments': 1,
@@ -295,9 +315,9 @@ def captura_json(pytools_item):
         'shipping': None,
         'items': [{
             'object': 'item',
-            'id': f'{pytools_item.slug}',
-            'title': f'{pytools_item.name}',
-            'unit_price': pytools_item.price,
+            'id': f'{webdev_item.slug}',
+            'title': f'{webdev_item.name}',
+            'unit_price': webdev_item.price,
             'quantity': 1,
             'category': None,
             'tangible': False,

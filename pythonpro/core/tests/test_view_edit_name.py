@@ -1,7 +1,7 @@
 import pytest
 from django.test import Client
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.django_assertions import dj_assert_contains
 
@@ -13,12 +13,12 @@ def resp(client: Client):
 
 def _resp(client):
     """Plain function to avoid _pytest.warning_types.RemovedInPytest4Warning: Fixture "resp" called directly."""
-    return client.get(reverse('core:profile_name'), secure=True)
+    return client.get(reverse('core:profile_name'))
 
 
 @pytest.fixture
 def user(django_user_model):
-    usr = mommy.make(django_user_model)
+    usr = baker.make(django_user_model)
     return usr
 
 
@@ -55,5 +55,5 @@ def test_form_data(data, resp_with_user):
 def test_edit_name(django_user_model, fake, user, client: Client):
     client.force_login(user)
     name = fake.name()
-    client.post(reverse('core:profile_name'), {'first_name': name}, secure=True)
+    client.post(reverse('core:profile_name'), {'first_name': name})
     assert name == django_user_model.objects.filter(pk=user.pk).get().first_name

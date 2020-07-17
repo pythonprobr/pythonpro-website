@@ -3,7 +3,7 @@ from datetime import timedelta
 import pytest
 from django.urls import reverse
 from django.utils import timezone
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.cohorts.models import Cohort, LiveClass
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains
@@ -12,7 +12,7 @@ from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contai
 @pytest.fixture
 def live_class(db, cohort, fake) -> LiveClass:
     now = timezone.now()
-    return mommy.make(
+    return baker.make(
         LiveClass,
         cohort=cohort,
         vimeo_id='1212',
@@ -23,7 +23,7 @@ def live_class(db, cohort, fake) -> LiveClass:
 
 @pytest.fixture
 def resp(client_with_member, live_class: LiveClass):
-    return client_with_member.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
+    return client_with_member.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
 
 
 def test_logged_user(resp):
@@ -31,7 +31,7 @@ def test_logged_user(resp):
 
 
 def test_link_unavailable_for_non_users(client):
-    resp = client.get(reverse('cohorts:live_class', kwargs={'pk': 1}), secure=True)
+    resp = client.get(reverse('cohorts:live_class', kwargs={'pk': 1}))
     assert resp.status_code == 302
 
 
@@ -48,7 +48,7 @@ def test_cohort_title(cohort, resp):
 def resp_video_not_recorded(client_with_member, live_class: LiveClass):
     live_class.vimeo_id = ''
     live_class.save()
-    return client_with_member.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
+    return client_with_member.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
 
 
 def test_pending_live_class_msg(resp_video_not_recorded):
@@ -72,7 +72,7 @@ def test_vimeo_player_not_present(resp_video_not_recorded):
 
 @pytest.fixture
 def resp_client(client_with_client, live_class: LiveClass, mocker, logged_user):
-    return client_with_client.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
+    return client_with_client.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
 
 
 def test_live_class_landing_for_client(cohort, resp_client):
@@ -82,7 +82,7 @@ def test_live_class_landing_for_client(cohort, resp_client):
 
 @pytest.fixture
 def resp_lead(client_with_lead, live_class: LiveClass, mocker, logged_user):
-    return client_with_lead.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}), secure=True)
+    return client_with_lead.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
 
 
 def test_live_class_landing_for_lead(cohort, resp_lead):

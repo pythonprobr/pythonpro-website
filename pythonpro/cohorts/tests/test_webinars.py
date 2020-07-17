@@ -6,16 +6,16 @@ from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contai
 
 @pytest.fixture
 def resp(client_with_user, webinars):
-    return client_with_user.get(reverse('cohorts:webinars'), secure=True)
+    return client_with_user.get(reverse('cohorts:webinars'))
 
 
 def test_link_for_logged_user(client_with_user):
-    resp = client_with_user.get(reverse('dashboard:home'), secure=True)
+    resp = client_with_user.get(reverse('dashboard:home'))
     dj_assert_contains(resp, reverse('cohorts:webinars'))
 
 
 def test_link_unavailable_for_non_users(client):
-    resp = client.get('/', secure=True)
+    resp = client.get('/')
     dj_assert_not_contains(resp, reverse('cohorts:webinars'))
 
 
@@ -45,7 +45,7 @@ def not_recorded_webinars(webinars):
 
 @pytest.fixture
 def resp_not_recorded_webinars(client_with_user, not_recorded_webinars):
-    return client_with_user.get(reverse('cohorts:webinars'), secure=True)
+    return client_with_user.get(reverse('cohorts:webinars'))
 
 
 def test_not_recorded_webinar_url_not_present(resp_not_recorded_webinars, not_recorded_webinars):

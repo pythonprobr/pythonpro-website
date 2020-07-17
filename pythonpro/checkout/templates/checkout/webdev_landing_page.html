@@ -1,0 +1,763 @@
+{% extends 'core/base_without_nav.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% load django_pagarme %}
+{% load tz %}
+
+{% block title %}MATRÍCULAS ABERTAS! - Curso de Django{% endblock %}
+{% block description %}Curso de Django. Aprenda a programar de forma rápida, fácil e simples!{% endblock %}
+
+{% block body %}
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col hero">
+                    
+                    <div class=''>
+                        <h1 class='font-weight-bold text-light text-uppercase'>
+                            Você já imaginou que bom seria se você estivesse preparado o suficiente
+                            para <u>empregos que pagam até 20 mil reais por mês de salário?</u>
+                        </h1>
+                        <h3 class='mt-5 text-light title-sub'>
+                            A faculdade não te prepara para o mercado de trabalho...
+                        </h3>
+
+                        <h3 class='mb-5 text-light title-sub text-uppercase font-weight-bold'>
+                            Mas, fique tranquilo, <u>o Curso Django Pro vai te preparar!</u>
+                            <span class="ec ec-wink"></span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class=''>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+
+                    <h3 class='mt-5 mb-5 font-weight-bold'>
+                        Para ter chances de conseguir uma vaga e se tornar um programador
+                        profissional você precisa dominar as principais ferramentas que estes
+                        profissionais usam no seu dia a dia.
+                    </h3>
+
+                    <p>
+                    <p>
+                        Deixa eu te explicar o porquê aprender essas ferramentas o mais rápido
+                        possível é essencial para que você se torne um programador de qualidade...
+                    </p>
+
+                    <p class='font-weight-bold'>
+                        <b class='highlight'>Como eu digo sempre que posso, a faculdade não te 
+                        prepara para o mercado de trabalho.</b>
+                    </p>
+
+                    <p>
+                        Na faculdade você aprende bastante teoria, mas quase nenhuma prática. 
+                        Eles não ensinam como é programar, no dia a dia.
+                    </p>
+
+                    <p>
+                        Eu sei disso porque senti esse problema na pele, e ainda por cima em 
+                        uma das melhores faculdades do Brasil, o ITA.
+                    </p>
+
+                    <p>
+                        No meu primeiro emprego, eu me deparei com vários conceitos e ferramentas 
+                        que eu não conhecia. Eu já conhecia tudo sobre lógica de programação, 
+                        tipos, iterações, orientação a objetos, herança, composição. 
+                        Mas somente este conhecimento não era suficiente…
+                    <p>
+
+                    <p>
+                        Os programadores mais experientes sabiam coisas que eu nunca 
+                        tinha ouvido falar. 
+                    </p>
+                    
+                    <p>
+                        <ul>
+                            <li><span class="ec ec-confused"></span> frameworks...</li>
+                            <li><span class="ec ec-confused"></span> deployment...</li>
+                            <li><span class="ec ec-confused"></span> versionamento de código...</li>
+                            <li><span class="ec ec-confused"></span> configuração de ambiente...</li>
+                            <li><span class="ec ec-confused"></span> testes automatizados...</li>
+                        </ul>
+                    </p>
+
+                    <p>
+                        <b class='highlight'>Eu não tinha aprendido nada disso na faculdade.</b>
+                    </p>
+
+                    <p>
+                        Acabou que, depois de penar muito, consegui aprender isso procurando 
+                        em livros, na internet e contando com a ajuda (quando dava) 
+                        dos meus colegas de trabalho.
+                    </p>
+
+                    <p>
+                        Isso já faz mais de 10 anos… Com o tempo eu fui dominando estas conceitos. 
+                        Com isso, a minha carreira foi evoluindo, a ponto de eu ser convidado 
+                        para ser diretor de tecnologia de uma startup. Como diretor de tecnologia, 
+                        além de programar, eu também era responsável por contratar e 
+                        gerenciar novos programadores.
+                    </p>
+
+                    <h4 class='mt-5 mb-5 font-weight-bold'>
+                        E, acredite, mesmo 10 anos depois, este cenário não mudou... 
+                    </h4>
+
+                    <p>
+                        Eu contratava programadores de ótimas faculdades e quase sempre acontecia
+                        o mesmo: a pessoa vinha com uma boa base conceitual, mas sem nenhum
+                        preparo pro mundo real.
+                    </p>
+
+                    <p>
+                        Para começar a desenvolver sistemas você precisa de conhecimentos
+                        além de conceitos de lógica de programação.
+                    </p>
+
+                    <p>
+                        Você precisa saber trabalhar com as principais ferramentas do mercado, 
+                        precisa saber trabalhar em equipe, de forma colaborativa. 
+                        São vários conceitos fundamentais que não são somente sobre lógica.
+                        <b>E a faculdade não te ensina isso.</b>
+                    </p>
+
+                    <p>
+                        E o pior de tudo isso é que se você tiver alguém pra te explicar 
+                        isso de forma simples e didática, você aprende muito rápido!
+                    </p>
+
+                    <p>
+                        Era isso que eu fazia como diretor de tecnologia. Treinava os novos funcionários.
+                    <p>
+
+                    <p>
+                        Enfim… para encurtar a história, foram destes treinamentos que nasceu o 
+                        curso Django Pro.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-secondary'>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col">
+                    <h2 class='mt-4 font-weight-bold text-uppercase'>
+                        Agora, me diz uma coisa… 
+                    </h2>
+                    <h2 class='mt-3 mb-4 font-weight-bold text-uppercase'>
+                        Você já imaginou que bom seria se você estivesse 
+                        preparado o suficiente para empregos que pagam 5... 10... 15... 
+                        <u>até 20 mil reais por mês de salário?</u>
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=''>
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col">
+                    <h4 class=''>
+                        Sim! Estes são os salários que um programador que dominam ferramentas 
+                        como Git, Github, Django, Pipenv ou técnicas como testes automatizados
+                        e entrega contínua, pode ganhar.
+                    </h4>
+
+                    <h4 class='mt-5 mb-4 text-uppercase font-weight-bold'>
+                        <b class=''>E no Django Pro eu te ensino tudo isso!</b>
+                        <span class="ec ec-heart-eyes"></span>
+                    </h4>
+
+                    <p>
+                        E, calma! Se você nunca ouviu falar destes termos 
+                        <i>(pois é, eu falo que a faculdade não ensina a programar)</i>, 
+                        não tem problema, <b class='highlight'>porque eu fiz este curso pensando tanto em pessoas que
+                        já sabem programar quanto em pessoas que nunca escreveram uma
+                        linha de código na vida.</b>
+                    </p>
+
+                    <p>
+                        O Django Pro possui os três módulos necessários para te ensinar o 
+                        necessário que todo programador Python deve saber. 
+                    </p>
+
+                    <h4 class='mt-5 font-weight-bold'>
+                        <span class="ec ec-pushpin"></span>
+                        MÓDULO 1: Python Birds, o fundamento!
+                    </h4>
+
+                    <p>
+                        No primeiro módulo você vai conhecer as maravilhas do Python. 
+                        Neste módulo eu vou te ensinar todos os fundamentos da programação. 
+                    </p>
+
+                    <h4 class='mt-5 font-weight-bold'>
+                        <span class="ec ec-pushpin"></span>
+                        MÓDULO 2: PyTools, as ferramentas primordiais!
+                    </h4>
+
+                    <p>
+                        No segundo módulo você vai aprender a utilizar todas as ferramentas
+                        que um bom programador utiliza no seu dia a dia. 
+                    </p>
+                        
+                    <p>
+                        Para programar não basta saber a lógica, é preciso saber operar as
+                        ferramentas e utilizar técnicas que auxiliam o programador a fazer o 
+                        seu trabalho do dia a dia.
+                    </p>
+
+                    <h4 class='mt-5 font-weight-bold'>
+                        <span class="ec ec-pushpin"></span>
+                        MÓDULO 3: Django, o framework mais utilizado!
+                    </h4>
+
+                    <p>
+                        E, no terceiro e principal módulo, você vai aprender a programar
+                        um sistema completo utilizando o melhor e mais famoso framework em Python:
+                        O Django! Você vai aprender a construir e publicar, do zero,
+                        um sistema que possui diversas funcionalidades que os recrutadores das
+                        melhores vagas solicitam.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="row text-center mt-5 mb-5">
+                <div class="col">
+                    <div class='text-center initiate-checkout'>
+                            <a href="#lead-form-header" class="cta-compra btn btn-warning initiate-checkout"  data-toggle="modal" data-target="#modal-waiting-capture">
+                            SIM! EU QUERO SER UM <b class='initiate-checkout'>PROGRAMADOR PROFISSIONAL! ➜</b>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row text-center text-light">
+                <div class="col">
+                    <h2 class='mt-4 mb-4 font-weight-bold'>
+                        Imagine você podendo provar em uma entrevista de emprego que sabe fazer 
+                        o que eles pedem?
+                    </h2>
+                    <h2 class='mt-4 mb-4 font-weight-bold text-uppercase'>
+                        Em uma situação dessas, <u>a chance de você conseguir 
+                        um ótimo emprego são ALTÍSSIMAS!</u>
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class=''>
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col">
+                    <p>
+                        Você vai aprender tudo isso do único jeito certo de se aprender: 
+                        colocando a mão na massa. As aulas do Django Pro são curtas, rápidas e
+                        objetivas para que você aprenda o que é necessário sem enrolação!
+                    </p>
+                    
+                    <p>
+                        <b class='highlight'>São mais de 220 aulas, que somam mais de 20h de carga horária. 
+                        Com certeza é um dos cursos mais completos do Brasil!</b>
+                    </p>
+
+                    <p>
+                        A única coisa que eu vou precisar de você é a sua DEDICAÇÃO. Aprender uma
+                        linguagem de programação é relativamente simples. Agora, aprender a
+                        programar como um profissional exige muita dedicação da sua parte. 
+                    <p>
+
+                    <p>
+                        Se você não se dedicar, não vai conseguir evoluir durante o curso. 
+                        Agora, se você se dedicar eu garanto que você vai conseguir se 
+                        tornar um programador profissional e conseguir um emprego na área. 
+                        Eu digo isso porque vários alunos meus que se dedicaram já conseguiram.
+                    </p>
+
+                    <p>
+                        E além disso, eu consigo garantir que você vai se tornar um programador
+                        profissional por causa do maior diferencial de todos os cursos aqui 
+                        da Python Pro: 
+                    </p>
+                        
+                    <p>
+                        <b>Você terá acesso vitalício ao curso Django Pro e
+                        todas atualizações dele!</b>
+                    </p>
+
+                    <p>
+                        Eu decidi liberar o acesso vitalício justamente porque cada pessoa
+                        possui um ritmo de aprendizado diferente. Eu não consigo determinar em
+                        quanto tempo uma pessoa vai conseguir se tornar um programador
+                        profissional...
+                    </p>
+                        
+                    <p>
+                        <i>(apesar de saber que será muito mais rápido que uma faculdade)</i> 
+                    </p>
+                    
+                    <p>
+                        ... o que eu consigo determinar é que, com um bom método, bons materiais
+                        de estudo e colegas para te ajudar você vai conseguir se tornar
+                        um programador profissional. E, quanto mais dedicação você tiver, 
+                        mais rápido isso vai acontecer!
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-primary'>
+        <div class="container">
+            <div class="row text-center text-light">
+                <div class="col">
+                    <h2 class='mt-4 mb-4 font-weight-bold'>
+                        E tem mais...
+                    </h2>
+                    <h2 class='mt-4 mb-4 font-weight-bold text-uppercase'>
+                        Além do curso Django Pro, eu preparei mais três bônus incríveis pra você!
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=''>
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col">
+
+                    <h4 class='font-weight-bold'>
+                        <span class="ec ec-gift"></span>
+                        BÔNUS #1: Você vai ter acesso a gravação do workshop Carreira Pro!
+                    </h4>
+
+                    <p>
+                        Sabe aquelas vagas que pagam ótimos salários? 
+                    </p>
+                        
+                    <p>
+                        Para conseguir passar em uma entrevista desse nível, não basta apenas saber programar. 
+                        Isso, na realidade, é pré-requisito. 
+                    </p>
+                        
+                    <p>
+                        Em um determinado momento do processo seletivo você vai precisar de um negócio chamado soft-skill. 
+                    </p>
+                    
+                    <p>
+                        <B class='highlight'>Com o workshop Carreira Pro você vai aprender a se portar em uma entrevista 
+                        técnica e finalmente conseguir o seu emprego dos sonhos.</B>
+                    </p>
+                    <p>
+                        <i class='line-through'>(R$ 197,00)</i>
+                    </p>
+                    
+                    <h4 class='mt-5 font-weight-bold'>
+                        <span class="ec ec-gift"></span>
+                        BÔNUS #2: Você vai ter acesso ao nosso Fórum de Dúvidas!
+                    </h4>
+
+                    <p>
+                        Programação é algo que se aprende pelos dedos. Você só vai aprender 
+                        se praticar. E, ao praticar, com certeza irão surgir diversas dúvidas.
+                    </p>
+                    
+                    <p>
+                         Só que quase sempre alguém já teve essa mesma dúvida antes de você. 
+                         Seria muito mais simples se você já tivesse um banco de informações onde 
+                         várias dúvidas comuns já foram respondidas, não é mesmo?
+                    </p>
+                        
+                    <p>
+                        E é para isso que eu resolvi te dar acesso ao nosso fórum exclusivo.
+                        <b class=''>Por lá você vai ter acesso as dúvidas de outros participantes e, assim,
+                        vai conseguir resolver seus impedimentos de uma maneira muito mais rápida. 
+                        Já são mais de 30 mil mensagens por lá!</b>
+                    </p>
+                        
+                    <p>
+                        Ah, e se você não encontrar a resposta da sua dúvida por lá, basta 
+                        você publicar um tópico com a sua dúvida que eu ou minha equipe vamos
+                        responder em menos de 24h.
+                    </p>
+
+                    <p>
+                        <i class='line-through'>(R$ 27,00/mês)</i>
+                    </p>
+
+                    <h4 class='mt-5 font-weight-bold'>
+                        <span class="ec ec-gift"></span>
+                        BÔNUS #3: Condição especial e acesso ao pré-lançamento do Bootcamp Python Pro!
+                    </h4>
+
+                    <p>
+                        O Bootcamp Python Pro é um curso completo onde eu mesmo, pessoalmente, vou te levar do 0 a 100 em programação.
+                    </p>
+                    
+                    <p>
+                        Por ele ser tão completo, demanda bastante energia. Por isso, eu só abro novas turmas poucas vezes por ano.
+                    </p>
+                        
+                    <p>
+                        Também pelo fato de ser ao vivo, as matrículas são bem concorridas.
+                    </p>
+                        
+                    <p>
+                        <b>Mas relaxa! Ao comprar o Django Pro você vai ter dois benefícios incríveis.</b>
+                    </p>
+
+                    <p>
+                        Primeiro, você vai ter acesso ao período de pré-lançamento do curso e assim poder garantir sua vaga no Bootcamp Python Pro antes de todo mundo! 
+                    </p>
+
+                    <p>
+                        E o segundo e melhor benefício: eu vou te dar um desconto incrível. 
+                        <b class='highlight'>Se você se matricular agora no Curso Django Pro, 
+                        você terá direito a R$ 500 reais de desconto no Bootcamp Python Pro.</b>
+                    </p>
+
+                    <p>
+                        <i class='line-through'>(R$ 500,00)</i>
+                    </p>
+
+                    <p class='mt-5'>
+                        (<i>Se considerarmos todos estes bônus, o curso vai sair praticamente de graça,
+                        você vai ver! </i> <span class="ec ec-wink"></span>)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-secondary'>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col">
+                    <h2 class='mt-4 font-weight-bold text-uppercase'>
+                        E vou além…
+                    </h2>
+                    <h2 class='mt-3 mb-4 font-weight-bold text-uppercase'>
+                        eu acredito tanto nesse curso que vou te oferecer uma garantia maluca!.
+                        <u>Trata-se da cláusula de felicidade garantida!</u>
+                        <span class="ec ec-tada"></span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class=''>
+            <div class="container">
+                <div class="row mt-5">
+                    <div class="col">
+
+                        <h4 class='font-weight-bold text-center text-uppercase'>
+                            Se você não gostar do meu curso eu te devolvo TODO seu dinheiro nos primeiros 15 dias. 
+                        </h4>
+                            
+                        <p>
+                            Pode ser por qualquer motivo. 
+                        </p>
+                            
+                        <p>
+                            Se você não gostar da minha didática, não gostar do jeito que eu falo, 
+                            não conseguir acompanhar o ritmo, se você não gostar até da cor 
+                            da minha camiseta... 
+                        </p>
+                        
+                        <p>
+                            ...basta me enviar um email que, se tiver dentro de 15 dias, 
+                            <b>eu te devolvo o dinheiro na hora, sem perguntas, sem condições.</b>
+                        </p>
+
+                        <p class='mb-5'>
+                            Eu te ofereço isso porque eu acredito no meu método! 
+                        </p>
+
+                        <p class='mt-5'>
+                            E, agora que eu falei de garantia, você deve estar se perguntando: 
+                            <b>quanto custa para você se inscrever no curso Django Pro?</b>
+                        </p>
+
+                        <p>
+                            Bom, primeiro de tudo, um curso de qualidade não é barato. 
+                        </p>
+                        
+                        <p>
+                            Como o curso Django Pro tem muita qualidade, ele com certeza não vai custar o preço de uma banana na feira. 
+                        </p>
+
+                        <p class='mt-5'>
+                            Além disso, o preço do curso Django Pro tem um grande diferencial. Presta bem atenção:
+                        </p>
+
+                        <p>
+                            <ul>
+                                <li><span class="ec ec-large-orange-diamond"></span> Uma boa faculdade custa, no mínimo, R$ 500 reais por mês.</li>
+                                <li><span class="ec ec-large-orange-diamond"></span> Um curso de tecnologia leva em torno de 3 a 5 anos para ser concluído.</li>
+                            </ul>
+                        </p>
+                        
+                        <p class='mt-5'>
+                            Ou seja, se você for fazer uma faculdade de programação... 
+                        </p>
+
+                        <p>
+                            <ul>                            
+                                <li><span class="ec ec-red-circle"></span> no primeiro ano você vai ter gasto R$ 6.000...</li>
+                                <li><span class="ec ec-red-circle"></span> no segundo ano R$ 12.000... </li>
+                                <li><span class="ec ec-red-circle"></span> no terceiro ano R$ 18.000...</li>
+                                <li><span class="ec ec-red-circle"></span> no quarto ano R$ 24.000...</li>
+                                <li><span class="ec ec-red-circle"></span>  e no quinto R$ 30.000. </li>
+                            </ul>                            
+                        </p>
+                        
+                        <p>        
+                            <i>(isso que eu nem coloquei outros custos, como livros, matrícula, transporte, alimentação, etc.)</i>
+                        </p>        
+
+                        <p>        
+                            Moral da história, uma faculdade é cara e você vai ter que pagar 
+                            todo ano em que estiver cursando.
+                        </p>        
+
+                        <p>        
+                            Aqui no Python Pro é diferente!
+                        </p>        
+                            
+                        <p>        
+                            <b class='highlight'>Você só vai pagar uma única vez e terá acesso por tempo ilimitado.</b>
+                        </p>        
+                            
+                        <p>        
+                            Se precisar de 6 meses até se tornar um programador profissional, você paga uma vez só, 
+                            se precisar de 1 ano, você paga uma vez só, se precisar de 2 anos, 
+                            você paga uma vez só, se precisar de 10 anos, você paga uma vez só!
+                        </p>        
+                    </div>
+                </div>
+
+                <div class="row text-center mb-3">
+                    <div class="col">
+                        <h1 class='price-parcelado'>
+                            <span class='parcela'>12x</span>
+                            <b>{{ payment_item_config.max_installment_amount_after_interest|cents_to_brl}}</b>
+                        </h1>
+                        <p class='price-a-vista'>(ou à vista com 15% de desconto, por {{ payment_item_config.price|cents_to_brl}})</p>
+                    </div>    
+                </div>
+
+                <div class="row text-center mb-3">
+                    <div class="col">
+                        <div class='text-center initiate-checkout'>
+                                <a href="#lead-form-header" class="cta-compra btn btn-warning initiate-checkout"  data-toggle="modal" data-target="#modal-waiting-capture">
+                                SIM! EU QUERO SER UM <b class='initiate-checkout'>PROGRAMADOR PROFISSIONAL! ➜</b>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            Este preço é mais barato que um semestre de qualquer faculdade de 
+                            qualidade no Brasil! 
+                        </p>
+                            
+                        <p>
+                            Além disso, o salário inicial de um programador é de, pelo menos, 
+                            R$ 1.500 reais mensais. 
+                        </p>
+                        
+                        <p>
+                            <b>Ou seja, com o seu primeiro salário como programador profissional você 
+                            já terá o retorno do seu investimento.</b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-secondary show-after'>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <div class='social-proof'>
+                        {% include 'core/social_proof.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center mt-5 mb-3">
+        <div class="col">
+            <div class='text-center initiate-checkout'>
+                    <a href="#lead-form-header" class="cta-compra btn btn-warning initiate-checkout"  data-toggle="modal" data-target="#modal-waiting-capture">
+                    SIM! EU QUERO SER UM <b class='initiate-checkout'>PROGRAMADOR PROFISSIONAL! ➜</b>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Vamos lá!</h5>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Preencha os dados abaixo e em seguida clique no botão <i>Continuar</i> para que possamos reservar sua vaga.
+                    </p>
+
+                    <form id="contact_form" action="{% url 'django_pagarme:contact_info' slug=payment_item_config.slug %}" method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form contact_form %}
+                    <button id="submit_button" type="submit" disabled="disabled" class="btn float-right">Continuar →</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="application/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script type="application/javascript">
+
+    let phoneInput = document.getElementById('id_phone');
+        phoneInput.addEventListener('input', function (e) {
+            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+        });
+
+        let submitButton = document.getElementById('submit_button');
+        document.getElementById('contact_form').addEventListener('input', function (e) {
+            if (phoneInput.value.search(/\(\d\d\) \d\d\d\d\d-\d\d\d\d/) === 0) {
+                submitButton.removeAttribute('disabled');
+            } else {
+                submitButton.setAttribute('disabled', 'disabled');
+            }
+        });
+    </script>
+
+{% endblock body %}
+
+{% block footer %}
+    <div class=''>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5 text-center">
+                    <i>
+                        {% now "Y" %} Python Pro. Todos os direitos reservados. <br>
+                        CNPJ: 31.080.715/0001-25<br>
+                        +55 84 99419-4414 - {{ DEFAULT_FROM_EMAIL }}
+                    </i>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock  %}
+
+{% block styles %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+
+    <style>
+        @font-face {
+            font-family: 'Gilroy-Bold';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Bold ☞'), url('{% static "fonts/Gilroy-Bold.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Heavy';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Heavy ☞'), url('{% static "fonts/Gilroy-Heavy.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Light';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Light ☞'), url('{% static "fonts/Gilroy-Light.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Medium';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Medium ☞'), url('{% static "fonts/Gilroy-Medium.woff" %}') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Regular';
+            font-style: normal;
+            font-weight: normal;
+            src: local('Gilroy-Regular ☞'), url('{% static "fonts/Gilroy-Regular.woff" %}') format('woff');
+        }
+
+        .container {
+            max-width: 960px;
+        }
+        .line-through {
+            text-decoration: line-through;
+        }
+        li {
+            list-style: none;
+        }
+        li .ec {
+            margin: 0 10px;
+            font-size: 16pt;
+        }
+
+
+        .price-parcelado {
+            font-size: 60pt;
+        }
+        .price-parcelado .parcela {
+            font-size: 30pt;
+            margin-right: -10px;
+        }
+        .price-a-vista {
+            margin-top: -15px;
+            font-size: 12pt;
+        }
+        .cta-compra {
+            line-height: 25px;
+            padding: 20px 50px;
+            font-size: 20pt;
+        }
+        .cta-compra .sub {
+            font-size: 12pt;
+        }
+    </style>
+    
+    <link rel="stylesheet" href="{% static 'css/client.css' %}"/>
+    
+    <style>
+  
+    </style>
+
+{% endblock %}

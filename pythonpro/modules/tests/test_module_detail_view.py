@@ -1,7 +1,7 @@
 import pytest
 from django.core.management import call_command
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains, dj_assert_template_used
 from pythonpro.modules import facade
@@ -9,7 +9,7 @@ from pythonpro.modules.models import Chapter, Module, Section
 
 
 def generate_resp(slug, client):
-    return client.get(reverse('modules:detail', kwargs={'slug': slug}), secure=True)
+    return client.get(reverse('modules:detail', kwargs={'slug': slug}))
 
 
 @pytest.fixture
@@ -88,7 +88,7 @@ def test_client_content_accesed_by_member(client_with_member, modules):
 
 @pytest.fixture
 def sections(python_birds):
-    return mommy.make(Section, 2, module=python_birds)
+    return baker.make(Section, 2, module=python_birds)
 
 
 @pytest.fixture
@@ -103,7 +103,7 @@ def resp_with_sections(client_with_lead, sections, python_birds):
 
 def _resp_with_sections(client_with_lead, sections, python_birds):
     """Plain function to avoid _pytest.warning_types.RemovedInPytest4Warning: Fixture "resp" called directly."""
-    return client_with_lead.get(reverse('modules:detail', kwargs={'slug': python_birds.slug}), secure=True)
+    return client_with_lead.get(reverse('modules:detail', kwargs={'slug': python_birds.slug}))
 
 
 def test_section_titles(resp_with_sections, sections):
@@ -120,7 +120,7 @@ def test_section_urls(resp_with_sections, sections):
 def chapters(sections):
     result = []
     for section in sections:
-        result.extend(mommy.make(Chapter, 2, section=section))
+        result.extend(baker.make(Chapter, 2, section=section))
     return result
 
 
@@ -141,6 +141,6 @@ def test_chapter_urls(resp_with_chapters, chapters):
 
 def test_enrol_user_tags(python_birds, client_with_lead, mocker, logged_user):
     tag_as = mocker.patch('pythonpro.modules.modules_views.tag_as')
-    resp = client_with_lead.get(reverse('modules:enrol', kwargs={'slug': python_birds.slug}), secure=True)
+    resp = client_with_lead.get(reverse('modules:enrol', kwargs={'slug': python_birds.slug}))
     tag_as.assert_called_once_with(logged_user.email, logged_user.id, python_birds.slug)
     assert resp.status_code == 200

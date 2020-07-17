@@ -1,6 +1,6 @@
 import pytest
 
-from model_mommy import mommy
+from model_bakery import baker
 
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -10,7 +10,7 @@ from django.test import RequestFactory
 @pytest.fixture
 def pre_request():
     factory = RequestFactory()
-    request = factory.get('/', secure=True)
+    request = factory.get('/')
     request.user = AnonymousUser()
     return request
 
@@ -44,7 +44,7 @@ def mocked_request_logged(pre_request, logged_user):
 
 @pytest.fixture
 def user_session(logged_user):
-    return mommy.make('UserSession', user=logged_user)
+    return baker.make('UserSession', user=logged_user)
 
 
 @pytest.fixture

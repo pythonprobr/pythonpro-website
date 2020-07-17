@@ -1,5 +1,5 @@
 import pytest
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.dashboard.models import TopicInteraction
 from pythonpro.domain import content_statistics_domain
@@ -10,14 +10,14 @@ TOPIC_DURATION = 100
 
 @pytest.fixture
 def modules(db):
-    return mommy.make(Module, 2)
+    return baker.make(Module, 2)
 
 
 @pytest.fixture
 def sections(modules):
     models = []
     for module in modules:
-        models.extend(mommy.make(Section, 2, module=module))
+        models.extend(baker.make(Section, 2, module=module))
     return models
 
 
@@ -25,7 +25,7 @@ def sections(modules):
 def chapters(sections):
     models = []
     for s in sections:
-        models.extend(mommy.make(Chapter, 2, section=s))
+        models.extend(baker.make(Chapter, 2, section=s))
     return models
 
 
@@ -33,7 +33,7 @@ def chapters(sections):
 def topics(chapters):
     models = []
     for c in chapters:
-        models.extend(mommy.make(Topic, 2, chapter=c, duration=TOPIC_DURATION))
+        models.extend(baker.make(Topic, 2, chapter=c, duration=TOPIC_DURATION))
     return models
 
 
@@ -41,7 +41,7 @@ def _interactions(topics, logged_user, total_watched_time, max_watched_time):
     models = []
     for t in topics:
         models.append(
-            mommy.make(
+            baker.make(
                 TopicInteraction,
                 user=logged_user,
                 topic=t,
@@ -60,14 +60,14 @@ def interactions_content_uncompleted(topics, logged_user):
 
 @pytest.fixture
 def uncompleted_modules(db):
-    return mommy.make(Module, 2)
+    return baker.make(Module, 2)
 
 
 @pytest.fixture
 def uncompleted_sections(uncompleted_modules):
     models = []
     for module in uncompleted_modules:
-        models.extend(mommy.make(Section, 2, module=module))
+        models.extend(baker.make(Section, 2, module=module))
     return models
 
 
@@ -75,7 +75,7 @@ def uncompleted_sections(uncompleted_modules):
 def uncompleted_chapters(uncompleted_sections):
     models = []
     for s in uncompleted_sections:
-        models.extend(mommy.make(Chapter, 2, section=s))
+        models.extend(baker.make(Chapter, 2, section=s))
     return models
 
 
@@ -83,7 +83,7 @@ def uncompleted_chapters(uncompleted_sections):
 def uncompleted_topics(uncompleted_chapters):
     models = []
     for c in uncompleted_chapters:
-        models.extend(mommy.make(Topic, 2, chapter=c, duration=TOPIC_DURATION))
+        models.extend(baker.make(Topic, 2, chapter=c, duration=TOPIC_DURATION))
     return models
 
 
@@ -155,7 +155,7 @@ def test_newly_all_completed_contents(topics, interactions_content_completed, lo
 
 def test_newly_completed_topic(topics, logged_user, tag_as_mock):
     topic = topics[0]  # it can be anyone, so I chose first
-    mommy.make(
+    baker.make(
         TopicInteraction,
         user=logged_user,
         topic=topic,

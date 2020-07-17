@@ -1,26 +1,118 @@
-{% extends 'core/base.html' %}
+{% extends 'core/base_without_nav.html' %}
 {% load static %}
+
+{% block title %}
+  Aprenda Python de Graça! - Aprenda a programar com a linguagem mais rentável que existe
+  e tenha acesso a um mercado que paga altos salários e está repleto de vagas em aberto!
+{% endblock %}
+
+{% block description %}
+  Que tal aprender a programar com a lingugagem mais simples e poderosa? 
+  Este é o curso de introdução Python que eu venho ministrando ao longo dos 
+  anos para ensinar as pessoas a programarem.
+{% endblock %}
+
+{% block styles %}
+  <link href="{% static 'css/python-birds/custom.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/python-birds/magnific-popup.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/python-birds/owl.carousel.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/python-birds/owl.theme.default.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/python-birds/normalize.min.css' %}" rel="stylesheet">
+  <style>
+    .steps__btn {
+        justify-content: center;
+    }
+  </style>
+{% endblock %}
+
+{% block head %}
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'python-birds/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/python-birds/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/python-birds/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'favicon/python-birds/site.webmanifest' %}">
+  <link rel="mask-icon" href="{% static 'favicon/python-birds/safari-pinned-tab.svg' %}" color="#777777">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="https://www.python.pro.br/" />
+  <meta name="twitter:title" content="Aprenda Python de Graça - Aprenda a programar com a linguagem mais rentável que existe e tenha acesso a um mercado que paga altos salários e está repleto de vagas em aberto!" />
+  <meta name="twitter:description" content="Que tal aprender a programar com a lingugagem mais simples e poderosa? Este é o curso de introdução Python que eu venho ministrando ao longo dos anos para ensinar as pessoas a programarem." />
+  <meta property="twitter:image" content="{% static 'img/python-birds/card-python-de-graca.png' %}" />
+  <meta property="og:url" content="https://www.python.pro.br/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Aprenda Python de Graça - Aprenda a programar com a linguagem mais rentável que existe e tenha acesso a um mercado que paga altos salários e está repleto de vagas em aberto!" />
+  <meta property="og:site_name" content="Aprenda Python de Graça - Aprenda a programar com a linguagem mais rentável que existe e tenha acesso a um mercado que paga altos salários e está repleto de vagas em aberto!" />
+  <meta property="og:description" content="Que tal aprender a programar com a lingugagem mais simples e poderosa? Este é o curso de introdução Python que eu venho ministrando ao longo dos anos para ensinar as pessoas a programarem." />
+  <meta property="og:image" content="{% static 'img/python-birds/card-python-de-graca.png' %}" />
+{% endblock %}
+
 {% block body %}
-    <div class="container mt-5 mb-5">
-        <div class="row">
-            <div class="col">
-                <h1 class="mb-4">Cadastro realizado com Sucesso!</h1>
-                <p>Enviamos a senha de sua conta para seu email. Não esqueça de checar a caixa spam.</p>
-                <p>Você receberá 4 emails nas próximas 4 semanas. Seguiremos um cronograma para você aprender o básico de
-                    programação. É muito importante que você siga os passos para poder construir a carreira de seus
-                    sonhos.
-                </p>
-                <p>Mas se você está ansioso para começar os estudos, acesse o módulo
-                    <a href="{% url 'modules:detail' slug='python-birds' %}">Python Birds</a>!
-                </p>
-                <p>
-                    Será um prazer acompanhar você nessa incrível jornada. Muito obrigado pela confiança em nosso
-                    trabalho!
-                </p>
-                <p>
-                    Luciano Ramalho e Renzo Nuccitelli
-                </p>
-            </div>
-        </div>
+    <header class="header" id="header">
+    <img class="header__mobile-left" src="{% static 'img/python-birds/header/header-detail-top-left.jpg' %}" alt="Detalhe de uma nuvem">
+    <img class="header__mobile-right" src="{% static 'img/python-birds/header/header-detail-top-right.jpg' %}" alt="Detalhe de um pedra de concreto com um furo grande no centro">
+
+    <div class="header__group">
+      <div class="header__group__content">
+        <img class="header__group__content__mobile-center" src="{% static 'img/python-birds/header/header-detail-middle.png' %}" alt="Detalhe com madeira; tamanho pequeno">
+      </div>
     </div>
-{% endblock body %}
+    <img class="header__mobile-bottom" src="{% static 'img/python-birds/header/header-renzo-bottom-mobile.jpg' %}" alt="Renzo Nuccitelli olhando para frente; sorriso sem mostrar os dentes; braços cruzados; camiseta preta do Python Pro; fundo amarelo">
+  </header>
+
+  <main role="main">
+    <section class="learning">
+      <div class="learning__group">
+        <h2 class="text-blue font-highlighted fw-900">SUA INSCRIÇÃO ESTÁ FEITA!</h2>
+        <h3 class="fw-500">
+            Para ter acesso às aulas, eu preciso que você cumpra estes três passos que listei a seguir.
+        </h3>
+      </div>
+
+      <div class="learning__group">
+        <h2 class="text-blue font-highlighted fw-900">1º Passo: Me siga no Instagram</h2>
+        <h3 class="fw-500">Lá nos meus stories eu estou, todo dia, tirando todas as dúvidas da galera. O conteúdo é sempre muito bom. Eu falo sobre a carreira de programação e estou sempre dando dicas para que você se torne um programador profissional e ganhe uma boa grana!</h3>
+
+        <a class="steps__btn steps__btn--instagram fw-700 text-uppercase main-transition" href="https://instagram.com/renzoprobr/" rel="noopener noreferrer" target="_blank">
+          Seguir no Instagram
+        </a>
+      </div>
+
+      <div class="learning__group">
+        <h2 class="text-blue font-highlighted fw-900">2º Passo: Se Inscreva no Meu Canal no Youtube</h2>
+        <h3 class="fw-500">Lá no Youtube eu posto um vídeo novo quase todo dia. O conteúdo é bastante completo. Tem dicas técnicas, tutoriais de Python e bate papos super interessantes sobre carreira.</h3>
+        <h3 class="fw-500">Além disso, toda semana eu faço uma live colocando a mão na massa. Na live Café com Python você vai ter a chance de ver como é, na prática, o trabalho de um programador profissional!</h3>
+
+        <a class="text-center steps__btn steps__btn--youtube fw-700 text-uppercase main-transition" href="https://www.youtube.com/user/renzonuccitelli?sub_confirmation=1" rel="noopener noreferrer" target="_blank">
+          Inscrever-se no canal do YouTube
+        </a>
+      </div>
+
+      <div class="learning__group">
+        <h2 class="text-blue font-highlighted fw-900">3º Passo: Acesse seu email e responda a pergunta que eu te fiz por lá</h2>
+        <h3 class="fw-500">Eu mandei, lá no seu email, as instruções para você definir o seu acesso a nossa plataforma de ensino e poder assistir às aulas.</h3>
+        <h3 class="fw-500">Eu também te mandei uma pergunta por lá. Você pode responder? Isso serve para que eu possa te conhecer mais e poder te ajudar da melhor forma possível!</h3>
+      </div>
+
+      <div class="learning__group">
+        <h2 class="text-blue font-highlighted fw-900">Compartilhe este curso grátis com seus amigos que querem aprender a programar!</h2>
+        <h3 class="fw-500">Eu mandei, lá no seu email, as instruções para você definir o seu acesso a nossa plataforma de ensino e poder assistir às aulas.</h3>
+        <h3 class="fw-500">Eu também te mandei uma pergunta por lá. Você pode responder? Isso serve para que eu possa te conhecer mais e poder te ajudar da melhor forma possível!</h3>
+
+        <a class="text-center steps__btn steps__btn--green fw-700 text-uppercase main-transition" href="https://api.whatsapp.com/send?text=Veja%20esse%20curso%20GRATUITO%20sobre%20Python!%20https://www.python.pro.br/curso-de-python-gratis" rel="noopener noreferrer" target="_blank">
+          Compartilhar no WhatsApp
+        </a>
+      </div>
+
+      <div class="learning__group">
+        <h2 class="text-blue font-highlighted fw-900">Não Recebeu o E-mail?</h2>
+        <h3 class="fw-500">Cheque a aba Promoções e a caixa de Spam. Se encontrar o email lá, arraste-o para a caixa de entrada principal. Dessa forma você se certifica de receber nossos próximos e-mails.</h3>
+        <h3 class="fw-500">Caso tenha qualquer problema, fale com a gente pelo email suporte@python.pro.br</h3>
+        <h3 class="fw-500" style="padding-bottom: 0;">Não deixe de confirmar sua inscrição, pois, caso contrário, você não terá como acessar a plataforma de estudos e assistir às aulas.</h3>
+      </div>
+    </section>
+    </section>
+  </main>
+{% endblock %}
+
+{% block footer %}{% endblock %}

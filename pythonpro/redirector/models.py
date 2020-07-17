@@ -1,5 +1,4 @@
 from django.utils import timezone
-
 from django.db import models
 
 
@@ -12,6 +11,9 @@ class Redirect(models.Model):
 
     def __str__(self):
         return self.slug
+
+    def get_absolute_url(self):
+        return f'/r/{self.slug}'
 
 
 class RedirectLink(models.Model):

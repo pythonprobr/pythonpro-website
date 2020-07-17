@@ -27,19 +27,20 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
+# Redirect to HTTPS:
+SECURE_SSL_REDIRECT = not DEBUG
+
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
 # Control subscriptions ads and payment.
 SUBSCRIPTIONS_OPEN = config('SUBSCRIPTIONS_OPEN', cast=bool)
 
-METEORIC_LAUNCH_OPEN = config('METEORIC_LAUNCH_OPEN', cast=bool)
 
 PAGARME_CRYPTO_KEY = config('PAGARME_CRYPTO_KEY')
 PAGARME_API_KEY = config('PAGARME_API_KEY')
 
 CHAVE_PAGARME_API_PRIVADA = PAGARME_API_KEY
 CHAVE_PAGARME_CRIPTOGRAFIA_PUBLICA = PAGARME_CRYPTO_KEY
-
 
 PAGSEGURO_PAYMENT_PLAN = config('PAGSEGURO_PAYMENT_PLAN')
 
@@ -57,7 +58,19 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 # Login Config
 
 LOGIN_REDIRECT_URL = LOGOUT_REDIRECT_URL = '/'
-LOGIN_URL = 'login'
+LOGIN_URL = 'two_factor:login'
+
+# 2FA Configs
+TWO_FACTOR_PATCH_ADMIN = True
+
+# Recaptch credentials
+has_captch_config = config('RECAPTCHA_PUBLIC_KEY')
+if has_captch_config:
+    RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY')
+    RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
+    RECAPTCHA_REQUIRED_SCORE = 0.85
+else:
+    SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
 # Application definition
 
@@ -65,7 +78,6 @@ INSTALLED_APPS = [
     'pythonpro.core',
     'pythonpro.discourse',
     'pythonpro.modules',
-    'pythonpro.payments',
     'pythonpro.cohorts',
     'pythonpro.email_marketing',
     'pythonpro.dashboard',
@@ -73,6 +85,8 @@ INSTALLED_APPS = [
     'pythonpro.analytics',
     'pythonpro.checkout',
     'pythonpro.redirector',
+    'pythonpro.pages',
+    'captcha',
     'rolepermissions',
     'ordered_model',
     'django.contrib.admin',
@@ -86,28 +100,31 @@ INSTALLED_APPS = [
     'bootstrap4',
     'django_pagarme',
     'phonenumber_field',
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'two_factor',
 ]
 
 MIDDLEWARE = [
-    'pythonpro.core.middleware.SSLMiddleware',
-    'django.middleware.gzip.GZipMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'pythonpro.analytics.middleware.AnalyticsMiddleware',
 ]
-
-ROLEPERMISSIONS_MODULE = 'pythonpro.core.roles'
 
 if DEBUG:
     INSTALLED_APPS.append('debug_toolbar')
     MIDDLEWARE.insert(2, 'debug_toolbar.middleware.DebugToolbarMiddleware')
     INTERNAL_IPS = ['127.0.0.1']
 
+ROLEPERMISSIONS_MODULE = 'pythonpro.core.roles'
 # Discourse config
 DISCOURSE_BASE_URL = config('DISCOURSE_BASE_URL', default='')
 DISCOURSE_SSO_SECRET = config('DISCOURSE_SSO_SECRET')
@@ -130,7 +147,6 @@ TEMPLATES = [
                 'pythonpro.core.context_processors.global_settings',
                 'pythonpro.modules.context_processors.global_settings',
                 'pythonpro.cohorts.context_processors.global_settings',
-                'pythonpro.payments.context_processors.global_settings',
             ],
         },
     },

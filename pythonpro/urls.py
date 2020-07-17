@@ -13,23 +13,25 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import (
-    LoginView, LogoutView, PasswordResetCompleteView, PasswordResetConfirmView,
+    LogoutView, PasswordResetCompleteView, PasswordResetConfirmView,
     PasswordResetDoneView,
-    PasswordResetView,
 )
-from django.urls import include, path
+from django.urls import include, path, reverse_lazy
+from django.views.generic.base import RedirectView
+from two_factor.urls import urlpatterns as tf_urls
 
-from pythonpro.payments import views as payments_views
+import pythonpro.launch.views
+from pythonpro.core import views as core_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('conta/login/', LoginView.as_view(), name='login'),
     path('conta/logout/', LogoutView.as_view(), name='logout'),
-    path('conta/reiniciar_senha', PasswordResetView.as_view(), name='password_reset'),
+    path('conta/reiniciar_senha', core_views.password_reset, name='password_reset'),
     path('conta/reiniciar_senha/ok', PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('conta/reiniciar/<uidb64>/<token>/', PasswordResetConfirmView.as_view(),
          name='password_reset_confirm'),
@@ -39,17 +41,33 @@ urlpatterns = [
     path('secoes/', include('pythonpro.modules.sections_urls')),
     path('capitulos/', include('pythonpro.modules.chapters_urls')),
     path('topicos/', include('pythonpro.modules.topics_urls')),
-    path('pagamento/', include('pythonpro.payments.urls')),
     path('turmas/', include('pythonpro.cohorts.urls')),
     path('dashboard/', include('pythonpro.dashboard.urls')),
+    path('', include(tf_urls)),
     path('', include('pythonpro.launch.urls')),
     path('', include('pythonpro.core.urls')),
     path('', include('pythonpro.checkout.urls')),
     path('r/', include('pythonpro.redirector.urls')),
+    path('p/', include('pythonpro.pages.urls')),
     path('checkout/', include('django_pagarme.urls')),
-    path('inscricao', payments_views.member_landing_page, name='member_landing_page'),
-    path('pre-inscricao', payments_views.meteoric_landing_page, name='meteoric_landing_page'),
+    path('inscricao', pythonpro.launch.views.member_landing_page, name='member_landing_page'),
 
+    # unused pages
+    path(
+        'curso-de-python-intermediario-oto',
+        RedirectView.as_view(url=reverse_lazy('member_landing_page')),
+        name='client_landing_page_oto'
+    ),
+    path(
+        'curso-de-python-intermediario-do',
+        RedirectView.as_view(url=reverse_lazy('member_landing_page')),
+        name='client_landing_page_do'
+    ),
+    path(
+        'curso-de-python-intermediario',
+        RedirectView.as_view(url=reverse_lazy('member_landing_page')),
+        name='client_landing_page'
+    ),
 ]
 
 if not settings.AWS_ACCESS_KEY_ID:

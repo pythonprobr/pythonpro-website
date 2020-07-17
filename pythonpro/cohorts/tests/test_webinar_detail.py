@@ -1,7 +1,7 @@
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.cohorts.models import Webinar
 from pythonpro.cohorts.tests.conftest import img_path
@@ -12,12 +12,12 @@ from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contai
 def webinar(cohort) -> Webinar:
     image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
                                content_type='image/png')
-    return mommy.make(Webinar, cohort=cohort, image=image, vimeo_id='1')
+    return baker.make(Webinar, cohort=cohort, image=image, vimeo_id='1')
 
 
 @pytest.fixture
 def resp(client_with_member, webinar: Webinar):
-    return client_with_member.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}), secure=True)
+    return client_with_member.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}))
 
 
 def test_logged_user(resp):
@@ -25,7 +25,7 @@ def test_logged_user(resp):
 
 
 def test_link_unavailable_for_non_users(client):
-    resp = client.get(reverse('cohorts:webinar', kwargs={'slug': 'foo'}), secure=True)
+    resp = client.get(reverse('cohorts:webinar', kwargs={'slug': 'foo'}))
     assert resp.status_code == 302
 
 
@@ -38,7 +38,7 @@ def test_basic_contents(resp, webinar, property_name):
 def resp_video_not_recorded(client_with_member, webinar: Webinar):
     webinar.vimeo_id = ''
     webinar.save()
-    return client_with_member.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}), secure=True)
+    return client_with_member.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}))
 
 
 def test_pending_webinar_msg(resp_video_not_recorded):
@@ -57,7 +57,7 @@ def test_vimeo_player_not_present(resp_video_not_recorded):
 
 @pytest.fixture
 def resp_client(client_with_client, webinar: Webinar, mocker, logged_user):
-    return client_with_client.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}), secure=True)
+    return client_with_client.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}))
 
 
 def test_webinar_landing_for_client(cohort, resp_client):
@@ -67,7 +67,7 @@ def test_webinar_landing_for_client(cohort, resp_client):
 
 @pytest.fixture
 def resp_lead(client_with_lead, webinar: Webinar, mocker, logged_user):
-    return client_with_lead.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}), secure=True)
+    return client_with_lead.get(reverse('cohorts:webinar', kwargs={'slug': webinar.slug}))
 
 
 def test_webinar_landing_for_lead(cohort, resp_lead):

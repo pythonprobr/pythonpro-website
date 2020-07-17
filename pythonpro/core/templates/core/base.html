@@ -11,22 +11,9 @@
     <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}" />
 
     {% block scripts %}
-    <script type="application/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-    <script type="application/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    
-    <script src="{% static 'js/sentry.5.3.0.min.js' %}" crossorigin="anonymous"></script>
-    <script type="application/javascript">
-        Sentry.init({ dsn: '{{ SENTRY_DSN }}' });
-    </script>
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44718512-1"></script>
-    {#    Google Tag Manager#}
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','{{GOOGLE_TAG_MANAGER_ID}}');</script>
-    {#     End Google Tag Manager#}
+        {% include 'core/_scripts.html' %}
+        <script type="application/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+        <script type="application/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     {% endblock %}
 
     {% block styles %}
@@ -124,7 +111,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </ul>
         {% else %}
             <a class="btn btn-light my-2 my-sm-0"
-               href="{% url 'login' %}?next={% url 'dashboard:home' %}">Entrar</a>
+               href="{% url 'two_factor:login' %}?next={% url 'dashboard:home' %}">Entrar</a>
         {% endif %}
     </div>
 </nav>
@@ -156,6 +143,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </footer>
 {% endblock footer %}
 
+{% block bottom_scripts %}{% endblock %}
 
 </body>
 </html>

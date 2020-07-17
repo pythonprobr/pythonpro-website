@@ -41,7 +41,7 @@ def _resp(client, payload, sig=None):
     hmac_obj = hmac.new(settings.DISCOURSE_SSO_SECRET.encode('utf-8'), encoded_payload, digestmod=hashlib.sha256)
     sig = hmac_obj.hexdigest() if sig is None else sig
     return client.get(reverse('discourse:sso'),
-                      data={'sso': encoded_payload, 'sig': sig}, secure=True)
+                      data={'sso': encoded_payload, 'sig': sig})
 
 
 @pytest.fixture
@@ -138,6 +138,6 @@ def test_user_not_logged_status_code(client):
 
 def test_user_not_logged(client):
     discourse_path = reverse('discourse:sso')
-    response = client.get(discourse_path, secure=True)
-    login_path = reverse('login')
+    response = client.get(discourse_path)
+    login_path = reverse('two_factor:login')
     assert response.url == f'{login_path}?next={discourse_path}'

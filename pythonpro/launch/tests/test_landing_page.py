@@ -7,7 +7,7 @@ from pythonpro.domain.user_facade import find_user_interactions
 
 @pytest.fixture
 def resp(client):
-    return client.get(reverse('launch:landing_page'), secure=True)
+    return client.get(reverse('launch:landing_page'))
 
 
 def test_status_code(resp):
@@ -28,7 +28,7 @@ def test_form_action_is_present(resp):
 
 @pytest.fixture
 def resp_with_user(client_with_user):
-    return client_with_user.get(reverse('launch:landing_page'), secure=True)
+    return client_with_user.get(reverse('launch:landing_page'))
 
 
 def test_user_interaction(resp_with_user, logged_user):

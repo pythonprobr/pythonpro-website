@@ -2,15 +2,17 @@ from django.conf import settings
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import SetPasswordForm
-from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.views import PasswordChangeView, PasswordResetView
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 from django_sitemaps import Sitemap
 from rolepermissions.checkers import has_role
 
-from pythonpro.core.forms import LeadForm, UserEmailForm, UserSignupForm
+from pythonpro.core.forms import LeadForm, UserEmailForm, UserSignupForm, PythonProResetForm
 from pythonpro.core.models import User
+from pythonpro.core import facade as core_facade
 from pythonpro.domain import user_facade
 
 
@@ -61,7 +63,6 @@ def sitemap(request):
     named_views = [
         'core:index',
         'core:lead_landing',
-        'checkout:pytools_lp',
         'member_landing_page',
         'core:podcast',
         'core:tech_talks',
@@ -110,7 +111,7 @@ profile_email = login_required(_ProfileUpdateEmail.as_view())
 
 class _ProfileChangePassword(PasswordChangeView):
     template_name = 'core/profile_password.html'
-    success_url = reverse_lazy('core:index')
+    success_url = reverse_lazy('pages:leads_onboarding_page')
 
 
 profile_password = _ProfileChangePassword.as_view()
@@ -124,7 +125,11 @@ waiting_list = _WaitingListView.as_view()
 
 
 def _lead_landing(request, template_name='core/lead_landing_page.html', form_action=None):
+    user = request.user
+    if user.is_authenticated and not user.is_superuser and core_facade.has_any_webdev_role(user):
+        return HttpResponseRedirect(reverse('dashboard:home'), status=301)
     form_action = reverse('core:lead_form') if form_action is None else form_action
+    form_action = f"{form_action}?{request.GET.urlencode(safe='&')}"
     return render(request, template_name, context={'form': LeadForm(), 'form_action': form_action})
 
 
@@ -134,6 +139,7 @@ def lead_landing(request):
     :param request:
     :return:
     """
+
     return _lead_landing(request)
 
 
@@ -143,6 +149,7 @@ def lead_landing_lite(request):
     :param request:
     :return:
     """
+
     return _lead_landing(request, template_name='core/lead_landing_lite_page.html')
 
 
@@ -164,7 +171,7 @@ def programmer_week_ty(request):
     return render(request, 'core/lead_landing_page.html', context={'form': UserSignupForm()})
 
 
-def _lead_form(request, redirect_to_OTO=True, *args, **kwargs):
+def _lead_form(request, *args, **kwargs):
     if request.method == 'GET':
         form = UserSignupForm()
         return render(request, 'core/lead_form_errors.html', context={'form': form})
@@ -172,27 +179,38 @@ def _lead_form(request, redirect_to_OTO=True, *args, **kwargs):
     source = request.GET.get('utm_source', default='unknown')
     first_name = request.POST.get('first_name')
     email = request.POST.get('email')
+    tags = [kwargs.get('offer_tag', 'offer-funnel-0')]
+    for key, value in request.GET.items():
+        if key.startswith('utm_'):
+            tags.append(f"{key}={value}")
 
     try:
-        user = user_facade.register_lead(first_name, email, source)
+        user = user_facade.register_lead(first_name, email, source, tags=tags)
     except user_facade.UserCreationException as e:
         return render(request, 'core/lead_form_errors.html', context={'form': e.form}, status=400)
 
     login(request, user)
 
-    if redirect_to_OTO:
-        return redirect(reverse('payments:client_landing_page_oto'))
-    else:
+    if kwargs.get('redirect_to_OTO') is False:
         return redirect(reverse('core:thanks'))
+
+    return redirect(reverse('checkout:webdev_landing_page_oto'))
 
 
 def lead_form(request):
-    return _lead_form(request)
+    return _lead_form(request, redirect_to_OTO=True, offer_tag='offer-funnel-0')
 
 
 def lead_form_with_no_offer(request):
-    return _lead_form(request, redirect_to_OTO=False)
+    return _lead_form(request, redirect_to_OTO=False, offer_tag='offer-funnel-1')
 
 
 def linktree(request):
     return render(request, 'core/linktree.html', {})
+
+
+class _PythonProResetView(PasswordResetView):
+    form_class = PythonProResetForm
+
+
+password_reset = _PythonProResetView.as_view()

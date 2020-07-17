@@ -88,22 +88,6 @@ def register_member(first_name, email, source):
     return user
 
 
-def register_client(first_name: str, email: str, source: str) -> User:
-    """
-    Create a new user on the system generation a random password or update existing on based on email.
-    :param first_name: User's first name
-    :param email: User's email
-    :param source: source of User traffic
-    :return: User
-    """
-    try:
-        user = User.objects.filter(email=email).get()
-    except User.DoesNotExist:
-        user = save_and_sent_password_email(first_name, email, source)
-    promote_to_client(user, source)
-    return user
-
-
 def promote_to_member(user: User, source: str) -> None:
     """
     Promote a user do member. Raises exception in case user is a member
@@ -114,25 +98,28 @@ def promote_to_member(user: User, source: str) -> None:
     UserInteraction(category=UserInteraction.BECOME_MEMBER, source=source, user=user).save()
     assign_role(user, 'member')
     remove_role(user, 'lead')
+    remove_role(user, 'webdev')
     remove_role(user, 'client')
 
 
-def promote_to_client(user: User, source: str) -> None:
+def promote_to_webdev(user: User, source: str) -> None:
     """
-    Promote a lead to user. Raises exception in case user is a member
+    Promote a user do webdev. Raises exception in case user is a member
     :param user:
     """
     if has_role(user, 'member'):
         raise UserRoleException('User is already a member')
-    if has_role(user, 'client'):
-        raise UserRoleException('User is already a client')
-    UserInteraction(category=UserInteraction.BECOME_CLIENT, source=source, user=user).save()
-    assign_role(user, 'client')
+    if has_role(user, 'webdev'):
+        raise UserRoleException('User is already a webdev')
+    UserInteraction(category=UserInteraction.BECOME_WEBDEV, source=source, user=user).save()
+    assign_role(user, 'webdev')
     remove_role(user, 'lead')
+    remove_role(user, 'client')
 
 
-def visit_client_landing_page(user: User, source: str):
-    return UserInteraction(category=UserInteraction.CLIENT_LP, source=source, user=user).save()
+def promote_to_data_scientist(user, source):
+    UserInteraction(category=UserInteraction.BECOME_DATA_SCIENTIST, source=source, user=user).save()
+    assign_role(user, 'data_scientist')
 
 
 def visit_launch_landing_page(user: User, source: str):
@@ -192,24 +179,16 @@ def activate_user(user: User, source: str):
     return UserInteraction(category=UserInteraction.ACTIVATED, source=source, user=user).save()
 
 
-def client_checkout(user: User, source: str) -> None:
-    return UserInteraction(category=UserInteraction.CLIENT_CHECKOUT, source=source, user=user).save()
-
-
-def client_checkout_form(user: User, source: str) -> None:
-    return UserInteraction(category=UserInteraction.CLIENT_CHECKOUT_FORM, source=source, user=user).save()
-
-
 def member_checkout_form(user: User, source='unknown'):
     return UserInteraction(category=UserInteraction.MEMBER_CHECKOUT_FORM, source=source, user=user).save()
 
 
+def webdev_checkout_form(user: User, source='unknown'):
+    return UserInteraction(category=UserInteraction.WEBDEV_CHECKOUT_FORM, source=source, user=user).save()
+
+
 def member_checkout(user: User, source='unknown'):
     return UserInteraction(category=UserInteraction.MEMBER_CHECKOUT, source=source, user=user).save()
-
-
-def client_generated_boleto(user: User, source: str):
-    return UserInteraction(category=UserInteraction.CLIENT_BOLETO, source=source, user=user).save()
 
 
 def member_generated_boleto(user, source='unknow'):
@@ -230,3 +209,15 @@ def is_lead(user: User):
 
 def is_member(user: User):
     return has_role(user, 'member')
+
+
+def is_webdev(user: User):
+    return has_role(user, 'webdev')
+
+
+def is_data_scientist(user):
+    return has_role(user, 'data_scientist')
+
+
+def has_any_webdev_role(user):
+    return has_role(user, 'lead client webdev member'.split())

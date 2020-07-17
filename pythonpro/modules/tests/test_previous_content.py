@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains
 from pythonpro.modules.models import Chapter, Module, Section, Topic
@@ -8,22 +8,22 @@ from pythonpro.modules.models import Chapter, Module, Section, Topic
 
 @pytest.fixture
 def module(db):
-    return mommy.make(Module)
+    return baker.make(Module)
 
 
 @pytest.fixture
 def section(module):
-    return mommy.make(Section, module=module)
+    return baker.make(Section, module=module)
 
 
 @pytest.fixture
 def chapter(section):
-    return mommy.make(Chapter, section=section)
+    return baker.make(Chapter, section=section)
 
 
 @pytest.fixture
 def topics(chapter):
-    return [mommy.make(Topic, chapter=chapter, order=i) for i in range(2)]
+    return [baker.make(Topic, chapter=chapter, order=i) for i in range(2)]
 
 
 @pytest.fixture
@@ -57,38 +57,38 @@ def test_first_topic(resp_first_topic):
 
 def test_first_topic_previous_chapter(section):
     """Assert previous Chapter as previous content for the first Topic"""
-    previous_chapter, next_chapter = [mommy.make(Chapter, section=section, order=order) for order in range(2)]
-    topic = mommy.make(Topic, chapter=next_chapter)
+    previous_chapter, next_chapter = [baker.make(Chapter, section=section, order=order) for order in range(2)]
+    topic = baker.make(Topic, chapter=next_chapter)
     assert previous_chapter == topic.previous_content()
 
 
 def test_topic_previous_section(module):
     """Assert previous Section as previous content for the first Topic"""
-    previous_section, next_section = [mommy.make(Section, module=module, order=order) for order in range(2)]
-    chapter = mommy.make(Chapter, section=next_section)
-    topic = mommy.make(Topic, chapter=chapter)
+    previous_section, next_section = [baker.make(Section, module=module, order=order) for order in range(2)]
+    chapter = baker.make(Chapter, section=next_section)
+    topic = baker.make(Topic, chapter=chapter)
     assert previous_section == topic.previous_content()
 
 
 @pytest.mark.django_db
 def test_topic_previous_module():
     """Assert previous Module as previous content for the first Topic"""
-    previous_module, next_module = [mommy.make(Module, order=order) for order in range(2)]
-    section = mommy.make(Section, module=next_module)
-    chapter = mommy.make(Chapter, section=section)
-    topic = mommy.make(Topic, chapter=chapter)
+    previous_module, next_module = [baker.make(Module, order=order) for order in range(2)]
+    section = baker.make(Section, module=next_module)
+    chapter = baker.make(Chapter, section=section)
+    topic = baker.make(Topic, chapter=chapter)
     assert previous_module == topic.previous_content()
 
 
 def test_previous_topic_first_none(chapter):
     """Assert None as previous content for the First Topic of First Chapter of First Section of First Module"""
-    topic = mommy.make(Topic, chapter=chapter)
+    topic = baker.make(Topic, chapter=chapter)
     assert topic.previous_content() is None
 
 
 def test_cache(chapter, mocker):
     """Assert cache is used when calling previous content multiple times"""
-    topic = mommy.make(Topic, chapter=chapter)
+    topic = baker.make(Topic, chapter=chapter)
     mocker.spy(topic, '_previous_content_query_set')
     for _ in range(3):
         topic.previous_content()

@@ -63,7 +63,8 @@
                             <div class="card">
                                 <div class="card-header bg-primary text-light">
                                     <a href="{{ module_progress.get_certificate_url }}" class="btn-sm btn-warning">Certificado &raquo;</a>
-                                    Módulo: {{ module_progress.title }}
+                                    <a href="{% url 'modules:detail' slug=module_progress.slug %}" class="btn-sm btn-secondary">
+                                    Módulo: {{ module_progress.title }}</a>                                  
                                 </div>
                                 <div class="card-body">
 

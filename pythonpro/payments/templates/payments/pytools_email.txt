@@ -1,8 +1,0 @@
-Olá {{ user.first_name }},
-
-Recebemos a confirmação de seu pagamento. Acesse {{ ty_url }} para conferir os detalhes.
-
-Agradecemos imensamente sua confiança em nosso trabalho.
-
-Grande abraço,
-Renzo Nuccitelli

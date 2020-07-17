@@ -44,12 +44,20 @@ def payment_handler_task_mock(mocker):
     )
 
 
+@pytest.fixture
+def remove_tags_mock(mocker):
+    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.remove_tags.delay')
+
+
 # test user not logged
 
 @pytest.fixture
 def resp(client, pagarme_responses, payment_handler_task_mock, create_or_update_lead_mock,
-         create_or_update_member_mock):
-    return client.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN}), secure=True)
+         create_or_update_member_mock, membership_item, remove_tags_mock):
+    return client.get(
+        reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': membership_item.slug}),
+        secure=True
+    )
 
 
 def test_status_code(resp, membership_item):
@@ -77,15 +85,18 @@ def test_user_is_subscribed_to_cohort(resp, django_user_model, cohort):
 def test_payment_linked_with_created_user(resp, django_user_model):
     User = django_user_model
     user = User.objects.first()
-    payment = django_pagarme_facade.find_payment_by_transaction(TRANSACTION_ID)
+    payment = django_pagarme_facade.find_payment_by_transaction(str(TRANSACTION_ID))
     assert user == payment.user
 
 
 # Tests user logged
 
 @pytest.fixture
-def resp_logged_user(client_with_user, pagarme_responses, payment_handler_task_mock):
-    return client_with_user.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN}), secure=True)
+def resp_logged_user(client_with_user, pagarme_responses, payment_handler_task_mock, membership_item, remove_tags_mock):
+    return client_with_user.get(
+        reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': membership_item.slug}),
+        secure=True
+    )
 
 
 def test_logged_user_become_member(resp_logged_user, logged_user):
@@ -126,7 +137,22 @@ def transaction_json(membership_item):
             'date_updated': '2020-01-21T01:45:57.789Z', 'brand': 'visa', 'holder_name': 'agora captura',
             'first_digits': '411111', 'last_digits': '1111', 'country': 'UNITED STATES',
             'fingerprint': 'cj5bw4cio00000j23jx5l60cq', 'valid': True, 'expiration_date': '1227'
-        }
+        },
+        'customer': {
+            'object': 'customer', 'id': 2601905, 'external_id': 'captura@gmail.com', 'type': 'individual',
+            'country': 'br',
+            'document_number': None, 'document_type': 'cpf', 'name': 'Agora Captura', 'email': 'captura@gmail.com',
+            'phone_numbers': ['+5512997411854'], 'born_at': None, 'birthday': None, 'gender': None,
+            'date_created': '2020-01-21T01:45:57.228Z', 'documents': [
+                {'object': 'document', 'id': 'doc_ck5n7vta0010nr36d01k1zzzw', 'type': 'cpf', 'number': '29770166863'}]
+        }, 'billing': {
+            'object': 'billing', 'id': 1135539, 'name': 'Agora Captura', 'address': {
+                'object': 'address', 'street': 'Rua Bahamas', 'complementary': 'Sem complemento', 'street_number': '56',
+                'neighborhood': 'Cidade Vista Verde', 'city': 'São José dos Campos', 'state': 'SP',
+                'zipcode': '12223770',
+                'country': 'br', 'id': 2559019
+            }
+        }, 'shipping': None,
     }
 
 

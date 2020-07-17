@@ -1,0 +1,12 @@
+Olá {{ user.first_name }},
+
+Recebemos a confirmação de seu pagamento para o curso Ciência de Dados.
+
+Faça login com sua conta e comece seus estudos em www.python.pro.br.
+
+Você pode aprender ou relembrar o básico de python em nosso curso gratuito:
+
+Python Birds: www.python.pro.br{% url 'modules:detail' slug='python-birds' %}
+
+Grande abraço,
+Renzo Nuccitelli

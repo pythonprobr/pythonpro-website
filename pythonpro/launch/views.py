@@ -2,13 +2,12 @@ import os
 
 from django.conf import settings
 from django.shortcuts import redirect, render
-from django.views.static import serve
 from django.urls import reverse
+from django.views.static import serve
 
 from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.cohorts.facade import find_most_recent_cohort
 from pythonpro.domain import user_facade
-from pythonpro.launch.forms import LeadForm
 from pythonpro.email_marketing import facade as email_marketing_facade
 from pythonpro.launch.facade import (
     get_launch_status,
@@ -16,6 +15,7 @@ from pythonpro.launch.facade import (
     LAUNCH_STATUS_OPEN_CART,
     LAUNCH_STATUS_PPL
 )
+from pythonpro.launch.forms import LeadForm
 
 
 def landing_page(request):
@@ -157,3 +157,19 @@ def onesignal_sdk_updater_worker(request):
         'js/spp/OneSignalSDUpdaterKWorker.js',
         document_root=os.path.join(settings.BASE_DIR, 'pythonpro', 'core', 'static')
     )
+
+
+def member_landing_page(request):
+    template_open_launch = 'payments/meteoric_landing_page_open.html'
+    template_closed_launch = 'payments/member_landing_page_subscription_closed.html'
+    is_launch_open = settings.SUBSCRIPTIONS_OPEN or request.GET.get('debug')
+    return _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch,
+                               'member_landing_page')
+
+
+def _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch, redirect_path_name: str):
+    user = request.user
+    if user.is_authenticated:
+        user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
+    template = template_closed_launch
+    return render(request, template, {})

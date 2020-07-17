@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.django_assertions import dj_assert_contains
 from pythonpro.redirector.models import Redirect
@@ -9,7 +9,7 @@ from pythonpro.redirector.facade import get_redirect_url
 
 @pytest.fixture
 def redirect(db):
-    return mommy.make(Redirect, url='https://google.com', use_javascript=True)
+    return baker.make(Redirect, url='https://google.com', use_javascript=True)
 
 
 def test_should_redirect_url_in_redirect_object(redirect):
@@ -18,7 +18,7 @@ def test_should_redirect_url_in_redirect_object(redirect):
 
 @pytest.fixture
 def resp(client, redirect):
-    return client.get(reverse('redirector:redirect', kwargs={'slug': redirect.slug}), secure=True)
+    return client.get(reverse('redirector:redirect', kwargs={'slug': redirect.slug}))
 
 
 def test_status_code_should_return_200(resp):

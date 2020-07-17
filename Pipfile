@@ -25,24 +25,28 @@ pagarme-python = "*"
 sentry-sdk = "*"
 python-dateutil = "*"
 django-extensions = "*"
-activecampaign-python = {git = "https://github.com/renzon/activecampaign-python.git",ref = "last-v1-api"}
+activecampaign-python = {editable = true,git = "https://github.com/renzon/activecampaign-python.git",ref = "update-list"}
 codecov = "*"
 django-bootstrap4 = "*"
 celery = "*"
 redis = "*"
+inflection = "*"
+django-two-factor-auth = "*"
+django-recaptcha = "*"
 django-pagarme = "*"
 
 [dev-packages]
 faker = "*"
 "flake8" = "*"
 freezegun = "*"
-model-mommy = "*"
 pytest-cov = "*"
 pytest-django = "*"
 pytest-freezegun = "*"
 pytest-mock = "*"
 pytest = "*"
 django-test-migrations = "*"
+model-bakery = "*"
+flower = "*"
 
 [requires]
 python_version = "3.8"

@@ -14,7 +14,6 @@ CHAVE_PAGARME_API_PRIVADA=
 
 # Control subscriptions ads and payment.
 SUBSCRIPTIONS_OPEN=False
-METEORIC_LAUNCH_OPEN=False
 PAGSEGURO_PAYMENT_PLAN=YOUR PAYMENT PLAN ON pagseguro
 
 # Amazon S3 configuration
@@ -49,4 +48,9 @@ GOOGLE_TAG_MANAGER_ID=GTM-ABC1234
 
 CLOUDAMQP_URL=amqp://guest:guest@localhost:5672
 REDIS_URL=redis://localhost:6379/1
+
+# RECAPTCHA CONFIG
+
+RECAPTCHA_PUBLIC_KEY=
+RECAPTCHA_PRIVATE_KEY=
                   

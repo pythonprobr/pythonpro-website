@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.django_assertions import dj_assert_contains
 from pythonpro.modules.models import Chapter, Module, Section
@@ -8,27 +8,27 @@ from pythonpro.modules.models import Chapter, Module, Section
 
 @pytest.fixture
 def module(db):
-    return mommy.make(Module)
+    return baker.make(Module)
 
 
 @pytest.fixture
 def section(module):
-    return mommy.make(Section, module=module)
+    return baker.make(Section, module=module)
 
 
 @pytest.fixture
 def chapter(section):
-    return mommy.make(Chapter, section=section)
+    return baker.make(Chapter, section=section)
 
 
 @pytest.fixture
 def chapters(section):
-    return mommy.make(Chapter, 2, section=section)
+    return baker.make(Chapter, 2, section=section)
 
 
 @pytest.fixture
 def resp_section(client, django_user_model, section: Section, chapters):
-    user = mommy.make(django_user_model)
+    user = baker.make(django_user_model)
     client.force_login(user)
     return client.get(reverse(
         'modules:section_detail',
@@ -49,7 +49,7 @@ def test_chapter_url_on_section(resp_section, chapters):
 @pytest.fixture
 def resp_old_path(client_with_lead, chapter, django_user_model):
     return client_with_lead.get(
-        reverse('chapters:detail_old', kwargs={'chapter_slug': chapter.slug}), secure=True)
+        reverse('chapters:detail_old', kwargs={'chapter_slug': chapter.slug}))
 
 
 def test_redirect_status_code(resp_old_path):
@@ -62,7 +62,7 @@ def test_redirect_url(resp_old_path, chapter):
 
 @pytest.fixture
 def resp(client, chapter: Chapter, django_user_model):
-    user = mommy.make(django_user_model)
+    user = baker.make(django_user_model)
     client.force_login(user)
     return client.get(reverse(
         'modules:chapter_detail',

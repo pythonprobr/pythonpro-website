@@ -17,5 +17,5 @@ all_slugs = pytest.mark.parametrize(
 
 @all_slugs
 def test_all_slugs_available(client, slug):
-    resp = client.get(reverse('django_pagarme:pagarme', kwargs={'slug': slug}), secure=True)
+    resp = client.get(reverse('django_pagarme:pagarme', kwargs={'slug': slug}))
     assert resp.status_code == 200

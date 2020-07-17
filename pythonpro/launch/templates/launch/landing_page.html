@@ -43,7 +43,52 @@
 
   <script src="{% static 'js/sentry.5.3.0.min.js' %}" crossorigin="anonymous"></script>
   <script type="application/javascript">
-      Sentry.init({ dsn: '{{ SENTRY_DSN }}' });
+      Sentry.init({
+        dsn: '{{ SENTRY_DSN }}',
+        allowList: [
+            'pypro.s3.amazonaws.com',
+            'pypro-staging.s3.amazonaws.com'
+        ],
+        denyUrls: [
+            {#// Facebook flakiness#}
+            /graph\.facebook\.com/i,
+            {#// Facebook blocked#}
+            /connect\.facebook\.net\/en_US\/all\.js/i,
+            {#// Woopra flakiness#}
+            /eatdifferent\.com\.woopra-ns\.com/i,
+            /static\.woopra\.com\/js\/woopra\.js/i,
+            // Chrome extensions
+            /extensions\//i,
+            /^chrome:\/\//i,
+            // Other plugins
+            /127\.0\.0\.1:4001\/isrunning/i,  // Cacaoweb
+            /webappstoolbarba\.texthelp\.com\//i,
+            /metrics\.itunes\.apple\.com\.edgesuite\.net\//i
+        ],
+        ignoreErrors: [
+            // Random plugins/extensions
+            'top.GLOBALS',
+            {#// See: http://blog.errorception.com/2012/03/tale-of-unfindable-js-error.html#}
+            'originalCreateNotification',
+            'canvas.contentDocument',
+            'MyApp_RemoveAllHighlights',
+            'http://tt.epicplay.com',
+            'Can\'t find variable: ZiteReader',
+            'jigsaw is not defined',
+            'ComboSearch is not defined',
+            'http://loading.retry.widdit.com/',
+            'atomicFindClose',
+            {#// Facebook borked#}
+            'fb_xd_fragment',
+            {#// ISP "optimizing" proxy - `Cache-Control: no-transform` seems to#}
+            {#// reduce this. (thanks @acdha)#}
+            {#// See http://stackoverflow.com/questions/4113268#}
+            'bmi_SafeAddOnload',
+            'EBCallBackMessageReceived',
+            {#// See http://toolbar.conduit.com/Developer/HtmlAndGadget/Methods/JSInjection.aspx#}
+            'conduitPage'
+        ]
+    });
   </script>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44718512-1"></script>
@@ -81,7 +126,7 @@
     </div>
 
     <div class="header__date">
-      <span class="header__date__title text-uppercase fw-800 font-highlighted">13 a 16 de abril</span>
+      <span class="header__date__title text-uppercase fw-800 font-highlighted">10 a 14 de agosto</span>
     </div>
 
     <div class="header__disclaimer">
@@ -102,22 +147,22 @@
 
         <div class="countdown__group__numbers">
           <div class="countdown__group__numbers__item">
-            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted" id="days"></span>
+            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted days" id="days"></span>
             <span class="countdown__group__numbers__item__description text-uppercase text-green fw-700">Dias</span>
           </div>
 
           <div class="countdown__group__numbers__item">
-            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted" id="hours"></span>
+            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted hours" id="hours"></span>
             <span class="countdown__group__numbers__item__description text-uppercase text-green fw-700">Horas</span>
           </div>
 
           <div class="countdown__group__numbers__item">
-            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted" id="minutes"></span>
+            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted minutes" id="minutes"></span>
             <span class="countdown__group__numbers__item__description text-uppercase text-green fw-700">Minutos</span>
           </div>
 
           <div class="countdown__group__numbers__item">
-            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted" id="seconds"></span>
+            <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted seconds" id="seconds"></span>
             <span class="countdown__group__numbers__item__description text-uppercase text-green fw-700">Segundos</span>
           </div>
         </div>
@@ -155,7 +200,7 @@
         <div class="footer__group__header">
           <img class="footer__group__header__logo" src="{% static 'svg/spp/logo-python-pro.svg' %}" alt="Logo Python Pro">
           <h2 class="footer__group__header__title fw-700 text-blue text-uppercase">Semana do Programador Profissional</h2>
-          <h3 class="footer__group__header__subtitle fw-700 text-blue text-uppercase">13 a 16 de abril</h3>
+          <h3 class="footer__group__header__subtitle fw-700 text-blue text-uppercase">10 a 14 de agosto</h3>
         </div>
 
         <div class="footer__group__content">
@@ -198,7 +243,10 @@
     </footer>
   </main>
 
-  <script src="{% static 'js/spp/countdown.min.js' %}"></script>
+  <script src="{% static 'js/spp/countdown.js' %}"></script>
+  <script>
+    initCountDown(new Date('Aug 10, 2020 23:59:59').getTime());
+  </script>
   {% endblock %}
   {% block extrabody %}{% endblock extrabody %}
 </body>

@@ -6,7 +6,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.template.defaultfilters import date
 from django.urls import reverse
 from django.utils import timezone
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.cohorts import facade
 from pythonpro.cohorts.models import Cohort, LiveClass, Webinar
@@ -16,15 +16,15 @@ from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contai
 
 @pytest.fixture
 def resp(client_with_member, cohort):
-    return client_with_member.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
+    return client_with_member.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}))
 
 
 @pytest.fixture
 def resp_without_user(client, db):
     image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
                                content_type='image/png')
-    cohort = mommy.make(Cohort, slug='guido-van-rossum', image=image)
-    resp = client.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
+    cohort = baker.make(Cohort, slug='guido-van-rossum', image=image)
+    resp = client.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}))
     return resp
 
 
@@ -34,12 +34,12 @@ def test_no_access(resp_without_user):
 
 
 def test_cohort_links_for_logged_user(client, django_user_model):
-    user = mommy.make(django_user_model)
+    user = baker.make(django_user_model)
     client.force_login(user)
     image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
                                content_type='image/png')
-    cohorts = mommy.make(Cohort, 4, image=image)
-    resp = client.get(reverse('dashboard:home'), secure=True)
+    cohorts = baker.make(Cohort, 4, image=image)
+    resp = client.get(reverse('dashboard:home'))
     for c in cohorts:
         dj_assert_contains(resp, c.get_absolute_url())
 
@@ -48,8 +48,8 @@ def test_cohort_links_for_logged_user(client, django_user_model):
 def test_cohort_links_not_avaliable_for_no_user(client):
     image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
                                content_type='image/png')
-    cohorts = mommy.make(Cohort, 4, image=image)
-    resp = client.get('/', secure=True)
+    cohorts = baker.make(Cohort, 4, image=image)
+    resp = client.get('/')
     for c in cohorts:
         dj_assert_not_contains(resp, c.get_absolute_url())
 
@@ -79,7 +79,7 @@ def test_cohort_end(cohort: Cohort, resp):
 def recorded_live_classes(cohort, fake):
     now = timezone.now()
     return [
-        mommy.make(
+        baker.make(
             LiveClass,
             cohort=cohort,
             vimeo_id=str(i),
@@ -99,7 +99,7 @@ def future_live_classes(cohort, fake):
     """
     now = timezone.now()
     return [
-        mommy.make(
+        baker.make(
             LiveClass,
             cohort=cohort,
             vimeo_id='',
@@ -111,7 +111,7 @@ def future_live_classes(cohort, fake):
 
 @pytest.fixture
 def resp_with_classes(recorded_live_classes, future_live_classes, cohort, client_with_member):
-    return client_with_member.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
+    return client_with_member.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}))
 
 
 def test_live_classes_are_sorted(recorded_live_classes, cohort):
@@ -147,7 +147,7 @@ def recorded_webinars(cohort):
     image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
                                content_type='image/png')
     return [
-        mommy.make(Webinar, cohort=cohort, vimeo_id=str(i), image=image, start=now + timedelta(days=i)) for i in
+        baker.make(Webinar, cohort=cohort, vimeo_id=str(i), image=image, start=now + timedelta(days=i)) for i in
         range(100, 105)
     ]
 
@@ -158,7 +158,7 @@ def future_webinars(cohort):
     image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
                                content_type='image/png')
     return [
-        mommy.make(Webinar, cohort=cohort, vimeo_id='', image=image, start=now + timedelta(days=i)) for i in
+        baker.make(Webinar, cohort=cohort, vimeo_id='', image=image, start=now + timedelta(days=i)) for i in
         range(100, 105)
     ]
 
@@ -175,7 +175,7 @@ def test_future_webinars_in_cohort(recorded_webinars, future_webinars, cohort):
 
 @pytest.fixture
 def resp_with_webnars(recorded_webinars, future_webinars, cohort, client_with_member):
-    return client_with_member.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}), secure=True)
+    return client_with_member.get(reverse('cohorts:detail', kwargs={'slug': cohort.slug}))
 
 
 def test_webnars_are_sorted(recorded_webinars: list, cohort):

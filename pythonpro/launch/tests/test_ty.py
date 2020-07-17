@@ -7,7 +7,7 @@ from pythonpro.domain.user_facade import find_user_interactions
 
 @pytest.fixture
 def resp(client, cohort):
-    return client.get(reverse('launch:ty'), secure=True)
+    return client.get(reverse('launch:ty'))
 
 
 def test_status_code(resp):
@@ -29,7 +29,7 @@ def test_email_field_is_present(resp, media_link):
 
 @pytest.fixture
 def resp_with_user(client_with_user, cohort):
-    return client_with_user.get(reverse('launch:ty'), secure=True)
+    return client_with_user.get(reverse('launch:ty'))
 
 
 def test_user_interaction(resp_with_user, logged_user):
