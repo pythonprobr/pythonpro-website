@@ -46,10 +46,11 @@ def test_data_scientist_add_tag_absent_user(contacts_mock, find_active_campaign_
 python_pro_roles = pytest.mark.parametrize(
     'granted_role, removed_roles',
     [
-        ('lead', {'Client', 'Webdev', 'Member'}),
-        ('client', {'Lead', 'Webdev', 'Member'}),
-        ('webdev', {'Lead', 'Client', 'Member'}),
-        ('member', {'Lead', 'Client', 'Webdev'}),
+        ('lead', {'Client', 'Webdev', 'Bootcamper', 'Member'}),
+        ('client', {'Lead', 'Webdev', 'Bootcamper', 'Member'}),
+        ('webdev', {'Lead', 'Client', 'Bootcamper', 'Member'}),
+        ('bootcamper', {'Lead', 'Client', 'Webdev', 'Member'}),
+        ('member', {'Lead', 'Client', 'Webdev', 'Bootcamper'}),
     ]
 )
 

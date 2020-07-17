@@ -25,8 +25,6 @@ __all__ = [
     'force_register_member', 'click_member_checkout', 'subscribe_anonymous_user_to_waiting_list'
 ]
 
-CLIENT_BOLETO_TAG = 'client-boleto'
-
 
 def register_lead(first_name: str, email: str, source: str = 'unknown', tags: list = []) -> _User:
     """
@@ -207,7 +205,7 @@ def subscribe_launch_landing_page(user, source):
 
 def click_member_checkout(user):
     """
-    Mark user as visited client landing page
+    Mark user as visited member landing page
     :param user:
     :return:
     """
