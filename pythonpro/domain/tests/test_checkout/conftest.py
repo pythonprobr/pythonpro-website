@@ -9,6 +9,7 @@ from django_pagarme.models import PagarmeFormConfig, PagarmeItemConfig
 migration_module = import_module('pythonpro.checkout.migrations.0001_payment_setup')
 webdev_migration_module = import_module('pythonpro.checkout.migrations.0002_webdev_setup')
 data_science_migration_module = import_module('pythonpro.checkout.migrations.0003_data_science_setup')
+bootcamp_migration_module = import_module('pythonpro.checkout.migrations.0004_bootcamp_setup')
 
 ALL_ACTIVE_PRODUCTS = [
     'membership',
@@ -18,6 +19,12 @@ ALL_ACTIVE_PRODUCTS = [
     'webdev',
     'webdev-oto',
     'data-science',
+    'bootcamp',
+    'bootcamp-35-discount',
+    'bootcamp-50-discount',
+    'bootcamp-webdev',
+    'bootcamp-webdev-35-discount',
+    'bootcamp-webdev-50-discount',
 ]
 ALL_INACTIVE_PRODUCTS = [
     'pytools',
@@ -33,6 +40,7 @@ def execute_migration(db, pytestconfig):
         migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
         webdev_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
         data_science_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
+        bootcamp_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
 
 
 @pytest.fixture(autouse=True)
