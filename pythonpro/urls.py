@@ -53,17 +53,17 @@ urlpatterns = [
     # unused pages
     path(
         'curso-de-python-intermediario-oto',
-        RedirectView.as_view(url=reverse_lazy('checkout:membership_lp')),
+        RedirectView.as_view(url=reverse_lazy('checkout:bootcamp_lp')),
         name='client_landing_page_oto'
     ),
     path(
         'curso-de-python-intermediario-do',
-        RedirectView.as_view(url=reverse_lazy('checkout:membership_lp')),
+        RedirectView.as_view(url=reverse_lazy('checkout:bootcamp_lp')),
         name='client_landing_page_do'
     ),
     path(
         'curso-de-python-intermediario',
-        RedirectView.as_view(url=reverse_lazy('checkout:membership_lp')),
+        RedirectView.as_view(url=reverse_lazy('checkout:bootcamp_lp')),
         name='client_landing_page'
     ),
 ]

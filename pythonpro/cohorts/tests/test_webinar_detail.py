@@ -62,4 +62,4 @@ def resp_not_level_three(client_with_not_level_three_roles, webinar: Webinar, lo
 
 def test_webinar_landing_for_client(cohort, resp_not_level_three):
     assert resp_not_level_three.status_code == 302
-    assert resp_not_level_three.url == reverse('checkout:membership_lp')
+    assert resp_not_level_three.url == reverse('checkout:bootcamp_lp')
