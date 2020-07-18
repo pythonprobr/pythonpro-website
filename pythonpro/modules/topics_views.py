@@ -11,7 +11,7 @@ def content_landing_page(content: Content):
     if content.module_slug() in {'pytools', 'django'}:
         redirect_path = reverse('checkout:webdev_landing_page')
     else:
-        redirect_path = reverse('member_landing_page')
+        redirect_path = reverse('checkout:membership_lp')
     return redirect(redirect_path, permanent=False)
 
 
