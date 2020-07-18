@@ -15,7 +15,7 @@ def tag_as_mock(mocker):
 @pytest.fixture
 def resp_no_user_after_discount(client, tag_as_mock, freezer):
     freezer.move_to(facade.discount_datetime_limit + timedelta(seconds=1))
-    return client.get(reverse('checkout:membership_lp'))
+    return client.get(reverse('checkout:bootcamp_lp'))
 
 
 def test_no_user_status_code(resp_no_user_after_discount):
@@ -42,7 +42,7 @@ def test_no_user_no_discount(resp_no_user_after_discount):
 @pytest.fixture
 def resp_no_user_before_discount(client, tag_as_mock, freezer):
     freezer.move_to(facade.discount_datetime_limit - timedelta(seconds=1))
-    return client.get(reverse('checkout:membership_lp'))
+    return client.get(reverse('checkout:bootcamp_lp'))
 
 
 def test_no_user_with_first_day_discount(resp_no_user_before_discount):
@@ -60,7 +60,7 @@ def test_no_user_with_first_day_discount(resp_no_user_before_discount):
 def resp_with_lead_after_discount(client_with_lead, logged_user, tag_as_mock, freezer):
     freezer.move_to(facade.discount_datetime_limit + timedelta(seconds=1))
     client_with_lead.force_login(logged_user)  # freezer for some reason logout user, so must be logged again
-    return client_with_lead.get(reverse('checkout:membership_lp'))
+    return client_with_lead.get(reverse('checkout:bootcamp_lp'))
 
 
 def test_tag_as_called(resp_with_lead_after_discount, logged_user, tag_as_mock):
@@ -74,14 +74,14 @@ def test_lead_without_discount(resp_with_lead_after_discount):
 def test_lead_with_first_day_discount(client_with_lead, logged_user, tag_as_mock, freezer):
     freezer.move_to(facade.discount_datetime_limit - timedelta(seconds=1))
     client_with_lead.force_login(logged_user)  # freezer for some reason logout user, so must be logged again
-    resp = client_with_lead.get(reverse('checkout:membership_lp'))
+    resp = client_with_lead.get(reverse('checkout:bootcamp_lp'))
     test_no_user_with_first_day_discount(resp)
 
 
 def test_client_without_first_day_discount(client_with_client, logged_user, tag_as_mock, freezer):
     freezer.move_to(facade.discount_datetime_limit + timedelta(seconds=1))
     client_with_client.force_login(logged_user)  # freezer for some reason logout user, so must be logged again
-    resp = client_with_client.get(reverse('checkout:membership_lp'))
+    resp = client_with_client.get(reverse('checkout:bootcamp_lp'))
     assert resp.context['payment_item_config'].slug == 'membership-client'
     assert resp.context['client_discount'] == 10000
     assert resp.context['first_day_discount'] == 0
@@ -95,7 +95,7 @@ def test_client_without_first_day_discount(client_with_client, logged_user, tag_
 def test_client_with_first_day_discount(client_with_client, logged_user, tag_as_mock, freezer):
     freezer.move_to(facade.discount_datetime_limit - timedelta(seconds=1))
     client_with_client.force_login(logged_user)  # freezer for some reason logout user, so must be logged again
-    resp = client_with_client.get(reverse('checkout:membership_lp'))
+    resp = client_with_client.get(reverse('checkout:bootcamp_lp'))
     assert resp.context['payment_item_config'].slug == 'membership-client-first-day'
     assert resp.context['client_discount'] == 10000
     assert resp.context['first_day_discount'] == 40000

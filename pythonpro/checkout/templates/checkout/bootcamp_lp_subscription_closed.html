@@ -3,7 +3,7 @@
 {% load django_pagarme %}
 {% load bootstrap4 %}
 
-{% block title %}INSCRIÇÕES ABERTAS! Curso Python Pro{% endblock %}
+{% block title %}MATRÍCULAS ESGOTADAS. Bootcamp Python Pro{% endblock %}
 
 {% block extrahead %}
     <link href="{% static 'css/spp/owl.carousel.min.css' %}" rel="stylesheet">
@@ -14,14 +14,14 @@
 {% block meta %}
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="https://www.python.pro.br/inscricao" />
-  <meta name="twitter:title" content="SAIBA COMO TER ACESSO A UM MERCADO QUE PAGA ALTOS SALÁRIOS E TEM MILHARES DE VAGAS EM ABERTO!" />
-  <meta name="twitter:description" content="Assista o vídeo e descubra como ir de 0 a 100 com Python e se tornar um programador profissional em questão de meses!" />
+  <meta name="twitter:title" content="Saiba com obter acesso a um mercado que paga altos salários e tem milhares de vagas em aberto!" />
+  <meta name="twitter:description" content="Conheça o Método que vai te levar de 0 a 100 na linguagem Python e te tranformar em um Programador Profissional. Tudo isso em Pouco Tempo!" />
   <meta property="twitter:image" content="{% static 'img/spp/card-python-pro.png' %}" />
   <meta property="og:url" content="https://www.python.pro.br/inscricao" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="SAIBA COMO TER ACESSO A UM MERCADO QUE PAGA ALTOS SALÁRIOS E TEM MILHARES DE VAGAS EM ABERTO!" />
-  <meta property="og:site_name" content="SAIBA COMO TER ACESSO A UM MERCADO QUE PAGA ALTOS SALÁRIOS E TEM MILHARES DE VAGAS EM ABERTO!" />
-  <meta property="og:description" content="Assista o vídeo e descubra como ir de 0 a 100 com Python e se tornar um programador profissional em questão de meses!" />
+  <meta property="og:title" content="Saiba com obter acesso a um mercado que paga altos salários e tem milhares de vagas em aberto!" />
+  <meta property="og:site_name" content="Saiba com obter acesso a um mercado que paga altos salários e tem milhares de vagas em aberto!" />
+  <meta property="og:description" content="Conheça o Método que vai te levar de 0 a 100 na linguagem Python e te tranformar em um Programador Profissional. Tudo isso em Pouco Tempo!" />
   <meta property="og:image" content="{% static 'img/spp/card-python-pro.png' %}" />
   {% endblock %}
 
@@ -29,24 +29,24 @@
     {% include 'launch/_whatsapp_widget.html' %}
     <header class="header-main">
         <div class="header-main__group text-center">
-        <h1 class="header-main__group__title text-uppercase fw-800 font-highlighted">Saiba como ter acesso a um mercado que paga altos salários e tem milhares de vagas em aberto!</h1>
-        <h2 class="header-main__group__subtitle fw-300">Assista o vídeo abaixo e descubra como ir de 0 a 100 com Python e se tornar um programador profissional em questão de meses!</h2>
+        <h1 class="header-main__group__title text-uppercase fw-800 font-highlighted">
+            AS MATRÍCULAS ESTÃO ESGOTADAS!
+            <br>ENTRE NA LISTA DE ESPERA.
+        </h1>
+        
+        <h2 class="header-main__group__subtitle fw-300">
+            Para ser avisado sobre a próxima turma, basta preencher os campos abaixo e você entrará na lista de espera:
+        </h2>
 
-        <div class="header-main__group__video">
-            {% if has_first_day_discount %}
-            <iframe class="header-main__group__video__item" src="https://www.youtube.com/embed/0rzm6NjyoSw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            {% else %}
-            <iframe class="header-main__group__video__item" src="https://www.youtube.com/embed/g-C_5oUCz2A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            {% endif %}
-            <img class="header-main__group__video__detail" src="{% static 'img/spp/header/detail-video-header-main.png' %}" alt="Detalhes com pequenos círculos brancos juntos formando um quadrado">
+        <form method="post" action="{% url 'checkout:bootcamp_lp' %}">
+            {% csrf_token %}
+            {% bootstrap_form form %}    
+            <button class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer" data-toggle="modal" data-target="#modal-waiting-capture">Entrar na lista de espera</button>
+        </form>
+
+        
         </div>
 
-        <div class="header-main__group__button">
-            <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer" data-toggle="modal" data-target="#modal-waiting-capture">Sim, eu quero me tornar um profissional!</a>
-        </div>
-        </div>
-
-        <div class="header-main__green"></div>
     </header>
 
     <main role="main">
@@ -76,144 +76,6 @@
                 <p class="method-main__boxes__item__description fw-400">Você vai procurar na internet por pessoas que já tiveram a mesma dúvida que você, vai também procurar no nosso fórum e, caso não ache, vai colocar sua dúvida por lá e eu, minha equipe e antigos alunos vamos te ajudar!</p>
             </div>
             </div>
-        </div>
-        </section>
-
-        <section class="people-main">
-        <div class="people-main__group">
-            <div class="people-main__group__content">
-            <h2 class="people-main__group__content__title text-uppercase text-blue font-highlighted">8 Aulas ao vivo em 3 meses de curso</h2>
-            <h3 class="people-main__group__content__subtitle fw-300">Durante todas essas aulas eu vou te acompanhar para que você consiga passar por todo o conteúdo do curso e se preparar para se tornar um programador profissional.</h3>
-            <h4 class="people-main__group__content__description fw-400 text-green">Além disso teremos 4 palestras, também ao vivo, que abordam assuntos relacionados ao mercado de programação.</h4>
-            </div>
-
-            <div class="people-main__group__cards">
-            <div class="people-main__group__cards__item">
-                <div class="people-main__group__cards__item__image">
-                <img class="people-main__group__cards__item__image__item" src="{% static 'img/spp/people-main/isaac-ferreira.jpg' %}" alt="Isaac Ferreira">
-
-                <img class="people-main__group__cards__item__image__detail" src="{% static 'img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
-                </div>
-
-                <div class="people-main__group__cards__item__content">
-                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Isaac <span class="break text-green">Ferreira</span></h4>
-                <p class="people-main__group__cards__item__content__description fw-300">Durante todas essas aulas eu vou te acompanhar para que você consiga passar por todo o conteúdo do curso e se preparar para se tornar um programador profissional.</p>
-                </div>
-            </div>
-
-            <div class="people-main__group__cards__item">
-                <div class="people-main__group__cards__item__image">
-                <img class="people-main__group__cards__item__image__item" src="{% static 'img/spp/people-main/vicente-marcal.jpg' %}" alt="Vicente Marçal">
-
-                <img class="people-main__group__cards__item__image__detail" src="{% static 'img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
-                </div>
-
-                <div class="people-main__group__cards__item__content">
-                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Vicente <span class="break text-green">Marçal</span></h4>
-                <p class="people-main__group__cards__item__content__description fw-300">Compartilhando sua jornada para se tornar programação depois dos 40 alunos já tendo uma carreira como professor universitário em filosofia.</p>
-                </div>
-            </div>
-
-            <div class="people-main__group__cards__item">
-                <div class="people-main__group__cards__item__image">
-                <img class="people-main__group__cards__item__image__item" src="{% static 'img/spp/people-main/eric-gomes.jpg' %}" alt="Eric Gomes">
-
-                <img class="people-main__group__cards__item__image__detail" src="{% static 'img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
-                </div>
-
-                <div class="people-main__group__cards__item__content">
-                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Eric <span class="break text-green">Gomes</span></h4>
-                <p class="people-main__group__cards__item__content__description fw-300">Irá abordar os aspectos da gestão de projetos que todo dev precisa conhecer para gerar valor para o negócio e manter seu crescimento profissional.</p>
-                </div>
-            </div>
-
-            <div class="people-main__group__cards__item">
-                <div class="people-main__group__cards__item__image">
-                <img class="people-main__group__cards__item__image__item" src="{% static 'img/spp/people-main/luiz-vital.jpg' %}" alt="Luiz Vital">
-
-                <img class="people-main__group__cards__item__image__detail" src="{% static 'img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
-                </div>
-
-                <div class="people-main__group__cards__item__content">
-                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Luiz <span class="break text-green">Vital</span></h4>
-                <p class="people-main__group__cards__item__content__description fw-300">Contando os desafios de empreender com Django e Dados Geográficos para fazer o SIGEF, sistema de certificação fundiária do Brasil. Fundador da Necto Systems.</p>
-                </div>
-            </div>
-            </div>
-
-            <div class="testimonials-classes__group__people testimonials-classes__group__people--mobile owl-carousel">
-            <div class="people-main__group__cards__item">
-                <div class="people-main__group__cards__item__image">
-                <img class="people-main__group__cards__item__image__item" src="{% static 'img/spp/people-main/isaac-ferreira.jpg' %}" alt="Isaac Ferreira">
-
-                <img class="people-main__group__cards__item__image__detail" src="{% static 'img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
-                </div>
-
-                <div class="people-main__group__cards__item__content">
-                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Isaac <span class="break text-green">Ferreira</span></h4>
-                <p class="people-main__group__cards__item__content__description fw-300">Durante todas essas aulas eu vou te acompanhar para que você consiga passar por todo o conteúdo do curso e se preparar para se tornar um programador profissional.</p>
-                </div>
-            </div>
-
-            <div class="people-main__group__cards__item">
-                <div class="people-main__group__cards__item__image">
-                <img class="people-main__group__cards__item__image__item" src="{% static 'img/spp/people-main/vicente-marcal.jpg' %}" alt="Vicente Marçal">
-
-                <img class="people-main__group__cards__item__image__detail" src="{% static 'img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
-                </div>
-
-                <div class="people-main__group__cards__item__content">
-                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Vicente <span class="break text-green">Marçal</span></h4>
-                <p class="people-main__group__cards__item__content__description fw-300">Compartilhando sua jornada para se tornar programação depois dos 40 alunos já tendo uma carreira como professor universitário em filosofia.</p>
-                </div>
-            </div>
-
-            <div class="people-main__group__cards__item">
-                <div class="people-main__group__cards__item__image">
-                <img class="people-main__group__cards__item__image__item" src="{% static 'img/spp/people-main/eric-gomes.jpg' %}" alt="Eric Gomes">
-
-                <img class="people-main__group__cards__item__image__detail" src="{% static 'img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
-                </div>
-
-                <div class="people-main__group__cards__item__content">
-                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Eric <span class="break text-green">Gomes</span></h4>
-                <p class="people-main__group__cards__item__content__description fw-300">Irá abordar os aspectos da gestão de projetos que todo dev precisa conhecer para gerar valor para o negócio e manter seu crescimento profissional.</p>
-                </div>
-            </div>
-
-            <div class="people-main__group__cards__item">
-                <div class="people-main__group__cards__item__image">
-                <img class="people-main__group__cards__item__image__item" src="{% static 'img/spp/people-main/luiz-vital.jpg' %}" alt="Luiz Vital">
-
-                <img class="people-main__group__cards__item__image__detail" src="{% static 'img/spp/people-main/people-image-detail.png' %}" alt="Pequenos círculos azuis formando um quadrado">
-                </div>
-
-                <div class="people-main__group__cards__item__content">
-                <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">Luiz <span class="break text-green">Vital</span></h4>
-                <p class="people-main__group__cards__item__content__description fw-300">Contando os desafios de empreender com Django e Dados Geográficos para fazer o SIGEF, sistema de certificação fundiária do Brasil. Fundador da Necto Systems.</p>
-                </div>
-            </div>
-            </div>
-
-            <div class="people-main__group__bonus">
-            <div class="people-main__group__bonus__item">
-                <div class="people-main__group__bonus__item__circle">
-                <img src="{% static 'img/spp/people-main/access-icon.jpg' %}" alt="Ícone de um cadeado com fundo transparente e bordas brancas">
-                </div>
-
-                <h5 class="people-main__group__bonus__item__title fw-700 text-uppercase text-white font-highlighted">Acesso completo e irrestrito ao fórum de dúvidas</h5>
-            </div>
-
-            <div class="people-main__group__bonus__item">
-                <div class="people-main__group__bonus__item__circle">
-                <img src="{% static 'img/spp/people-main/certificate-icon.jpg' %}" alt="Ícone de um certificado com fundo transparente e bordas brancas">
-                </div>
-
-                <h5 class="people-main__group__bonus__item__title fw-700 text-uppercase text-white font-highlighted">Certificado de conclusão de curso</h5>
-            </div>
-            </div>
-
-            <h6 class="people-main__group__disclaimer fw-300 text-blue text-uppercase">Além das aulas Ao Vivo, você terá acesso a <span class="text-green fw-800">6 cursos completos</span> <span class="fw-800">que explicam, do básico ao avançado, como ir de 0 a 100 com o Python!</span></h6>
         </div>
         </section>
 
@@ -283,14 +145,13 @@
 
                         <div class="tab-content__group__disclaimer__row">
                             <div class="tab-content__group__disclaimer__1">
-                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Criação de objetos</h3>
+                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Criação de projetos</h3>
                             <ul>
                                 <li>Afinando o Machado - Git</li>
                                 <li>Isolando o Ambiente</li>
                                 <li>Gestão de Dependências</li>
                                 <li>Publicação do Pacote</li>
                             </ul>
-    
                             <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Pipenv</h3>
                             <ul>
                                 <li>Instalação e Princípios Básicos</li>
@@ -369,291 +230,9 @@
                     </div>
                 </div>
 
-                <div class="tab">
-                    <div class="tab-detail"></div>
-                    <input type="checkbox" id="content4" checked>
-                    <label class="tab-label main-transition text-uppercase font-highlighted fw-800" for="content4">Objetos Pythônicos</label>
-                    <div class="tab-content main-transition">
-                    <div class="tab-content__group">
-                        <div class="tab-content__group__description">
-                        <h2 class="tab-content__group__description__title fw-700 font-highlighted text-uppercase text-blue">Descrição</h2>
-                        <p class="tab-content__group__description__description fw-300">No curso Objetos Pythônicos você vai se aprofundar nas características que tornam o Python a melhor linguagem de programação para quem quer ser produtivo com qualidade.</p>
-                        <p class="tab-content__group__description__description fw-300">Você vai aprender mais sobre com o Python lida com conceitos de programação orientada a objeto e programação funcional.</p>
-                        </div>
-
-                        <div class="tab-content__group__disclaimer">
-                        <h2 class="tab-content__group__disclaimer__title fw-700 font-highlighted text-uppercase text-blue">Ementa</h2>
-
-                        <div class="tab-content__group__disclaimer__row">
-                            <div class="tab-content__group__disclaimer__1">
-                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Programação Funcional</h3>
-                            <ul>
-                                <li>Função como Objeto</li>
-                                <li>Decorator</li>
-                            </ul>
-                            </div>
-    
-                            <div class="tab-content__group__disclaimer__2">
-                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Orientação a objetos Pythonica</h3>
-                            <ul>
-                                <li>Interfaces</li>
-                                <li>Protocolos</li>
-                                <li>Bibliotecas</li>
-                                <li>Herança Múltiplas</li>
-                                <li>Aliasing</li>
-                                <li>Protocolo de Sequência</li>
-                                <li>Métodos Mágicos</li>
-                                <li>Class Based Views</li>
-                            </ul>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-
-                <div class="tab">
-                    <div class="tab-detail"></div>
-                    <input type="checkbox" id="content5" checked>
-                    <label class="tab-label main-transition text-uppercase font-highlighted fw-800" for="content5">Python para Pythonistas</label>
-                    <div class="tab-content main-transition">
-                    <div class="tab-content__group">
-                        <div class="tab-content__group__description">
-                        <h2 class="tab-content__group__description__title fw-700 font-highlighted text-uppercase text-blue">Descrição</h2>
-                        <p class="tab-content__group__description__description fw-300">No curso Python para Pythonistas, você vai desvendar módulos avançados da linguagem.</p>
-                        <p class="tab-content__group__description__description fw-300">São conceitos que, em geral, são utilizados em diversos frameworks. Você vai entender como o Python funciona de verdade e poder utilizar todo o seu poder para construir aplicações simples e poderosas.</p>
-                        </div>
-
-                        <div class="tab-content__group__disclaimer">
-                        <h2 class="tab-content__group__disclaimer__title fw-700 font-highlighted text-uppercase text-blue">Ementa</h2>
-
-                        <div class="tab-content__group__disclaimer__row">
-                            <div class="tab-content__group__disclaimer__1">
-                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Programação Assincrona</h3>
-                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Metaprogramação</h3>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-
-                <div class="tab">
-                    <div class="tab-detail"></div>
-                    <input type="checkbox" id="content6" checked>
-                    <label class="tab-label main-transition text-uppercase font-highlighted fw-800" for="content6">Python Patterns</label>
-                    <div class="tab-content main-transition">
-                    <div class="tab-content__group">
-                        <div class="tab-content__group__description">
-                        <h2 class="tab-content__group__description__title fw-700 font-highlighted text-uppercase text-blue">Descrição</h2>
-                        <p class="tab-content__group__description__description fw-300">Com o curso Python Patterns você vai desvendar módulos avançados da linguagem, em geral utilizados em diversos frameworks.</p>
-                        </div>
-
-                        <div class="tab-content__group__disclaimer">
-                        <h2 class="tab-content__group__disclaimer__title fw-700 font-highlighted text-uppercase text-blue">Ementa</h2>
-
-                        <div class="tab-content__group__disclaimer__row">
-                            <div class="tab-content__group__disclaimer__1">
-                            <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">Programação Funcional</h3>
-                            <ul>
-                                <li>Motivação</li>
-                                <li>Facade</li>
-                                <li>Embrulho</li>
-                                <li>Singleton</li>
-                                <li>Borg</li>
-                                <li>Adapter</li>
-                            </ul>
-                            </div>
-
-                            <div class="tab-content__group__disclaimer__2">
-                            <ul class="tab-content__group__disclaimer__2--last">
-                                <li>Template Method</li>
-                                <li>Composite</li>
-                                <li>Strategy Clássico</li>
-                                <li>Flyweight e NullObject</li>
-                                <li>Strategy Funcional</li>
-                                <li>Decorator</li>
-                            </ul>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
+                
                 </div>
             </div>
-            </div>
-
-            <a class="content-main__group__button main-transition text-uppercase text-white fw-800 font-highlighted" href="" target="blank">Compre aqui</a>
-            <!-- <div class="header-main__group__button"> -->
-            <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer" data-toggle="modal" data-target="#modal-waiting-capture">Sim, eu quero me tornar um profissional!</a>
-            <!-- </div> -->
-        </div>
-        </section>
-
-        <section class="interview-main">
-        <div class="interview-main__group">
-            <img class="interview-main__group__image" src="{% static 'img/spp/interview-main/interview-icon.png' %}" alt="Ícone de um microfone com fundo transparente e bordas verdes">
-            <h2 class="interview-main__group__title fw-800 text-uppercase font-highlighted">Além disso, você também terá acesso ao nosso curso <span class="text-white">Como passar em entrevistas técnicas</span></h2>
-            <p class="interview-main__group__description fw-400 text-white">Neste curso eu vou te mostrar o passo a passo para você mandar bem nas entrevistas de grandes empresas. Eu vou te ensinar como se portar em todo o processo, desde como montar o seu currículo, até a resolução dos exercícios técnicos, onde eu mostro como resolver os testes mais comuns neste tipo de entrevista.</p>
-        </div>
-        </section>
-
-        <section class="experience-main">
-        <div class="experience-main__group">
-            <h2 class="experience-main__group__title fw-300 font-highlighted text-blue text-uppercase">Como será a sua <span class="text-green fw-800">experiência?</span></h2>
-
-            <div class="experience-main__group__box">
-            <div class="experience-main__group__box__item">
-                <h3 class="experience-main__group__box__item__title fw-800 font-highlighted text-blue text-uppercase">Curso 100% online</h3>
-                <p class="experience-main__group__box__item__description fw-400">Assista de qualquer lugar que quiser. Do seu computador, do seu tablet ou mesmo do seu celular. Basta ter acesso a Internet.</p>
-            </div>
-
-            <div class="experience-main__group__box__item">
-                <h3 class="experience-main__group__box__item__title fw-800 font-highlighted text-blue text-uppercase">Mais de 300 vídeoaulas</h3>
-                <p class="experience-main__group__box__item__description fw-400">Seu tempo é valioso e o nosso objetivo é que você se transforme em um profissional o mais rápido possível! As aulas são práticas, objetivas, direto ao ponto e sem enrolação.</p>
-            </div>
-
-            <div class="experience-main__group__box__item">
-                <h3 class="experience-main__group__box__item__title fw-800 font-highlighted text-blue text-uppercase">Acesso vitalício</h3>
-                <p class="experience-main__group__box__item__description fw-400">Você terá acesso ao curso para sempre, inclusive a todas as atualizações! Poderá assistir todas as aulas quantas vezes quiser.</p>
-            </div>
-            </div>
-        </div>
-        </section>
-
-        <section class="summary-main">
-        <div class="summary-main__group">
-            <h3 class="summary-main__group__subtitle text-blue text-uppercase font-highlighted fw-800">Em resumo...</h3>
-
-            <div class="summary-main__group__cards">
-            <div class="summary-main__group__cards__item">
-                <div class="summary-main__group__cards__item__circle">
-                <img class="summary-main__group__cards__item__circle__item" src="{% static 'img/spp/summary-main/summary-card-1.png' %}" alt="Ícone com logo do Python com fundo transparente e bordas brancas">
-                </div>
-
-                <h3 class="summary-main__group__cards__item__title text-uppercase text-blue font-highlighted fw-700">6 cursos da formação Python Pro</h3>
-            </div>
-
-            <div class="summary-main__group__cards__item">
-                <div class="summary-main__group__cards__item__circle">
-                <img class="summary-main__group__cards__item__circle__item" src="{% static 'img/spp/summary-main/summary-card-2.png' %}" alt="Ícone de um microfone com fundo transparente e bordas brancas">
-                </div>
-
-                <h3 class="summary-main__group__cards__item__title text-uppercase text-blue font-highlighted fw-700">Curso de Entrevista Técnica</h3>
-            </div>
-
-            <div class="summary-main__group__cards__item">
-                <div class="summary-main__group__cards__item__circle">
-                <img class="summary-main__group__cards__item__circle__item" src="{% static 'img/spp/summary-main/summary-card-3.png' %}" alt="Ícone de um 'play' de vídeo com fundo transparente e bordas brancas">
-                </div>
-
-                <h3 class="summary-main__group__cards__item__title text-uppercase text-blue font-highlighted fw-700">8 Aulas ao vivo</h3>
-            </div>
-
-            <div class="summary-main__group__cards__item">
-                <div class="summary-main__group__cards__item__circle">
-                <img class="summary-main__group__cards__item__circle__item" src="{% static 'img/spp/summary-main/summary-card-3.png' %}" alt="Ícone de um 'play' de vídeo com fundo transparente e bordas brancas">
-                </div>
-
-                <h3 class="summary-main__group__cards__item__title text-uppercase text-blue font-highlighted fw-700">4 Webinários</h3>
-            </div>
-            </div>
-
-            <div class="summary-main__group__bonus">
-            <h3 class="summary-main__group__bonus__title text-uppercase text-blue fw-800 font-highlighted">E além dos itens acima, tenho mais <span class="text-green">3 bônus para você!</span></h3>
-
-            <div class="summary-main__group__bonus__cards">
-                <div class="summary-main__group__bonus__cards__item">
-                <div class="summary-main__group__bonus__cards__item__image">
-                    <img class="summary-main__group__bonus__cards__item__image__mobile" src="{% static 'img/spp/summary-main/bonus-1-mobile.jpg' %}" alt="Monitor de iMac com Renzo na tela (imagem para mobile)">
-                    <img class="summary-main__group__bonus__cards__item__image__desktop" src="{% static 'img/spp/summary-main/bonus-1-desktop.jpg' %}" alt="Monitor de iMac com Renzo na tela (imagem para desktop)">
-                </div>
-
-                <div class="summary-main__group__bonus__cards__item__content">
-                    <h4 class="summary-main__group__bonus__cards__item__content__title text-uppercase text-blue fw-800 font-highlighted">Acesso a todos os webinários das turmas passadas</h4>
-                    <p class="summary-main__group__bonus__cards__item__content__description fw-400">Tem material muito bom ali no meio que vai te ajudar bastante a acelerar seu processo de se tornar um programador profissional. Foi por isso que eu decidi liberar esse bônus.</p>
-                    <p class="summary-main__group__bonus__cards__item__content__description fw-400">Eu poderia cobrar, tranquilamente, R$ 99 reais por cada webinário desses. Mas, nessa turma, você terá os 9 webinários de graça!</p>
-                    <span class="summary-main__group__bonus__cards__item__content__price fw-700"><strike>R$ 891,00</strike></span>
-                    <span class="summary-main__group__bonus__cards__item__content__information fw-700 text-uppercase text-green break">Grátis</span>
-                </div>
-                </div>
-
-                <div class="summary-main__group__bonus__cards__item">
-                <div class="summary-main__group__bonus__cards__item__image summary-main__group__bonus__cards__item__image--2">
-                    <img class="summary-main__group__bonus__cards__item__image__mobile" src="{% static 'img/spp/summary-main/bonus-2-mobile.jpg' %}" alt="Mão direita de uma pessoa segurando um iPhone com logo de Telegram na tela (imagem para mobile)">
-                    <img class="summary-main__group__bonus__cards__item__image__desktop" src="{% static 'img/spp/summary-main/bonus-2-desktop.jpg' %}" alt="Mão direita de uma pessoa segurando um iPhone com logo de Telegram na tela (imagem para desktop)">
-                </div>
-
-                <div class="summary-main__group__bonus__cards__item__content">
-                    <h4 class="summary-main__group__bonus__cards__item__content__title text-uppercase text-blue fw-800 font-highlighted">Acesso vitalício ao grupo de discussão no Telegram</h4>
-                    <p class="summary-main__group__bonus__cards__item__content__description fw-400">Hoje temos centenas de programadores dos mais variados níveis discutindo diariamente sobre tecnologia naquele grupo. Vai ser a sua oportunidade de ficar amigo de uma turma muito fera.</p>
-                    <p class="summary-main__group__bonus__cards__item__content__description fw-400">Eu já pensei em cobrar por essa participação. O preço que tinha decidido era de R$ 29,90/mês. Mas eu decidi liberar como bônus. Ou seja, você terá um bônus de, pelo menos, R$ 358,00/ano, totalmente de graça.</p>
-                    <span class="summary-main__group__bonus__cards__item__content__price fw-700"><strike>R$ 358,00</strike></span>
-                    <span class="summary-main__group__bonus__cards__item__content__information fw-700 text-uppercase text-green break">Grátis</span>
-                </div>
-                </div>
-
-                <div class="summary-main__group__bonus__cards__item">
-                <div class="summary-main__group__bonus__cards__item__image">
-                    <img class="summary-main__group__bonus__cards__item__image__mobile" src="{% static 'img/spp/summary-main/bonus-3-mobile.jpg' %}" alt="Mão esquerda de uma pessoa segurando um iPhone com 3 thumbnails de vídeos do renzo na tela (imagem para mobile)">
-                    <img class="summary-main__group__bonus__cards__item__image__desktop" src="{% static 'img/spp/summary-main/bonus-3-desktop.jpg' %}" alt="Mão esquerda de uma pessoa segurando um iPhone com 3 thumbnails de vídeos do renzo na tela (imagem para desktop)">
-                </div>
-
-                <div class="summary-main__group__bonus__cards__item__content">
-                    <h4 class="summary-main__group__bonus__cards__item__content__title text-uppercase text-blue fw-800 font-highlighted">Acesso a todas as aulas das turmas passadas para você</h4>
-                    <p class="summary-main__group__bonus__cards__item__content__description fw-400">Você terá acesso a todo o conteúdo que foi passado em todas as turmas do Python Pro. Isso inclui as aulas e os arquivos dos projetos!</p>
-                    <p class="summary-main__group__bonus__cards__item__content__description fw-400">Eu poderia cobrar, tranquilamente, R$ 1.500,00 só por este acesso. Mas resolvi te dar como bônus para te provar como eu estou comprometido com o seu sucesso! Somente estes bônus já valem quase muito mais que o curso!</p>
-                    <span class="summary-main__group__bonus__cards__item__content__price fw-700"><strike>R$ 891,00</strike></span>
-                    <span class="summary-main__group__bonus__cards__item__content__information fw-700 text-uppercase text-green break">Grátis</span>
-                </div>
-                </div>
-            </div>
-            </div>
-
-            {% include 'checkout/_membership_lp_payment_block.html'%}
-        </div>
-        </section>
-
-        <section class="countdown countdown-main countdown-main--secondary">
-        <div class="countdown__group">
-            <div class="countdown-main__group">
-            <h2 class="countdown-main__group__title text-uppercase text-white fw-800"><span class="text-red">Aproveite!</span> Essa promoção vai expirar em breve.</h2>
-            </div>
-
-            <div class="countdown__group__numbers">
-            <div class="countdown__group__numbers__item">
-                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted days"></span>
-                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Dias</span>
-            </div>
-
-            <div class="countdown__group__numbers__item">
-                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted hours"></span>
-                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Horas</span>
-            </div>
-
-            <div class="countdown__group__numbers__item">
-                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted minutes"></span>
-                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Minutos</span>
-            </div>
-
-            <div class="countdown__group__numbers__item">
-                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted seconds"></span>
-                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Segundos</span>
-            </div>
-            </div>
-        </div>
-        </section>
-
-        <section class="garantee-main">
-        <div class="garantee-main__group">
-            <img class="garantee-main__group__badge" src="{% static 'img/spp/garantee-main/garantee-badge.png' %}" alt="Imagem de um badge escrito 'Garantia de 30 dias'">
-
-            <h2 class="garantee-main__group__title text-white text-uppercase fw-800 font-highlighted">"Mas e se eu não gostar do curso?"</h2>
-
-            <div class="garantee-main__group__description">
-            <p class="garantee-main__group__description__item text-white fw-400">Você terá acesso a todo o conteúdo que foi passado em todas as turmas do Python Pro. Isso inclui as aulas e os arquivos dos projetos!</p>
-            <p class="garantee-main__group__description__item text-white fw-400">Eu poderia cobrar, tranquilamente, R$ 1.500,00 só por este acesso. Mas resolvi te dar como bônus para te provar como eu estou comprometido com o seu sucesso! Somente estes bônus já valem quase muito mais que o curso!</p>
             </div>
         </div>
         </section>
@@ -1049,40 +628,6 @@
             </div>
         </div>
         </section>
-
-        <section class="summary-main summary-main--secondary">
-            {% include 'checkout/_membership_lp_payment_block.html'%}
-        </section>
-
-        <section class="countdown countdown-main countdown-main--secondary">
-        <div class="countdown__group">
-            <div class="countdown-main__group">
-            <h2 class="countdown-main__group__title text-uppercase text-white fw-800"><span class="text-red">Aproveite!</span> Essa promoção vai expirar em breve.</h2>
-            </div>
-
-            <div class="countdown__group__numbers">
-            <div class="countdown__group__numbers__item">
-                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted days"></span>
-                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Dias</span>
-            </div>
-
-            <div class="countdown__group__numbers__item">
-                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted hours"></span>
-                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Horas</span>
-            </div>
-
-            <div class="countdown__group__numbers__item">
-                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted minutes"></span>
-                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Minutos</span>
-            </div>
-
-            <div class="countdown__group__numbers__item">
-                <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted seconds"></span>
-                <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Segundos</span>
-            </div>
-            </div>
-        </div>
-        </section>
     </main>
 
     <footer class="footer">
@@ -1130,51 +675,16 @@
     
         <img class="footer__group__detail-right-desktop" src="{% static 'img/spp/footer/renzo-nuccitelli-footer-desktop.png' %}" alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
     </footer>
-
-    <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Vamos lá!</h5>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        Preencha os dados abaixo e em seguida clique no botão <i>Continuar</i> para que possamos reservar sua vaga.
-                    </p>
-
-                    <form id="contact_form" action="{% url 'django_pagarme:contact_info' slug=payment_item_config.slug %}" method="post">
-                    {% csrf_token %}
-                    {% bootstrap_form contact_form %}
-                    <button id="submit_button" type="submit" disabled="disabled" class="btn float-right">Continuar →</button>
-                </form>
-                </div>
-            </div>
-        </div>
-    </div>
     
     <script type="application/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <script type="application/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/spp/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/spp/magnific-popup.min.js' %}"></script>
-    <script src="{% static 'js/spp/countdown.js' %}"></script>
     <script type="application/javascript">
-
-    initCountDown(new Date({{promotion_end_date_milliseconds}}).getTime());
-
-    let phoneInput = document.getElementById('id_phone');
+        let phoneInput = document.getElementById('id_phone');
         phoneInput.addEventListener('input', function (e) {
             var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
             e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
-        });
-
-        let submitButton = document.getElementById('submit_button');
-        document.getElementById('contact_form').addEventListener('input', function (e) {
-            if (phoneInput.value.search(/\(\d\d\) \d\d\d\d\d-\d\d\d\d/) === 0) {
-                submitButton.removeAttribute('disabled');
-            } else {
-                submitButton.setAttribute('disabled', 'disabled');
-            }
         });
 
         $(document).ready(function(){

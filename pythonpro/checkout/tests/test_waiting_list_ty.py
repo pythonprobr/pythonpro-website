@@ -25,7 +25,7 @@ def resp(subscription_closed, client_with_lead, logged_user, create_or_update_wi
         'first_name': logged_user.first_name,
         'phone': logged_user.phone
     }
-    yield client_with_lead.post(reverse('checkout:membership_lp'), data)
+    yield client_with_lead.post(reverse('checkout:bootcamp_lp'), data)
 
 
 def test_logged_user_updated(resp, logged_user, create_or_update_with_no_role_mock):
@@ -51,7 +51,7 @@ def resp_anonymous_user_existing_email(subscription_closed, client, logged_user,
         'first_name': logged_user.first_name,
         'phone': logged_user.phone
     }
-    yield client.post(reverse('checkout:membership_lp'), data)
+    yield client.post(reverse('checkout:bootcamp_lp'), data)
 
 
 def test_anonymous_user_existing_email_updated(resp_anonymous_user_existing_email, logged_user,
@@ -73,7 +73,7 @@ def anonymous_form_data():
 @pytest.fixture
 def resp_anonymous_user_missing_email(subscription_closed, client, create_or_update_with_no_role_mock,
                                       anonymous_form_data, db):
-    yield client.post(reverse('checkout:membership_lp'), anonymous_form_data)
+    yield client.post(reverse('checkout:bootcamp_lp'), anonymous_form_data)
 
 
 def test_anonymous_user_missing_email_updated(resp_anonymous_user_missing_email, anonymous_form_data,

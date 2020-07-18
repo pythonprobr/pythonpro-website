@@ -128,7 +128,7 @@ def _render_cpl(description, request, title, user, video_id, visit_function, vid
         return redirect(reverse('launch:landing_page'))
 
     if launch_status == LAUNCH_STATUS_OPEN_CART and not request.GET.get('debug'):
-        return redirect(reverse('checkout:membership_lp'))
+        return redirect(reverse('checkout:bootcamp_lp'))
 
     ctx = {
         'data_href': f'https://{build_absolute_uri(request.path)}',

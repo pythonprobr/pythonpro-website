@@ -71,7 +71,7 @@ def test_payment_link_is_present(home_resp_open_subscriptions):
     """
     Assert Payment link is present on home page when subscriptions are open
     """
-    dj_assert_contains(home_resp_open_subscriptions, reverse('checkout:membership_lp'))
+    dj_assert_contains(home_resp_open_subscriptions, reverse('checkout:bootcamp_lp'))
 
 
 @pytest.fixture
@@ -84,4 +84,4 @@ def test_payment_link_is_not_present(home_resp_closed_subscriptions):
     """
     Assert Payment link is not present on home page when subscriptions are closed
     """
-    dj_assert_not_contains(home_resp_closed_subscriptions, reverse('checkout:membership_lp'))
+    dj_assert_not_contains(home_resp_closed_subscriptions, reverse('checkout:bootcamp_lp'))
