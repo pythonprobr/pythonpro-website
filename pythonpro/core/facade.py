@@ -240,3 +240,7 @@ def is_data_scientist(user):
 
 def has_any_webdev_role(user):
     return has_role(user, 'lead client webdev member'.split())
+
+
+def is_bootcamper(user):
+    return has_role(user, 'bootcamper')

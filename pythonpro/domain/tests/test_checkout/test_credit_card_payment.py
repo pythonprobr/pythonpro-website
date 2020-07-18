@@ -92,7 +92,7 @@ def test_user_is_created(resp, django_user_model):
     assert User.objects.exists()
 
 
-def test_user_is_member(resp, django_user_model, active_product_item):
+def test_user_is_promoted(resp, django_user_model, active_product_item):
     User = django_user_model
     user = User.objects.first()
     slug = active_product_item.slug
@@ -106,6 +106,8 @@ def assert_user_promoted(user, slug):
         assert core_facade.is_webdev(user)
     elif slug.startswith('data-science'):
         assert core_facade.is_data_scientist(user)
+    elif slug.startswith('bootcamp'):
+        assert core_facade.is_bootcamper(user)
     else:
         pytest.fail(f'Invalid slug prefix {slug}')
 

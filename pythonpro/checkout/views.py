@@ -11,7 +11,7 @@ from django_pagarme import facade
 from pythonpro.checkout import facade as checkout_facade
 from pythonpro.checkout import forms as checkout_forms
 from pythonpro.checkout.forms import WaitingForm
-from pythonpro.core.facade import is_client
+from pythonpro.core.facade import is_webdev
 from pythonpro.domain import user_facade
 
 
@@ -47,24 +47,24 @@ def bootcamp_lp(request):
     has_client_discount = False
 
     if user.is_authenticated:
-        has_client_discount = is_client(user)
+        has_client_discount = is_webdev(user)
         data = {'name': user.first_name, 'email': user.email}
         form = facade.ContactForm(data)
     else:
         form = facade.ContactForm()
 
-    has_first_day_discount = checkout_facade.is_launch_first_day_discount() or is_debug
-    no_discount_item_config = facade.find_payment_item_config('membership')
+    has_first_day_discount = checkout_facade.has_50_percent_discount()
+    no_discount_item_config = facade.find_payment_item_config('bootcamp')
     payment_item_config = no_discount_item_config
     client_discount = 0
     first_day_discount = 0
-    client_discount_slug = 'membership-client'
+    client_discount_slug = 'bootcamp-webdev'
     if has_first_day_discount:
-        first_day_discount_item_config = facade.find_payment_item_config('membership-first-day')
+        first_day_discount_item_config = facade.find_payment_item_config('bootcamp-50-discount')
         payment_item_config = first_day_discount_item_config
         first_day_discount = no_discount_item_config.price - first_day_discount_item_config.price
         if has_client_discount:
-            client_discount_slug = 'membership-client-first-day'
+            client_discount_slug = 'bootcamp-webdev-50-discount'
 
     if has_client_discount:
         client_discount_item_config = facade.find_payment_item_config(client_discount_slug)
@@ -79,7 +79,7 @@ def bootcamp_lp(request):
     login_url = f'{login_url}?{qs}'
 
     promotion_end_date = (
-        checkout_facade.discount_datetime_limit if has_first_day_discount else checkout_facade.launch_datetime_finish
+        checkout_facade.discount_50_percent_datetime_limit if has_first_day_discount else checkout_facade.launch_datetime_finish
     )
 
     # Seconds to milliseconds https://stackoverflow.com/questions/5022447/converting-date-from-python-to-javascript
@@ -87,7 +87,7 @@ def bootcamp_lp(request):
 
     context = {
         'launch_datetime_finish': checkout_facade.launch_datetime_finish,
-        'discount_datetime_limit': checkout_facade.discount_datetime_limit,
+        'discount_datetime_limit': checkout_facade.discount_50_percent_datetime_limit,
         'payment_item_config': payment_item_config,
         'contact_form': form,
         'login_url': login_url,
