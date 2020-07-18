@@ -154,7 +154,7 @@ def resp_not_advanced_user_accessing_advanced_content(client_with_not_advanced_r
 
 def test_not_advanced_user_hitting_member_landing_page(resp_not_advanced_user_accessing_advanced_content):
     assert resp_not_advanced_user_accessing_advanced_content.status_code == 302
-    assert resp_not_advanced_user_accessing_advanced_content.url == reverse('member_landing_page')
+    assert resp_not_advanced_user_accessing_advanced_content.url == reverse('checkout:membership_lp')
 
 
 @pytest.fixture
@@ -289,7 +289,7 @@ def resp_not_level_three_accesing_level_three_content(client_with_not_level_thre
 
 def test_not_level_three_hitting_level_three_landing_page(resp_not_level_three_accesing_level_three_content):
     assert resp_not_level_three_accesing_level_three_content.status_code == 302
-    assert resp_not_level_three_accesing_level_three_content.url == reverse('member_landing_page')
+    assert resp_not_level_three_accesing_level_three_content.url == reverse('checkout:membership_lp')
 
 
 @pytest.fixture

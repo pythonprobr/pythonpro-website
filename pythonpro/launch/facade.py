@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
-from django.utils import timezone
 
+from django.utils import timezone
 
 LAUNCH_PPL_START_DATE = datetime(2020, 3, 23, 0)
 LAUNCH_STATUS_PPL = 0

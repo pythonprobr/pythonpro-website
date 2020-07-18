@@ -4,9 +4,9 @@ from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.http import urlencode
 from django_pagarme import facade
-from django.utils import timezone
 
 from pythonpro.checkout import facade as checkout_facade
 from pythonpro.checkout import forms as checkout_forms
