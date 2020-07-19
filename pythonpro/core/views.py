@@ -10,16 +10,18 @@ from django.views.generic import TemplateView, UpdateView
 from django_sitemaps import Sitemap
 from rolepermissions.checkers import has_role
 
+from pythonpro.checkout.facade import is_launch_open
+from pythonpro.core import facade as core_facade
 from pythonpro.core.forms import LeadForm, UserEmailForm, UserSignupForm, PythonProResetForm
 from pythonpro.core.models import User
-from pythonpro.core import facade as core_facade
 from pythonpro.domain import user_facade
 
 
 def index(request):
     if request.user.is_authenticated:
         return redirect(reverse('dashboard:home'))
-    return render(request, 'core/index.html', {'form': UserSignupForm()})
+
+    return render(request, 'core/index.html', {'form': UserSignupForm(), 'is_launch_open': is_launch_open()})
 
 
 def thanks(request):

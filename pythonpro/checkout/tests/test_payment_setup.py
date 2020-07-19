@@ -223,7 +223,7 @@ def test_second_config_properties(second_pagarme_form_config):
            )
 
 
-def test_item_bootcamp(second_pagarme_form_config):
+def test_item_bootcamp(first_pagarme_form_config):
     item_config = facade.find_payment_item_config('bootcamp')
     assert (
                item_config.name,
@@ -236,7 +236,7 @@ def test_item_bootcamp(second_pagarme_form_config):
                'bootcamp',
                199700,
                False,
-               second_pagarme_form_config
+               first_pagarme_form_config
            )
 
 
@@ -257,7 +257,7 @@ def test_item_bootcamp_35_discount(first_pagarme_form_config):
            )
 
 
-def test_item_bootcamp_50_discount(first_pagarme_form_config):
+def test_item_bootcamp_50_discount(second_pagarme_form_config):
     item_config = facade.find_payment_item_config('bootcamp-50-discount')
     assert (
                item_config.name,
@@ -270,11 +270,11 @@ def test_item_bootcamp_50_discount(first_pagarme_form_config):
                'bootcamp-50-discount',
                99700,
                False,
-               first_pagarme_form_config
+               second_pagarme_form_config
            )
 
 
-def test_item_bootcamp_webdev(second_pagarme_form_config):
+def test_item_bootcamp_webdev(first_pagarme_form_config):
     item_config = facade.find_payment_item_config('bootcamp-webdev')
     assert (
                item_config.name,
@@ -287,7 +287,7 @@ def test_item_bootcamp_webdev(second_pagarme_form_config):
                'bootcamp-webdev',
                150000,
                False,
-               second_pagarme_form_config
+               first_pagarme_form_config
            )
 
 
@@ -308,7 +308,7 @@ def test_item_bootcamp_webdev_35_discount(first_pagarme_form_config):
            )
 
 
-def test_item_bootcamp_webdev_50_discount(first_pagarme_form_config):
+def test_item_bootcamp_webdev_50_discount(second_pagarme_form_config):
     item_config = facade.find_payment_item_config('bootcamp-webdev-50-discount')
     assert (
                item_config.name,
@@ -321,5 +321,5 @@ def test_item_bootcamp_webdev_50_discount(first_pagarme_form_config):
                'bootcamp-webdev-50-discount',
                50000,
                False,
-               first_pagarme_form_config
+               second_pagarme_form_config
            )
