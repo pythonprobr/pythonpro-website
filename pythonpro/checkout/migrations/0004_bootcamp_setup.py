@@ -28,7 +28,7 @@ def setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig):
         slug='bootcamp',
         price=199700,
         tangible=False,
-        default_config=config_card_only,
+        default_config=config_card_and_boleto,
     ).save()
 
     PagarmeItemConfig(
@@ -36,7 +36,7 @@ def setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig):
         slug='bootcamp-50-discount',
         price=99700,
         tangible=False,
-        default_config=config_card_and_boleto,
+        default_config=config_card_only,
     ).save()
     PagarmeItemConfig(
         name='Bootcamp Python Pro - 35% de Desconto',
@@ -46,13 +46,12 @@ def setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig):
         default_config=config_card_and_boleto,
     ).save()
 
-
     PagarmeItemConfig(
         name='Bootcamp Python Pro - R$497 Off',
         slug='bootcamp-webdev',
         price=150000,
         tangible=False,
-        default_config=config_card_only,
+        default_config=config_card_and_boleto,
     ).save()
 
     PagarmeItemConfig(
@@ -60,8 +59,9 @@ def setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig):
         slug='bootcamp-webdev-50-discount',
         price=50000,
         tangible=False,
-        default_config=config_card_and_boleto,
+        default_config=config_card_only,
     ).save()
+
     PagarmeItemConfig(
         name='Bootcamp Python Pro - 35% de Desconto - R$497 Off',
         slug='bootcamp-webdev-35-discount',

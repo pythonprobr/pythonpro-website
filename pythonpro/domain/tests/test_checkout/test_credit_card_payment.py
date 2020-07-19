@@ -70,12 +70,20 @@ def create_or_update_data_scientist_mock(mocker):
     )
 
 
+@pytest.fixture
+def create_or_update_bootcamper_mock(mocker):
+    return mocker.patch(
+        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_bootcamper.delay',
+        side_effect=email_marketing_facade.create_or_update_bootcamper
+    )
+
+
 # test user not logged
 
 @pytest.fixture
 def resp(client, pagarme_responses, payment_handler_task_mock, create_or_update_lead_mock,
          create_or_update_member_mock, create_or_update_webdev_mock, create_or_update_data_scientist_mock,
-         active_product_item, remove_tags_mock, sync_on_discourse_mock):
+         create_or_update_bootcamper_mock, active_product_item, remove_tags_mock, sync_on_discourse_mock):
     return client.get(
         reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': active_product_item.slug}),
         secure=True
@@ -143,7 +151,7 @@ def test_payment_linked_with_created_user(resp, django_user_model):
 def resp_logged_user(client_with_user, pagarme_responses, payment_handler_task_mock, active_product_item,
                      remove_tags_mock,
                      sync_on_discourse_mock, create_or_update_member_mock, create_or_update_webdev_mock,
-                     create_or_update_data_scientist_mock):
+                     create_or_update_data_scientist_mock, create_or_update_bootcamper_mock):
     return client_with_user.get(
         reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': active_product_item.slug})
     )

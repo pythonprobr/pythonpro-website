@@ -61,12 +61,11 @@ def test_redirec_to_dashboard(home_resp_with_user):
 
 
 @pytest.fixture
-def home_resp_open_subscriptions(settings, client):
-    settings.SUBSCRIPTIONS_OPEN = True
+def home_resp_open_subscriptions(client, mocker):
+    mocker.patch('pythonpro.core.views.is_launch_open', return_value=True)
     return _resp(client)
 
 
-@pytest.mark.skip  # TODO: reimplement based on dates
 def test_payment_link_is_present(home_resp_open_subscriptions):
     """
     Assert Payment link is present on home page when subscriptions are open
@@ -75,8 +74,8 @@ def test_payment_link_is_present(home_resp_open_subscriptions):
 
 
 @pytest.fixture
-def home_resp_closed_subscriptions(settings, client):
-    settings.SUBSCRIPTIONS_OPEN = False
+def home_resp_closed_subscriptions(client, mocker):
+    mocker.patch('pythonpro.core.views.is_launch_open', return_value=False)
     return _resp(client)
 
 
