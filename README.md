@@ -24,7 +24,7 @@ pipenv install -d
 If you want use SQLite on your dev environment, please remove DATABASE_URL from .env file.
 Otherwise fill this value with your database credentials.
 
-You can aply migrations to generate database schema:
+You can apply migrations to generate database schema:
 
 ```console
 python manage.py migrate
