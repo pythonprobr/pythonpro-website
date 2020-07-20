@@ -16,7 +16,7 @@ def email_upper(email):
 
 @pytest.fixture
 def create_or_update_with_no_role(mocker):
-    return mocker.patch('pythonpro.launch.views.email_marketing_facade.create_or_update_with_no_role')
+    return mocker.patch('pythonpro.launch.views.email_marketing_facade.create_or_update_with_no_role.delay')
 
 
 @pytest.fixture
