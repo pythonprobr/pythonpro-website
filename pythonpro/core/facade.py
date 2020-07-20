@@ -100,6 +100,23 @@ def promote_to_member(user: User, source: str) -> None:
     remove_role(user, 'lead')
     remove_role(user, 'webdev')
     remove_role(user, 'client')
+    remove_role(user, 'bootcamper')
+
+
+def promote_to_bootcamper(user: User, source: str) -> None:
+    """
+    Promote a user do bootcamper. Raises exception in case user is a member
+    :param user:
+    """
+    if has_role(user, 'member'):
+        raise UserRoleException('User is already a member')
+    elif has_role(user, 'bootcamper'):
+        raise UserRoleException('User is already a bootcamper')
+    UserInteraction(category=UserInteraction.BECOME_BOOTCAMPER, source=source, user=user).save()
+    assign_role(user, 'bootcamper')
+    remove_role(user, 'lead')
+    remove_role(user, 'webdev')
+    remove_role(user, 'client')
 
 
 def promote_to_webdev(user: User, source: str) -> None:
@@ -109,7 +126,9 @@ def promote_to_webdev(user: User, source: str) -> None:
     """
     if has_role(user, 'member'):
         raise UserRoleException('User is already a member')
-    if has_role(user, 'webdev'):
+    elif has_role(user, 'bootcamper'):
+        raise UserRoleException('User is already a bootcamper')
+    elif has_role(user, 'webdev'):
         raise UserRoleException('User is already a webdev')
     UserInteraction(category=UserInteraction.BECOME_WEBDEV, source=source, user=user).save()
     assign_role(user, 'webdev')
@@ -221,3 +240,7 @@ def is_data_scientist(user):
 
 def has_any_webdev_role(user):
     return has_role(user, 'lead client webdev member'.split())
+
+
+def is_bootcamper(user):
+    return has_role(user, 'bootcamper')

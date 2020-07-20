@@ -2,7 +2,7 @@ import pytest
 from django.conf import settings
 from django.test import Client
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains, dj_assert_template_used
 
@@ -20,7 +20,7 @@ def _resp(client):
 @pytest.fixture
 def home_resp_with_user(django_user_model, client: Client, settings):
     settings.DISCOURSE_BASE_URL = 'https://forum.python.pro.br/'
-    user = mommy.make(django_user_model)
+    user = baker.make(django_user_model)
     client.force_login(user)
     return _resp(client)
 
@@ -61,22 +61,21 @@ def test_redirec_to_dashboard(home_resp_with_user):
 
 
 @pytest.fixture
-def home_resp_open_subscriptions(settings, client):
-    settings.SUBSCRIPTIONS_OPEN = True
+def home_resp_open_subscriptions(client, mocker):
+    mocker.patch('pythonpro.core.views.is_launch_open', return_value=True)
     return _resp(client)
 
 
-@pytest.mark.skip  # TODO: reimplement based on dates
 def test_payment_link_is_present(home_resp_open_subscriptions):
     """
     Assert Payment link is present on home page when subscriptions are open
     """
-    dj_assert_contains(home_resp_open_subscriptions, reverse('member_landing_page'))
+    dj_assert_contains(home_resp_open_subscriptions, reverse('checkout:bootcamp_lp'))
 
 
 @pytest.fixture
-def home_resp_closed_subscriptions(settings, client):
-    settings.SUBSCRIPTIONS_OPEN = False
+def home_resp_closed_subscriptions(client, mocker):
+    mocker.patch('pythonpro.core.views.is_launch_open', return_value=False)
     return _resp(client)
 
 
@@ -84,4 +83,4 @@ def test_payment_link_is_not_present(home_resp_closed_subscriptions):
     """
     Assert Payment link is not present on home page when subscriptions are closed
     """
-    dj_assert_not_contains(home_resp_closed_subscriptions, reverse('member_landing_page'))
+    dj_assert_not_contains(home_resp_closed_subscriptions, reverse('checkout:bootcamp_lp'))

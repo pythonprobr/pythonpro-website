@@ -3,10 +3,10 @@ from unittest.mock import Mock, call, ANY
 import pytest
 from django.urls import reverse
 from faker import Faker
-from model_mommy import mommy
+from model_bakery import baker
+from pytest_django.asserts import assertRedirects
 from rolepermissions.checkers import has_role
 from rolepermissions.roles import assign_role, remove_role
-from pytest_django.asserts import assertRedirects
 
 from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.core.models import UserInteraction
@@ -34,8 +34,8 @@ def test_there_is_no_none_on_landing_page(resp):
 def superuser(django_user_model, request):
     role = request.param
     if role == 'superadmin':
-        return mommy.make(django_user_model, is_superuser=True)
-    data_scientist = mommy.make(django_user_model, is_superuser=False)
+        return baker.make(django_user_model, is_superuser=True)
+    data_scientist = baker.make(django_user_model, is_superuser=False)
     assign_role(data_scientist, role)
     return data_scientist
 
@@ -54,7 +54,7 @@ def test_superuser_can_access_landing_page(resp_with_superuser):
 @pytest.mark.django_db
 def user_with_webdev_roles(django_user_model, request):
     role = request.param
-    user = mommy.make(django_user_model, is_superuser=False)
+    user = baker.make(django_user_model, is_superuser=False)
     assign_role(user, role)
     return user
 
@@ -140,18 +140,12 @@ def resp_lead_change_pasword(resp_lead_creation, client):
 
 
 @pytest.fixture(autouse=True)
-def sync_user(mocker):
-    return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse')
-
-
-@pytest.fixture(autouse=True)
 def sync_user_delay(mocker):
     return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse.delay')
 
 
-def test_user_discourse_sync(resp_lead_creation, django_user_model, sync_user_delay):
-    user = django_user_model.objects.first()
-    sync_user_delay.assert_called_once_with(user.id)
+def test_user_discourse_sync(resp_lead_creation, sync_user_delay):
+    assert not sync_user_delay.called
 
 
 def test_lead_creation(resp_lead_creation, django_user_model):
@@ -194,11 +188,8 @@ def test_user_has_role(resp_lead_creation, django_user_model):
 
 def test_user_created_as_lead_on_email_marketing(resp_lead_creation, django_user_model, create_lead_mock: Mock):
     user = django_user_model.objects.first()
-    calls = [
-        call(user.first_name, user.email, 'offer-funnel-0', 'utm_source=facebook'),
-        call(user.first_name, user.email, 'offer-funnel-0', 'utm_source=facebook', id=user.id)
-    ]
-    create_lead_mock.assert_has_calls(calls)
+    create_lead_mock.assert_called_once_with(user.first_name, user.email, 'offer-funnel-0', 'utm_source=facebook',
+                                             id=user.id)
 
 
 def test_user_source_was_saved_from_url(resp_lead_creation, django_user_model, create_lead_mock: Mock):
@@ -296,16 +287,6 @@ def resp_lead_creation_with_utms(client, db, fake: Faker, create_lead_mock, emai
 
 def test_should_send_utms_to_email_marketing_as_tags(create_lead_mock, resp_lead_creation_with_utms):
     calls = [
-        call(
-            ANY,
-            ANY,
-            'offer-funnel-1',
-            "utm_source=facebook-ads",
-            "utm_medium=trafego-pago",
-            "utm_campaign=a00f00",
-            "utm_content=content",
-            "utm_term=term"
-        ),
         call(
             ANY,
             ANY,

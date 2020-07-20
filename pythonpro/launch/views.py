@@ -36,12 +36,12 @@ def lead_form(request):
     first_name = form.cleaned_data['name']
     user = request.user
     if user.is_authenticated:
-        email_marketing_facade.create_or_update_with_no_role(
+        email_marketing_facade.create_or_update_with_no_role.delay(
             first_name,
             email,
             f'turma-{find_most_recent_cohort().slug}-semana-do-programador', id=user.id)
     else:
-        email_marketing_facade.create_or_update_with_no_role(
+        email_marketing_facade.create_or_update_with_no_role.delay(
             first_name,
             email,
             f'turma-{find_most_recent_cohort().slug}-semana-do-programador')
@@ -128,7 +128,7 @@ def _render_cpl(description, request, title, user, video_id, visit_function, vid
         return redirect(reverse('launch:landing_page'))
 
     if launch_status == LAUNCH_STATUS_OPEN_CART and not request.GET.get('debug'):
-        return redirect(reverse('member_landing_page'))
+        return redirect(reverse('checkout:bootcamp_lp'))
 
     ctx = {
         'data_href': f'https://{build_absolute_uri(request.path)}',
@@ -157,14 +157,6 @@ def onesignal_sdk_updater_worker(request):
         'js/spp/OneSignalSDUpdaterKWorker.js',
         document_root=os.path.join(settings.BASE_DIR, 'pythonpro', 'core', 'static')
     )
-
-
-def member_landing_page(request):
-    template_open_launch = 'payments/meteoric_landing_page_open.html'
-    template_closed_launch = 'payments/member_landing_page_subscription_closed.html'
-    is_launch_open = settings.SUBSCRIPTIONS_OPEN or request.GET.get('debug')
-    return _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch,
-                               'member_landing_page')
 
 
 def _render_launch_page(is_launch_open, request, template_closed_launch, template_open_launch, redirect_path_name: str):

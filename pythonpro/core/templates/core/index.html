@@ -28,10 +28,10 @@
                     </div>
                 </div>
                 <div class="col-12 col-md text-light">
-                    {% if SUBSCRIPTIONS_OPEN %}                    
+                    {% if is_launch_open %}
                     <h3 class="mb-3">Inscrições Abertas!</h3>
-                    <p>Aulas da turma começam em novembro. Garanta sua matrícula, vagas limitadas!</p>
-                    <a class="btn btn-warning p-4 font-weight-bold" href="{% url 'member_landing_page' %}" role="button">SIM! Quero me matricular &raquo;</a>
+                    <p>Aulas da turma começam em agosto. Garanta sua matrícula, vagas limitadas!</p>
+                    <a class="btn btn-warning p-4 font-weight-bold" href="{% url 'checkout:bootcamp_lp' %}?utm_source=pythonpro-home" role="button">SIM! Quero me matricular &raquo;</a>
     
                     {% else %}
                     <h3 class="mb-3">Curso Python Birds Grátis</h3>

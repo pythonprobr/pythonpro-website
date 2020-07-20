@@ -1,7 +1,7 @@
 import pytest
 from django.core.management import call_command
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains, dj_assert_template_used
 from pythonpro.modules import facade
@@ -88,7 +88,7 @@ def test_client_content_accesed_by_member(client_with_member, modules):
 
 @pytest.fixture
 def sections(python_birds):
-    return mommy.make(Section, 2, module=python_birds)
+    return baker.make(Section, 2, module=python_birds)
 
 
 @pytest.fixture
@@ -120,7 +120,7 @@ def test_section_urls(resp_with_sections, sections):
 def chapters(sections):
     result = []
     for section in sections:
-        result.extend(mommy.make(Chapter, 2, section=section))
+        result.extend(baker.make(Chapter, 2, section=section))
     return result
 
 

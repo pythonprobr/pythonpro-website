@@ -25,7 +25,6 @@ from django.urls import include, path, reverse_lazy
 from django.views.generic.base import RedirectView
 from two_factor.urls import urlpatterns as tf_urls
 
-import pythonpro.launch.views
 from pythonpro.core import views as core_views
 
 urlpatterns = [
@@ -50,22 +49,21 @@ urlpatterns = [
     path('r/', include('pythonpro.redirector.urls')),
     path('p/', include('pythonpro.pages.urls')),
     path('checkout/', include('django_pagarme.urls')),
-    path('inscricao', pythonpro.launch.views.member_landing_page, name='member_landing_page'),
 
     # unused pages
     path(
         'curso-de-python-intermediario-oto',
-        RedirectView.as_view(url=reverse_lazy('member_landing_page')),
+        RedirectView.as_view(url=reverse_lazy('checkout:bootcamp_lp')),
         name='client_landing_page_oto'
     ),
     path(
         'curso-de-python-intermediario-do',
-        RedirectView.as_view(url=reverse_lazy('member_landing_page')),
+        RedirectView.as_view(url=reverse_lazy('checkout:bootcamp_lp')),
         name='client_landing_page_do'
     ),
     path(
         'curso-de-python-intermediario',
-        RedirectView.as_view(url=reverse_lazy('member_landing_page')),
+        RedirectView.as_view(url=reverse_lazy('checkout:bootcamp_lp')),
         name='client_landing_page'
     ),
 ]

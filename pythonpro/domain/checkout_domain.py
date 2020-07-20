@@ -35,10 +35,8 @@ def user_factory(pagarme_transaction):
 
 django_pagarme_facade.set_user_factory(user_factory)
 
-GENERATED_BOLETO_TAG = 'generated-boleto'
 
-
-@shared_task()
+@shared_task
 def payment_handler_task(payment_id):
     payment = django_pagarme_facade.find_payment(payment_id)
     try:
@@ -69,6 +67,8 @@ def _promote(user, slug: str):
         user_facade.promote_webdev(user, 'unknown')
     elif slug.startswith('data-science'):
         user_facade.promote_data_scientist(user, 'unknown')
+    elif slug.startswith('bootcamp'):
+        user_facade.promote_bootcamper(user, 'unknown')
     else:
         raise ValueError(f'{slug} should contain webdev or membership or data-science')
 

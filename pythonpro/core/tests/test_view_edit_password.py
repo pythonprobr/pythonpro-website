@@ -1,7 +1,7 @@
 import pytest
 from django.test import Client
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pythonpro.core.models import User
 from pythonpro.django_assertions import dj_assert_contains
@@ -19,7 +19,7 @@ def _resp(client):
 
 @pytest.fixture
 def user(django_user_model):
-    usr = mommy.make(django_user_model)
+    usr = baker.make(django_user_model)
     return usr
 
 
