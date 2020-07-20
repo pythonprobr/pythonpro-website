@@ -54,6 +54,24 @@ def test_no_user_no_discount_after_launch_with_debug(resp_no_user_after_launch_w
     assert resp_no_user_after_launch_with_debug.context['payment_item_config'].slug == 'bootcamp'
 
 
+@pytest.fixture(params=[
+    'checkout:bootcamp_lp_d1',
+    'checkout:bootcamp_lp_d2',
+    'checkout:bootcamp_lp_d3',
+    'checkout:bootcamp_lp_d1_webdev',
+    'checkout:bootcamp_lp_d2_webdev',
+    'checkout:bootcamp_lp_d3_webdev',
+])
+def resp_debug_all_lp_after_lanch(client_with_lead, tag_as_mock, freezer, request, logged_user):
+    freezer.move_to(facade.launch_datetime_finish + timedelta(seconds=1))
+    client_with_lead.force_login(logged_user)
+    return client_with_lead.get(reverse(request.param), data={'debug': 'true'})
+
+
+def test_status_code_200_eg_no_redirect(resp_debug_all_lp_after_lanch):
+    assert resp_debug_all_lp_after_lanch.status_code == 200
+
+
 @pytest.fixture
 def resp_no_user_with_50_discount(client, tag_as_mock, freezer):
     freezer.move_to(facade.discount_50_percent_datetime_limit - timedelta(seconds=1))
