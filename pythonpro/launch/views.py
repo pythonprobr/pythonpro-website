@@ -36,12 +36,12 @@ def lead_form(request):
     first_name = form.cleaned_data['name']
     user = request.user
     if user.is_authenticated:
-        email_marketing_facade.create_or_update_with_no_role(
+        email_marketing_facade.create_or_update_with_no_role.delay(
             first_name,
             email,
             f'turma-{find_most_recent_cohort().slug}-semana-do-programador', id=user.id)
     else:
-        email_marketing_facade.create_or_update_with_no_role(
+        email_marketing_facade.create_or_update_with_no_role.delay(
             first_name,
             email,
             f'turma-{find_most_recent_cohort().slug}-semana-do-programador')
