@@ -101,7 +101,8 @@ def bootcamp_lp_d1(request):
 @login_required
 def bootcamp_lp_d1_webdev(request):
     user = request.user
-    if not (checkout_facade.has_50_percent_discount() and is_webdev(user)):
+    is_debug = bool(request.GET.get('debug', False))
+    if not is_debug and not (checkout_facade.has_50_percent_discount() and is_webdev(user)):
         return _redirect_to_bootcamp_lp(request)
 
     client_discount_slug = 'bootcamp-webdev-50-discount'
@@ -115,7 +116,7 @@ def bootcamp_lp_d1_webdev(request):
 def bootcamp_lp_d2(request):
     user = request.user
     is_debug = bool(request.GET.get('debug', False))
-    if not is_debug and (not checkout_facade.has_35_percent_discount()) or is_webdev(user):
+    if not is_debug and (not checkout_facade.has_35_percent_discount() or is_webdev(user)):
         return _redirect_to_bootcamp_lp(request)
 
     return _no_wevdev_discount(request, 'bootcamp-35-discount', checkout_facade.discount_35_percent_datetime_limit)
@@ -161,7 +162,8 @@ def bootcamp_lp_d3(request):
 def bootcamp_lp_d3_webdev(request):
     user = request.user
     has_discount = checkout_facade.has_35_percent_discount() or checkout_facade.has_50_percent_discount()
-    if has_discount or not (checkout_facade.is_launch_open() and is_webdev(user)):
+    is_debug = bool(request.GET.get('debug', False))
+    if not is_debug and (has_discount or not (checkout_facade.is_launch_open() and is_webdev(user))):
         return _redirect_to_bootcamp_lp(request)
 
     user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
