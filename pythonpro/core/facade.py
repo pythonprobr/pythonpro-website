@@ -141,6 +141,11 @@ def promote_to_data_scientist(user, source):
     assign_role(user, 'data_scientist')
 
 
+def promote_to_pythonista(user, source):
+    UserInteraction(category=UserInteraction.BECOME_PYTHONISTA, source=source, user=user).save()
+    assign_role(user, 'pythonista')
+
+
 def visit_launch_landing_page(user: User, source: str):
     return UserInteraction(category=UserInteraction.LAUNCH_LP, source=source, user=user).save()
 

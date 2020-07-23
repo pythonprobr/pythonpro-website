@@ -60,11 +60,22 @@ class Bootcamper(AbstractUserRole):
     }
 
 
+watch_pythonista_modules = 'watch_pythonista_modules'
+
+
+class Pythonista(AbstractUserRole):
+    available_permissions = {
+        watch_pythonista_modules: True,
+        access_forum: True,
+    }
+
+
 watch_member_modules = 'watch_member_modules'
 
 
 class Member(AbstractUserRole):
     available_permissions = {
+        watch_pythonista_modules: True,
         watch_webdev_modules: True,
         watch_lead_modules: True,
         watch_client_modules: True,
