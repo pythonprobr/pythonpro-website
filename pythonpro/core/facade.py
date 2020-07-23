@@ -249,3 +249,7 @@ def has_any_webdev_role(user):
 
 def is_bootcamper(user):
     return has_role(user, 'bootcamper')
+
+
+def is_pythonista(user):
+    return has_role(user, 'pythonista')

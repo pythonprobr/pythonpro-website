@@ -1,10 +1,10 @@
 import pytest
 from django_pagarme import facade
-from django_pagarme.models import PagarmeFormConfig
+from django_pagarme.models import PagarmeFormConfig, PagarmeItemConfig
 
 
 def test_config_creation():
-    assert PagarmeFormConfig.objects.count() == 2
+    assert PagarmeFormConfig.objects.count() == 3
 
 
 @pytest.fixture
@@ -323,3 +323,45 @@ def test_item_bootcamp_webdev_50_discount(second_pagarme_form_config):
                False,
                second_pagarme_form_config
            )
+
+
+@pytest.fixture
+def free_interest_form_config():
+    return PagarmeFormConfig.objects.order_by('id').all()[2]
+
+
+def test_free_interest_properties(free_interest_form_config):
+    assert (
+               free_interest_form_config.name,
+               free_interest_form_config.max_installments,
+               free_interest_form_config.default_installment,
+               free_interest_form_config.free_installment,
+               free_interest_form_config.interest_rate,
+               free_interest_form_config.payments_methods,
+           ) == (
+               'Cartão ou Boleto 10 vezes sem juros',
+               10,
+               10,
+               10,
+               0,
+               'credit_card,boleto'
+           )
+
+
+def test_item_python_avancado(free_interest_form_config):
+    item_config = facade.find_payment_item_config('python-avancado')
+    assert (
+               item_config.name,
+               item_config.slug,
+               item_config.price,
+               item_config.tangible,
+               item_config.default_config,
+           ) == (
+               'Pacote Python Avançado - 50% de Desconto',
+               'python-avancado',
+               49700,
+               False,
+               free_interest_form_config
+           )
+    for payment_item in PagarmeItemConfig.objects.filter(slug__startswith='bootcamp').all():
+        assert payment_item.upsell_id == item_config.id

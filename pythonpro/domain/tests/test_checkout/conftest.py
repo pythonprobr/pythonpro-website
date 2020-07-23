@@ -10,12 +10,10 @@ migration_module = import_module('pythonpro.checkout.migrations.0001_payment_set
 webdev_migration_module = import_module('pythonpro.checkout.migrations.0002_webdev_setup')
 data_science_migration_module = import_module('pythonpro.checkout.migrations.0003_data_science_setup')
 bootcamp_migration_module = import_module('pythonpro.checkout.migrations.0004_bootcamp_setup')
+python_avancado_migration_module = import_module('pythonpro.checkout.migrations.0005_python_avancado_setup')
 
 ALL_ACTIVE_PRODUCTS = [
-    'membership',
-    'membership-client',
-    'membership-client-first-day',
-    'membership-first-day',
+
     'webdev',
     'webdev-oto',
     'data-science',
@@ -25,11 +23,16 @@ ALL_ACTIVE_PRODUCTS = [
     'bootcamp-webdev',
     'bootcamp-webdev-35-discount',
     'bootcamp-webdev-50-discount',
+    'python-avancado',
 ]
 ALL_INACTIVE_PRODUCTS = [
     'pytools',
     'pytools-oto',
     'pytools-done',
+    'membership',
+    'membership-client',
+    'membership-client-first-day',
+    'membership-first-day',
 ]
 ALL_PRODUCTS = ALL_ACTIVE_PRODUCTS + ALL_INACTIVE_PRODUCTS
 
@@ -41,6 +44,7 @@ def execute_migration(db, pytestconfig):
         webdev_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
         data_science_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
         bootcamp_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
+        python_avancado_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
 
 
 @pytest.fixture(autouse=True)

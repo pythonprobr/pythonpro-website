@@ -78,15 +78,23 @@ def create_or_update_bootcamper_mock(mocker):
     )
 
 
+@pytest.fixture
+def create_or_update_pythonist_mock(mocker):
+    return mocker.patch(
+        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_pythonista.delay',
+        side_effect=email_marketing_facade.create_or_update_pythonista
+    )
+
+
 # test user not logged
 
 @pytest.fixture
 def resp(client, pagarme_responses, payment_handler_task_mock, create_or_update_lead_mock,
          create_or_update_member_mock, create_or_update_webdev_mock, create_or_update_data_scientist_mock,
-         create_or_update_bootcamper_mock, active_product_item, remove_tags_mock, sync_on_discourse_mock):
+         create_or_update_bootcamper_mock, active_product_item, remove_tags_mock, sync_on_discourse_mock,
+         create_or_update_pythonist_mock):
     return client.get(
-        reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': active_product_item.slug}),
-        secure=True
+        reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': active_product_item.slug})
     )
 
 
@@ -116,6 +124,8 @@ def assert_user_promoted(user, slug):
         assert core_facade.is_data_scientist(user)
     elif slug.startswith('bootcamp'):
         assert core_facade.is_bootcamper(user)
+    elif slug == 'python-avancado':
+        assert core_facade.is_pythonista(user)
     else:
         pytest.fail(f'Invalid slug prefix {slug}')
 
@@ -128,7 +138,7 @@ def test_user_is_subscribed_to_cohort(resp, django_user_model, cohort, active_pr
 
 
 def asssert_subscribed_to_cohort(cohort, slug, user):
-    if not (slug.startswith('webdev') or slug.startswith('data-science')):
+    if not (slug.startswith('webdev') or slug.startswith('data-science') or slug == 'python-avancado'):
         assert cohort.students.first() == user
 
 
@@ -151,7 +161,8 @@ def test_payment_linked_with_created_user(resp, django_user_model):
 def resp_logged_user(client_with_user, pagarme_responses, payment_handler_task_mock, active_product_item,
                      remove_tags_mock,
                      sync_on_discourse_mock, create_or_update_member_mock, create_or_update_webdev_mock,
-                     create_or_update_data_scientist_mock, create_or_update_bootcamper_mock):
+                     create_or_update_data_scientist_mock, create_or_update_bootcamper_mock,
+                     create_or_update_pythonist_mock):
     return client_with_user.get(
         reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': active_product_item.slug})
     )
