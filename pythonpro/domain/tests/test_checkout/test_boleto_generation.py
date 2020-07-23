@@ -12,13 +12,12 @@ from pythonpro.email_marketing import facade as email_marketing_facade
 @pytest.fixture
 def pagarme_responses(transaction_json, captura_json):
     with responses.RequestsMock() as rsps:
-        rsps.add(responses.GET, f'https://api.pagar.me/1/transactions/{TOKEN}', json=transaction_json)
-        rsps.add(responses.POST, f'https://api.pagar.me/1/transactions/{TOKEN}/capture', json=captura_json)
+        rsps.add(responses.GET, f'https://api.pagar.me/1/transactions/{TRANSACTION_ID}', json=transaction_json)
+        rsps.add(responses.POST, f'https://api.pagar.me/1/transactions/{TRANSACTION_ID}/capture', json=captura_json)
         yield rsps
 
 
 TRANSACTION_ID = 7656690
-TOKEN = 'test_transaction_aJx9ibUmRqYcQrrUaNtQ3arTO4tF1z'
 BOLETO_URL = 'www.some.boleto.com'
 BOLETO_BARCODE = '123455'
 
@@ -53,8 +52,9 @@ def sync_on_discourse_mock(mocker):
 @pytest.fixture
 def resp(client, pagarme_responses, create_or_update_lead_mock, payment_handler_task_mock, tag_as_mock,
          active_product_item, sync_on_discourse_mock):
-    return client.get(reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': active_product_item.slug}),
-                      secure=True)
+    return client.get(
+        reverse('django_pagarme:capture', kwargs={'token': TRANSACTION_ID, 'slug': active_product_item.slug})
+    )
 
 
 def test_status_code(resp):
@@ -95,7 +95,7 @@ def test_created_user_tagged_with_boleto(resp, django_user_model, tag_as_mock, a
 def resp_logged_user(client_with_lead, pagarme_responses, payment_handler_task_mock, tag_as_mock, active_product_item,
                      remove_tags_mock):
     return client_with_lead.get(
-        reverse('django_pagarme:capture', kwargs={'token': TOKEN, 'slug': active_product_item.slug}),
+        reverse('django_pagarme:capture', kwargs={'token': TRANSACTION_ID, 'slug': active_product_item.slug}),
         secure=True
     )
 
