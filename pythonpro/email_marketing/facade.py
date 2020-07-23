@@ -14,11 +14,13 @@ MEMBER = 'member'
 WEBDEV = 'webdev'
 BOOTCAMPER = 'bootcamper'
 DATA_SCIENTIST = 'data-scientist'
+PYTHONISTA = 'pythonista'
 
 _PYTHON_PRO_ROLES = {LEAD, CLIENT, WEBDEV, BOOTCAMPER, MEMBER}
 
 _ALL_ROLES = set(_PYTHON_PRO_ROLES)
 _ALL_ROLES.add(DATA_SCIENTIST)
+_ALL_ROLES.add(PYTHONISTA)
 
 run_until_available = shared_task(autoretry_for=(JSONDecodeError,), retry_backoff=True, max_retries=None)
 
@@ -41,6 +43,11 @@ def create_or_update_bootcamper(name: str, email: str, *tags, id='0', phone=None
 @run_until_available
 def create_or_update_data_scientist(name: str, email: str, *tags, id='0', phone=None):
     return create_or_update_user(name, email, DATA_SCIENTIST, *tags, id=id, phone=phone)
+
+
+@run_until_available
+def create_or_update_pythonista(name: str, email: str, *tags, id='0', phone=None):
+    return create_or_update_user(name, email, PYTHONISTA, *tags, id=id, phone=phone)
 
 
 @run_until_available
@@ -120,8 +127,8 @@ def grant_role(email, id, role: str):
     role = role.lower()
 
     if role not in _ALL_ROLES:
-        raise ValueError(f'Role {role} must be one of {_PYTHON_PRO_ROLES}')
-    if role == DATA_SCIENTIST:
+        raise ValueError(f'Role {role} must be one of {_ALL_ROLES}')
+    if role in {DATA_SCIENTIST, PYTHONISTA}:
         roles_to_remove = set()
         role_to_grant = role.capitalize()
     elif role in _PYTHON_PRO_ROLES:

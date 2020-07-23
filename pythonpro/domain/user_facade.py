@@ -145,6 +145,21 @@ def promote_data_scientist(user: _User, source: str) -> _User:
     return user
 
 
+def promote_pythonista(user: _User, source: str) -> _User:
+    """
+    Promote a user to Pythonista role and change it's role on Email Marketing. Will not fail in case API call fails.
+    Email welcome email is sent to user
+    :param source: source of traffic
+    :param user:
+    :return:
+    """
+    _core_facade.promote_to_pythonista(user, source)
+    sync_user_on_discourse.delay(user.id)
+    _email_marketing_facade.create_or_update_pythonista.delay(
+        user.first_name, user.email, id=user.id)
+    return user
+
+
 def find_user_by_email(user_email: str) -> _User:
     """
     Find user by her email

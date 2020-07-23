@@ -92,6 +92,7 @@ class UserInteraction(models.Model):
     WAITING_LIST = 'WAITING_LIST'
     BECOME_MEMBER = 'BECOME_MEMBER'
     BECOME_BOOTCAMPER = 'BECOME_BOOTCAMPER'
+    BECOME_PYTHONISTA = 'BECOME_PYTHONISTA'
     WEBDEV_CHECKOUT_FORM = 'WEBDEV_CHECKOUT_FORM'
     BECOME_WEBDEV = 'BECOME_WEBDEV'
     LAUNCH_LP = 'LAUNCH_LP'
@@ -121,6 +122,7 @@ class UserInteraction(models.Model):
                 (WAITING_LIST, 'User subscribed to Waiting List'),
                 (BECOME_MEMBER, 'User Become Member'),
                 (BECOME_BOOTCAMPER, 'User Become Bootcamper'),
+                (BECOME_PYTHONISTA, 'User Become Pythonista'),
                 (BECOME_WEBDEV, 'User Become Webdev'),
                 (LAUNCH_LP, 'User visited Launch Landing Page'),
                 (LAUNCH_SUBSCRIPTION, 'User subscribed to launch'),
