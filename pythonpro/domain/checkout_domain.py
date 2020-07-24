@@ -80,3 +80,16 @@ def payment_change_handler(payment_id):
 
 
 django_pagarme_facade.add_payment_status_changed(payment_change_handler)
+
+
+def availability_strategy(payment_item_config, request):
+    if not payment_item_config.is_available():
+        return False
+    elif request.GET.get('debug', '').lower() == 'true':
+        return True
+    elif payment_item_config.slug.startswith('bootcamp-webdev'):
+        return core_facade.is_webdev(request.user)
+    return True
+
+
+django_pagarme_facade.set_available_payment_config_item_strategy(availability_strategy)
