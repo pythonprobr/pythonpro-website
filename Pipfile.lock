@@ -448,10 +448,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:19c8f083676061ca5848104aaecfd0d6378d1fc9b37d3777a8636fce05bca6d1",
-                "sha256:f898bff9cb2fe6a0f6e6d6d8d27e550acf77af4cf20ec22f4f02c0a399ae6f39"
+                "sha256:424053cbd468ed84fa3722f0235d636c348591d7acdecdb6a00875ae3f03874c",
+                "sha256:cdb969afecc532ad4cfee12f6fb90d4a5cdf938150dffa4626fb43b8eb2f9396"
             ],
-            "version": "==8.12.6"
+            "version": "==8.12.7"
         },
         "pickleshare": {
             "hashes": [
