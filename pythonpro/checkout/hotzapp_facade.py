@@ -1,15 +1,11 @@
-from json.decoder import JSONDecodeError
-
 import requests
 from celery import shared_task
 
 from pythonpro import settings
-from pythonpro.core.models import User
-
-run_until_available = shared_task(autoretry_for=(JSONDecodeError,), retry_backoff=True, max_retries=None)
+from pythonpro.core import facade
 
 
-@run_until_available
+@shared_task
 def send_abandoned_cart(name, email, phone, payment_item_slug):
     """
     Send a potential client who filled their data but not complete the buy to hotzapp
@@ -33,7 +29,7 @@ def send_abandoned_cart(name, email, phone, payment_item_slug):
     return requests.post(settings.HOTZAPP_API_URL, potential_customer)
 
 
-@run_until_available
+@shared_task
 def send_billet_issued(name, email, phone, payment_item_slug):
     """
     Send a potential client who filled their data but not complete the buy-in face of a billet not paid
@@ -59,7 +55,7 @@ def send_billet_issued(name, email, phone, payment_item_slug):
     return requests.post(settings.HOTZAPP_API_URL, potential_customer)
 
 
-@run_until_available
+@shared_task
 def send_refused_credit_card(name, email, phone, payment_item_slug):
     """
     Send a potential client who filled their data but not complete the buy-in face of a refused credit card
@@ -85,7 +81,7 @@ def send_refused_credit_card(name, email, phone, payment_item_slug):
     return requests.post(settings.HOTZAPP_API_URL, potential_customer)
 
 
-@run_until_available
+@shared_task
 def verify_purchase(name, email, phone, payment_item_slug):
     """
     Verify each buy interaction to see if it succeeded and depending on each situation take an action
@@ -94,11 +90,11 @@ def verify_purchase(name, email, phone, payment_item_slug):
     :param email: email filled at the form
     :param payment_item_slug: slug of the item of purchase
     """
-    user = User.objects.get(email=email)
-    if user is not None:
-        pass
-        # Usuário pode já existir e tentar comprar outro produto, mas nao finaliza a compra?
-        # Usuário criado, compra realizada não é necessária a interação com hotzapp
-        # o Hotzap vai ser usado só para usuários novos?
+    try:
+        user = facade.find_user_by_email(email=email)
+    except facade.UserDoesNotExist:
+        send_abandoned_cart(name, phone, email, payment_item_slug)
+    else:
 
-    send_abandoned_cart(name, phone, email, payment_item_slug)
+
+

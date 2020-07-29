@@ -12,6 +12,7 @@ from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.core.forms import UserSignupForm
 from pythonpro.core.models import User, UserInteraction
 
+UserDoesNotExist = User.DoesNotExist
 
 class UserCreationException(Exception):
 

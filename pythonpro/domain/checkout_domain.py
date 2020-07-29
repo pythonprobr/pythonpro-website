@@ -23,8 +23,8 @@ def contact_info_listener(name: str, email: str, phone: str, payment_item_slug: 
         name, email, f'{payment_item_slug}-form', id=user_id, phone=str(phone)
     )
 
-    # Criar task com espera de 30 min com celery
-    verify_purchase.s(name, email, phone, payment_item_slug).apply_async(countdown=1800)
+    THIRTY_MINUTES_IN_SECONDS = 1800
+    verify_purchase.apply_async([name, email, phone, payment_item_slug], countdown=THIRTY_MINUTES_IN_SECONDS)
 
 
 django_pagarme_facade.add_contact_info_listener(contact_info_listener)
