@@ -63,7 +63,7 @@ def payment_handler_task(payment_id):
 def _promote(user, slug: str):
     if slug.startswith('membership'):
         user_facade.promote_member(user, 'unknown')
-    elif slug == 'python-avancado':
+    elif slug == 'pacote-proximo-nivel-67-discount':
         user_facade.promote_pythonista(user, 'unknown')
     elif slug.startswith('webdev'):
         user_facade.promote_webdev(user, 'unknown')

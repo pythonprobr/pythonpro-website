@@ -123,7 +123,7 @@ def assert_user_promoted(user, slug):
         assert core_facade.is_data_scientist(user)
     elif slug.startswith('bootcamp'):
         assert core_facade.is_bootcamper(user)
-    elif slug == 'python-avancado':
+    elif slug == 'pacote-proximo-nivel-67-discount':
         assert core_facade.is_pythonista(user)
     else:
         pytest.fail(f'Invalid slug prefix {slug}')
@@ -137,7 +137,7 @@ def test_user_is_subscribed_to_cohort(resp, django_user_model, cohort, active_pr
 
 
 def asssert_subscribed_to_cohort(cohort, slug, user):
-    if not (slug.startswith('webdev') or slug.startswith('data-science') or slug == 'python-avancado'):
+    if not (slug.startswith('webdev') or slug.startswith('data-science') or slug == 'pacote-proximo-nivel-67-discount'):
         assert cohort.students.first() == user
 
 

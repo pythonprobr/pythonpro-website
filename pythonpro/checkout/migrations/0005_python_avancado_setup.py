@@ -24,7 +24,7 @@ def setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig):
 
     python_avancado = PagarmeItemConfig(
         name='Pacote Python Avançado - 50% de Desconto',
-        slug='python-avancado',
+        slug='pacote-proximo-nivel-67-discount',
         price=49700,
         tangible=False,
         default_config=free_interest_config
