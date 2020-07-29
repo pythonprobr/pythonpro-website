@@ -121,6 +121,9 @@ def assert_user_promoted(user, slug):
         assert core_facade.is_webdev(user)
     elif slug.startswith('data-science'):
         assert core_facade.is_data_scientist(user)
+    elif slug in {'bootcamp', 'bootcamp-webdev'}:
+        assert core_facade.is_bootcamper(user)
+        assert core_facade.is_pythonista(user)  # bonus because of full paid price
     elif slug.startswith('bootcamp'):
         assert core_facade.is_bootcamper(user)
     elif slug == 'pacote-proximo-nivel-67-discount':
@@ -141,10 +144,14 @@ def asssert_subscribed_to_cohort(cohort, slug, user):
         assert cohort.students.first() == user
 
 
-def test_user_synced_on_discourse(resp, django_user_model, sync_on_discourse_mock):
+def test_user_synced_on_discourse(resp, django_user_model, sync_on_discourse_mock, active_product_item, mocker):
     User = django_user_model
     user = User.objects.first()
-    sync_on_discourse_mock.assert_called_once_with(user.id)
+    if active_product_item.slug in {'bootcamp', 'bootcamp-webdev'}:
+        user_sync_call = mocker.call(user.id)
+        assert sync_on_discourse_mock.mock_calls == [user_sync_call, user_sync_call]
+    else:
+        sync_on_discourse_mock.assert_called_once_with(user.id)
 
 
 def test_payment_linked_with_created_user(resp, django_user_model):
@@ -180,8 +187,13 @@ def test_logged_user_is_subscribed_to_cohort(resp_logged_user, logged_user, coho
     asssert_subscribed_to_cohort(cohort, active_product_item.slug, logged_user)
 
 
-def test_logged_user_is_synced_on_discourse(resp_logged_user, logged_user, sync_on_discourse_mock):
-    sync_on_discourse_mock.assert_called_once_with(logged_user.id)
+def test_logged_user_is_synced_on_discourse(resp_logged_user, logged_user, sync_on_discourse_mock, active_product_item,
+                                            mocker):
+    if active_product_item.slug in {'bootcamp', 'bootcamp-webdev'}:
+        user_sync_call = mocker.call(logged_user.id)
+        assert sync_on_discourse_mock.mock_calls == [user_sync_call, user_sync_call]
+    else:
+        sync_on_discourse_mock.assert_called_once_with(logged_user.id)
 
 
 @pytest.fixture

@@ -69,6 +69,9 @@ def _promote(user, slug: str):
         user_facade.promote_webdev(user, 'unknown')
     elif slug.startswith('data-science'):
         user_facade.promote_data_scientist(user, 'unknown')
+    elif slug in {'bootcamp', 'bootcamp-webdev'}:
+        user_facade.promote_bootcamper(user, 'unknown')
+        user_facade.promote_pythonista(user, 'unknown')
     elif slug.startswith('bootcamp'):
         user_facade.promote_bootcamper(user, 'unknown')
     else:
