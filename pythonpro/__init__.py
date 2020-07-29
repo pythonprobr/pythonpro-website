@@ -1,1 +1,1 @@
-from .celery import app  # noqa
+# from .celery import app  # noqa
