@@ -16,73 +16,67 @@ from pythonpro.launch.facade import (
 
 
 def test_should_return_launch_status_ppl_before_monday(mocker):
-    fake_today = timezone.make_aware(datetime(2020, 4, 12, 23, 59, 59))
+    fake_today = timezone.make_aware(datetime(2020, 8, 9, 23, 59, 59))
     mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
     assert get_launch_status() == LAUNCH_STATUS_PPL
 
 
 def test_should_return_launch_status_cpl1_on_mon_early(mocker):
-    fake_today = timezone.make_aware(datetime(2020, 4, 13))
+    fake_today = timezone.make_aware(datetime(2020, 8, 10))
     mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
     assert get_launch_status() == LAUNCH_STATUS_CPL1
 
 
 def test_should_return_launch_status_cpl1_on_mon_late(mocker):
-    fake_today = timezone.make_aware(datetime(2020, 4, 13, 23, 59, 59))
+    fake_today = timezone.make_aware(datetime(2020, 8, 10, 23, 59, 59))
     mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
     assert get_launch_status() == LAUNCH_STATUS_CPL1
 
 
 def test_should_return_launch_status_cpl2_on_tue_early(mocker):
-    fake_today = timezone.make_aware(datetime(2020, 4, 14))
+    fake_today = timezone.make_aware(datetime(2020, 8, 11))
     mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
     assert get_launch_status() == LAUNCH_STATUS_CPL1
 
 
 def test_should_return_launch_status_cpl2_on_tue_late(mocker):
-    fake_today = timezone.make_aware(datetime(2020, 4, 14, 23, 59, 59))
+    fake_today = timezone.make_aware(datetime(2020, 8, 11, 23, 59, 59))
     mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
     assert get_launch_status() == LAUNCH_STATUS_CPL2
 
 
 def test_should_return_launch_status_cpl3_on_wed_early(mocker):
-    fake_today = timezone.make_aware(datetime(2020, 4, 15))
+    fake_today = timezone.make_aware(datetime(2020, 8, 12))
     mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
     assert get_launch_status() == LAUNCH_STATUS_CPL2
 
 
 def test_should_return_launch_status_cpl3_on_wed_late(mocker):
-    fake_today = timezone.make_aware(datetime(2020, 4, 15, 23, 59, 59))
+    fake_today = timezone.make_aware(datetime(2020, 8, 12, 23, 59, 59))
     mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
     assert get_launch_status() == LAUNCH_STATUS_CPL3
 
 
 def test_should_return_launch_status_cpl4_on_thu_early(mocker):
-    fake_today = timezone.make_aware(datetime(2020, 4, 16))
+    fake_today = timezone.make_aware(datetime(2020, 8, 13))
     mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
     assert get_launch_status() == LAUNCH_STATUS_CPL3
 
 
-def test_should_return_launch_status_open_cart_after_last_class_start(mocker):
-    fake_today = timezone.make_aware(datetime(2020, 4, 16, 20))
-    mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
-    assert get_launch_status() == LAUNCH_STATUS_OPEN_CART
-
-
-def test_should_return_launch_status_open_cart_on_thu_late(mocker):
-    fake_today = timezone.make_aware(datetime(2020, 4, 16, 23, 59, 59))
+def test_should_return_launch_status_open_cart_on_first_day(mocker):
+    fake_today = timezone.make_aware(datetime(2020, 8, 16, 21))
     mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
     assert get_launch_status() == LAUNCH_STATUS_OPEN_CART
 
 
 def test_should_return_launch_status_open_cart_on_last_day(mocker):
-    fake_today = timezone.make_aware(datetime(2020, 4, 21, 23, 59, 59))
+    fake_today = timezone.make_aware(datetime(2020, 8, 19, 16, 59, 59))
     mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
     assert get_launch_status() == LAUNCH_STATUS_OPEN_CART
 
 
 def test_should_return_launch_status_closed_on_day_after_closed(mocker):
-    fake_today = timezone.make_aware(datetime(2020, 4, 22))
+    fake_today = timezone.make_aware(datetime(2020, 8, 19, 17))
     mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
     assert get_launch_status() == LAUNCH_STATUS_CLOSED
 
