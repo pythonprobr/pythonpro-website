@@ -23,7 +23,7 @@ ALL_ACTIVE_PRODUCTS = [
     'bootcamp-webdev',
     'bootcamp-webdev-35-discount',
     'bootcamp-webdev-50-discount',
-    'python-avancado',
+    'pacote-proximo-nivel-67-discount',
 ]
 ALL_INACTIVE_PRODUCTS = [
     'pytools',

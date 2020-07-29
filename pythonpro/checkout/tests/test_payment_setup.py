@@ -349,7 +349,7 @@ def test_free_interest_properties(free_interest_form_config):
 
 
 def test_item_python_avancado(free_interest_form_config):
-    item_config = facade.find_payment_item_config('python-avancado')
+    item_config = facade.find_payment_item_config('pacote-proximo-nivel-67-discount')
     assert (
                item_config.name,
                item_config.slug,
@@ -358,7 +358,7 @@ def test_item_python_avancado(free_interest_form_config):
                item_config.default_config,
            ) == (
                'Pacote Python Avançado - 50% de Desconto',
-               'python-avancado',
+               'pacote-proximo-nivel-67-discount',
                49700,
                False,
                free_interest_form_config
