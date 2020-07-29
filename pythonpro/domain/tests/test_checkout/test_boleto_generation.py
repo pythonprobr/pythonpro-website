@@ -50,8 +50,13 @@ def sync_on_discourse_mock(mocker):
 
 
 @pytest.fixture
+def send_purchase_notification_mock(mocker):
+    return mocker.patch('pythonpro.domain.checkout_domain.send_purchase_notification.delay')
+
+
+@pytest.fixture
 def resp(client, pagarme_responses, create_or_update_lead_mock, payment_handler_task_mock, tag_as_mock,
-         active_product_item, sync_on_discourse_mock):
+         active_product_item, sync_on_discourse_mock, send_purchase_notification_mock):
     return client.get(
         reverse('django_pagarme:capture', kwargs={'token': TRANSACTION_ID, 'slug': active_product_item.slug})
     )
@@ -59,6 +64,12 @@ def resp(client, pagarme_responses, create_or_update_lead_mock, payment_handler_
 
 def test_status_code(resp):
     assert resp.status_code == 200
+
+
+def test_send_purchase_notification(resp, send_purchase_notification_mock):
+    send_purchase_notification_mock.assert_called_once_with(
+        django_pagarme_facade.find_payment_by_transaction(TRANSACTION_ID).id
+    )
 
 
 def test_user_is_created(resp, django_user_model):
@@ -93,7 +104,7 @@ def test_created_user_tagged_with_boleto(resp, django_user_model, tag_as_mock, a
 
 @pytest.fixture
 def resp_logged_user(client_with_lead, pagarme_responses, payment_handler_task_mock, tag_as_mock, active_product_item,
-                     remove_tags_mock):
+                     remove_tags_mock, send_purchase_notification_mock):
     return client_with_lead.get(
         reverse('django_pagarme:capture', kwargs={'token': TRANSACTION_ID, 'slug': active_product_item.slug}),
         secure=True

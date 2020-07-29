@@ -4,6 +4,7 @@ from django.urls import reverse
 from pythonpro.core import facade as core_facade
 from pythonpro.core.models import UserInteraction
 from pythonpro.django_assertions import dj_assert_template_used
+from pythonpro.domain import hotzapp_domain
 
 all_slugs = pytest.mark.parametrize(
     'slug',
@@ -27,6 +28,12 @@ def create_or_update_with_no_role_mock(mocker):
     return mocker.patch('pythonpro.domain.checkout_domain.email_marketing_facade.create_or_update_with_no_role.delay')
 
 
+@pytest.fixture(autouse=True)
+def verify_purchase_mock(mocker):
+    return mocker.patch('pythonpro.domain.checkout_domain.verify_purchase_after_30_minutes',
+                        side_effetc=hotzapp_domain.verify_purchase)
+
+
 @pytest.fixture
 def valid_data():
     return {'name': 'Foo Bar Baz', 'email': 'foo@email.com', 'phone': '12999999999'}
@@ -37,9 +44,17 @@ def make_post(client, contact_info, slug):
 
 
 @all_slugs
-def test_status_code(resp, client, valid_data, slug):
+def test_status_code(client, valid_data, slug):
     resp = make_post(client, valid_data, slug)
     assert resp.status_code == 302
+
+
+@all_slugs
+def test_verify_purchase_called(client, valid_data, slug, verify_purchase_mock):
+    make_post(client, valid_data, slug)
+    phone = valid_data['phone']
+    verify_purchase_mock.assert_called_once_with(
+        valid_data['name'], valid_data['email'], f'+55{phone}', slug)
 
 
 membership_slugs = pytest.mark.parametrize(

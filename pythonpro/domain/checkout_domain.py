@@ -4,6 +4,7 @@ from django_pagarme import facade as django_pagarme_facade
 
 from pythonpro.core import facade as core_facade
 from pythonpro.domain import user_facade
+from pythonpro.domain.hotzapp_domain import verify_purchase, send_purchase_notification
 from pythonpro.email_marketing import facade as email_marketing_facade
 
 __all__ = ['contact_info_listener', 'user_factory', 'payment_handler_task', 'payment_change_handler']
@@ -18,9 +19,17 @@ def contact_info_listener(name: str, email: str, phone: str, payment_item_slug: 
             core_facade.webdev_checkout_form(user)
     else:
         user_id = None
+    phone = str(phone)
     email_marketing_facade.create_or_update_with_no_role.delay(
-        name, email, f'{payment_item_slug}-form', id=user_id, phone=str(phone)
+        name, email, f'{payment_item_slug}-form', id=user_id, phone=phone
     )
+
+    verify_purchase_after_30_minutes(name, email, phone, payment_item_slug)
+
+
+def verify_purchase_after_30_minutes(name, email, phone, payment_item_slug):
+    THIRTY_MINUTES_IN_SECONDS = 1800
+    verify_purchase.apply_async((name, email, phone, payment_item_slug), countdown=THIRTY_MINUTES_IN_SECONDS)
 
 
 django_pagarme_facade.add_contact_info_listener(contact_info_listener)
@@ -52,12 +61,15 @@ def payment_handler_task(payment_id):
             else:
                 email_marketing_facade.remove_tags.delay(user.email, user.id, f'{slug}-refused')
             _promote(user, slug)
+            send_purchase_notification.delay(payment.id)
         elif status == django_pagarme_facade.REFUSED:
             user = payment.user
             email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-refused')
+            send_purchase_notification.delay(payment.id)
         elif status == django_pagarme_facade.WAITING_PAYMENT:
             user = payment.user
             email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-boleto')
+            send_purchase_notification.delay(payment.id)
 
 
 def _promote(user, slug: str):
