@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from django.utils import timezone
 
-LAUNCH_PPL_START_DATE = datetime(2020, 3, 23, 0)
+LAUNCH_PPL_START_DATE = datetime(2020, 7, 20, 0)
 LAUNCH_STATUS_PPL = 0
 LAUNCH_STATUS_CPL1 = 1
 LAUNCH_STATUS_CPL2 = 2
@@ -30,11 +30,11 @@ def _get_fourth_class_start():
 
 
 def _get_open_cart_start():
-    return _get_fourth_class_start()
+    return _get_first_class_start() + timedelta(days=6) + timedelta(hours=20, minutes=59)
 
 
 def _get_open_cart_end():
-    return _get_fourth_class_start() + timedelta(days=5, hours=4)
+    return _get_first_class_start() + timedelta(days=9, hours=17)
 
 
 def get_launch_status():
