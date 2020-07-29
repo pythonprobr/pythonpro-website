@@ -53,3 +53,7 @@ RECAPTCHA_PRIVATE_KEY=
 
 # Make it False to disable cache. Default is True
 CACHE_TURNED_ON=false
+
+# Hotzapp Integration
+
+HOTZAPP_API_URL=https://hotzapp.me

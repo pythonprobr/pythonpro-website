@@ -85,13 +85,18 @@ def create_or_update_pythonist_mock(mocker):
     )
 
 
-# test user not logged
+@pytest.fixture
+def send_purchase_notification_mock(mocker):
+    return mocker.patch('pythonpro.domain.checkout_domain.send_purchase_notification.delay')
+
+
+# tests for user not logged
 
 @pytest.fixture
 def resp(client, pagarme_responses, payment_handler_task_mock, create_or_update_lead_mock,
          create_or_update_member_mock, create_or_update_webdev_mock, create_or_update_data_scientist_mock,
          create_or_update_bootcamper_mock, active_product_item, remove_tags_mock, sync_on_discourse_mock,
-         create_or_update_pythonist_mock):
+         create_or_update_pythonist_mock, send_purchase_notification_mock):
     return client.get(
         reverse('django_pagarme:capture', kwargs={'token': TRANSACTION_ID, 'slug': active_product_item.slug})
     )
@@ -100,6 +105,12 @@ def resp(client, pagarme_responses, payment_handler_task_mock, create_or_update_
 def test_status_code(resp, active_product_item):
     assert resp.status_code == 302
     assert resp.url == reverse('django_pagarme:thanks', kwargs={'slug': active_product_item.slug})
+
+
+def test_send_purchase_notification(resp, send_purchase_notification_mock):
+    send_purchase_notification_mock.assert_called_once_with(
+        django_pagarme_facade.find_payment_by_transaction(TRANSACTION_ID).id
+    )
 
 
 def test_user_is_created(resp, django_user_model):
@@ -168,7 +179,7 @@ def resp_logged_user(client_with_user, pagarme_responses, payment_handler_task_m
                      remove_tags_mock,
                      sync_on_discourse_mock, create_or_update_member_mock, create_or_update_webdev_mock,
                      create_or_update_data_scientist_mock, create_or_update_bootcamper_mock,
-                     create_or_update_pythonist_mock):
+                     create_or_update_pythonist_mock, send_purchase_notification_mock):
     return client_with_user.get(
         reverse('django_pagarme:capture', kwargs={'token': TRANSACTION_ID, 'slug': active_product_item.slug})
     )
