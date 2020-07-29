@@ -2,6 +2,7 @@
 from celery import shared_task
 from django_pagarme import facade as django_pagarme_facade
 
+from pythonpro.checkout.hotzapp_facade import verify_purchase
 from pythonpro.core import facade as core_facade
 from pythonpro.domain import user_facade
 from pythonpro.email_marketing import facade as email_marketing_facade
@@ -21,6 +22,9 @@ def contact_info_listener(name: str, email: str, phone: str, payment_item_slug: 
     email_marketing_facade.create_or_update_with_no_role.delay(
         name, email, f'{payment_item_slug}-form', id=user_id, phone=str(phone)
     )
+
+    # Criar task com espera de 30 min com celery
+    verify_purchase.s(name, email, phone, payment_item_slug).apply_async(countdown=1800)
 
 
 django_pagarme_facade.add_contact_info_listener(contact_info_listener)
@@ -55,6 +59,7 @@ def payment_handler_task(payment_id):
         elif status == django_pagarme_facade.REFUSED:
             user = payment.user
             email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-refused')
+
         elif status == django_pagarme_facade.WAITING_PAYMENT:
             user = payment.user
             email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-boleto')
