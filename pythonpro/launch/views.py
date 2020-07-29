@@ -58,8 +58,8 @@ def ty(request):
 def cpl1(request):
     user = request.user
     visit_function = user_facade.visit_cpl1
-    video_id = 'Xls9-5DnNLc'
-    video_id_next_class = 'qTugLQeCn54'
+    video_id = 'Rwt6wYrDeYY'
+    video_id_next_class = 'WK1sCtvGjBU'
     description = (
         'Nesta aula você você vai aprender como instalar o Python em seu sistema operacional, '
         'editar código e fazer pequenos testes no console.'
@@ -73,8 +73,8 @@ def cpl1(request):
 def cpl2(request):
     user = request.user
     visit_function = user_facade.visit_cpl2
-    video_id = 'qTugLQeCn54'
-    video_id_next_class = 'pEj16gPFbpk'
+    video_id = 'WK1sCtvGjBU'
+    video_id_next_class = 'ADhQ7H8-hxw'
     title = 'AULA #2: Os Fundamentos da PROGRAMAÇÃO PROCEDURAL'
     description = (
         'Nesta aula você vai aprender programação procedural. Esse paradigma consiste em'
@@ -90,8 +90,8 @@ def cpl2(request):
 def cpl3(request):
     user = request.user
     visit_function = user_facade.visit_cpl3
-    video_id = 'pEj16gPFbpk'
-    video_id_next_class = 'tTjFK4x0Qb8'
+    video_id = 'ADhQ7H8-hxw'
+    video_id_next_class = 'QNo7gS_dsUw'
     title = 'AULA #3: Descobrindo o Mundo da ORIENTAÇÃO A OBJETO'
     description = (
         'Depois de aprender o paradigma procedural na seção anterior chega hora de conhecer '
@@ -108,13 +108,11 @@ def cpl3(request):
 def cpl4(request):
     user = request.user
     visit_function = user_facade.visit_cpl3
-    video_id = 'tTjFK4x0Qb8'
-    title = 'AULA #4: A técnica Matadora para CONSEGUIR UMA VAGA + Resumão'
+    video_id = 'QNo7gS_dsUw'
+    title = 'AULA #4: Voando com Python + Resumão'
     description = (
-        'Chegou o grande dia! Nesta aula você vai aprender uma técnica matadora para conseguir '
-        'sua primeira oportunidade como Programador Profissional. Além disso, eu vou dar todas '
-        'as instruções para você se matricular no Curso Python Pro, e, por fim, vou fazer um re'
-        'sumão da Semana do Programador Profissional.'
+        'Por fim, vamos ver o nosso projeto funcionando! Além disso, nesta aula vamos fazer um '
+        'resumão e te explicar tudo sobre as matrículas do Bootcamp Python Pro'
     )
     return _render_cpl(description, request, title, user, video_id, visit_function, video_id)
 
