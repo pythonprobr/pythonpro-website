@@ -159,6 +159,32 @@ DATABASES = {
     'default': config('DATABASE_URL', default=default_db_url, cast=dburl),
 }
 
+# Cache configuration
+REDIS_URL = config('REDIS_URL')
+CACHE_REDIS_URL = f'{REDIS_URL}/1'
+
+CACHE_TTL = 60 * 15
+
+CACHE_TURNED_ON = config('CACHE_TURNED_ON', default=True, cast=bool)
+
+if CACHE_TURNED_ON:
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": CACHE_REDIS_URL,
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient"
+            },
+            "KEY_PREFIX": "example"
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+    }
+
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 
@@ -274,6 +300,6 @@ GOOGLE_TAG_MANAGER_ID = config('GOOGLE_TAG_MANAGER_ID')
 
 BROKER_URL = config('CLOUDAMQP_URL')
 
-CELERY_RESULT_BACKEND = config('REDIS_URL')
+CELERY_RESULT_BACKEND = f'{REDIS_URL}/0'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE

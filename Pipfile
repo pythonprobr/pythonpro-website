@@ -34,6 +34,7 @@ inflection = "*"
 django-two-factor-auth = "*"
 django-recaptcha = "*"
 django-pagarme = "*"
+django-redis = "*"
 
 [dev-packages]
 faker = "*"

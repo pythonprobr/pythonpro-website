@@ -205,6 +205,14 @@ def turn_active_campaign_on(settings):
 
 
 @pytest.fixture(autouse=True)
+def turn_cache_off(settings):
+    """
+    This way test don't depend on local .env configuration
+    """
+    settings.CACHE_TURNED_ON = False
+
+
+@pytest.fixture(autouse=True)
 def turn_ssl_rediret_off_for_tests(settings):
     """
     There is no need to place secure=True in all client requests
