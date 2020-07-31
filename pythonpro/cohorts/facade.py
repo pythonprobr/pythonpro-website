@@ -1,3 +1,7 @@
+from functools import partial
+
+from django.conf import settings
+from django.core.cache import cache
 from django.db.models import Prefetch as _Prefetch
 from django.urls import reverse
 
@@ -15,7 +19,8 @@ __all__ = [
 
 
 def get_all_cohorts_desc():
-    return tuple(_Cohort.objects.order_by('-start'))
+    lazy_all_cohorts = partial(tuple, _Cohort.objects.order_by('-start'))
+    return cache.get_or_set('ALL_COHORTS', lazy_all_cohorts, settings.CACHE_TTL)
 
 
 def find_cohort(slug):

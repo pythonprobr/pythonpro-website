@@ -1,3 +1,7 @@
+from functools import partial
+
+from django.conf import settings
+from django.core.cache import cache
 from django.db.models import Prefetch
 
 from pythonpro.modules.models import (
@@ -14,7 +18,8 @@ def get_all_modules():
     Search all modules on database sorted by order
     :return: tuple of Module
     """
-    return tuple(_Module.objects.order_by('order'))
+    lazy_all_modules = partial(tuple, _Module.objects.order_by('order'))
+    return cache.get_or_set('ALL_MODULES', lazy_all_modules, settings.CACHE_TTL)
 
 
 def get_module_with_contents(slug):
