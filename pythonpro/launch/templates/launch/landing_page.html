@@ -118,8 +118,8 @@
     </section>
 
     <section class="renzo">
-      <img class="renzo__img__mobile" src="{% static 'img/spp/renzo/about-renzo-nuccitelli-mobile.webp' %}" alt="Renzo Nuccitelli com braços cruzados, olhando para foto. Fundo verde abacate com códigos escritos em branco. Imagem pequena">
-      <img class="renzo__img__desktop" src="{% static 'img/spp/renzo/about-renzo-nuccitelli-desktop.webp' %}" alt="Renzo Nuccitelli com braços cruzados, olhando para foto. Fundo verde abacate com códigos escritos em branco. Imagem grande">
+      <img class="renzo__img__mobile lazyload" data-src="{% static 'img/spp/renzo/about-renzo-nuccitelli-mobile.webp' %}" alt="Renzo Nuccitelli com braços cruzados, olhando para foto. Fundo verde abacate com códigos escritos em branco. Imagem pequena">
+      <img class="renzo__img__desktop lazyload" data-src="{% static 'img/spp/renzo/about-renzo-nuccitelli-desktop.webp' %}" alt="Renzo Nuccitelli com braços cruzados, olhando para foto. Fundo verde abacate com códigos escritos em branco. Imagem grande">
 
       <div class="renzo__group">
         <span class="renzo__group__about text-uppercase text-green fw-700">Conheça o professor</span>
@@ -177,7 +177,7 @@
           </div>
         </div>
 
-        <img class="footer__renzo-mobile" src="{% static 'img/spp/footer/renzo-nuccitelli-footer.webp' %}" alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Python Pro. Imagem pequena">
+        <img class="footer__renzo-mobile lazyload" data-src="{% static 'img/spp/footer/renzo-nuccitelli-footer.webp' %}" alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Python Pro. Imagem pequena">
 
         <img class="footer__group__detail" src="{% static 'img/spp/footer/footer-group-detail.jpg' %}" alt="Pequenos círculos na cor verde abacate formando um retângulo">
       </div>
@@ -187,14 +187,13 @@
         <img class="footer__copyright__renzo-desktop" src="" alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Python Pro. Imagem grande">
       </div>
 
-      <img class="footer__group__detail-right-desktop" src="{% static 'img/spp/footer/renzo-nuccitelli-footer-desktop.webp' %}" alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
+      <img class="footer__group__detail-right-desktop lazyload" data-src="{% static 'img/spp/footer/renzo-nuccitelli-footer-desktop.webp' %}" alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
     </footer>
   </main>
 
-  <script src="{% static 'js/spp/countdown.min.js' %}"></script>
-  <script>
-    initCountDown(new Date('Aug 10, 2020 23:59:59').getTime());
-  </script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" async></script>
+  <script src="{% static 'js/spp/countdown.min.js' %}" async></script>
   {% endblock %}
   {% block extrabody %}{% endblock extrabody %}
 </body>
