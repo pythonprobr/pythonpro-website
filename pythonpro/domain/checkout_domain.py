@@ -19,12 +19,13 @@ def contact_info_listener(name: str, email: str, phone: str, payment_item_slug: 
             core_facade.webdev_checkout_form(user)
     else:
         user_id = None
+    phone = str(phone)
     email_marketing_facade.create_or_update_with_no_role.delay(
-        name, email, f'{payment_item_slug}-form', id=user_id, phone=str(phone)
+        name, email, f'{payment_item_slug}-form', id=user_id, phone=phone
     )
 
     THIRTY_MINUTES_IN_SECONDS = 1800
-    verify_purchase.apply_async([name, email, phone, payment_item_slug], countdown=THIRTY_MINUTES_IN_SECONDS)
+    verify_purchase.apply_async((name, email, phone, payment_item_slug), countdown=THIRTY_MINUTES_IN_SECONDS)
 
 
 django_pagarme_facade.add_contact_info_listener(contact_info_listener)
