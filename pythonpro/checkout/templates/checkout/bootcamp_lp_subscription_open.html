@@ -9,6 +9,7 @@
     <link href="{% static 'css/spp/owl.carousel.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/spp/owl.theme.default.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/spp/magnific-popup.min.css' %}" rel="stylesheet">
+     <link href="//stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 {% endblock %}
 
 {% block meta %}
@@ -1131,7 +1132,14 @@
         <img class="footer__group__detail-right-desktop" src="{% static 'img/spp/footer/renzo-nuccitelli-footer-desktop.png' %}" alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
     </footer>
 
-    <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
+
+    
+    <script type="application/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/spp/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/spp/magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/spp/countdown.js' %}"></script>
+     <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -1152,12 +1160,6 @@
             </div>
         </div>
     </div>
-    
-    <script type="application/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-    <script type="application/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/spp/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'js/spp/magnific-popup.min.js' %}"></script>
-    <script src="{% static 'js/spp/countdown.js' %}"></script>
     <script type="application/javascript">
 
     initCountDown(new Date({{promotion_end_date_milliseconds}}).getTime());
