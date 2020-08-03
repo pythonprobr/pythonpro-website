@@ -47,7 +47,7 @@ def send_abandoned_cart(name, email, phone, payment_item_slug):
             }
         ],
     }
-    return requests.post(settings.HOTZAPP_API_URL, potential_customer)
+    return requests.post(settings.HOTZAPP_API_URL, json=potential_customer).status_code
 
 
 PAYMENT_METHOD_DCT = {
@@ -75,17 +75,20 @@ def send_purchase_notification(payment_id):
                        payment_config_items]
 
     purchase = {
-        "created_at": last_notification['creation'],
-        "transaction_id": payment.transaction_id,
-        "name": payment_profile.name,
-        "email": payment_profile.email,
-        "phone": str(payment_profile.phone),
-        "total_price": total_price(payment_config_items),
-        "line_items": purchased_items,
-        "payment_method": PAYMENT_METHOD_DCT[payment.payment_method],
-        "financial_status": STATUS_DCT[last_notification['status']],
+        'created_at': last_notification['creation'].isoformat(),
+        'transaction_id': payment.transaction_id,
+        'name': payment_profile.name,
+        'email': payment_profile.email,
+        'phone': str(payment_profile.phone),
+        'total_price': total_price(payment_config_items),
+        'line_items': purchased_items,
+        'payment_method': PAYMENT_METHOD_DCT[payment.payment_method],
+        'financial_status': STATUS_DCT[last_notification['status']],
+        'billet_url': payment.boleto_url,
+        'billet_barcode': payment.boleto_barcode,
+
     }
-    return requests.post(settings.HOTZAPP_API_URL, purchase)
+    return requests.post(settings.HOTZAPP_API_URL, json=purchase).status_code
 
 
 @shared_task

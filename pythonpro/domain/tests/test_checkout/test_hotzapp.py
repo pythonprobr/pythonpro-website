@@ -22,9 +22,9 @@ def resp_success_mock(settings):
 
 
 def test_verify_purchase_not_existing_user(active_product_item, resp_success_mock):
-    resp = verify_purchase(name='User test', email='asser@test.com', phone=5563432343,
-                           payment_item_slug=active_product_item.slug)
-    assert resp.status_code == 200
+    status_code = verify_purchase(name='User test', email='asser@test.com', phone=5563432343,
+                                  payment_item_slug=active_product_item.slug)
+    assert status_code == 200
 
 
 @pytest.fixture
@@ -45,8 +45,8 @@ def pagarme_notification(payment, request):
 
 
 def test_send_purchase_notification(payment, pagarme_notification, resp_success_mock):
-    resp = send_purchase_notification(payment.id)
-    assert resp.status_code == 200
+    status_code = send_purchase_notification(payment.id)
+    assert status_code == 200
 
 
 @pytest.fixture(params=[facade.REFUSED, facade.WAITING_PAYMENT])
@@ -56,10 +56,13 @@ def pagarme_notification_not_paid(payment, request):
 
 def test_verify_purchase_existing_user(active_product_item, resp_success_mock, payment_profile,
                                        pagarme_notification_not_paid):
-    resp = verify_purchase(name=payment_profile.name, email=payment_profile.email,
-                           phone=str(payment_profile.phone),
-                           payment_item_slug=active_product_item.slug)
-    assert resp.status_code == 200
+    status_code = verify_purchase(
+        name=payment_profile.name,
+        email=payment_profile.email,
+        phone=str(payment_profile.phone),
+        payment_item_slug=active_product_item.slug
+    )
+    assert status_code == 200
 
 
 @pytest.fixture
