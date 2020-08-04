@@ -61,15 +61,18 @@ def payment_handler_task(payment_id):
             else:
                 email_marketing_facade.remove_tags.delay(user.email, user.id, f'{slug}-refused')
             _promote(user, slug)
-            send_purchase_notification.delay(payment.id)
+            if slug.startswith('bootcamp'):
+                send_purchase_notification.delay(payment.id)
         elif status == django_pagarme_facade.REFUSED:
             user = payment.user
             email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-refused')
-            send_purchase_notification.delay(payment.id)
+            if slug.startswith('bootcamp'):
+                send_purchase_notification.delay(payment.id)
         elif status == django_pagarme_facade.WAITING_PAYMENT:
             user = payment.user
             email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-boleto')
-            send_purchase_notification.delay(payment.id)
+            if slug.startswith('bootcamp'):
+                send_purchase_notification.delay(payment.id)
 
 
 def _promote(user, slug: str):
