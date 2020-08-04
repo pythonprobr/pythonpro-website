@@ -66,10 +66,11 @@ def test_status_code(resp):
     assert resp.status_code == 200
 
 
-def test_send_purchase_notification(resp, send_purchase_notification_mock):
-    send_purchase_notification_mock.assert_called_once_with(
-        django_pagarme_facade.find_payment_by_transaction(TRANSACTION_ID).id
-    )
+def test_send_purchase_notification(resp, send_purchase_notification_mock, active_product_item):
+    if active_product_item.slug.startswith('bootcamp'):
+        send_purchase_notification_mock.assert_called_once_with(
+            django_pagarme_facade.find_payment_by_transaction(TRANSACTION_ID).id
+        )
 
 
 def test_user_is_created(resp, django_user_model):
