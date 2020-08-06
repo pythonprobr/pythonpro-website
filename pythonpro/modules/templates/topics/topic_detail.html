@@ -88,6 +88,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
+                
                 <h1 class="mt-4 mb-3">{{ topic.title }}</h1>
                 <p>{{ topic.description|linebreaks }}</p>
                 <div class="embed-container mb-3">
@@ -112,6 +113,16 @@
                     </div>
                 {% endif %}
                 </div>
+                <div class="_116mije" role="tablist" aria-orientation="horizontal">
+                    <button class="btn btn-outline-secondary" role="tab">
+                        <span aria-label="Fórum ligado o vídeo">Fórum</span>
+                    </button>
+                    <button class="btn btn-outline-secondary" role="tab">
+                        Material de apoio
+                    </button>
+
+                </div>
+                <p></p>
                 <div id='discourse-comments' class="mb-5"></div>
                 <script type="text/javascript">
                     DiscourseEmbed = {
