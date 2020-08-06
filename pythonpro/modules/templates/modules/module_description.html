@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{ module.title }}{% endblock %}
+{% block description %}{{ module.description }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col">
+                <h1 class="mt-4 mb-3">{{ module.title }}</h1>
+                <dt>Objetivo</dt>
+                <dd>
+                    <ul>
+                        <li>{{ module.objective }}</li>
+                    </ul>
+                </dd>
+                <dt>Público</dt>
+                <dd>
+                    <ul>
+                        <li>{{ module.target }}</li>
+                    </ul>
+                </dd>
+                <dt>Descrição</dt>
+                <dd>
+                    <ul>
+                        <li>{{ module.description|linebreaks }}</li>
+                    </ul>
+                </dd>
+                <dt>Conteúdo</dt>
+                <ul class="list-group mt-2">
+                    {% for section in module.sections %}
+                        <li class="list-group-item bg-primary text-white">{{ section.title }}</li>
+                        {% for chapter in section.chapters %}
+                            <li class="list-group-item">{{ chapter.title }}</li>
+                        {% empty %}
+                            <li class="list-group-item">Nenhum Capítulo definido ainda</li>
+                        {% endfor %}
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

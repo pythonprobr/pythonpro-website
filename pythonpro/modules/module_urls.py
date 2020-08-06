@@ -10,4 +10,5 @@ urlpatterns = [
     path('<slug:module_slug>/topicos/<slug:topic_slug>', topics_views.detail, name='topic_detail'),
     path('<slug:module_slug>/secoes/<slug:section_slug>', sections_views.detail, name='section_detail'),
     path('<slug:module_slug>/capitulos/<slug:chapter_slug>', chapters_views.detail, name='chapter_detail'),
+    path('descricao/<slug:slug>/', modules_views.description, name='description'),
 ]

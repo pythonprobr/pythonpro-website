@@ -62,12 +62,13 @@ def test_module_link_logged(modules, resp):
         dj_assert_contains(resp, f'href="{module.get_absolute_url()}"')
 
 
-def test_anchor(modules, resp_not_logged):
+def test_present_attrs(modules, resp_not_logged):
     for module in modules:
-        dj_assert_contains(resp_not_logged, f'<h1 id="{module.slug}"')
+        dj_assert_contains(resp_not_logged, module.title)
+        dj_assert_contains(resp_not_logged, module.objective[:71])
 
 
-@pytest.mark.parametrize('attr_name', 'title objective description target'.split())
-def test_present_attrs(modules, resp_not_logged, attr_name):
+def test_module_description_links(modules, resp_not_logged):
+    """ Assert module description link are present for not logged users """
     for module in modules:
-        dj_assert_contains(resp_not_logged, getattr(module, attr_name))
+        dj_assert_contains(resp_not_logged, reverse('modules:description', kwargs={'slug': module.slug}))
