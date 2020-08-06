@@ -8,7 +8,7 @@ from pythonpro.modules.facade import get_all_modules, get_module_with_contents
 @login_required
 def detail(request, slug):
     module = get_module_with_contents(slug)
-    return render(request, 'modules/module_detail.html', {'module': module})
+    return render(request, 'modules/module_detail.html', context={'module': module})
 
 
 def index(request):
@@ -20,4 +20,9 @@ def enrol(request, slug):
     module = get_module_with_contents(slug)
     user = request.user
     tag_as(user.email, user.id, slug)
-    return render(request, 'modules/module_enrol.html', {'module': module})
+    return render(request, 'modules/module_enrol.html', context={'module': module})
+
+
+def description(request, slug):
+    module = get_module_with_contents(slug)
+    return render(request, 'modules/module_description.html', context={'module': module})
