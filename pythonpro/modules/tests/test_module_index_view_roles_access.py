@@ -15,36 +15,24 @@ def modules(transactional_db):
     return modules
 
 
-@pytest.fixture # NOTE: only call client_with_user?
+@pytest.fixture
 def resp_lead_user(client_with_lead, modules):
     return _resp_not_logged(client_with_lead, modules)
 
 
 @pytest.fixture
-def resp_webdev_user(client, django_user_model, modules):
-    user = baker.make(django_user_model)
-    clear_roles(user)
-    assign_role(user, 'webdev')
-    client.force_login(user)
-    return _resp_not_logged(client, modules)
+def resp_webdev_user(client_with_webdev, modules):
+    return _resp_not_logged(client_with_webdev, modules)
 
 
 @pytest.fixture
-def resp_bootcamper_user(client, django_user_model, modules):
-    user = baker.make(django_user_model)
-    clear_roles(user)
-    assign_role(user, 'bootcamper')
-    client.force_login(user)
-    return _resp_not_logged(client, modules)
+def resp_bootcamper_user(client_with_bootcamper, modules):
+    return _resp_not_logged(client_with_bootcamper, modules)
 
 
 @pytest.fixture
-def resp_client_user(client, django_user_model, modules):
-    user = baker.make(django_user_model)
-    clear_roles(user)
-    assign_role(user, 'client')
-    client.force_login(user)
-    return _resp_not_logged(client, modules)
+def resp_client_user(client_with_user, modules):
+    return _resp_not_logged(client_with_user, modules)
 
 
 @pytest.fixture
@@ -65,7 +53,7 @@ def resp_member_user(client, django_user_model, modules):
     return _resp_not_logged(client, modules)
 
 
-def _resp_not_logged(client, modules):  # NOTE: the resp_lead_user return
+def _resp_not_logged(client, modules):
     return client.get(reverse('modules:index'))
 
 
