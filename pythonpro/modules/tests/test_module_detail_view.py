@@ -63,7 +63,6 @@ def test_member_has_no_automation_button(client_with_member, modules, python_bir
         'Aprofundar o conhecimento de Orientação a Objetos tendo em vista as peculiaridade do Python.',
         'Alunos que conhecem OO e estão começando com Python ou que já usam a linguagem no dia-a-dia, mas querem '
         'aperfeiçoar o modo pythônico de programar.',
-        'Python Birds',
         'Aprofundamento no conhecimento da linguagem: tipagem dinâmica, protocolos versus interfaces, '
         'classes abstratas, herança múltipla e sobrecarga de operadores são alguns dos temas cobertos.',
         # reverse('modules:detail', kwargs={'slug': 'python-birds'}),
