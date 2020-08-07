@@ -60,6 +60,15 @@ def resp_pythonista_user(client, django_user_model, modules):
     return _resp_not_logged(client, modules)
 
 
+@pytest.fixture
+def resp_member_user(client, django_user_model, modules):
+    user = baker.make(django_user_model)
+    clear_roles(user)
+    assign_role(user, 'member')
+    client.force_login(user)
+    return _resp_not_logged(client, modules)
+
+
 def _resp_not_logged(client, modules):
     return client.get(reverse('modules:index'))
 
@@ -92,7 +101,7 @@ def test_module_client_user_can_access(modules, resp_client_user, urls):
 
 
 @pytest.mark.parametrize('urls', [
-    'href="/modulos/python-web/"',
+    'href="/modulos/django/"',
     'href="/modulos/objetos-pythonicos/"',
     'href="/modulos/python-para-pythonistas/"',
     'href="/modulos/python-paterns/"',
@@ -106,7 +115,7 @@ def test_module_client_user_can_not_access(modules, resp_client_user, urls):
 @pytest.mark.parametrize('urls', [
     'href="/modulos/python-birds/"',
     'href="/modulos/pytools/"',
-    'href="/modulos/python-web/"',
+    'href="/modulos/django/"',
 ])
 def test_module_webdev_user_can_access(modules, resp_webdev_user, urls):
     """ Assert that user with a webdev role can access the right content """
@@ -127,7 +136,7 @@ def test_module_webdev_user_can_not_access(modules, resp_webdev_user, urls):
 @pytest.mark.parametrize('urls', [
     'href="/modulos/python-birds/"',
     'href="/modulos/pytools/"',
-    'href="/modulos/python-web/"',
+    'href="/modulos/django/"',
     'href="/modulos/entrevistas-tecnicas/"',
 ])
 def test_module_bootcamper_user_can_access(modules, resp_bootcamper_user, urls):
@@ -158,9 +167,23 @@ def test_module_pythonista_user_can_access(modules, resp_pythonista_user, urls):
 
 @pytest.mark.parametrize('urls', [
     'href="/modulos/pytools/"',
-    'href="/modulos/python-web/"',
+    'href="/modulos/django/"',
     'href="/modulos/entrevistas-tecnicas/"',
 ])
 def test_module_pythonista_user_can_not_access(modules, resp_pythonista_user, urls):
     """ Assert that user with a pythonista role can not access some contents """
     dj_assert_not_contains(resp_pythonista_user, urls)
+
+
+@pytest.mark.parametrize('urls', [
+    'href="/modulos/pytools/"',
+    'href="/modulos/django/"',
+    'href="/modulos/entrevistas-tecnicas/"',
+    'href="/modulos/python-birds/"',
+    'href="/modulos/objetos-pythonicos/"',
+    'href="/modulos/python-para-pythonistas/"',
+    'href="/modulos/python-patterns/"',
+])
+def test_module_member_user_can_access(modules, resp_member_user, urls):
+    """ Assert that user with a member role can access all the content """
+    dj_assert_contains(resp_member_user, urls)
