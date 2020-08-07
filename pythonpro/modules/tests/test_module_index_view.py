@@ -51,15 +51,9 @@ def test_module_link_not_logged(modules, resp_not_logged):
 
 
 def test_module_index_link_logged(resp):
-    """ Assert module index link is not present when user is logged """
+    """ Assert module index link is present when user is logged """
     url = reverse('modules:index')
-    dj_assert_not_contains(resp, f'href="{url}"')
-
-
-def test_module_link_logged(modules, resp):
-    """ Assert module links are present when user is logged """
-    for module in modules:
-        dj_assert_contains(resp, f'href="{module.get_absolute_url()}"')
+    dj_assert_contains(resp, f'href="{url}"')
 
 
 def test_present_attrs(modules, resp_not_logged):
