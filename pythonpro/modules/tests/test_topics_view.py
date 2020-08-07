@@ -79,7 +79,7 @@ def test_video_template(resp):
 
 
 def test_vimeo_video(resp, topic):
-    dj_assert_contains(resp, f'<iframe id="topic-iframe" src="https://player.vimeo.com/video/{topic.vimeo_id}"')
+    dj_assert_contains(resp, f"'id': '{ topic.vimeo_id }'")
 
 
 @pytest.mark.parametrize('property_name', 'title description'.split())
