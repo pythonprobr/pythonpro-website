@@ -9,294 +9,318 @@
 
 {% block body %}
     {% block first_block %}
-    <div class='bg-primary'>
-        <div class="container">
-            <div class="row text-center">
-                <div class="col hero">{% block hero %}
-                    <div class='desktop d-none d-sm-block d-md-block'>
-                        <h1 class='font-weight-bold text-light'><u>SUA MATRÍCULA FOI REALIZADA!</u></h1>
-                        <p class='mb-5 text-light title-sub'>
-                            Assista o vídeo abaixo para saber como acessar os vídeos do curso grátis.
-                        </p>
-                        <iframe width="100%" height='523px' src="https://www.youtube.com/embed/Fx8KxGIJOL4?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
+        <div class='bg-primary'>
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col hero">{% block hero %}
+                        <div class='desktop d-none d-sm-block d-md-block'>
+                            <h1 class='font-weight-bold text-light'><u>SUA MATRÍCULA FOI REALIZADA!</u></h1>
+                            <p class='mb-5 text-light title-sub'>
+                                Assista o vídeo abaixo para saber como acessar os vídeos do curso grátis.
+                            </p>
+                            <iframe width="100%" height='523px'
+                                    src="https://www.youtube.com/embed/Fx8KxGIJOL4?autoplay=1" frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                        </div>
 
-                    <div class='mobile d-block d-lg-none d-xl-none'>
-                        <h1 class='font-weight-bold text-light'><u>SUA MATRÍCULA FOI REALIZADA!</u></h1>
-                        <p class='mb-5 text-light title-sub'>
-                            Assista o vídeo abaixo para saber como acessar os vídeos do curso grátis.
-                        </p>
-                        <iframe width="100%" height='208px' src="https://www.youtube.com/embed/Fx8KxGIJOL4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                {% endblock hero %}</div>
+                        <div class='mobile d-block d-lg-none d-xl-none'>
+                            <h1 class='font-weight-bold text-light'><u>SUA MATRÍCULA FOI REALIZADA!</u></h1>
+                            <p class='mb-5 text-light title-sub'>
+                                Assista o vídeo abaixo para saber como acessar os vídeos do curso grátis.
+                            </p>
+                            <iframe width="100%" height='208px' src="https://www.youtube.com/embed/Fx8KxGIJOL4"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                        </div>
+                    {% endblock hero %}</div>
+                </div>
             </div>
         </div>
-    </div>
     {% endblock %}
 
     {% block second_block %}
-    <div class='show-after' style="display: none">
-        <div class="container">
-
-            <div class='desktop d-none d-sm-block d-md-block'>
-                <div class="row">
-                    <div class="col mb-5 mt-5">
-                        <h2 class='text-center text-uppercase mb-5 '>
-                            Você já imaginou que bom seria se você estivesse preparado o suficiente para 
-                            <b><u>empregos que pagam 5... 10... 15... até 20 mil reais por mês de salário?</u></b>
-                        </h2>
-
-                        <h4 class='text-center'>
-                            A faculdade não te prepara para o mercado de trabalho...
-                            <b class='text-uppercase'>Mas, fique tranquilo, o <u>Curso Django Pro</u> vai te preparar!</b>
-                        </h4>
-                    </div>
-                </div>
-
-                <div class="row text-center mb-3">
-                    <div class="col">
-                        <h1 class='price-parcelado'>
-                            <span class='parcela'>12x</span>
-                            <b>{{ payment_item_config.max_installment_amount_after_interest|cents_to_brl}}</b>
-                        </h1>
-                        <p class='price-a-vista'>(ou à vista com 15% de desconto, por {{ payment_item_config.price|cents_to_brl}})</p>
-                    </div>    
-                </div>
-
-                {% if not is_promotion_expired %}
-                <div class="row text-center mb-5">
-                    <div class="col">
-                        <div class='text-center initiate-checkout d-none d-sm-block d-md-block'>
-                                <a href="#lead-form-header" class="cta-compra btn btn-warning initiate-checkout"  data-toggle="modal" data-target="#modal-waiting-capture">
-                                EU QUERO SER UM <b class='initiate-checkout'>PROGRAMADOR PROFISSIONAL!</b>
-                                <br><span class='sub'>Clique aqui para fazer sua matrícula com acesso vitalício!</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-                
-                <div class="row mt-5 mb-5 text-center">
-                    <div class="col">
-                        <img src='{% static "img/garantia.png" %}'>    
-                    </div>    
-                    
-                    <div class="col">
-                        <img src='{% static "img/banner-pagarme.png" %}'>    
-                    </div>    
-                
-                </div>
-            </div>
-            
-            <div class='mobile d-block d-lg-none d-xl-none'>
-                <div class="row">
-                    <div class="col mb-5 mt-5">
-                        <h2 class='text-center text-uppercase mb-5 '>
-                            Você já imaginou que bom seria se você estivesse preparado o suficiente para 
-                            <b><u>empregos que pagam 5... 10... 15... até 20 mil reais por mês de salário?</u></b>
-                        </h2>
-
-                        <h4 class='text-center'>
-                            A faculdade não te prepara para o mercado de trabalho...
-                            <b class='text-uppercase'>Mas, fique tranquilo, o <u>Cusro Django Pro</u> vai te preparar!</b>
-                        </h4>
-                    </div>
-                </div>
-
-                <div class="row text-center mb-3">
-                    <div class="col">
-                        <h1 class='price-parcelado'>
-                            <span class='parcela'>12x</span>
-                            <b>R$ 49,70</b>
-                        </h1>
-                        <p class='price-a-vista'>(ou à vista com 15% de desconto, por R$ 497,00)</p>
-                    </div>    
-                </div>
-
-                {% if not is_promotion_expired %}
-                <div class="row text-center mb-5">
-                    <div class="col">
-                        <div class='text-center initiate-checkout d-block d-lg-none d-xl-none'>
-                            <a href="#lead-form-header" class="cta-compra btn btn-warning initiate-checkout" data-toggle="modal" data-target="#modal-waiting-capture">
-                                SIM! EU QUERO SER UM <br><b class='initiate-checkout'>PROGRAMADOR PROFISSIONAL!</b>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-                
-                <div class="row mt-5 mb-5 text-center">
-                    <div class="col">
-                        <img src='{% static "img/garantia.png" %}'>    
-                    </div>    
-                    
-                    <div class="col">
-                        <img src='{% static "img/banner-pagarme.png" %}'>    
-                    </div>    
-                
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {% block countdown %}
-        <div class='bg-black show-after' style="display: none">
+        <div class='show-after' style="display: none">
             <div class="container">
-                <div class="row text-light text-center">
-                    <div class="col mb-5 mt-5">
-                        {% if not is_promotion_expired %}
-                            <h2 class='font-weight-bold mb-5'>
-                                PRESTE ATENÇÃO: Essa promoção vai expirar em breve!
+
+                <div class='desktop d-none d-sm-block d-md-block'>
+                    <div class="row">
+                        <div class="col mb-5 mt-5">
+                            <h2 class='text-center text-uppercase mb-5 '>
+                                Você já imaginou que bom seria se você estivesse preparado o suficiente para
+                                <b><u>empregos que pagam 5... 10... 15... até 20 mil reais por mês de salário?</u></b>
                             </h2>
 
-                            <p>
-                                Esta oferta estará disponível apenas durante 30 minutos,
-                                contando a partir do momento do seu cadastro no Python Birds.</b>
-                            </p>
-                            
-                            <p>
-                                Ou seja, <b>você só possui esta chance de adquirir o Django Pro com 50% de desconto. </b>
-                                Quando o relógio abaixo chegar a zero, <b>a sua chance acabou.</b>
-                            </p>
+                            <h4 class='text-center'>
+                                A faculdade não te prepara para o mercado de trabalho...
+                                <b class='text-uppercase'>Mas, fique tranquilo, o <u>Curso Django Pro</u> vai te
+                                    preparar!</b>
+                            </h4>
+                        </div>
+                    </div>
 
-                            <h2 class='demo countdown text-light font-weight-bold text-center'></h2>
-                        
-                        {% else %}
-                        
-                            <h2 class='font-weight-bold mb-5' style='font-size: 30pt'>
-                                <u>Infelizmente a promoção se encerrou...</u>
+                    <div class="row text-center mb-3">
+                        <div class="col">
+                            <h1 class='price-parcelado'>
+                                <span class='parcela'>12x</span>
+                                <b>{{ payment_item_config.max_installment_amount_after_interest|cents_to_brl }}</b>
+                            </h1>
+                            <p class='price-a-vista'>(ou à vista com 15% de desconto,
+                                por {{ payment_item_config.price|cents_to_brl }})</p>
+                        </div>
+                    </div>
+
+                    {% if not is_promotion_expired %}
+                        <div class="row text-center mb-5">
+                            <div class="col">
+                                <div class='text-center initiate-checkout d-none d-sm-block d-md-block'>
+                                    <a href="#lead-form-header" class="cta-compra btn btn-warning initiate-checkout"
+                                       data-toggle="modal" data-target="#modal-waiting-capture">
+                                        EU QUERO SER UM <b class='initiate-checkout'>PROGRAMADOR PROFISSIONAL!</b>
+                                        <br><span
+                                            class='sub'>Clique aqui para fazer sua matrícula com acesso vitalício!</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="row mt-5 mb-5 text-center">
+                        <div class="col">
+                            <img src='{% static "img/garantia.png" %}'>
+                        </div>
+
+                        <div class="col">
+                            <img src='{% static "img/banner-pagarme.png" %}'>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class='mobile d-block d-lg-none d-xl-none'>
+                    <div class="row">
+                        <div class="col mb-5 mt-5">
+                            <h2 class='text-center text-uppercase mb-5 '>
+                                Você já imaginou que bom seria se você estivesse preparado o suficiente para
+                                <b><u>empregos que pagam 5... 10... 15... até 20 mil reais por mês de salário?</u></b>
                             </h2>
 
-                            <div class='initiate-checkout d-none d-sm-block d-md-block mt-5 mb-5'>
-                                <a href='/pagamento/curso-de-python-intermediario' class="cta btn btn-warning initiate-checkout mt-10">
-                                    <b>Comprar o Django Pro pelo preço normal</b>
-                                </a>
-                            </div>
+                            <h4 class='text-center'>
+                                A faculdade não te prepara para o mercado de trabalho...
+                                <b class='text-uppercase'>Mas, fique tranquilo, o <u>Cusro Django Pro</u> vai te
+                                    preparar!</b>
+                            </h4>
+                        </div>
+                    </div>
 
-                            <div class='initiate-checkout d-block d-lg-none d-xl-none  mt-5 mb-5'>
-                                <a href='/pagamento/curso-de-python-intermediario' class="cta-mobile btn initiate-checkout btn-warning mt-10">
-                                    <b>Comprar o Django Pro pelo preço normal</b>
-                                </a >
+                    <div class="row text-center mb-3">
+                        <div class="col">
+                            <h1 class='price-parcelado'>
+                                <span class='parcela'>12x</span>
+                                <b>R$ 49,70</b>
+                            </h1>
+                            <p class='price-a-vista'>(ou à vista com 15% de desconto, por R$ 497,00)</p>
+                        </div>
+                    </div>
+
+                    {% if not is_promotion_expired %}
+                        <div class="row text-center mb-5">
+                            <div class="col">
+                                <div class='text-center initiate-checkout d-block d-lg-none d-xl-none'>
+                                    <a href="#lead-form-header" class="cta-compra btn btn-warning initiate-checkout"
+                                       data-toggle="modal" data-target="#modal-waiting-capture">
+                                        SIM! EU QUERO SER UM <br><b class='initiate-checkout'>PROGRAMADOR
+                                        PROFISSIONAL!</b>
+                                    </a>
+                                </div>
                             </div>
-                        {% endif %}
+                        </div>
+                    {% endif %}
+
+                    <div class="row mt-5 mb-5 text-center">
+                        <div class="col">
+                            <img src='{% static "img/garantia.png" %}'>
+                        </div>
+
+                        <div class="col">
+                            <img src='{% static "img/banner-pagarme.png" %}'>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
-    {% endblock %}
 
-    <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Vamos lá!</h5>
+        {% block countdown %}
+            <div class='bg-black show-after' style="display: none">
+                <div class="container">
+                    <div class="row text-light text-center">
+                        <div class="col mb-5 mt-5">
+                            {% if not is_promotion_expired %}
+                                <h2 class='font-weight-bold mb-5'>
+                                    PRESTE ATENÇÃO: Essa promoção vai expirar em breve!
+                                </h2>
+
+                                <p>
+                                    Esta oferta estará disponível apenas durante 30 minutos,
+                                    contando a partir do momento do seu cadastro no Python Birds.</b>
+                                </p>
+
+                                <p>
+                                    Ou seja, <b>você só possui esta chance de adquirir o Django Pro com 50% de
+                                    desconto. </b>
+                                    Quando o relógio abaixo chegar a zero, <b>a sua chance acabou.</b>
+                                </p>
+
+                                <h2 class='demo countdown text-light font-weight-bold text-center'></h2>
+
+                            {% else %}
+
+                                <h2 class='font-weight-bold mb-5' style='font-size: 30pt'>
+                                    <u>Infelizmente a promoção se encerrou...</u>
+                                </h2>
+
+                                <div class='initiate-checkout d-none d-sm-block d-md-block mt-5 mb-5'>
+                                    <a href='/pagamento/curso-de-python-intermediario'
+                                       class="cta btn btn-warning initiate-checkout mt-10">
+                                        <b>Comprar o Django Pro pelo preço normal</b>
+                                    </a>
+                                </div>
+
+                                <div class='initiate-checkout d-block d-lg-none d-xl-none  mt-5 mb-5'>
+                                    <a href='/pagamento/curso-de-python-intermediario'
+                                       class="cta-mobile btn initiate-checkout btn-warning mt-10">
+                                        <b>Comprar o Django Pro pelo preço normal</b>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <p>
-                        Preencha os dados abaixo e em seguida clique no botão <i>Continuar</i> para que possamos reservar sua vaga.
-                    </p>
+            </div>
+        {% endblock %}
 
-                    <form id="contact_form" action="{% url 'django_pagarme:contact_info' slug=payment_item_config.slug %}" method="post">
-                    {% csrf_token %}
-                    {% bootstrap_form contact_form %}
-                    <button id="submit_button" type="submit" disabled="disabled" class="btn float-right">Continuar →</button>
-                </form>
+        <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Vamos lá!</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Preencha os dados abaixo e em seguida clique no botão <i>Continuar</i> para que possamos
+                            reservar sua vaga.
+                        </p>
+
+                        <form id="contact_form"
+                              action="{% url 'django_pagarme:contact_info' slug=payment_item_config.slug %}"
+                              method="post">
+                            {% csrf_token %}
+                            {% bootstrap_form contact_form %}
+                            <button id="submit_button" type="submit" disabled="disabled" class="btn float-right">
+                                Continuar →
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-            <script type="application/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-    <script type="application/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script type="application/javascript">
-
+        <script type="application/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+        <script type="application/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        <script type="application/javascript">
 
 
-    let phoneInput = document.getElementById('id_phone');
-        phoneInput.addEventListener('input', function (e) {
-            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
-            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
-        });
+            let phoneInput = document.getElementById('id_phone');
+            phoneInput.addEventListener('input', function (e) {
+                let originalNumber = e.target.value;
+                if (!originalNumber.startsWith('+')) {
+                    var x = originalNumber.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+                    e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+                }
+            });
 
-        let submitButton = document.getElementById('submit_button');
-        document.getElementById('contact_form').addEventListener('input', function (e) {
-            if (phoneInput.value.search(/\(\d\d\) \d\d\d\d\d-\d\d\d\d/) === 0) {
-                submitButton.removeAttribute('disabled');
-            } else {
-                submitButton.setAttribute('disabled', 'disabled');
-            }
-        });
+            let submitButton = document.getElementById('submit_button');
+            document.getElementById('contact_form').addEventListener('input', function (e) {
+                if (phoneInput.value.search(/\(\d\d\) \d\d\d\d\d-\d\d\d\d/) === 0 || phoneInput.value.search(/\+\d{13}/) === 0) {
+                    submitButton.removeAttribute('disabled');
+                } else {
+                    submitButton.setAttribute('disabled', 'disabled');
+                }
+            });
 
-        function showIt() {
-            var all = document.getElementsByClassName("show-after")
-            for (var i = 0; i < all.length; i++) {
-                all[i].style.display = "block";
-            }
-        }
-        setTimeout("showIt()", {% if request.GET.debug %}1{% else %}{{ seconds_to_show_full_page }}{% endif %} * 1000);
-
-        {% localtime on %}
-            // Set the date we're counting down to
-            var countDownDate = new Date("{{ countdown_limit|date:"m/d/Y H:i:s" }}").getTime();
-        {% endlocaltime %}
-
-        // Update the count down every 1 second
-        var x = setInterval(function () {
-
-            // Get today's date and time
-            var now = new Date().getTime();
-
-            // Find the distance between now and the count down date
-            var distance = countDownDate - now;
-
-            // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            if(hours < 10) {
-                hours = "0" + hours 
+            function showIt() {
+                var all = document.getElementsByClassName("show-after")
+                for (var i = 0; i < all.length; i++) {
+                    all[i].style.display = "block";
+                }
             }
 
-            if(minutes < 10) {
-                minutes = "0" + minutes 
-            }
-            
-            if(seconds < 10) {
-                seconds = "0" + seconds 
-            }
+            setTimeout("showIt()", {% if request.GET.debug %}1{% else %}{{ seconds_to_show_full_page }}{% endif %} * 1000);
 
-            days_in_hours = days * 24
-            hours += days_in_hours
+            {% localtime on %}
+                // Set the date we're counting down to
+                var countDownDate = new Date("{{ countdown_limit|date:"m/d/Y H:i:s" }}").getTime();
+            {% endlocaltime %}
 
-            // Display the result in the element with id="demo"
-            $(".countdown").html(hours + ":" + minutes + ":" + seconds);
-            
-            // If the count down is finished, write some text
-            if (distance < 0) {
-                clearInterval(x);
-                $(".countdown").html("ACABOU!!!");
-            }
-        }, 1000);
-    </script>
+            // Update the count down every 1 second
+            var x = setInterval(function () {
+
+                // Get today's date and time
+                var now = new Date().getTime();
+
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                if (hours < 10) {
+                    hours = "0" + hours
+                }
+
+                if (minutes < 10) {
+                    minutes = "0" + minutes
+                }
+
+                if (seconds < 10) {
+                    seconds = "0" + seconds
+                }
+
+                days_in_hours = days * 24
+                hours += days_in_hours
+
+                // Display the result in the element with id="demo"
+                $(".countdown").html(hours + ":" + minutes + ":" + seconds);
+
+                // If the count down is finished, write some text
+                if (distance < 0) {
+                    clearInterval(x);
+                    $(".countdown").html("ACABOU!!!");
+                }
+            }, 1000);
+        </script>
 
 
     {% endblock %}
 
     {% block testimonials %}
-    <div style="display: none" class='bg-secondary show-after'>
-        <div class="container">
-            <div class="row">
-                <div class="col mt-5 mb-5">
-                    <div class='social-proof'>
-                        {% include 'core/social_proof.html' %}
+        <div style="display: none" class='bg-secondary show-after'>
+            <div class="container">
+                <div class="row">
+                    <div class="col mt-5 mb-5">
+                        <div class='social-proof'>
+                            {% include 'core/social_proof.html' %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     {% endblock %}
 {% endblock body %}
 
@@ -315,11 +339,12 @@
             </div>
         </div>
     </div>
-    
-{% endblock  %}
+
+{% endblock %}
 
 {% block styles %}
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <style>
         @font-face {
@@ -365,30 +390,35 @@
             max-width: 960px;
         }
     </style>
-    
+
     <link rel="stylesheet" href="{% static 'css/client.css' %}"/>
-    
+
     <style>
 
         .desktop .title-sub {
             font-size: 1.5rem;
         }
+
         .desktop .price-parcelado {
             font-size: 60pt;
         }
+
         .desktop .price-parcelado .parcela {
             font-size: 30pt;
             margin-right: -10px;
         }
+
         .desktop .price-a-vista {
             margin-top: -15px;
             font-size: 12pt;
         }
+
         .desktop .cta-compra {
             line-height: 25px;
             padding: 20px 50px;
             font-size: 20pt;
         }
+
         .desktop .cta-compra .sub {
             font-size: 12pt;
         }
@@ -396,32 +426,41 @@
         .mobile h1 {
             font-size: 1.5rem;
         }
+
         .mobile .title-sub {
             font-size: 1rem;
             margin: 0;
         }
+
         .mobile h2 {
             font-size: 1.5rem;
         }
+
         .mobile h4 {
             font-size: 1.2rem;
         }
+
         .mobile .price-parcelado {
             font-size: 50pt;
         }
+
         .mobile .price-parcelado .parcela {
             font-size: 14pt;
         }
+
         .mobile .price-a-vista {
             font-size: 10pt;
         }
+
         .mobile .cta-compra {
             padding: 20px 40px;
             font-size: 14pt;
         }
+
         .bg-black .text-light h2 {
             color: #C33149 !important;
         }
+
         .bg-black .text-light .countdown {
             font-size: 60pt;
         }
