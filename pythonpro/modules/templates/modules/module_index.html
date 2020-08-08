@@ -2,25 +2,38 @@
 {% load static %}
 
 {% block title %}Módulos do Curso Python Pro{% endblock %}
-{% block description %}Listagem de todos os 7 módulos que compõem o curso Python Pro visando a formação profissional dos alunos{% endblock %}
+{% block description %}Listagem de todos os 7 cursos que compõem o curso Python Pro visando a formação profissional dos
+    alunos{% endblock %}
 
 {% block body %}
-  <div class="container mb-5">
-  {% for module in modules %}
-    <div class="row">
-      <div class="col">
-        <h1 id="{{module.slug}}" class="mt-4 mb-3" >{{ module.title }}</h1>
-        <dd>
-        </dd>
-        <dt>Objetivo</dt>
-        <dd><ul><li>{{ module.objective }}</li></ul></dd>
-        <dt>Público</dt>
-        <dd><ul><li>{{ module.target }}</li></ul></dd>
-        <dt>Descrição</dt>
-        <dd><ul><li>{{ module.description|linebreaks }}</li></ul></dd>
-        </dl>
-      </div>
+    <div class="container">
+        <h1 class="mt-5 mb-2">Todos os Cursos</h1>
+
+        <div class="row">
+            {% for module in modules %}
+                <div class="col-sm-4 mt-3 mb-2">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <b>{{ module.title }}</b>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Objetivo</h5>
+                            <p class="card-text">{{ module.objective |truncatechars:75 }}</p>
+                            <a href="{% url 'modules:description' slug=module.slug %}" class="btn btn-secondary">Saiba
+                                Mais</a>
+                            {% if module.title == 'Python Birds' %}
+                                <a href="{% url 'core:lead_landing' %}" class="btn btn-success"> Eu quero!</a>
+                            {% elif module.title == 'PyTools' or module.title == 'Django' %}
+                                <a href="{% url 'checkout:webdev_landing_page' %}" class="btn btn-success"> Comprar</a>
+                            {% else %}
+                                <a href="{% url 'checkout:bootcamp_lp' %}" class="btn btn-success"> Comprar</a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+
+            {% endfor %}
+        </div>
     </div>
-  {% endfor %}
-  </div>
 {% endblock body %}

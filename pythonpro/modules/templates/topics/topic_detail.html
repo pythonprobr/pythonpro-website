@@ -4,73 +4,6 @@
 {% block title %}{{ topic.title }}{% endblock %}
 {% block description %}{{ topic.description }}{% endblock %}
 {% block head %}
-    <script type="application/javascript" src="//player.vimeo.com/api/player.js"></script>
-    <script>
-        $(document).ready(function () {
-            var player = new Vimeo.Player(document.querySelector('#topic-iframe'));
-
-            var totalWatchedTime = 0;
-            var lastTimeCheck = 0;
-            var maxWatchedTime = 0;
-            var topicDuration = null;
-
-            function nowInSeconds() {
-                return Math.round(Date.now() / 1000);
-            }
-
-            function increaseWatchTime() {
-                var now = nowInSeconds();
-                totalWatchedTime += now - lastTimeCheck;
-                lastTimeCheck = now;
-                return totalWatchedTime;
-            }
-
-            function setMaxTimeWatched(currentTimeWatch) {
-                currentTimeWatch = Math.round(currentTimeWatch);
-                maxWatchedTime = Math.max(currentTimeWatch, maxWatchedTime);
-                return maxWatchedTime;
-            }
-
-            function storeStats() {
-                if (maxWatchedTime > 0) {
-                    $.post('{% url 'dashboard:topic_interaction' %}',
-                        {
-                            'topic': {{topic.id}},
-                            'topic_duration': topicDuration,
-                            'total_watched_time': totalWatchedTime,
-                            'max_watched_time': maxWatchedTime
-                        }
-                    );
-                    {# Reset time #}
-                    maxWatchedTime = 0;
-                    totalWatchedTime = 0;
-
-                }
-            }
-
-            player.getDuration().then(function (d) {
-                topicDuration = Math.round(d);
-            });
-
-
-            player.on('play', function () {
-                lastTimeCheck = nowInSeconds();
-            });
-
-
-            player.on('timeupdate', function (e) {
-                setMaxTimeWatched(e.seconds);
-                increaseWatchTime();
-                let watched_1_minute = totalWatchedTime >= 60;
-                if (watched_1_minute){
-                    storeStats();
-                }
-            });
-
-            $(window).on('beforeunload', storeStats);
-            player.on('ended', storeStats);
-        });
-    </script>
 
 {% endblock %}
 {% block body %}
@@ -88,83 +21,112 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                
                 <h1 class="mt-4 mb-3">{{ topic.title }}</h1>
                 <p>{{ topic.description|linebreaks }}</p>
                 <div class="embed-container mb-3">
-                    <iframe id="topic-iframe" src="https://player.vimeo.com/video/{{ topic.vimeo_id }}" width="640"
-                            height="360"
-                            frameborder="0"
-                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    <div id="topic-iframe"
+                         webkitallowfullscreen mozallowfullscreen allowfullscreen></div>
                 </div>
                 <div class="row mt-5 mb-5">
-                {% if topic.previous_content %}
-                    <div class="col-md text-md-left text-center">
-                        <a class="btn btn-success" href="{{ topic.previous_content.get_absolute_url }}">
-                           &laquo; <strong>{{ topic.previous_content.title }}</strong>
-                        </a>
-                    </div>
-                {% endif %}
-                {% if topic.next_content %}
-                    <div class="col-md text-md-right text-center mt-md-0 mt-2">
-                        <a class="btn btn-primary" href="{{ topic.next_content.get_absolute_url }}">
-                            <strong>{{ topic.next_content.title }}</strong> &raquo;
-                        </a>
-                    </div>
-                {% endif %}
-                </div>
-                <!-- <div class="_116mije" role="tablist" aria-orientation="horizontal">
-                    <button class="btn btn-outline-secondary" role="tab">
-                        <span aria-label="Fórum ligado o vídeo">Fórum</span>
-                    </button>
-                    <button class="btn btn-outline-secondary" role="tab">
-                        Material de apoio
-                    </button>
-
-                </div> -->
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="tabbable" id="tabs-98259">
-                                <ul class="nav nav-tabs">
-                                    <li class="nav-item">
-                                        <a class="nav-link active show" href="#tab1" data-toggle="tab">Fórum</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#tab2" data-toggle="tab">Material de apoio</a>
-                                    </li>
-                                </ul>
-                                <p></p>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="panel-138572">
-                                        <div id='discourse-comments' class="mb-5"></div>
-                                            <script type="text/javascript">
-                                                DiscourseEmbed = {
-                                                    discourseUrl: '{{ DISCOURSE_BASE_URL }}',
-                                                    topicId: {{ topic.discourse_topic_id }}
-                                                };
-                                            
-                                                (function () {
-                                                    var d = document.createElement('script');
-                                                    d.type = 'text/javascript';
-                                                    d.async = true;
-                                                    d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
-                                                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
-                                                })();
-                                            </script>
-                                    </div>
-                                    <div class="tab-pane" id="tab2">
-                                        <p>
-                                            Howdy, I'm in Section 2.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                    {% if topic.previous_content %}
+                        <div class="col-md text-md-left text-center">
+                            <a class="btn btn-success" href="{{ topic.previous_content.get_absolute_url }}">
+                                &laquo; <strong>{{ topic.previous_content.title }}</strong>
+                            </a>
                         </div>
-                    </div>
+                    {% endif %}
+                    {% if topic.next_content %}
+                        <div class="col-md text-md-right text-center mt-md-0 mt-2">
+                            <a class="btn btn-primary" href="{{ topic.next_content.get_absolute_url }}">
+                                <strong>{{ topic.next_content.title }}</strong> &raquo;
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
-                <p></p>
-                
+                <div id='discourse-comments' class="mb-5"></div>
+                <script type="application/javascript" src="//player.vimeo.com/api/player.js"></script>
+
+                <script type="text/javascript">
+
+                    $(document).ready(function () {
+                        let options = {'id': '{{ topic.vimeo_id }}', 'width': 640, 'height': 360}
+                        var player = new Vimeo.Player('topic-iframe', options);
+
+                        var totalWatchedTime = 0;
+                        var lastTimeCheck = 0;
+                        var maxWatchedTime = 0;
+                        var topicDuration = null;
+
+                        function nowInSeconds() {
+                            return Math.round(Date.now() / 1000);
+                        }
+
+                        function increaseWatchTime() {
+                            var now = nowInSeconds();
+                            totalWatchedTime += now - lastTimeCheck;
+                            lastTimeCheck = now;
+                            return totalWatchedTime;
+                        }
+
+                        function setMaxTimeWatched(currentTimeWatch) {
+                            currentTimeWatch = Math.round(currentTimeWatch);
+                            maxWatchedTime = Math.max(currentTimeWatch, maxWatchedTime);
+                            return maxWatchedTime;
+                        }
+
+                        function storeStats() {
+                            if (maxWatchedTime > 0) {
+                                $.post('{% url 'dashboard:topic_interaction' %}',
+                                    {
+                                        'topic': {{topic.id}},
+                                        'topic_duration': topicDuration,
+                                        'total_watched_time': totalWatchedTime,
+                                        'max_watched_time': maxWatchedTime
+                                    }
+                                );
+                                {# Reset time #}
+                                maxWatchedTime = 0;
+                                totalWatchedTime = 0;
+
+                            }
+                        }
+
+                        player.getDuration().then(function (d) {
+                            topicDuration = Math.round(d);
+                        });
+
+
+                        player.on('play', function () {
+                            lastTimeCheck = nowInSeconds();
+                        });
+
+
+                        player.on('timeupdate', function (e) {
+                            setMaxTimeWatched(e.seconds);
+                            increaseWatchTime();
+                            let watched_1_minute = totalWatchedTime >= 60;
+                            if (watched_1_minute) {
+                                storeStats();
+                            }
+                        });
+
+                        $(window).on('beforeunload', storeStats);
+                        player.on('ended', storeStats);
+                    });
+
+                    DiscourseEmbed = {
+                        discourseUrl: '{{ DISCOURSE_BASE_URL }}',
+                        topicId: {{ topic.discourse_topic_id }}
+                    };
+
+                    (function () {
+                        var d = document.createElement('script');
+                        d.type = 'text/javascript';
+                        d.async = true;
+                        d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+                    })();
+                </script>
             </div>
         </div>
     </div>
