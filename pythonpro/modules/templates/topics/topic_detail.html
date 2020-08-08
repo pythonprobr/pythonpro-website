@@ -113,7 +113,7 @@
                     </div>
                 {% endif %}
                 </div>
-                <div class="_116mije" role="tablist" aria-orientation="horizontal">
+                <!-- <div class="_116mije" role="tablist" aria-orientation="horizontal">
                     <button class="btn btn-outline-secondary" role="tab">
                         <span aria-label="Fórum ligado o vídeo">Fórum</span>
                     </button>
@@ -121,23 +121,50 @@
                         Material de apoio
                     </button>
 
+                </div> -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tabbable" id="tabs-98259">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active show" href="#tab1" data-toggle="tab">Fórum</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#tab2" data-toggle="tab">Material de apoio</a>
+                                    </li>
+                                </ul>
+                                <p></p>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="panel-138572">
+                                        <div id='discourse-comments' class="mb-5"></div>
+                                            <script type="text/javascript">
+                                                DiscourseEmbed = {
+                                                    discourseUrl: '{{ DISCOURSE_BASE_URL }}',
+                                                    topicId: {{ topic.discourse_topic_id }}
+                                                };
+                                            
+                                                (function () {
+                                                    var d = document.createElement('script');
+                                                    d.type = 'text/javascript';
+                                                    d.async = true;
+                                                    d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                                                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+                                                })();
+                                            </script>
+                                    </div>
+                                    <div class="tab-pane" id="tab2">
+                                        <p>
+                                            Howdy, I'm in Section 2.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <p></p>
-                <div id='discourse-comments' class="mb-5"></div>
-                <script type="text/javascript">
-                    DiscourseEmbed = {
-                        discourseUrl: '{{ DISCOURSE_BASE_URL }}',
-                        topicId: {{ topic.discourse_topic_id }}
-                    };
-
-                    (function () {
-                        var d = document.createElement('script');
-                        d.type = 'text/javascript';
-                        d.async = true;
-                        d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
-                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
-                    })();
-                </script>
+                
             </div>
         </div>
     </div>
