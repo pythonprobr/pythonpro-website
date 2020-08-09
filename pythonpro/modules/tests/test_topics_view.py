@@ -123,6 +123,14 @@ def test_discourse_url(resp, topic):
     dj_assert_contains(resp, f"discourseUrl: '{settings.DISCOURSE_BASE_URL}'")
 
 
+def test_tab_1(resp, topic):  # test para verificar se esta selecionada tab 1
+    pass
+
+
+def test_tab_2(resp, topic):
+    pass
+
+
 @pytest.fixture(params='objetos-pythonicos python-para-pythonistas python-patterns'.split())
 def advanced_module(db, request):
     slug = request.param
