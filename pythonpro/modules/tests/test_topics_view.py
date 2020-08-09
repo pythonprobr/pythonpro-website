@@ -124,10 +124,17 @@ def test_discourse_url(resp, topic):
 
 
 def test_tab_1(resp, topic):  # test para verificar se esta selecionada tab 1
-    pass
+    dj_assert_contains(resp, 'data-toggle="tab">Fórum</a>')
 
 
 def test_tab_2(resp, topic):
+    dj_assert_contains(resp, 'data-toggle="tab">Material de apoio</a>')
+
+
+def test_tab_selecionado():
+    """criar teste que verifique quando tab selecionada mostra 
+    conteúdo relacionado.
+    """
     pass
 
 
