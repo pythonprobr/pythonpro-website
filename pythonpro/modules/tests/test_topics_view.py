@@ -132,7 +132,7 @@ def test_tab_2(resp, topic):
 
 
 def test_tab_content_forum(resp, topic):
-    """criar teste que verifique quando tab selecionada mostra 
+    """criar teste que verifique quando tab selecionada mostra
     conteúdo relacionado.
     """
     dj_assert_contains(resp, 'id="forum">')
