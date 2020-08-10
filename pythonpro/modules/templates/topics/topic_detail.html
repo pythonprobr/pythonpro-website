@@ -48,20 +48,20 @@
                         <div class="col-md-12">
                             <div class="tabbable" id="tabs-262000">
                                 <ul class="nav nav-tabs">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="#tab1" data-toggle="tab">Fórum</a>
+                                    <li class="nav-item active">
+                                        <a class="nav-link" href="#forum" data-toggle="tab">Fórum</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#tab2" data-toggle="tab">Material de apoio</a>
+                                        <a class="nav-link" href="#material_de_apoio" data-toggle="tab">Material de apoio</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane active" id="panel-430775">
+                                    <div class="tab-pane fade in active" id="forum">
                                         <p>
                                             <div id='discourse-comments' class="mb-5"></div>
                                         </p>
                                     </div>
-                                    <div class="tab-pane" id="tab2">
+                                    <div class="tab-pane fade" id="material_de_apoio">
                                         <p>
                                             Howdy, I'm in Section 2.
                                         </p>
@@ -102,7 +102,7 @@
                         }
 
                         function storeStats() {
-                            if (maxWatchedTime > 0) {
+                            if (maxWatchedTime > 0) {ab2
                                 $.post('{% url 'dashboard:topic_interaction' %}',
                                     {
                                         'topic': {{topic.id}},
