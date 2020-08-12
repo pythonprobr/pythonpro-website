@@ -30,4 +30,14 @@ urlpatterns = [
         views.LeadsOnboardingPage.as_view(),
         name='leads_onboarding_page'
     ),
+    path(
+        'bootcamp-pre-inscricao',
+        views.BootcampVipLandingPage.as_view(),
+        name='bootcamp_vip_landing_page'
+    ),
+    path(
+        'bootcamp-pre-inscricao-obrigado',
+        views.BootcampVipThankYouPage.as_view(),
+        name='bootcamp_vip_thank_you_page'
+    ),
 ]

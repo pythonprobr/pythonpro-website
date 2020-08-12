@@ -15,13 +15,9 @@ def modules(transactional_db):
     return modules
 
 
-@pytest.fixture
-def resp_lead_user(client, django_user_model, modules):
-    user = baker.make(django_user_model)
-    clear_roles(user)
-    assign_role(user, 'lead')
-    client.force_login(user)
-    return _resp_not_logged(client, modules)
+@pytest.fixture # NOTE: only call client_with_user?
+def resp_lead_user(client_with_lead, modules):
+    return _resp_not_logged(client_with_lead, modules)
 
 
 @pytest.fixture
@@ -69,7 +65,7 @@ def resp_member_user(client, django_user_model, modules):
     return _resp_not_logged(client, modules)
 
 
-def _resp_not_logged(client, modules):
+def _resp_not_logged(client, modules):  # NOTE: the resp_lead_user return
     return client.get(reverse('modules:index'))
 
 

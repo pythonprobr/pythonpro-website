@@ -30,6 +30,8 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 # Redirect to HTTPS:
 SECURE_SSL_REDIRECT = not DEBUG
 
+SECURE_REFERRER_POLICY = None
+
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
 PAGARME_CRYPTO_KEY = config('PAGARME_CRYPTO_KEY')
