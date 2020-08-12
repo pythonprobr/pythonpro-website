@@ -13,17 +13,17 @@
                     <h1 class='font-weight-bold text-light mb-4'>
                         <u>APRENDA COMO PASSAR NAS VAGAS QUE PAGAM OS MELHORES SALÁRIOS!</u>
                     </h1>
-                    
+
                     <h4 class='text-light'>
                         <b>Workshop Online e Gratuito.</b>
                         <br>Dia 02/06 às 20h
-                    </h4>                    
+                    </h4>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class='offset-md-2 col-md-8 col-sm-12'>
-                    
+
                     <span class='text-light font-weight-bold' style='font-size: 16pt'>Preencha o formulário:</span>
                     <form method="POST" class='mb-5 text-center'>
                         {% csrf_token %}
@@ -46,43 +46,46 @@
                         DESCUBRA O QUE FAZER PARA PASSAR NOS PROCESSOS SELETIVOS <u>MAIS CONCORRIDOS
                         DO MERCADO...</u>
                     </h2>
-                    
+
                     <p>
-                        Sabe aquelas vagas que pagam ótimos salários? Para conseguir passar em 
-                        uma entrevista desse nível, não basta apenas saber programar. 
+                        Sabe aquelas vagas que pagam ótimos salários? Para conseguir passar em
+                        uma entrevista desse nível, não basta apenas saber programar.
                     </p>
 
                     <p>
-                        Em um determinado momento do processo seletivo você vai precisar de um 
+                        Em um determinado momento do processo seletivo você vai precisar de um
                         negócio chamado soft-skill.
                     </p>
 
                     <p>
                         Pra te ajudar, eu resolvi fazer um workshop online, 100% gratuito,
-                        onde eu vou te ensinar como se portar durante um processo seletivo e 
+                        onde eu vou te ensinar como se portar durante um processo seletivo e
                         finalmente conseguir o seu emprego dos sonhos como programador!
                     </p>
 
                     <p>
-                        O workshop vai acontecer no dia 02/06, a partir das 20h. 
+                        O workshop vai acontecer no dia 02/06, a partir das 20h.
                     </p>
                 </div>
 
             </div>
         </div>
     </div>
-    
+
     <script type="application/javascript">
 
-    let phoneInput = document.getElementById('id_phone');
+        let phoneInput = document.getElementById('id_phone');
         phoneInput.addEventListener('input', function (e) {
-            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
-            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+            let originalNumber = e.target.value;
+            if (!originalNumber.startsWith('+')) {
+                var x = originalNumber.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+                e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+            }
         });
 
         let submitButton = document.getElementById('submit_button');
         document.getElementById('contact_form').addEventListener('input', function (e) {
-            if (phoneInput.value.search(/\(\d\d\) \d\d\d\d\d-\d\d\d\d/) === 0) {
+            if (phoneInput.value.search(/\(\d\d\) \d\d\d\d\d-\d\d\d\d/) === 0 || phoneInput.value.search(/\+\d{13}/) === 0) {
                 submitButton.removeAttribute('disabled');
             } else {
                 submitButton.setAttribute('disabled', 'disabled');
@@ -106,14 +109,14 @@
             </div>
         </div>
     </div>
-    
-{% endblock  %}
+
+{% endblock %}
 
 {% block styles %}
     {{ block.super }}
     <style>
 
-        
+
     </style>
 
 {% endblock %}

@@ -19,6 +19,7 @@ def client_with_user(client, logged_user):
 
 _all_roles = set('data_scientist lead client webdev bootcamper pythonista member'.split())
 _advanced_roles = set('member pythonista'.split())
+_level_zero_roles = set('lead client webdev bootcamper member'.split())
 _level_one_roles = set('client webdev bootcamper member'.split())
 _level_two_roles = set('webdev bootcamper member'.split())
 _level_three_roles = set('bootcamper member'.split())
@@ -85,6 +86,20 @@ def level_one_role(logged_user, request):
 @pytest.fixture
 def client_with_level_one_roles(client, level_one_role):
     client.force_login(level_one_role)
+    return client
+
+
+@pytest.fixture(params=_level_zero_roles)
+@pytest.mark.django_db
+def level_zero_role(logged_user, request):
+    role = request.param
+    assign_role(logged_user, role)
+    return logged_user
+
+
+@pytest.fixture
+def client_with_level_zero_roles(client, level_zero_role):
+    client.force_login(level_zero_role)
     return client
 
 
@@ -187,6 +202,20 @@ def client_with_member(client, logged_user):
 @pytest.fixture
 def client_with_client(client, logged_user):
     assign_role(logged_user, 'client')
+    client.force_login(logged_user)
+    return client
+
+
+@pytest.fixture
+def client_with_bootcamper(client, logged_user):
+    assign_role(logged_user, 'bootcamper')
+    client.force_login(logged_user)
+    return client
+
+
+@pytest.fixture
+def client_with_pythonista(client, logged_user):
+    assign_role(logged_user, 'pythonista')
     client.force_login(logged_user)
     return client
 
