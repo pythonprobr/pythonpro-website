@@ -54,7 +54,8 @@ def bootcamp_lp(request):
     return _redirect_to_bootcamp_lp(request)
 
 
-def _no_wevdev_discount(request, discount_slug, promotion_end_date):
+def _no_wevdev_discount(request, discount_slug, promotion_end_date,
+                        template_name='checkout/bootcamp_lp_subscription_open.html'):
     if request.user.is_authenticated:
         user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
 
@@ -66,11 +67,12 @@ def _no_wevdev_discount(request, discount_slug, promotion_end_date):
     has_first_day_discount = True
     has_client_discount = False
     return _render_bootcamp_lp(client_discount, first_day_discount, form, has_client_discount, has_first_day_discount,
-                               no_discount_item_config, payment_item_config, promotion_end_date, request)
+                               no_discount_item_config, payment_item_config, promotion_end_date, request, template_name)
 
 
 def _render_bootcamp_lp(client_discount, first_day_discount, form, has_client_discount, has_first_day_discount,
-                        no_discount_item_config, payment_item_config, promotion_end_date, request):
+                        no_discount_item_config, payment_item_config, promotion_end_date, request,
+                        template_name='checkout/bootcamp_lp_subscription_open.html'):
     # Seconds to milliseconds https://stackoverflow.com/questions/5022447/converting-date-from-python-to-javascript
     promotion_end_date_milliseconds = int(time.mktime(promotion_end_date.timetuple())) * 1000
     context = {
@@ -86,7 +88,7 @@ def _render_bootcamp_lp(client_discount, first_day_discount, form, has_client_di
         'promotion_end_date_milliseconds': promotion_end_date_milliseconds,
         'no_discount_item_config': no_discount_item_config,
     }
-    return render(request, 'checkout/bootcamp_lp_subscription_open.html', context)
+    return render(request, template_name, context)
 
 
 def bootcamp_lp_d1(request):
@@ -95,7 +97,12 @@ def bootcamp_lp_d1(request):
     if not is_debug and ((not checkout_facade.has_50_percent_discount()) or is_webdev(user)):
         return _redirect_to_bootcamp_lp(request)
 
-    return _no_wevdev_discount(request, 'bootcamp-50-discount', checkout_facade.discount_50_percent_datetime_limit)
+    return _no_wevdev_discount(
+        request,
+        'bootcamp-50-discount',
+        checkout_facade.discount_50_percent_datetime_limit,
+        'checkout/bootcamp_lp_d1.html'
+    )
 
 
 @login_required
@@ -109,8 +116,13 @@ def bootcamp_lp_d1_webdev(request):
     first_day_discount_slug = 'bootcamp-50-discount'
     promotion_end_date = checkout_facade.discount_50_percent_datetime_limit
 
-    return _render_with_webdev_and_first_day_discounts(request, client_discount_slug, first_day_discount_slug,
-                                                       promotion_end_date)
+    return _render_with_webdev_and_first_day_discounts(
+        request,
+        client_discount_slug,
+        first_day_discount_slug,
+        promotion_end_date,
+        'checkout/bootcamp_lp_d1.html'
+    )
 
 
 def bootcamp_lp_d2(request):
@@ -119,7 +131,12 @@ def bootcamp_lp_d2(request):
     if not is_debug and (not checkout_facade.has_35_percent_discount() or is_webdev(user)):
         return _redirect_to_bootcamp_lp(request)
 
-    return _no_wevdev_discount(request, 'bootcamp-35-discount', checkout_facade.discount_35_percent_datetime_limit)
+    return _no_wevdev_discount(
+        request,
+        'bootcamp-35-discount',
+        checkout_facade.discount_35_percent_datetime_limit,
+        'checkout/bootcamp_lp_d2.html'
+    )
 
 
 @login_required
@@ -132,8 +149,13 @@ def bootcamp_lp_d2_webdev(request):
     first_day_discount_slug = 'bootcamp-35-discount'
     promotion_end_date = checkout_facade.discount_35_percent_datetime_limit
 
-    return _render_with_webdev_and_first_day_discounts(request, client_discount_slug, first_day_discount_slug,
-                                                       promotion_end_date)
+    return _render_with_webdev_and_first_day_discounts(
+        request,
+        client_discount_slug,
+        first_day_discount_slug,
+        promotion_end_date,
+        'checkout/bootcamp_lp_d2.html'
+    )
 
 
 def bootcamp_lp_d3(request):
@@ -154,8 +176,18 @@ def bootcamp_lp_d3(request):
     has_first_day_discount = False
     has_client_discount = False
     promotion_end_date = checkout_facade.launch_datetime_finish
-    return _render_bootcamp_lp(client_discount, first_day_discount, form, has_client_discount, has_first_day_discount,
-                               no_discount_item_config, payment_item_config, promotion_end_date, request)
+    return _render_bootcamp_lp(
+        client_discount,
+        first_day_discount,
+        form,
+        has_client_discount,
+        has_first_day_discount,
+        no_discount_item_config,
+        payment_item_config,
+        promotion_end_date,
+        request,
+        'checkout/bootcamp_lp_d3.html'
+    )
 
 
 @login_required
@@ -177,8 +209,18 @@ def bootcamp_lp_d3_webdev(request):
     promotion_end_date = checkout_facade.launch_datetime_finish
     payment_item_config = client_discount_item_config
     client_discount = no_discount_item_config.price - client_discount_item_config.price - first_day_discount
-    return _render_bootcamp_lp(client_discount, first_day_discount, form, has_client_discount, has_first_day_discount,
-                               no_discount_item_config, payment_item_config, promotion_end_date, request)
+    return _render_bootcamp_lp(
+        client_discount,
+        first_day_discount,
+        form,
+        has_client_discount,
+        has_first_day_discount,
+        no_discount_item_config,
+        payment_item_config,
+        promotion_end_date,
+        request,
+        'checkout/bootcamp_lp_d3.html'
+    )
 
 
 def waiting_list_ty(request):
@@ -238,8 +280,10 @@ def webdev_landing_page(request):
     return render(request, 'checkout/webdev_landing_page.html', ctx)
 
 
-def _render_with_webdev_and_first_day_discounts(request, client_discount_slug, first_day_discount_slug,
-                                                promotion_end_date):
+def _render_with_webdev_and_first_day_discounts(
+    request, client_discount_slug, first_day_discount_slug, promotion_end_date,
+    template_name='checkout/bootcamp_lp_subscription_open.html'
+):
     user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
     has_client_discount = True
     data = {'name': request.user.first_name, 'email': request.user.email}
@@ -252,4 +296,4 @@ def _render_with_webdev_and_first_day_discounts(request, client_discount_slug, f
     payment_item_config = client_discount_item_config
     client_discount = no_discount_item_config.price - client_discount_item_config.price - first_day_discount
     return _render_bootcamp_lp(client_discount, first_day_discount, form, has_client_discount, has_first_day_discount,
-                               no_discount_item_config, payment_item_config, promotion_end_date, request)
+                               no_discount_item_config, payment_item_config, promotion_end_date, request, template_name)

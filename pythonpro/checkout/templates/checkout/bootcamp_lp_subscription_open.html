@@ -3,7 +3,7 @@
 {% load django_pagarme %}
 {% load bootstrap4 %}
 
-{% block title %}INSCRIÇÕES ABERTAS! Curso Python Pro{% endblock %}
+{% block title %}INSCRIÇÕES ABERTAS! Bootcamp Python Pro{% endblock %}
 
 {% block extrahead %}
     <link href="{% static 'css/spp/owl.carousel.min.css' %}" rel="stylesheet">
@@ -28,7 +28,7 @@
     <meta property="og:site_name"
           content="SAIBA COMO TER ACESSO A UM MERCADO QUE PAGA ALTOS SALÁRIOS E TEM MILHARES DE VAGAS EM ABERTO!"/>
     <meta property="og:description"
-          content="Assista o vídeo e descubra como ir de 0 a 100 com Python e se tornar um programador profissional em questão de meses!"/>
+          content="Assista o vídeo e descubra como ir de 0 a 100 nos fundamentos e ferramentas da linguagem Python e se tornar um programador profissional em questão de meses!"/>
     <meta property="og:image" content="{% static 'img/spp/card-python-pro.png' %}"/>
 {% endblock %}
 
@@ -38,21 +38,15 @@
         <div class="header-main__group text-center">
             <h1 class="header-main__group__title text-uppercase fw-800 font-highlighted">Saiba como ter acesso a um
                 mercado que paga altos salários e tem milhares de vagas em aberto!</h1>
-            <h2 class="header-main__group__subtitle fw-300">Assista o vídeo abaixo e descubra como ir de 0 a 100 com
-                Python e se tornar um programador profissional em questão de meses!</h2>
+            <h2 class="header-main__group__subtitle fw-300">Assista o vídeo abaixo e descubra como ir de 0 a 100 nos
+                fundamentos e ferramentas da linguagem Python e se tornar um programador profissional em questão de meses!</h2>
 
             <div class="header-main__group__video">
-                {% if has_first_day_discount %}
-                    <iframe class="header-main__group__video__item" src="https://www.youtube.com/embed/0rzm6NjyoSw"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
-                {% else %}
-                    <iframe class="header-main__group__video__item" src="https://www.youtube.com/embed/g-C_5oUCz2A"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
-                {% endif %}
+                <iframe class="header-main__group__video__item" 
+                    src="{% block vsl %}https://www.youtube.com/embed/41DjlWEbT1M{% endblock vsl %}"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
                 <img class="header-main__group__video__detail"
                      src="{% static 'img/spp/header/detail-video-header-main.png' %}"
                      alt="Detalhes com pequenos círculos brancos juntos formando um quadrado">
@@ -60,20 +54,22 @@
 
             <div class="header-main__group__button">
                 <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition"
-                   rel="noopener noreferrer" data-toggle="modal" data-target="#modal-waiting-capture">Sim, eu quero me
-                    tornar um profissional!</a>
+                   rel="noopener noreferrer" data-toggle="modal" data-target="#modal-waiting-capture">
+                   Sim, eu quero me tornar um profissional!</a>
             </div>
         </div>
 
         <div class="header-main__green"></div>
     </header>
 
+    {% block main %}
     <main role="main">
         <section class="method-main">
             <div class="method-main__group">
                 <h2 class="method-main__group__title fw-300 text-blue text-uppercase font-highlighted">Conheça o método
-                    que vai te levar de <span class="fw-800">0 a 100 na linguagem Python e te transformar em um programador profissional. <span
-                            class="text-green">Tudo isso em pouco tempo!</span></span></h2>
+                    que vai te levar de <span class="fw-800">0 a 100 nos fundamentos e ferramentas da linguagem Python 
+                    e te transformar em um programador profissional. 
+                    <span class="text-green">Tudo isso em pouco tempo!</span></span></h2>
 
                 <div class="method-main__boxes">
                     <div class="method-main__boxes__item">
@@ -128,7 +124,7 @@
                     <div class="people-main__group__cards__item">
                         <div class="people-main__group__cards__item__image">
                             <img class="people-main__group__cards__item__image__item"
-                                 src="{% static 'img/spp/people-main/isaac-ferreira.jpg' %}" alt="Isaac Ferreira">
+                                 src="{% static 'img/spp/people-main/rodrigo-vaccari.jpg' %}" alt="Rodrigo Vaccari">
 
                             <img class="people-main__group__cards__item__image__detail"
                                  src="{% static 'img/spp/people-main/people-image-detail.png' %}"
@@ -137,17 +133,19 @@
 
                         <div class="people-main__group__cards__item__content">
                             <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">
-                                Isaac <span class="break text-green">Ferreira</span></h4>
-                            <p class="people-main__group__cards__item__content__description fw-300">Durante todas essas
-                                aulas eu vou te acompanhar para que você consiga passar por todo o conteúdo do curso e
-                                se preparar para se tornar um programador profissional.</p>
+                                Rodrigo <span class="break text-green">Vaccari</span></h4>
+                            <p class="people-main__group__cards__item__content__description fw-300">
+                                12 anos como desenvolvedor, 11 trabalhando remoto. 
+                                Saibacomo me preparei para os processos seletivos, até conseguir 
+                                fazer parte do time da maior fintech de empréstimos do Brasil.
+                            </p>
                         </div>
                     </div>
 
                     <div class="people-main__group__cards__item">
                         <div class="people-main__group__cards__item__image">
                             <img class="people-main__group__cards__item__image__item"
-                                 src="{% static 'img/spp/people-main/vicente-marcal.jpg' %}" alt="Vicente Marçal">
+                                 src="{% static 'img/spp/people-main/adriano-brasileiro.jpg' %}" alt="Adriano Brasileiro">
 
                             <img class="people-main__group__cards__item__image__detail"
                                  src="{% static 'img/spp/people-main/people-image-detail.png' %}"
@@ -156,17 +154,19 @@
 
                         <div class="people-main__group__cards__item__content">
                             <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">
-                                Vicente <span class="break text-green">Marçal</span></h4>
-                            <p class="people-main__group__cards__item__content__description fw-300">Compartilhando sua
-                                jornada para se tornar programação depois dos 40 alunos já tendo uma carreira como
-                                professor universitário em filosofia.</p>
+                                Adriano <span class="break text-green">Brasileiro</span></h4>
+                            <p class="people-main__group__cards__item__content__description fw-300">
+                                Saiba como usamos Python para construir uma ferramenta para que os professores 
+                                possam subir documentos de Word e o sistema seja capaz de
+                                transformar isso em séries de exercícios para seus alunos. 
+                            </p>
                         </div>
                     </div>
 
                     <div class="people-main__group__cards__item">
                         <div class="people-main__group__cards__item__image">
                             <img class="people-main__group__cards__item__image__item"
-                                 src="{% static 'img/spp/people-main/eric-gomes.jpg' %}" alt="Eric Gomes">
+                                 src="{% static 'img/spp/people-main/vinicius-assef.jpg' %}" alt="Vinicius Assef">
 
                             <img class="people-main__group__cards__item__image__detail"
                                  src="{% static 'img/spp/people-main/people-image-detail.png' %}"
@@ -175,17 +175,18 @@
 
                         <div class="people-main__group__cards__item__content">
                             <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">
-                                Eric <span class="break text-green">Gomes</span></h4>
-                            <p class="people-main__group__cards__item__content__description fw-300">Irá abordar os
-                                aspectos da gestão de projetos que todo dev precisa conhecer para gerar valor para o
-                                negócio e manter seu crescimento profissional.</p>
+                                Vinicius <span class="break text-green">Assef</span></h4>
+                            <p class="people-main__group__cards__item__content__description fw-300">
+                                Saiba o que é fluxo de request -> response; qual o papel do frontend;
+                                qual o papel do backend, e uma visão geral de um framework web.
+                            </p>
                         </div>
                     </div>
 
                     <div class="people-main__group__cards__item">
                         <div class="people-main__group__cards__item__image">
                             <img class="people-main__group__cards__item__image__item"
-                                 src="{% static 'img/spp/people-main/luiz-vital.jpg' %}" alt="Luiz Vital">
+                                 src="{% static 'img/spp/people-main/jessica-ferrari1.jpg' %}" alt="Jéssica Ferrari">
 
                             <img class="people-main__group__cards__item__image__detail"
                                  src="{% static 'img/spp/people-main/people-image-detail.png' %}"
@@ -194,10 +195,12 @@
 
                         <div class="people-main__group__cards__item__content">
                             <h4 class="people-main__group__cards__item__content__title fw-800 text-uppercase font-highlighted text-blue">
-                                Luiz <span class="break text-green">Vital</span></h4>
-                            <p class="people-main__group__cards__item__content__description fw-300">Contando os desafios
-                                de empreender com Django e Dados Geográficos para fazer o SIGEF, sistema de certificação
-                                fundiária do Brasil. Fundador da Necto Systems.</p>
+                                Jéssica <span class="break text-green">Ferrari</span></h4>
+                            <p class="people-main__group__cards__item__content__description fw-300">
+                                Como foi o meu processo de auto descobrimento na carreira de desenvolvedora. 
+                                O começo, os medos, inseguranças, perrengues e cagadas fenomenais. 
+                                Como eu passei a me enxergar depois desses quase 8 anos de estrada.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -302,8 +305,9 @@
                     </div>
                 </div>
 
-                <h6 class="people-main__group__disclaimer fw-300 text-blue text-uppercase">Além das aulas Ao Vivo, você
-                    terá acesso a <span class="text-green fw-800">6 cursos completos</span> <span class="fw-800">que explicam, do básico ao avançado, como ir de 0 a 100 com o Python!</span>
+                <h6 class="people-main__group__disclaimer fw-300 text-blue text-uppercase">
+                    Além das aulas Ao Vivo, você terá acesso a <span class="text-green fw-800">3 cursos completos</span> 
+                    que explicam o caminho mínimo necessário para <span class="fw-800">aprender Python e conseguir sua primeira vaga!</span>
                 </h6>
             </div>
         </section>
@@ -502,144 +506,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="tab">
-                                <div class="tab-detail"></div>
-                                <input type="checkbox" id="content4" checked>
-                                <label class="tab-label main-transition text-uppercase font-highlighted fw-800"
-                                       for="content4">Objetos Pythônicos</label>
-                                <div class="tab-content main-transition">
-                                    <div class="tab-content__group">
-                                        <div class="tab-content__group__description">
-                                            <h2 class="tab-content__group__description__title fw-700 font-highlighted text-uppercase text-blue">
-                                                Descrição</h2>
-                                            <p class="tab-content__group__description__description fw-300">No curso
-                                                Objetos Pythônicos você vai se aprofundar nas características que tornam
-                                                o Python a melhor linguagem de programação para quem quer ser produtivo
-                                                com qualidade.</p>
-                                            <p class="tab-content__group__description__description fw-300">Você vai
-                                                aprender mais sobre com o Python lida com conceitos de programação
-                                                orientada a objeto e programação funcional.</p>
-                                        </div>
-
-                                        <div class="tab-content__group__disclaimer">
-                                            <h2 class="tab-content__group__disclaimer__title fw-700 font-highlighted text-uppercase text-blue">
-                                                Ementa</h2>
-
-                                            <div class="tab-content__group__disclaimer__row">
-                                                <div class="tab-content__group__disclaimer__1">
-                                                    <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">
-                                                        Programação Funcional</h3>
-                                                    <ul>
-                                                        <li>Função como Objeto</li>
-                                                        <li>Decorator</li>
-                                                    </ul>
-                                                </div>
-
-                                                <div class="tab-content__group__disclaimer__2">
-                                                    <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">
-                                                        Orientação a objetos Pythonica</h3>
-                                                    <ul>
-                                                        <li>Interfaces</li>
-                                                        <li>Protocolos</li>
-                                                        <li>Bibliotecas</li>
-                                                        <li>Herança Múltiplas</li>
-                                                        <li>Aliasing</li>
-                                                        <li>Protocolo de Sequência</li>
-                                                        <li>Métodos Mágicos</li>
-                                                        <li>Class Based Views</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tab">
-                                <div class="tab-detail"></div>
-                                <input type="checkbox" id="content5" checked>
-                                <label class="tab-label main-transition text-uppercase font-highlighted fw-800"
-                                       for="content5">Python para Pythonistas</label>
-                                <div class="tab-content main-transition">
-                                    <div class="tab-content__group">
-                                        <div class="tab-content__group__description">
-                                            <h2 class="tab-content__group__description__title fw-700 font-highlighted text-uppercase text-blue">
-                                                Descrição</h2>
-                                            <p class="tab-content__group__description__description fw-300">No curso
-                                                Python para Pythonistas, você vai desvendar módulos avançados da
-                                                linguagem.</p>
-                                            <p class="tab-content__group__description__description fw-300">São conceitos
-                                                que, em geral, são utilizados em diversos frameworks. Você vai entender
-                                                como o Python funciona de verdade e poder utilizar todo o seu poder para
-                                                construir aplicações simples e poderosas.</p>
-                                        </div>
-
-                                        <div class="tab-content__group__disclaimer">
-                                            <h2 class="tab-content__group__disclaimer__title fw-700 font-highlighted text-uppercase text-blue">
-                                                Ementa</h2>
-
-                                            <div class="tab-content__group__disclaimer__row">
-                                                <div class="tab-content__group__disclaimer__1">
-                                                    <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">
-                                                        Programação Assincrona</h3>
-                                                    <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">
-                                                        Metaprogramação</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tab">
-                                <div class="tab-detail"></div>
-                                <input type="checkbox" id="content6" checked>
-                                <label class="tab-label main-transition text-uppercase font-highlighted fw-800"
-                                       for="content6">Python Patterns</label>
-                                <div class="tab-content main-transition">
-                                    <div class="tab-content__group">
-                                        <div class="tab-content__group__description">
-                                            <h2 class="tab-content__group__description__title fw-700 font-highlighted text-uppercase text-blue">
-                                                Descrição</h2>
-                                            <p class="tab-content__group__description__description fw-300">Com o curso
-                                                Python Patterns você vai desvendar módulos avançados da linguagem, em
-                                                geral utilizados em diversos frameworks.</p>
-                                        </div>
-
-                                        <div class="tab-content__group__disclaimer">
-                                            <h2 class="tab-content__group__disclaimer__title fw-700 font-highlighted text-uppercase text-blue">
-                                                Ementa</h2>
-
-                                            <div class="tab-content__group__disclaimer__row">
-                                                <div class="tab-content__group__disclaimer__1">
-                                                    <h3 class="tab-content__group__disclaimer__1__title text-green fw-700">
-                                                        Programação Funcional</h3>
-                                                    <ul>
-                                                        <li>Motivação</li>
-                                                        <li>Facade</li>
-                                                        <li>Embrulho</li>
-                                                        <li>Singleton</li>
-                                                        <li>Borg</li>
-                                                        <li>Adapter</li>
-                                                    </ul>
-                                                </div>
-
-                                                <div class="tab-content__group__disclaimer__2">
-                                                    <ul class="tab-content__group__disclaimer__2--last">
-                                                        <li>Template Method</li>
-                                                        <li>Composite</li>
-                                                        <li>Strategy Clássico</li>
-                                                        <li>Flyweight e NullObject</li>
-                                                        <li>Strategy Funcional</li>
-                                                        <li>Decorator</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -669,8 +535,8 @@
 
         <section class="experience-main">
             <div class="experience-main__group">
-                <h2 class="experience-main__group__title fw-300 font-highlighted text-blue text-uppercase">Como será a
-                    sua <span class="text-green fw-800">experiência?</span></h2>
+                <h2 class="experience-main__group__title fw-300 font-highlighted text-blue text-uppercase">
+                Como será a sua <span class="text-green fw-800">experiência?</span></h2>
 
                 <div class="experience-main__group__box">
                     <div class="experience-main__group__box__item">
@@ -714,7 +580,7 @@
                         </div>
 
                         <h3 class="summary-main__group__cards__item__title text-uppercase text-blue font-highlighted fw-700">
-                            6 cursos da formação Python Pro</h3>
+                            3 cursos da formação Python Pro</h3>
                     </div>
 
                     <div class="summary-main__group__cards__item">
@@ -878,13 +744,16 @@
                     não gostar do curso?"</h2>
 
                 <div class="garantee-main__group__description">
-                    <p class="garantee-main__group__description__item text-white fw-400">Você terá acesso a todo o
-                        conteúdo que foi passado em todas as turmas do Python Pro. Isso inclui as aulas e os arquivos
-                        dos projetos!</p>
-                    <p class="garantee-main__group__description__item text-white fw-400">Eu poderia cobrar,
-                        tranquilamente, R$ 1.500,00 só por este acesso. Mas resolvi te dar como bônus para te provar
-                        como eu estou comprometido com o seu sucesso! Somente estes bônus já valem quase muito mais que
-                        o curso!</p>
+                    <p class="garantee-main__group__description__item text-white fw-400">
+                        Se você não gostar do meu curso eu te devolvo TODO seu dinheiro nos primeiros 15 dias.
+                        Pode ser por qualquer motivo.
+                    </p>
+                    <p class="garantee-main__group__description__item text-white fw-400">
+                        Se você não gostar da minha didática, não gostar do
+                        jeito que eu falo, não conseguir acompanhar o ritmo, se você não gostar até da cor da minha camiseta, 
+                        basta me enviar um email que, se tiver dentro de 15 dias,
+                        a partir da data da primeira aula, eu te devolvo o dinheiro na hora, sem perguntas.    
+                    </p>
                 </div>
             </div>
         </section>
@@ -1481,6 +1350,7 @@
             </div>
         </section>
     </main>
+    {% endblock main %}
 
     <footer class="footer">
         <div class="footer__group">
