@@ -813,11 +813,10 @@
         },
         "humanize": {
             "hashes": [
-                "sha256:89062c6db8601693b7d223443d0d7529aa9577df43a1387ddd4b9c273abb4a51",
-                "sha256:8a68bd9bccb899fd9bfb1e6d96c1e84e4475551cc9a5b5bdbd69b9b1cfd19c80"
+                "sha256:8ee358ea6c23de896b9d1925ebe6a8504bb2ba7e98d5ccf4d07ab7f3b28f3819",
+                "sha256:fd5b32945687443d5b8bc1e02fad027da1d293a9e963b3450122ad98ef534f21"
             ],
-            "markers": "python_version >= '3.5'",
-            "version": "==2.5.0"
+            "version": "==2.6.0"
         },
         "iniconfig": {
             "hashes": [
