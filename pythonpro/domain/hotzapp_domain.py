@@ -103,9 +103,9 @@ def verify_purchase(name, email, phone, payment_item_slug):
     try:
         user = facade.find_user_by_email(email=email)
     except facade.UserDoesNotExist:
-        return send_abandoned_cart(name, phone, email, payment_item_slug)
+        return send_abandoned_cart(name, email, phone, payment_item_slug)
     else:
         payment = PagarmePayment.objects.filter(user__id=user.id, items__slug__exact=payment_item_slug).order_by(
             '-id').first()
         if payment is None or payment.status() != django_pagarme_facade.PAID:
-            return send_abandoned_cart(name, phone, email, payment_item_slug)
+            return send_abandoned_cart(name, email, phone, payment_item_slug)
