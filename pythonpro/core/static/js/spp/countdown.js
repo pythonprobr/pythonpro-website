@@ -25,5 +25,3 @@ function initCountDown(countDown) {
         }
     }, second)
 }
-
-initCountDown(new Date('Aug 10, 2020 23:59:59').getTime());

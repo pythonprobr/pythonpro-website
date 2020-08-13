@@ -193,7 +193,10 @@
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" async></script>
-  <script src="{% static 'js/spp/countdown.min.js' %}" async></script>
+  <script src="{% static 'js/spp/countdown.js' %}"></script>
+  <script>
+    initCountDown(new Date('Aug 10, 2020 23:59:59').getTime());
+  </script>
   {% endblock %}
   {% block extrabody %}{% endblock extrabody %}
 </body>
