@@ -281,7 +281,7 @@ def webdev_landing_page(request):
 
 
 def _render_with_webdev_and_first_day_discounts(
-    request, client_discount_slug, first_day_discount_slug, promotion_end_date, 
+    request, client_discount_slug, first_day_discount_slug, promotion_end_date,
     template_name='checkout/bootcamp_lp_subscription_open.html'
 ):
     user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
