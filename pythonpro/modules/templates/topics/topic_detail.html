@@ -102,7 +102,7 @@
                         }
 
                         function storeStats() {
-                            if (maxWatchedTime > 0) {ab2
+                            if (maxWatchedTime > 0) {
                                 $.post('{% url 'dashboard:topic_interaction' %}',
                                     {
                                         'topic': {{topic.id}},

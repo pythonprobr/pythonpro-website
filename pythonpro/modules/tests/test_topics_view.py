@@ -123,7 +123,9 @@ def test_discourse_url(resp, topic):
     dj_assert_contains(resp, f"discourseUrl: '{settings.DISCOURSE_BASE_URL}'")
 
 
-def test_tab_1(resp, topic):  # test para verificar se esta selecionada tab 1
+def test_tab_1(resp, topic):
+    """Test assert if exist 
+    """
     dj_assert_contains(resp, 'href="#forum" data-toggle="tab">Fórum</a>')
 
 
@@ -132,8 +134,7 @@ def test_tab_2(resp, topic):
 
 
 def test_tab_content_forum(resp, topic):
-    """criar teste que verifique quando tab selecionada mostra
-    conteúdo relacionado.
+    """Make a test with assert contains in tab 'Fórum'.
     """
     dj_assert_contains(resp, 'id="forum">')
 
