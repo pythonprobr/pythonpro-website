@@ -124,7 +124,7 @@ def test_discourse_url(resp, topic):
 
 
 def test_tab_1(resp, topic):
-    """Test assert if exist 
+    """Test assert if exist
     """
     dj_assert_contains(resp, 'href="#forum" data-toggle="tab">Fórum</a>')
 
