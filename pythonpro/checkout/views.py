@@ -12,7 +12,7 @@ from pythonpro.checkout import facade as checkout_facade
 from pythonpro.checkout import forms as checkout_forms
 from pythonpro.checkout.forms import WaitingForm
 from pythonpro.core.facade import is_webdev
-from pythonpro.domain import user_facade
+from pythonpro.domain import user_domain
 
 
 def _redirect_to_bootcamp_lp(request):
@@ -36,9 +36,9 @@ def bootcamp_lp(request):
             source = request.GET.get('utm_source', default='unknown')
             data = form.cleaned_data
             if request.user.is_authenticated:
-                user_facade.subscribe_to_waiting_list(request.user, data['phone'], source)
+                user_domain.subscribe_to_waiting_list(request.user, data['phone'], source)
             else:
-                user_facade.subscribe_anonymous_user_to_waiting_list(
+                user_domain.subscribe_anonymous_user_to_waiting_list(
                     data['email'], data['first_name'], data['phone'], source
                 )
             return redirect(reverse('checkout:waiting_list_ty'))
@@ -46,7 +46,7 @@ def bootcamp_lp(request):
 
     if not checkout_facade.is_launch_open():
         if request.user.is_authenticated:
-            user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
+            user_domain.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
 
         form = checkout_forms.WaitingForm()
         return render(request, 'checkout/bootcamp_lp_subscription_closed.html', {'form': form})
@@ -57,7 +57,7 @@ def bootcamp_lp(request):
 def _no_wevdev_discount(request, discount_slug, promotion_end_date,
                         template_name='checkout/bootcamp_lp_subscription_open.html'):
     if request.user.is_authenticated:
-        user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
+        user_domain.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
 
     form = facade.ContactForm()
     payment_item_config = facade.find_payment_item_config(discount_slug)
@@ -167,7 +167,7 @@ def bootcamp_lp_d3(request):
         return _redirect_to_bootcamp_lp(request)
 
     if request.user.is_authenticated:
-        user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
+        user_domain.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
 
     form = facade.ContactForm()
     payment_item_config = no_discount_item_config = facade.find_payment_item_config('bootcamp')
@@ -198,7 +198,7 @@ def bootcamp_lp_d3_webdev(request):
     if not is_debug and (has_discount or not (checkout_facade.is_launch_open() and is_webdev(user))):
         return _redirect_to_bootcamp_lp(request)
 
-    user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
+    user_domain.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
     has_client_discount = True
     data = {'name': request.user.first_name, 'email': request.user.email}
     form = facade.ContactForm(data)
@@ -284,7 +284,7 @@ def _render_with_webdev_and_first_day_discounts(
     request, client_discount_slug, first_day_discount_slug, promotion_end_date,
     template_name='checkout/bootcamp_lp_subscription_open.html'
 ):
-    user_facade.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
+    user_domain.visit_member_landing_page(request.user, source=request.GET.get('utm_source', default='unknown'))
     has_client_discount = True
     data = {'name': request.user.first_name, 'email': request.user.email}
     form = facade.ContactForm(data)

@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
 
-from pythonpro.domain import user_facade
+from pythonpro.domain import user_domain
 
 
 @pytest.fixture
@@ -12,7 +12,7 @@ def subscription_closed(settings):
 @pytest.fixture
 def create_or_update_with_no_role_mock(mocker):
     create_or_update_with_no_role = mocker.patch(
-        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_with_no_role.delay'
+        'pythonpro.domain.user_domain._email_marketing_facade.create_or_update_with_no_role.delay'
     )
     return create_or_update_with_no_role
 
@@ -40,7 +40,7 @@ def test_status_code(resp):
 
 
 def test_user_interacton(resp, logged_user):
-    assert 'WAITING_LIST' == user_facade.find_user_interactions(logged_user)[0].category
+    assert 'WAITING_LIST' == user_domain.find_user_interactions(logged_user)[0].category
 
 
 @pytest.fixture

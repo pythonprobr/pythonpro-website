@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from pythonpro.dashboard.facade import has_watched_any_topic
 from pythonpro.dashboard.forms import TopicInteractionForm
-from pythonpro.domain import content_statistics_domain, user_facade
+from pythonpro.domain import content_statistics_domain, user_domain
 from pythonpro.modules.models import Topic
 
 
@@ -45,7 +45,7 @@ def topic_interaction(request):
     form = TopicInteractionForm(data)
     if form.is_valid():
         if not has_watched_any_topic(user):
-            user_facade.activate_user(user, None)
+            user_domain.activate_user(user, None)
         topic_id = int(request.POST['topic'])
         current_topic_duration = Topic.objects.values('duration').get(id=topic_id)['duration']
         maybe_new_topic_duration = form.cleaned_data['topic_duration']

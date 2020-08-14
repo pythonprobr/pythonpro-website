@@ -56,42 +56,42 @@ class UserAdmin(RolePermissionsUserAdminMixin, admin.ModelAdmin):
     actions = ['make_bootcamper', 'make_webdev', 'make_member', 'make_data_scientist', 'make_pythonista']
 
     def make_webdev(self, request, queryset):
-        from pythonpro.domain import user_facade
+        from pythonpro.domain import user_domain
         for user in queryset:
             try:
-                user_facade.promote_webdev(user, 'django_admin')
+                user_domain.promote_webdev(user, 'django_admin')
             except UserRoleException:
                 pass  # No need to handle on admin
 
     def make_bootcamper(self, request, queryset):
-        from pythonpro.domain import user_facade
+        from pythonpro.domain import user_domain
         for user in queryset:
             try:
-                user_facade.promote_bootcamper(user, 'django_admin')
+                user_domain.promote_bootcamper(user, 'django_admin')
             except UserRoleException:
                 pass  # No need to handle on admin
 
     def make_pythonista(self, request, queryset):
-        from pythonpro.domain import user_facade
+        from pythonpro.domain import user_domain
         for user in queryset:
             try:
-                user_facade.promote_pythonista(user, 'django_admin')
+                user_domain.promote_pythonista(user, 'django_admin')
             except UserRoleException:
                 pass  # No need to handle on admin
 
     def make_data_scientist(self, request, queryset):
-        from pythonpro.domain import user_facade
+        from pythonpro.domain import user_domain
         for user in queryset:
             try:
-                user_facade.promote_data_scientist(user, 'django_admin')
+                user_domain.promote_data_scientist(user, 'django_admin')
             except UserRoleException:
                 pass  # No need to handle on admin
 
     def make_member(self, request, queryset):
-        from pythonpro.domain import user_facade
+        from pythonpro.domain import user_domain
         for user in queryset:
             try:
-                user_facade.promote_member(user, 'django_admin')
+                user_domain.promote_member(user, 'django_admin')
             except UserRoleException:
                 pass  # No need to handle on admin
 

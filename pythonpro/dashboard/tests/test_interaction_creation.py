@@ -3,13 +3,13 @@ from django.urls import reverse
 from model_bakery import baker
 
 from pythonpro.dashboard.models import TopicInteraction
-from pythonpro.domain import user_facade
+from pythonpro.domain import user_domain
 from pythonpro.modules.models import Topic
 
 
 @pytest.fixture
 def remove_tags_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.remove_tags.delay')
+    return mocker.patch('pythonpro.domain.user_domain._email_marketing_facade.remove_tags.delay')
 
 
 @pytest.fixture
@@ -54,7 +54,7 @@ def test_user_mark_on_email_marketing(resp, remove_tags_mock, logged_user):
 
 
 def test_user_activation(resp, remove_tags_mock, logged_user):
-    assert 'ACTIVATED' == user_facade.find_user_interactions(logged_user)[0].category
+    assert 'ACTIVATED' == user_domain.find_user_interactions(logged_user)[0].category
 
 
 def test_topic_interaction_status_code(resp):

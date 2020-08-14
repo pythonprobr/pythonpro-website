@@ -9,17 +9,17 @@ from pythonpro.django_assertions import dj_assert_contains
 
 @pytest.fixture
 def tag_as_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.tag_as.delay')
+    return mocker.patch('pythonpro.domain.user_domain._email_marketing_facade.tag_as.delay')
 
 
 @pytest.fixture
 def visit_member_landing_page_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._core_facade.visit_member_landing_page')
+    return mocker.patch('pythonpro.domain.user_domain._core_facade.visit_member_landing_page')
 
 
 @pytest.fixture
 def subscribe_to_waiting_list_mock(mocker):
-    return mocker.patch('pythonpro.checkout.views.user_facade.subscribe_to_waiting_list')
+    return mocker.patch('pythonpro.checkout.views.user_domain.subscribe_to_waiting_list')
 
 
 begin_and_finish = [
@@ -79,7 +79,7 @@ def test_post_with_user(dt, client, freezer, subscribe_to_waiting_list_mock, log
 
 @pytest.fixture
 def subscribe_anonymous_user_to_waiting_list_mock(mocker):
-    return mocker.patch('pythonpro.checkout.views.user_facade.subscribe_anonymous_user_to_waiting_list')
+    return mocker.patch('pythonpro.checkout.views.user_domain.subscribe_anonymous_user_to_waiting_list')
 
 
 @pytest.mark.parametrize('dt', begin_and_finish)

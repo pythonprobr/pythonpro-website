@@ -9,7 +9,7 @@ from pythonpro.django_assertions import dj_assert_contains
 
 @pytest.fixture
 def tag_as_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.tag_as.delay')
+    return mocker.patch('pythonpro.domain.user_domain._email_marketing_facade.tag_as.delay')
 
 
 @pytest.fixture

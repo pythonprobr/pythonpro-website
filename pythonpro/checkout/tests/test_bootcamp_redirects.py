@@ -8,7 +8,7 @@ from pythonpro.checkout import facade
 
 @pytest.fixture
 def tag_as_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.tag_as.delay')
+    return mocker.patch('pythonpro.domain.user_domain._email_marketing_facade.tag_as.delay')
 
 
 def assert_redirect_with_querystring(client, from_path, tag_as_mock, to_path):
