@@ -22,7 +22,7 @@ TRANSACTION_ID = 7656690
 @pytest.fixture
 def create_or_update_member_mock(mocker):
     return mocker.patch(
-        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_member.delay',
+        'pythonpro.domain.user_domain._email_marketing_facade.create_or_update_member.delay',
         side_effect=email_marketing_facade.create_or_update_member
     )
 
@@ -30,7 +30,7 @@ def create_or_update_member_mock(mocker):
 @pytest.fixture
 def create_or_update_lead_mock(mocker):
     return mocker.patch(
-        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_lead.delay',
+        'pythonpro.domain.user_domain._email_marketing_facade.create_or_update_lead.delay',
         side_effect=email_marketing_facade.create_or_update_lead
     )
 
@@ -45,18 +45,18 @@ def payment_handler_task_mock(mocker):
 
 @pytest.fixture
 def remove_tags_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.remove_tags.delay')
+    return mocker.patch('pythonpro.domain.user_domain._email_marketing_facade.remove_tags.delay')
 
 
 @pytest.fixture
 def sync_on_discourse_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse.delay')
+    return mocker.patch('pythonpro.domain.user_domain.sync_user_on_discourse.delay')
 
 
 @pytest.fixture
 def create_or_update_webdev_mock(mocker):
     return mocker.patch(
-        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_webdev.delay',
+        'pythonpro.domain.user_domain._email_marketing_facade.create_or_update_webdev.delay',
         side_effect=email_marketing_facade.create_or_update_webdev
     )
 
@@ -64,7 +64,7 @@ def create_or_update_webdev_mock(mocker):
 @pytest.fixture
 def create_or_update_data_scientist_mock(mocker):
     return mocker.patch(
-        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_data_scientist.delay',
+        'pythonpro.domain.user_domain._email_marketing_facade.create_or_update_data_scientist.delay',
         side_effect=email_marketing_facade.create_or_update_data_scientist
     )
 
@@ -72,7 +72,7 @@ def create_or_update_data_scientist_mock(mocker):
 @pytest.fixture
 def create_or_update_bootcamper_mock(mocker):
     return mocker.patch(
-        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_bootcamper.delay',
+        'pythonpro.domain.user_domain._email_marketing_facade.create_or_update_bootcamper.delay',
         side_effect=email_marketing_facade.create_or_update_bootcamper
     )
 
@@ -80,7 +80,7 @@ def create_or_update_bootcamper_mock(mocker):
 @pytest.fixture
 def create_or_update_pythonist_mock(mocker):
     return mocker.patch(
-        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_pythonista.delay',
+        'pythonpro.domain.user_domain._email_marketing_facade.create_or_update_pythonista.delay',
         side_effect=email_marketing_facade.create_or_update_pythonista
     )
 

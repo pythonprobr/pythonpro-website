@@ -2,7 +2,7 @@ import pytest
 from django.urls import reverse
 
 from pythonpro.django_assertions import dj_assert_contains
-from pythonpro.domain.user_facade import find_user_interactions
+from pythonpro.domain.user_domain import find_user_interactions
 
 
 @pytest.fixture

@@ -4,23 +4,23 @@ from rolepermissions.checkers import has_role
 from rolepermissions.roles import RolesManager
 
 from pythonpro.core.admin import UserAdmin
-from pythonpro.domain import user_facade
+from pythonpro.domain import user_domain
 
 
 @pytest.fixture
 def sync_user_delay(mocker):
-    return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse.delay')
+    return mocker.patch('pythonpro.domain.user_domain.sync_user_on_discourse.delay')
 
 
 @pytest.fixture
 def email_market_mocks(mocker):
-    maybe_function_names = dir(user_facade._email_marketing_facade)
+    maybe_function_names = dir(user_domain._email_marketing_facade)
     task_function_mocks = []
     for name in maybe_function_names:
-        maybe_task_function = getattr(user_facade._email_marketing_facade, name)
+        maybe_task_function = getattr(user_domain._email_marketing_facade, name)
         if hasattr(maybe_task_function, 'delay'):
             task_function_mocks.append(mocker.patch(
-                f'pythonpro.domain.user_facade._email_marketing_facade.{name}.delay', side_effeict=maybe_task_function
+                f'pythonpro.domain.user_domain._email_marketing_facade.{name}.delay', side_effeict=maybe_task_function
             ))
     return task_function_mocks
 

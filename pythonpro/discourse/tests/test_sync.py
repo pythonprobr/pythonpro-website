@@ -1,7 +1,7 @@
 import pytest
 import responses
 
-import pythonpro.domain.user_facade
+import pythonpro.domain.user_domain
 from pythonpro.discourse import facade
 
 
@@ -15,21 +15,21 @@ def test_missing_discourse_api_key(settings, no_responses):
     settings.DISCOURSE_API_KEY = ''
     settings.DISCOURSE_BASE_URL = 'https://forum.python.pro.br/'
     with pytest.raises(facade.MissingDiscourseAPICredentials):
-        pythonpro.domain.user_facade.sync_user_on_discourse(None)
+        pythonpro.domain.user_domain.sync_user_on_discourse(None)
 
 
 def test_missing_discourse_api_user(settings, no_responses):
     settings.DISCOURSE_API_USER = ''
     settings.DISCOURSE_BASE_URL = 'https://forum.python.pro.br/'
     with pytest.raises(facade.MissingDiscourseAPICredentials):
-        pythonpro.domain.user_facade.sync_user_on_discourse(None)
+        pythonpro.domain.user_domain.sync_user_on_discourse(None)
 
 
 def test_no_integration_on_missing_url_config(settings, no_responses):
     settings.DISCOURSE_API_USER = ''
     settings.DISCOURSE_API_KEY = ''
     settings.DISCOURSE_BASE_URL = ''
-    assert pythonpro.domain.user_facade.sync_user_on_discourse(None) is None
+    assert pythonpro.domain.user_domain.sync_user_on_discourse(None) is None
 
 
 @pytest.fixture
@@ -44,7 +44,7 @@ def resps(settings):
 
 
 def test_user_sync(logged_user, resps):
-    pythonpro.domain.user_facade.sync_user_on_discourse(logged_user)
+    pythonpro.domain.user_domain.sync_user_on_discourse(logged_user)
 
 
 success_response = {
