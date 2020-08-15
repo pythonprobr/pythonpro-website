@@ -49,17 +49,17 @@
 </div>
 {% endif %}
 
-{% if not user.is_authenticated %}
-<div>
-    <h4 class="summary-main__group__price__login fw-400">
-        (Se você comprou o Django Pro, 
-        <a class="text-blue" 
-            href="{% url 'two_factor:login' %}?next={% url 'checkout:bootcamp_lp' %}"
-            >faça o login</a> 
-        para ganhar um desconto)
-    </h4>
-</div>
-{% endif %}
+{#{% if not user.is_authenticated %}#}
+{#<div>#}
+{#    <h4 class="summary-main__group__price__login fw-400">#}
+{#        (Se você comprou o Django Pro,#}
+{#        <a class="text-blue"#}
+{#            href="{% url 'two_factor:login' %}?next={% url 'checkout:bootcamp_lp' %}"#}
+{#            >faça o login</a>#}
+{#        para ganhar um desconto)#}
+{#    </h4>#}
+{#</div>#}
+{#{% endif %}#}
 
 <div class="header-main__group__button">
 <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer" data-toggle="modal" data-target="#modal-waiting-capture">Sim, eu quero me tornar um profissional!</a>
