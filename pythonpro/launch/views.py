@@ -20,6 +20,11 @@ from pythonpro.launch.forms import LeadForm
 
 def landing_page(request):
     user = request.user
+
+    launch_status = get_launch_status()
+    if launch_status == LAUNCH_STATUS_OPEN_CART and not request.GET.get('debug'):
+        return redirect(reverse('checkout:bootcamp_lp'))
+
     if user.is_authenticated:
         form = LeadForm({'email': user.email})
         user_domain.visit_launch_landing_page(user, request.GET.get('utm_source', 'unknown'))
