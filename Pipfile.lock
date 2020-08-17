@@ -449,10 +449,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:424053cbd468ed84fa3722f0235d636c348591d7acdecdb6a00875ae3f03874c",
-                "sha256:cdb969afecc532ad4cfee12f6fb90d4a5cdf938150dffa4626fb43b8eb2f9396"
+                "sha256:1e452195f682abebf4fc2feb66f9aecd58453fabbb6451a8eb67a08a14f7e864",
+                "sha256:6f67f8d72904d82c0467a7b92b48b7a059a139def24514b49e796f1e5f34c443"
             ],
-            "version": "==8.12.7"
+            "version": "==8.12.8"
         },
         "pickleshare": {
             "hashes": [
