@@ -31,8 +31,8 @@ def resp_bootcamper_user(client_with_bootcamper, modules):
 
 
 @pytest.fixture
-def resp_client_user(client_with_user, modules):
-    return _resp_not_logged(client_with_user, modules)
+def resp_client_user(client_with_client, modules):
+    return _resp_not_logged(client_with_client, modules)
 
 
 @pytest.fixture
