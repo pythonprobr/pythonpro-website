@@ -24,7 +24,7 @@ _level_two_roles = set('webdev bootcamper member'.split())
 _level_three_roles = set('bootcamper member'.split())
 
 
-@pytest.fixture 
+@pytest.fixture
 def logged_user(django_user_model):
     logged_user = baker.make(django_user_model, is_superuser=False)
     logged_user.email = logged_user.email.lower()
