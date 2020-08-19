@@ -1,4 +1,4 @@
-# Python Pro Website
+# Python Pro
 
 Source code of website www.python.pro.br
 
