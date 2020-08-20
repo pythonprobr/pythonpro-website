@@ -54,16 +54,17 @@ To tun the tests:
 pytest pythonpro
 ```
 
-If you want run your amb dev using postgres, you can install docker and run:
-
-```console
-docker-compose docker-compose.yml up 
-```
-
-and add to your .env
+If you want run your amb dev using postgres, you can add to your .env 
 
 ```console
 DATABASE_URL=postgres://postgres:pass@localhost:5432/postgres
+```
+
+
+and install docker and run:
+
+```console
+docker-compose up -d
 ```
 
 
