@@ -9,7 +9,7 @@ from pythonpro.django_assertions import dj_assert_contains
 
 @pytest.fixture
 def tag_as_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.tag_as.delay')
+    return mocker.patch('pythonpro.domain.user_domain._email_marketing_facade.tag_as.delay')
 
 
 @pytest.fixture
@@ -85,7 +85,7 @@ def test_no_user_with_50_discount(resp_no_user_with_50_discount):
     assert resp_no_user_with_50_discount.context['has_first_day_discount'] is True
     assert resp_no_user_with_50_discount.context['has_client_discount'] is False
     dj_assert_contains(resp_no_user_with_50_discount, 'R$ 99,63')
-    discount_video = 'https://www.youtube.com/embed/0rzm6NjyoSw'
+    discount_video = 'https://www.youtube.com/embed/lIWmM0j-WdM'
     dj_assert_contains(resp_no_user_with_50_discount, discount_video)
 
 
@@ -102,7 +102,7 @@ def test_no_user_with_35_discount(resp_no_user_with_35_discount):
     assert resp_no_user_with_35_discount.context['has_first_day_discount'] is True
     assert resp_no_user_with_35_discount.context['has_client_discount'] is False
     dj_assert_contains(resp_no_user_with_35_discount, 'R$ 129,61')
-    discount_video = 'https://www.youtube.com/embed/0rzm6NjyoSw'
+    discount_video = 'https://www.youtube.com/embed/41DjlWEbT1M'
     dj_assert_contains(resp_no_user_with_35_discount, discount_video)
 
 
@@ -147,7 +147,7 @@ def test_webdev_after_discount(client_with_webdev, logged_user, tag_as_mock, fre
     assert resp.context['first_day_discount'] == 0
     assert resp.context['has_first_day_discount'] is False
     assert resp.context['has_client_discount'] is True
-    no_discount_video = 'https://www.youtube.com/embed/g-C_5oUCz2A'
+    no_discount_video = 'https://www.youtube.com/embed/rwxY_WjIjEE'
     dj_assert_contains(resp, no_discount_video)
     dj_assert_contains(resp, 'R$ 199,56')
 

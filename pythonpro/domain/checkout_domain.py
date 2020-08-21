@@ -3,7 +3,7 @@ from celery import shared_task
 from django_pagarme import facade as django_pagarme_facade
 
 from pythonpro.core import facade as core_facade
-from pythonpro.domain import user_facade
+from pythonpro.domain import user_domain
 from pythonpro.domain.hotzapp_domain import verify_purchase, send_purchase_notification
 from pythonpro.email_marketing import facade as email_marketing_facade
 
@@ -39,7 +39,7 @@ def user_factory(pagarme_transaction):
     customer = pagarme_transaction['customer']
     customer_email = customer['email'].lower()
     customer_first_name = customer['name'].split()[0]
-    return user_facade.force_register_lead(customer_first_name, customer_email)
+    return user_domain.force_register_lead(customer_first_name, customer_email)
 
 
 django_pagarme_facade.set_user_factory(user_factory)
@@ -77,18 +77,18 @@ def payment_handler_task(payment_id):
 
 def _promote(user, slug: str):
     if slug.startswith('membership'):
-        user_facade.promote_member(user, 'unknown')
+        user_domain.promote_member(user, 'unknown')
     elif slug == 'pacote-proximo-nivel-67-discount':
-        user_facade.promote_pythonista(user, 'unknown')
+        user_domain.promote_pythonista(user, 'unknown')
     elif slug.startswith('webdev'):
-        user_facade.promote_webdev(user, 'unknown')
+        user_domain.promote_webdev(user, 'unknown')
     elif slug.startswith('data-science'):
-        user_facade.promote_data_scientist(user, 'unknown')
+        user_domain.promote_data_scientist(user, 'unknown')
     elif slug in {'bootcamp', 'bootcamp-webdev'}:
-        user_facade.promote_bootcamper(user, 'unknown')
-        user_facade.promote_pythonista(user, 'unknown')
+        user_domain.promote_bootcamper(user, 'unknown')
+        user_domain.promote_pythonista(user, 'unknown')
     elif slug.startswith('bootcamp'):
-        user_facade.promote_bootcamper(user, 'unknown')
+        user_domain.promote_bootcamper(user, 'unknown')
     else:
         raise ValueError(f'{slug} should contain webdev or membership or data-science')
 

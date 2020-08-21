@@ -1,13 +1,13 @@
 import pytest
 from django.urls import reverse
 
-from pythonpro.domain.user_facade import find_user_interactions
+from pythonpro.domain.user_domain import find_user_interactions
 from pythonpro.launch.facade import LAUNCH_STATUS_OPEN_CART, LAUNCH_STATUS_CPL4
 
 
 @pytest.fixture
 def tag_as_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.tag_as.delay')
+    return mocker.patch('pythonpro.domain.user_domain._email_marketing_facade.tag_as.delay')
 
 
 @pytest.fixture

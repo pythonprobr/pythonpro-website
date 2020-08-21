@@ -64,7 +64,7 @@ def test_should_return_launch_status_cpl4_on_thu_early(mocker):
 
 
 def test_should_return_launch_status_open_cart_on_first_day(mocker):
-    fake_today = timezone.make_aware(datetime(2020, 8, 16, 21))
+    fake_today = timezone.make_aware(datetime(2020, 8, 16, 20))
     mocker.patch('pythonpro.launch.facade.timezone.now', return_value=fake_today)
     assert get_launch_status() == LAUNCH_STATUS_OPEN_CART
 

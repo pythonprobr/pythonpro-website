@@ -30,7 +30,7 @@ def _get_fourth_class_start():
 
 
 def _get_open_cart_start():
-    return _get_first_class_start() + timedelta(days=6) + timedelta(hours=20, minutes=59)
+    return _get_first_class_start() + timedelta(days=6) + timedelta(hours=19, minutes=59)
 
 
 def _get_open_cart_end():

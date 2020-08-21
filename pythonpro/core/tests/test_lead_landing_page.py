@@ -74,7 +74,7 @@ def test_user_with_webdev_roles_can_access_landing_page(resp_with_user_with_webd
 
 @pytest.fixture
 def create_lead_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade._email_marketing_facade.create_or_update_lead.delay')
+    return mocker.patch('pythonpro.domain.user_domain._email_marketing_facade.create_or_update_lead.delay')
 
 
 @pytest.fixture()
@@ -141,7 +141,7 @@ def resp_lead_change_pasword(resp_lead_creation, client):
 
 @pytest.fixture(autouse=True)
 def sync_user_delay(mocker):
-    return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse.delay')
+    return mocker.patch('pythonpro.domain.user_domain.sync_user_on_discourse.delay')
 
 
 def test_user_discourse_sync(resp_lead_creation, sync_user_delay):

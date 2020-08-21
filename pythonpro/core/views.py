@@ -14,7 +14,7 @@ from pythonpro.checkout.facade import is_launch_open
 from pythonpro.core import facade as core_facade
 from pythonpro.core.forms import LeadForm, UserEmailForm, UserSignupForm, PythonProResetForm
 from pythonpro.core.models import User
-from pythonpro.domain import user_facade
+from pythonpro.domain import user_domain
 
 
 def index(request):
@@ -187,8 +187,8 @@ def _lead_form(request, *args, **kwargs):
             tags.append(f"{key}={value}")
 
     try:
-        user = user_facade.register_lead(first_name, email, source, tags=tags)
-    except user_facade.UserCreationException as e:
+        user = user_domain.register_lead(first_name, email, source, tags=tags)
+    except user_domain.UserCreationException as e:
         return render(request, 'core/lead_form_errors.html', context={'form': e.form}, status=400)
 
     login(request, user)

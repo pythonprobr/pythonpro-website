@@ -1,13 +1,27 @@
-from functools import partial
+from functools import partial as _partial
 
-from django.conf import settings
-from django.core.cache import cache
-from django.db.models import Prefetch
+from django.conf import settings as _settings
+from django.core.cache import cache as _cache
+from django.db.models import Prefetch as _Prefetch
 from django.urls import reverse
+
 
 from pythonpro.modules.models import (
     Chapter as _Chapter, Module as _Module, Section as _Section, Topic as _Topic,
 )
+
+__all__ = [
+    'get_topic_model',
+    'get_all_modules',
+    'get_module_with_contents',
+    'get_section_with_contents',
+    'get_chapter_with_contents',
+    'get_topic_with_contents',
+    'get_topic_with_contents_by_id',
+    'get_entire_content_forest',
+    'get_tree',
+    'topics_user_interacted_queryset',
+]
 
 
 def get_topic_model():
@@ -19,8 +33,8 @@ def get_all_modules():
     Search all modules on database sorted by order
     :return: tuple of Module
     """
-    lazy_all_modules = partial(tuple, _Module.objects.order_by('order'))
-    return cache.get_or_set('ALL_MODULES', lazy_all_modules, settings.CACHE_TTL)
+    lazy_all_modules = _partial(tuple, _Module.objects.order_by('order'))
+    return _cache.get_or_set('ALL_MODULES', lazy_all_modules, _settings.CACHE_TTL)
 
 
 def get_module_with_contents(slug):
@@ -31,10 +45,10 @@ def get_module_with_contents(slug):
     """
 
     return _Module.objects.filter(slug=slug).prefetch_related(
-        Prefetch(
+        _Prefetch(
             'section_set',
             queryset=_Section.objects.order_by('order').prefetch_related(
-                Prefetch(
+                _Prefetch(
                     'chapter_set',
                     queryset=_Chapter.objects.order_by('order'),
                     to_attr='chapters'
@@ -51,7 +65,7 @@ def get_section_with_contents(slug):
     :return: Section
     """
     return _Section.objects.filter(slug=slug).select_related('module').prefetch_related(
-        Prefetch(
+        _Prefetch(
             'chapter_set',
             queryset=_Chapter.objects.order_by('order'),
             to_attr='chapters'
@@ -67,7 +81,7 @@ def get_chapter_with_contents(slug):
     """
     return _Chapter.objects.filter(slug=slug).select_related('section').select_related(
         'section__module').prefetch_related(
-        Prefetch(
+        _Prefetch(
             'topic_set',
             queryset=_Topic.objects.order_by('order'),
             to_attr='topics'
@@ -100,13 +114,13 @@ def get_entire_content_forest():
     :return:
     """
     return list(_Module.objects.all().prefetch_related(
-        Prefetch(
+        _Prefetch(
             'section_set',
             queryset=_Section.objects.order_by('order').prefetch_related(
-                Prefetch(
+                _Prefetch(
                     'chapter_set',
                     queryset=_Chapter.objects.order_by('order').prefetch_related(
-                        Prefetch(
+                        _Prefetch(
                             'topic_set',
                             queryset=_Topic.objects.order_by('order'),
                             to_attr='topics'
@@ -125,11 +139,11 @@ def get_tree(module):
     :return:
     """
     sections = list(_Section.objects.filter(module=module).order_by('order').prefetch_related(
-        Prefetch(
+        _Prefetch(
             'chapter_set',
             queryset=_Chapter.objects.order_by(
                 'order').prefetch_related(
-                Prefetch(
+                _Prefetch(
                     'topic_set',
                     queryset=_Topic.objects.order_by(
                         'order'),

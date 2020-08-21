@@ -26,7 +26,7 @@ BOLETO_BARCODE = '123455'
 @pytest.fixture
 def create_or_update_lead_mock(mocker):
     return mocker.patch(
-        'pythonpro.domain.user_facade._email_marketing_facade.create_or_update_lead.delay',
+        'pythonpro.domain.user_domain._email_marketing_facade.create_or_update_lead.delay',
         side_effect=email_marketing_facade.create_or_update_lead
     )
 
@@ -46,7 +46,7 @@ def tag_as_mock(mocker):
 
 @pytest.fixture
 def sync_on_discourse_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_facade.sync_user_on_discourse.delay')
+    return mocker.patch('pythonpro.domain.user_domain.sync_user_on_discourse.delay')
 
 
 @pytest.fixture

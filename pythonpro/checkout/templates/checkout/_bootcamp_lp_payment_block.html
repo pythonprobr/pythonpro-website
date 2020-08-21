@@ -12,7 +12,7 @@
 <div class="summary-main__group__price__group summary-main__group__price__group--top">
     <div class="summary-main__group__price__group__info">
     <img class="summary-main__group__price__group__info__icon" src="{% static 'img/spp/summary-main/summary-price-icon.jpg' %}" alt="Ícone com símbolo de porcentagem com fundo transparente e bordas verdes">
-    <h6 class="summary-main__group__price__group__info__title fw-700 text-uppercase text-blue font-highlighted">Promoção do primeiro dia</h6>
+    <h6 class="summary-main__group__price__group__info__title fw-700 text-uppercase text-blue font-highlighted">Promoção do dia de hoje</h6>
     </div>
 
     <div class="summary-main__group__price__group__value">
@@ -49,13 +49,17 @@
 </div>
 {% endif %}
 
-{% if not user.is_authenticated %}
-<div>
-    <h4 class="summary-main__group__price__login fw-400">
-        (Se você comprou o Django Pro, <a class="text-blue" href="{{ login_url }}">faça o login</a> para ganhar um desconto)
-    </h4>
-</div>
-{% endif %}
+{#{% if not user.is_authenticated %}#}
+{#<div>#}
+{#    <h4 class="summary-main__group__price__login fw-400">#}
+{#        (Se você comprou o Django Pro,#}
+{#        <a class="text-blue"#}
+{#            href="{% url 'two_factor:login' %}?next={% url 'checkout:bootcamp_lp' %}"#}
+{#            >faça o login</a>#}
+{#        para ganhar um desconto)#}
+{#    </h4>#}
+{#</div>#}
+{#{% endif %}#}
 
 <div class="header-main__group__button">
 <a href="#" class="header-main__group__button__item text-uppercase fw-700 main-transition" rel="noopener noreferrer" data-toggle="modal" data-target="#modal-waiting-capture">Sim, eu quero me tornar um profissional!</a>

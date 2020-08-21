@@ -1,0 +1,35 @@
+{% extends "checkout/bootcamp_lp_subscription_open.html" %}
+{% load static %}
+{% load django_pagarme %}
+{% load bootstrap4 %}
+
+{% block vsl %}https://www.youtube.com/embed/rwxY_WjIjEE{% endblock vsl %}
+
+{% block extrabonus %}
+    <div class="summary-main__group__price">
+        <h3 class="summary-main__group__price__title fw-800 text-uppercase text-red font-highlighted">
+            BÔNUS ESPECIAL PARA HOJE!
+        </h3>
+
+        <p class="summary-main__group__bonus__cards__item__content__description fw-400">
+            Se imagine daqui a alguns meses…
+        </p>
+
+        <p class="summary-main__group__bonus__cards__item__content__description fw-400">
+            Você já estará preparado para aplicar para diversas vagas de trabalho. Quem sabe até já estará empregado, ou fazendo freelas e ganhando dinheiro com programação.
+        </p>
+
+        <p class="summary-main__group__bonus__cards__item__content__description fw-400">
+            Agora que você já é um programador profissional, com certeza vão surgir novos desafios. Serão problemas mais complexos, que vão exigir de você novas fontes de conhecimento.
+        </p>
+        
+        <p class="summary-main__group__bonus__cards__item__content__description fw-400">
+            Como você faria para aprender estes novos conhecimentos?
+        </p>
+
+        <p class="summary-main__group__bonus__cards__item__content__description fw-400">
+            <img style='max-width: 700px; text-align:center' class='d-none d-lg-block' src="{% static 'img/spp/pacote-proximo-nivel.png' %}" />
+            <img style='max-width: 350px' class='d-lg-none' src="{% static 'img/spp/pacote-proximo-nivel-mobile.png' %}" />
+        </p>
+    </div>
+{% endblock %}

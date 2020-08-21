@@ -1,0 +1,399 @@
+{% extends "checkout/bootcamp_lp_subscription_open.html" %}
+{% load static %}
+{% load django_pagarme %}
+{% load bootstrap4 %}
+
+{% block vsl %}https://www.youtube.com/embed/lIWmM0j-WdM{% endblock vsl %}
+
+{% block main %}
+    <main role="main">
+        <section class="summary-main">
+            <div class="summary-main__group">
+                <div class="summary-main__group__cards mb-5">
+                    <div class="summary-main__group__cards__item">
+                        <div class="summary-main__group__cards__item__circle">
+                            <img class="summary-main__group__cards__item__circle__item"
+                                 src="{% static 'img/spp/summary-main/summary-card-1.png' %}"
+                                 alt="Ícone com logo do Python com fundo transparente e bordas brancas">
+                        </div>
+
+                        <h3 class="summary-main__group__cards__item__title text-uppercase text-blue font-highlighted fw-700">
+                            3 cursos da formação Python Pro</h3>
+                    </div>
+
+                    <div class="summary-main__group__cards__item">
+                        <div class="summary-main__group__cards__item__circle">
+                            <img class="summary-main__group__cards__item__circle__item"
+                                 src="{% static 'img/spp/summary-main/summary-card-2.png' %}"
+                                 alt="Ícone de um microfone com fundo transparente e bordas brancas">
+                        </div>
+
+                        <h3 class="summary-main__group__cards__item__title text-uppercase text-blue font-highlighted fw-700">
+                            Curso de Entrevista Técnica</h3>
+                    </div>
+
+                    <div class="summary-main__group__cards__item">
+                        <div class="summary-main__group__cards__item__circle">
+                            <img class="summary-main__group__cards__item__circle__item"
+                                 src="{% static 'img/spp/summary-main/summary-card-3.png' %}"
+                                 alt="Ícone de um 'play' de vídeo com fundo transparente e bordas brancas">
+                        </div>
+
+                        <h3 class="summary-main__group__cards__item__title text-uppercase text-blue font-highlighted fw-700">
+                            8 Aulas ao vivo</h3>
+                    </div>
+
+                    <div class="summary-main__group__cards__item">
+                        <div class="summary-main__group__cards__item__circle">
+                            <img class="summary-main__group__cards__item__circle__item"
+                                 src="{% static 'img/spp/summary-main/summary-card-3.png' %}"
+                                 alt="Ícone de um 'play' de vídeo com fundo transparente e bordas brancas">
+                        </div>
+
+                        <h3 class="summary-main__group__cards__item__title text-uppercase text-blue font-highlighted fw-700">
+                            4 Webinários</h3>
+                    </div>
+                </div>
+
+                {% include 'checkout/_bootcamp_lp_payment_block.html' %}
+            </div>
+        </section>
+
+        <section class="countdown countdown-main countdown-main--secondary">
+            <div class="countdown__group">
+                <div class="countdown-main__group">
+                    <h2 class="countdown-main__group__title text-uppercase text-white fw-800"><span class="text-red">Aproveite!</span>
+                        Essa promoção vai expirar em breve.</h2>
+                </div>
+
+                <div class="countdown__group__numbers">
+                    <div class="countdown__group__numbers__item">
+                        <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted days"></span>
+                        <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Dias</span>
+                    </div>
+
+                    <div class="countdown__group__numbers__item">
+                        <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted hours"></span>
+                        <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Horas</span>
+                    </div>
+
+                    <div class="countdown__group__numbers__item">
+                        <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted minutes"></span>
+                        <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Minutos</span>
+                    </div>
+
+                    <div class="countdown__group__numbers__item">
+                        <span class="countdown__group__numbers__item__time text-white fw-900 font-highlighted seconds"></span>
+                        <span class="countdown__group__numbers__item__description text-uppercase text-red fw-700">Segundos</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="garantee-main">
+            <div class="garantee-main__group">
+                <img class="garantee-main__group__badge" src="{% static 'img/spp/garantee-main/garantee-badge.png' %}"
+                     alt="Imagem de um badge escrito 'Garantia de 30 dias'">
+
+                <h2 class="garantee-main__group__title text-white text-uppercase fw-800 font-highlighted">"Mas e se eu
+                    não gostar do curso?"</h2>
+
+                <div class="garantee-main__group__description">
+                    <p class="garantee-main__group__description__item text-white fw-400">
+                        Se você não gostar do meu curso eu te devolvo TODO seu dinheiro nos primeiros 15 dias.
+                        Pode ser por qualquer motivo.
+                    </p>
+                    <p class="garantee-main__group__description__item text-white fw-400">
+                        Se você não gostar da minha didática, não gostar do
+                        jeito que eu falo, não conseguir acompanhar o ritmo, se você não gostar até da cor da minha camiseta, 
+                        basta me enviar um email que, se tiver dentro de 15 dias,
+                        a partir da data da primeira aula, eu te devolvo o dinheiro na hora, sem perguntas.    
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials-classes testimonials-classes--main">
+            <div class="testimonials-classes__group">
+                <h2 class="testimonials-classes__group__title text-blue fw-700 font-highlighted text-uppercase text-center">
+                    Já são vários alunos transformados</h2>
+
+                <div class="testimonials-classes__group__people testimonials-classes__group__people--mobile owl-carousel">
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=Fpq-T9lApho">
+                        <img src="{% static 'img/social-proof/tanio.png' %}" alt="Card do vídeo 1 - Tanio">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=ZNsU9KLVkoM&">
+                        <img src="{% static 'img/social-proof/isaac.webp' %}" alt="Card do vídeo 24 - Isaac Ferreira">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=p-7b3LYxXPc">
+                        <img src="{% static 'img/social-proof/fabricio.webp' %}"
+                             alt="Card do vídeo 8 - Fabrício Aguiar">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=SvM33abGWMw">
+                        <img src="{% static 'img/social-proof/pablo.png' %}" alt="Card do vídeo 9 - Pablo">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=EzxzGFQXQYQ">
+                        <img src="{% static 'img/social-proof/ronaldo-oliveira.png' %}"
+                             alt="Card do vídeo 20 - Ronaldo Oliveira">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=i-P3S6sTOzA">
+                        <img src="{% static 'img/social-proof/charles-tenorio.png' %}"
+                             alt="Card do vídeo 18 - Charles Tenório">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=B82STg6siYA">
+                        <img src="{% static 'img/social-proof/marcelo-andreoli.png' %}"
+                             alt="Card do vídeo 12 - Marcelo Andrioli">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=OfFN_WjTYqM">
+                        <img src="{% static 'img/social-proof/alisson-americo-1.png' %}"
+                             alt="Card do vídeo 17 - Alison Américo">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=90lX76GH2y0">
+                        <img src="{% static 'img/social-proof/guido-percu.png' %}" alt="Card do vídeo 4 - Guido Percú">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=LgosbGSJ5fI">
+                        <img src="{% static 'img/social-proof/paulo.png' %}" alt="Card do vídeo 10 - Paulo">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=nUZGmihUy1o">
+                        <img src="{% static 'img/social-proof/jorge-plautz.png' %}" alt="Card do vídeo 11 - Jorge Luiz">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=SwGDBRrjyf0">
+                        <img src="{% static 'img/social-proof/diego.webp' %}" alt="Card do vídeo 2 - Diego Sorrilha">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=uWokzyDsWsQ">
+                        <img src="{% static 'img/social-proof/marcus-vinicius.png' %}"
+                             alt="Card do vídeo 13 - Marcos Vinícius">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=OU8mLyjX-y0">
+                        <img src="{% static 'img/social-proof/carlos-augusto.png' %}"
+                             alt="Card do vídeo 14 - Carlos Augusto Moreno">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=COUA7lbKZn8">
+                        <img src="{% static 'img/social-proof/jasiel.png' %}" alt="Card do vídeo 15 - Jasiel">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=5FAditPNynA">
+                        <img src="{% static 'img/social-proof/vinicius-assef.png' %}"
+                             alt="Card do vídeo 16 - Vinicius Assef">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=ZNgfS9Ohwac">
+                        <img src="{% static 'img/social-proof/marcelo.webp' %}"
+                             alt="Card do vídeo 3 - Marcelo Del Fiore">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=TtlB4E7_MZM">
+                        <img src="{% static 'img/social-proof/ferrabras.webp' %}"
+                             alt="Card do vídeo 6 - Tiago Cordeiro">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=faruwyQcbWY">
+                        <img src="{% static 'img/social-proof/maria-elisa.png' %}" alt="Card do vídeo 19 - Elisa">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=0HP2nS44Ip4">
+                        <img src="{% static 'img/social-proof/alysson.webp' %}" alt="Card do vídeo 5 - Alison Américo">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=3S22WWkOJRo">
+                        <img src="{% static 'img/social-proof/rafael-ramos.png' %}"
+                             alt="Card do vídeo 21 - Rafinha Ramos">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=VSW4SY395Mo">
+                        <img src="{% static 'img/social-proof/regis-silva.png' %}" alt="Card do vídeo 22 - Régis Silva">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=NXqsyoWalO8">
+                        <img src="{% static 'img/social-proof/ricardo-portela.png' %}"
+                             alt="Card do vídeo 23 - Ricardo Portela">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=avyZ4WjluEo">
+                        <img src="{% static 'img/social-proof/vinicius.webp' %}" alt="Card do vídeo 7 - Vinicius Mesel">
+                    </a>
+                </div>
+
+                <div class="testimonials-classes__group__people testimonials-classes__group__people--desktop">
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=Fpq-T9lApho">
+                        <img src="{% static 'img/social-proof/tanio.png' %}" alt="Card do vídeo 1 - Tanio">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=ZNsU9KLVkoM&">
+                        <img src="{% static 'img/social-proof/isaac.webp' %}" alt="Card do vídeo 24 - Isaac Ferreira">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=p-7b3LYxXPc">
+                        <img src="{% static 'img/social-proof/fabricio.webp' %}"
+                             alt="Card do vídeo 8 - Fabrício Aguiar">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=SvM33abGWMw">
+                        <img src="{% static 'img/social-proof/pablo.png' %}" alt="Card do vídeo 9 - Pablo">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=EzxzGFQXQYQ">
+                        <img src="{% static 'img/social-proof/ronaldo-oliveira.png' %}"
+                             alt="Card do vídeo 20 - Ronaldo Oliveira">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=i-P3S6sTOzA">
+                        <img src="{% static 'img/social-proof/charles-tenorio.png' %}"
+                             alt="Card do vídeo 18 - Charles Tenório">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=B82STg6siYA">
+                        <img src="{% static 'img/social-proof/marcelo-andreoli.png' %}"
+                             alt="Card do vídeo 12 - Marcelo Andrioli">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=OfFN_WjTYqM">
+                        <img src="{% static 'img/social-proof/alisson-americo-1.png' %}"
+                             alt="Card do vídeo 17 - Alison Américo">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=90lX76GH2y0">
+                        <img src="{% static 'img/social-proof/guido-percu.png' %}" alt="Card do vídeo 4 - Guido Percú">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=LgosbGSJ5fI">
+                        <img src="{% static 'img/social-proof/paulo.png' %}" alt="Card do vídeo 10 - Paulo">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=nUZGmihUy1o">
+                        <img src="{% static 'img/social-proof/jorge-plautz.png' %}" alt="Card do vídeo 11 - Jorge Luiz">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=SwGDBRrjyf0">
+                        <img src="{% static 'img/social-proof/diego.webp' %}" alt="Card do vídeo 2 - Diego Sorrilha">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=uWokzyDsWsQ">
+                        <img src="{% static 'img/social-proof/marcus-vinicius.png' %}"
+                             alt="Card do vídeo 13 - Marcos Vinícius">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=OU8mLyjX-y0">
+                        <img src="{% static 'img/social-proof/carlos-augusto.png' %}"
+                             alt="Card do vídeo 14 - Carlos Augusto Moreno">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=COUA7lbKZn8">
+                        <img src="{% static 'img/social-proof/jasiel.png' %}" alt="Card do vídeo 15 - Jasiel">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=5FAditPNynA">
+                        <img src="{% static 'img/social-proof/vinicius-assef.png' %}"
+                             alt="Card do vídeo 16 - Vinicius Assef">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=ZNgfS9Ohwac">
+                        <img src="{% static 'img/social-proof/marcelo.webp' %}"
+                             alt="Card do vídeo 3 - Marcelo Del Fiore">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=TtlB4E7_MZM">
+                        <img src="{% static 'img/social-proof/ferrabras.webp' %}"
+                             alt="Card do vídeo 6 - Tiago Cordeiro">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=faruwyQcbWY">
+                        <img src="{% static 'img/social-proof/maria-elisa.png' %}" alt="Card do vídeo 19 - Elisa">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=0HP2nS44Ip4">
+                        <img src="{% static 'img/social-proof/alysson.webp' %}" alt="Card do vídeo 5 - Alison Américo">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=3S22WWkOJRo">
+                        <img src="{% static 'img/social-proof/rafael-ramos.png' %}"
+                             alt="Card do vídeo 21 - Rafinha Ramos">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=VSW4SY395Mo">
+                        <img src="{% static 'img/social-proof/regis-silva.png' %}" alt="Card do vídeo 22 - Régis Silva">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=NXqsyoWalO8">
+                        <img src="{% static 'img/social-proof/ricardo-portela.png' %}"
+                             alt="Card do vídeo 23 - Ricardo Portela">
+                    </a>
+
+                    <a class="testimonials-classes__group__people__link popup-vimeo main-transition"
+                       href="https://www.youtube.com/watch?v=avyZ4WjluEo">
+                        <img src="{% static 'img/social-proof/vinicius.webp' %}" alt="Card do vídeo 7 - Vinicius Mesel">
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% endblock main %}
+
+    {% block extrabody %}{{ block.super }}
+    <style>
+        .mb-5 {
+            margin-bottom: 50px;
+        }
+    </style>
+    {% endblock %}
