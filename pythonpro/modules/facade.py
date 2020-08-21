@@ -3,6 +3,8 @@ from functools import partial as _partial
 from django.conf import settings as _settings
 from django.core.cache import cache as _cache
 from django.db.models import Prefetch as _Prefetch
+from django.urls import reverse
+
 
 from pythonpro.modules.models import (
     Chapter as _Chapter, Module as _Module, Section as _Section, Topic as _Topic,
@@ -157,3 +159,26 @@ def topics_user_interacted_queryset(user):
     ).select_related('chapter').select_related('chapter__section').select_related(
         'chapter__section__module'
     )
+
+
+def add_modules_purchase_link(modules):
+    """
+    Add purchase link to modules
+    :param modules - a list of modules
+    :return modules - a list of modules with a purchase link
+    """
+    purchase_links = {
+        'python-birds': reverse('core:lead_landing'),
+        'pytools': reverse('checkout:webdev_landing_page'),
+        'django': reverse('checkout:webdev_landing_page'),
+        'entrevistas-tecnicas': reverse('checkout:webdev_landing_page'),
+        'objetos-pythonicos': reverse('checkout:bootcamp_lp'),
+        'python-para-pythonistas': reverse('checkout:bootcamp_lp'),
+        'python-patterns': reverse('checkout:bootcamp_lp'),
+
+    }
+
+    for module in modules:
+        module.purchase_link = purchase_links[module.slug]
+
+    return modules

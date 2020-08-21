@@ -1,1 +1,154 @@
-[{"model": "modules.module", "pk": 1, "fields": {"order": 0, "title": "Python Birds", "description": "Durante o m\u00f3dulo ser\u00e1 desenvolvida uma vers\u00e3o simplificada do jogo Angry Birds. Assim o aluno aprender\u00e1 os conceitos ao mesmo tempo em que implementa um projeto pr\u00e1tico.", "slug": "python-birds", "objective": "Introduzir programa\u00e7\u00e3o Procedural e Orienta\u00e7\u00e3o a Objetos em Python.", "target": "Alunos com nenhuma ou pouca experi\u00eancia."}}, {"model": "modules.module", "pk": 2, "fields": {"order": 1, "title": "Objetos Pyth\u00f4nicos", "description": "Aprofundamento no conhecimento da linguagem: tipagem din\u00e2mica, protocolos versus interfaces, classes abstratas, heran\u00e7a m\u00faltipla e sobrecarga de operadores s\u00e3o alguns dos temas cobertos.", "slug": "objetos-pythonicos", "objective": "Aprofundar o conhecimento de Orienta\u00e7\u00e3o a Objetos tendo em vista as peculiaridade do Python.", "target": "Alunos que conhecem OO e est\u00e3o come\u00e7ando com Python ou que j\u00e1 usam a linguagem no dia-a-dia, mas querem aperfei\u00e7oar o modo pyth\u00f4nico de programar."}}, {"model": "modules.module", "pk": 3, "fields": {"order": 2, "title": "PyTools", "description": "Nesse m\u00f3dulo ser\u00e1 abordada a leitura e escrita de arquivos, com defini\u00e7\u00e3o de unicode e encode. Instala\u00e7\u00e3o e cria\u00e7\u00e3o de bibliotecas utilizando pip, virtualenv e pypi. Cria\u00e7\u00e3o de testes autom\u00e1ticos com o framework pytest.", "slug": "pytools", "objective": "Apresentar um conjunto de ferramentas b\u00e1sico, mas poderoso, que Pythonistas experientes usam no dia-a-dia.", "target": "Alunos iniciantes de Python que desejam conhecer as ferramentas de seu ecossistema."}}, {"model": "modules.module", "pk": 4, "fields": {"order": 3, "title": "Python para Pythonistas", "description": "Este m\u00f3dulo vai te mostrar o modo pyth\u00f4nico de abordar concorr\u00eancia, escalabilidade e metaprograma\u00e7\u00e3o, aproveitando o que Python tem de mais avan\u00e7ado.", "slug": "python-para-pythonistas", "objective": "Curso para desvendar rem\u00f3dulos avan\u00e7ados da linguagem, em geral utilizados em diversos frameworks.", "target": "Alunos com conhecimento intermedi\u00e1rio/avan\u00e7ado de Python, que j\u00e1 programam com a linguagem em seu dia-a-dia."}}, {"model": "modules.module", "pk": 5, "fields": {"order": 4, "title": "Django", "description": "Nesse m\u00f3dulo ser\u00e1 constru\u00eddo uma aplica\u00e7\u00e3o web real utilizando o Web Django, o mais famoso framework web de Python. Ele serve como m\u00f3dulo pr\u00e1tico onde todos os conceitos vistos nos demais m\u00f3dulos ser\u00e3o colados \u00e0 prova. Al\u00e9m dos conceitos, ser\u00e1 exemplificado um processo de entrega cont\u00ednua com deploys regulares no Heroku.", "slug": "python-web", "objective": "Constru\u00e7\u00e3o de web site", "target": "Alunos com conhecimento intermedi\u00e1rio de Python interessados em aprender sobre desenvolvimento web."}}, {"model": "modules.module", "pk": 6, "fields": {"order": 5, "title": "Python Paterns", "description": "Neste m\u00f3dulo analisamos as caracter\u00edsticas espec\u00edficas dos objetos, classes e interfaces em Python, e aplicamos esse entendimento na an\u00e1lise e refatora\u00e7\u00e3o de v\u00e1rios padr\u00f5es de projeto cl\u00e1ssicos do livro Padr\u00f5es de Projeto de Gamma, Helm, Johnson e Vlissides. Al\u00e9m de padr\u00f5es arquiteturais, tamb\u00e9m estudamos padr\u00f5es de codifica\u00e7\u00e3o em uma escala menor, relacionados ao gerenciamento de atributos e usos din\u00e2micos de classes.", "slug": "python-patterns", "objective": "Apresentar t\u00e9cnicas de programa\u00e7\u00e3o orientada a objetos e padr\u00f5es de projeto otimizados para as caracter\u00edsticas din\u00e2micas da linguagem Python.", "target": "Alunos com firmes conceitos de programa\u00e7\u00e3o orientada a objetos."}}, {"model": "modules.module", "pk": 7, "fields": {"order": 6, "title": "Entrevistas T\u00e9cnicas", "description": "Nesse m\u00f3dulo ser\u00e1 passada uma vis\u00e3o geral sobre os processos seletivos de empresas estrangeiras: envio de curr\u00edculo, an\u00e1lise de algor\u00edtmos, estruturas de dados e resolu\u00e7\u00e3o de quest\u00f5es.", "slug": "entrevistas-tecnicas", "objective": "Aprender como ocorre o processo seletivo de empresas gringas e as quest\u00f5es t\u00e9cnicas que s\u00e3o feitas na entrevista t\u00e9cnica.", "target": "Alunos com conhecimento avan\u00e7ado de Python que pretendem prestar processos seletivos e/ou avaliar quantitativamente diferentes algor\u00edtmos."}}, {"model": "modules.section", "pk": 1, "fields": {"order": 0, "title": "Programa\u00e7\u00e3o Procedural", "description": "Nessa se\u00e7\u00e3o voc\u00ea vai aprender programa\u00e7\u00e3o procedural. Esse paradigma consiste em voc\u00ea definir a resolu\u00e7\u00e3o de um problema, passo a passo, de forma linear. Funciona como uma receita culin\u00e1ria, onde cada passado \u00e9 definido exatamente um depois do outro.", "slug": "programacao-procedural", "module": 1}}, {"model": "modules.section", "pk": 2, "fields": {"order": 1, "title": "Orienta\u00e7\u00e3o a Objetos", "description": "Depois de aprende o paradigma procedural na se\u00e7\u00e3o anterior chega hora de conhecer outro: a Orienta\u00e7\u00e3o a Objetos (OO). Voc\u00ea vai aprender sobre classes e seus componentes, heran\u00e7a e utilizar esses conceitos para implementar o jogo Python Birds. Como toda mudan\u00e7a de paradigma, demora um tempo para se acostumar, mas \u00e9 importante aprender bem OO porque ela utilizada em in\u00fameras bibliotecas e frameworks.", "slug": "orientacao-a-objetos", "module": 1}}, {"model": "modules.chapter", "pk": 1, "fields": {"order": 0, "title": "Introdu\u00e7\u00e3o", "description": "Nesse cap\u00edtulo voc\u00ea vai conferir a motiva\u00e7\u00e3o do curso, ou seja, como o jogo ficar\u00e1 ap\u00f3s a implementa\u00e7\u00e3o. Logo depois voc\u00ea vai aprender como instalar o Python em seu sistema operacional, editar c\u00f3digo e fazer pequenos testes no console.", "slug": "introducao-python-birds", "section": 1}}, {"model": "modules.chapter", "pk": 2, "fields": {"order": 1, "title": "Tipos Embutidos", "description": "Nesse cap\u00edtulo voc\u00ea vai aprender sobre os tipos embutidos. Eles formam um conjunto b\u00e1sicos de classes que serve para modelar o seu programa como n\u00fameros e palavras.", "slug": "tipos-embutidos", "section": 1}}, {"model": "modules.chapter", "pk": 3, "fields": {"order": 0, "title": "whatever", "description": "kjhsadfsadf", "slug": "whatever", "section": 2}}, {"model": "modules.topic", "pk": 1, "fields": {"order": 0, "title": "Curso Python Pro", "description": "V\u00eddeo explicando como funciona o curso Python Pro.", "slug": "curso-python-pro", "chapter": 1, "vimeo_id": "258681672", "discourse_topic_id": "1"}}]
+[
+  {
+    "model": "modules.module",
+    "pk": 1,
+    "fields": {
+      "order": 0,
+      "title": "Python Birds",
+      "description": "Durante o m\u00f3dulo ser\u00e1 desenvolvida uma vers\u00e3o simplificada do jogo Angry Birds. Assim o aluno aprender\u00e1 os conceitos ao mesmo tempo em que implementa um projeto pr\u00e1tico.",
+      "slug": "python-birds",
+      "objective": "Introduzir programa\u00e7\u00e3o Procedural e Orienta\u00e7\u00e3o a Objetos em Python.",
+      "target": "Alunos com nenhuma ou pouca experi\u00eancia."
+    }
+  },
+  {
+    "model": "modules.module",
+    "pk": 2,
+    "fields": {
+      "order": 1,
+      "title": "Objetos Pyth\u00f4nicos",
+      "description": "Aprofundamento no conhecimento da linguagem: tipagem din\u00e2mica, protocolos versus interfaces, classes abstratas, heran\u00e7a m\u00faltipla e sobrecarga de operadores s\u00e3o alguns dos temas cobertos.",
+      "slug": "objetos-pythonicos",
+      "objective": "Aprofundar o conhecimento de Orienta\u00e7\u00e3o a Objetos tendo em vista as peculiaridade do Python.",
+      "target": "Alunos que conhecem OO e est\u00e3o come\u00e7ando com Python ou que j\u00e1 usam a linguagem no dia-a-dia, mas querem aperfei\u00e7oar o modo pyth\u00f4nico de programar."
+    }
+  },
+  {
+    "model": "modules.module",
+    "pk": 3,
+    "fields": {
+      "order": 2,
+      "title": "PyTools",
+      "description": "Nesse m\u00f3dulo ser\u00e1 abordada a leitura e escrita de arquivos, com defini\u00e7\u00e3o de unicode e encode. Instala\u00e7\u00e3o e cria\u00e7\u00e3o de bibliotecas utilizando pip, virtualenv e pypi. Cria\u00e7\u00e3o de testes autom\u00e1ticos com o framework pytest.",
+      "slug": "pytools",
+      "objective": "Apresentar um conjunto de ferramentas b\u00e1sico, mas poderoso, que Pythonistas experientes usam no dia-a-dia.",
+      "target": "Alunos iniciantes de Python que desejam conhecer as ferramentas de seu ecossistema."
+    }
+  },
+  {
+    "model": "modules.module",
+    "pk": 4,
+    "fields": {
+      "order": 3,
+      "title": "Python para Pythonistas",
+      "description": "Este m\u00f3dulo vai te mostrar o modo pyth\u00f4nico de abordar concorr\u00eancia, escalabilidade e metaprograma\u00e7\u00e3o, aproveitando o que Python tem de mais avan\u00e7ado.",
+      "slug": "python-para-pythonistas",
+      "objective": "Curso para desvendar rem\u00f3dulos avan\u00e7ados da linguagem, em geral utilizados em diversos frameworks.",
+      "target": "Alunos com conhecimento intermedi\u00e1rio/avan\u00e7ado de Python, que j\u00e1 programam com a linguagem em seu dia-a-dia."
+    }
+  },
+  {
+    "model": "modules.module",
+    "pk": 5,
+    "fields": {
+      "order": 4,
+      "title": "Django",
+      "description": "Nesse m\u00f3dulo ser\u00e1 constru\u00eddo uma aplica\u00e7\u00e3o web real utilizando o Web Django, o mais famoso framework web de Python. Ele serve como m\u00f3dulo pr\u00e1tico onde todos os conceitos vistos nos demais m\u00f3dulos ser\u00e3o colados \u00e0 prova. Al\u00e9m dos conceitos, ser\u00e1 exemplificado um processo de entrega cont\u00ednua com deploys regulares no Heroku.",
+      "slug": "django",
+      "objective": "Constru\u00e7\u00e3o de web site",
+      "target": "Alunos com conhecimento intermedi\u00e1rio de Python interessados em aprender sobre desenvolvimento web."
+    }
+  },
+  {
+    "model": "modules.module",
+    "pk": 6,
+    "fields": {
+      "order": 5,
+      "title": "Python Paterns",
+      "description": "Neste m\u00f3dulo analisamos as caracter\u00edsticas espec\u00edficas dos objetos, classes e interfaces em Python, e aplicamos esse entendimento na an\u00e1lise e refatora\u00e7\u00e3o de v\u00e1rios padr\u00f5es de projeto cl\u00e1ssicos do livro Padr\u00f5es de Projeto de Gamma, Helm, Johnson e Vlissides. Al\u00e9m de padr\u00f5es arquiteturais, tamb\u00e9m estudamos padr\u00f5es de codifica\u00e7\u00e3o em uma escala menor, relacionados ao gerenciamento de atributos e usos din\u00e2micos de classes.",
+      "slug": "python-patterns",
+      "objective": "Apresentar t\u00e9cnicas de programa\u00e7\u00e3o orientada a objetos e padr\u00f5es de projeto otimizados para as caracter\u00edsticas din\u00e2micas da linguagem Python.",
+      "target": "Alunos com firmes conceitos de programa\u00e7\u00e3o orientada a objetos."
+    }
+  },
+  {
+    "model": "modules.module",
+    "pk": 7,
+    "fields": {
+      "order": 6,
+      "title": "Entrevistas T\u00e9cnicas",
+      "description": "Nesse m\u00f3dulo ser\u00e1 passada uma vis\u00e3o geral sobre os processos seletivos de empresas estrangeiras: envio de curr\u00edculo, an\u00e1lise de algor\u00edtmos, estruturas de dados e resolu\u00e7\u00e3o de quest\u00f5es.",
+      "slug": "entrevistas-tecnicas",
+      "objective": "Aprender como ocorre o processo seletivo de empresas gringas e as quest\u00f5es t\u00e9cnicas que s\u00e3o feitas na entrevista t\u00e9cnica.",
+      "target": "Alunos com conhecimento avan\u00e7ado de Python que pretendem prestar processos seletivos e/ou avaliar quantitativamente diferentes algor\u00edtmos."
+    }
+  },
+  {
+    "model": "modules.section",
+    "pk": 1,
+    "fields": {
+      "order": 0,
+      "title": "Programa\u00e7\u00e3o Procedural",
+      "description": "Nessa se\u00e7\u00e3o voc\u00ea vai aprender programa\u00e7\u00e3o procedural. Esse paradigma consiste em voc\u00ea definir a resolu\u00e7\u00e3o de um problema, passo a passo, de forma linear. Funciona como uma receita culin\u00e1ria, onde cada passado \u00e9 definido exatamente um depois do outro.",
+      "slug": "programacao-procedural",
+      "module": 1
+    }
+  },
+  {
+    "model": "modules.section",
+    "pk": 2,
+    "fields": {
+      "order": 1,
+      "title": "Orienta\u00e7\u00e3o a Objetos",
+      "description": "Depois de aprende o paradigma procedural na se\u00e7\u00e3o anterior chega hora de conhecer outro: a Orienta\u00e7\u00e3o a Objetos (OO). Voc\u00ea vai aprender sobre classes e seus componentes, heran\u00e7a e utilizar esses conceitos para implementar o jogo Python Birds. Como toda mudan\u00e7a de paradigma, demora um tempo para se acostumar, mas \u00e9 importante aprender bem OO porque ela utilizada em in\u00fameras bibliotecas e frameworks.",
+      "slug": "orientacao-a-objetos",
+      "module": 1
+    }
+  },
+  {
+    "model": "modules.chapter",
+    "pk": 1,
+    "fields": {
+      "order": 0,
+      "title": "Introdu\u00e7\u00e3o",
+      "description": "Nesse cap\u00edtulo voc\u00ea vai conferir a motiva\u00e7\u00e3o do curso, ou seja, como o jogo ficar\u00e1 ap\u00f3s a implementa\u00e7\u00e3o. Logo depois voc\u00ea vai aprender como instalar o Python em seu sistema operacional, editar c\u00f3digo e fazer pequenos testes no console.",
+      "slug": "introducao-python-birds",
+      "section": 1
+    }
+  },
+  {
+    "model": "modules.chapter",
+    "pk": 2,
+    "fields": {
+      "order": 1,
+      "title": "Tipos Embutidos",
+      "description": "Nesse cap\u00edtulo voc\u00ea vai aprender sobre os tipos embutidos. Eles formam um conjunto b\u00e1sicos de classes que serve para modelar o seu programa como n\u00fameros e palavras.",
+      "slug": "tipos-embutidos",
+      "section": 1
+    }
+  },
+  {
+    "model": "modules.chapter",
+    "pk": 3,
+    "fields": {
+      "order": 0,
+      "title": "whatever",
+      "description": "kjhsadfsadf",
+      "slug": "whatever",
+      "section": 2
+    }
+  },
+  {
+    "model": "modules.topic",
+    "pk": 1,
+    "fields": {
+      "order": 0,
+      "title": "Curso Python Pro",
+      "description": "V\u00eddeo explicando como funciona o curso Python Pro.",
+      "slug": "curso-python-pro",
+      "chapter": 1,
+      "vimeo_id": "258681672",
+      "discourse_topic_id": "1"
+    }
+  }
+]

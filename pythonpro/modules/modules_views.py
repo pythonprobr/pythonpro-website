@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from rolepermissions.checkers import has_object_permission
 
 from pythonpro.email_marketing.facade import tag_as
-from pythonpro.modules.facade import get_all_modules, get_module_with_contents
+from pythonpro.modules.facade import get_all_modules, get_module_with_contents, add_modules_purchase_link
 
 
 @login_required
@@ -12,7 +13,13 @@ def detail(request, slug):
 
 
 def index(request):
-    return render(request, 'modules/module_index.html', context={'modules': get_all_modules()})
+    modules = get_all_modules()
+    modules = add_modules_purchase_link(modules)
+
+    for module in modules:
+        module.has_access = True if has_object_permission('access_content', request.user, module) else False
+
+    return render(request, 'modules/module_index.html', context={'modules': modules})
 
 
 @login_required
