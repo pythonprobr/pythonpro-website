@@ -27,6 +27,9 @@ class Cohort(models.Model):
     def future_webinars(self):
         return [w for w in self.webinars if not w.vimeo_id]
 
+    def __str__(self):
+        return self.title
+
 
 class CohortStudent(models.Model):
     added = models.DateTimeField(auto_now_add=True)
