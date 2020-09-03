@@ -23,11 +23,10 @@
         },
         "amqp": {
             "hashes": [
-                "sha256:70cdb10628468ff14e57ec2f751c7aa9e48e7e3651cfd62d431213c0c4e58f21",
-                "sha256:aa7f313fb887c91f15474c1229907a04dac0b8135822d6603437803424c0aa59"
+                "sha256:1183b66e54a5c533b679d9f557b31c5b31d26701761f2bbd144054cce58f3588",
+                "sha256:ebec0adba224eccfec0b8e92ee25e555581b59f6daa5a743838bbfd6c3b90b2f"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
-            "version": "==2.6.1"
+            "version": "==5.0.0"
         },
         "asgiref": {
             "hashes": [
@@ -697,11 +696,10 @@
     "develop": {
         "amqp": {
             "hashes": [
-                "sha256:70cdb10628468ff14e57ec2f751c7aa9e48e7e3651cfd62d431213c0c4e58f21",
-                "sha256:aa7f313fb887c91f15474c1229907a04dac0b8135822d6603437803424c0aa59"
+                "sha256:1183b66e54a5c533b679d9f557b31c5b31d26701761f2bbd144054cce58f3588",
+                "sha256:ebec0adba224eccfec0b8e92ee25e555581b59f6daa5a743838bbfd6c3b90b2f"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
-            "version": "==2.6.1"
+            "version": "==5.0.0"
         },
         "asgiref": {
             "hashes": [
