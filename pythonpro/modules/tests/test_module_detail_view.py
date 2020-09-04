@@ -5,7 +5,7 @@ from model_bakery import baker
 
 from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains, dj_assert_template_used
 from pythonpro.modules import facade
-from pythonpro.modules.models import Chapter, Module, Section
+from pythonpro.modules.models import Chapter, Module, Section, Topic
 
 
 def generate_resp(slug, client):
@@ -97,10 +97,10 @@ def python_birds(modules):
 
 @pytest.fixture
 def resp_with_sections(client_with_lead, sections, python_birds):
-    return _resp_with_sections(client_with_lead, sections, python_birds)
+    return _resp_module_detail(client_with_lead, python_birds)
 
 
-def _resp_with_sections(client_with_lead, sections, python_birds):
+def _resp_module_detail(client_with_lead, python_birds):
     """Plain function to avoid _pytest.warning_types.RemovedInPytest4Warning: Fixture "resp" called directly."""
     return client_with_lead.get(reverse('modules:detail', kwargs={'slug': python_birds.slug}))
 
@@ -125,7 +125,7 @@ def chapters(sections):
 
 @pytest.fixture
 def resp_with_chapters(client_with_lead, python_birds, sections, chapters):
-    return _resp_with_sections(client_with_lead, sections, python_birds)
+    return _resp_module_detail(client_with_lead, python_birds)
 
 
 def test_chapter_titles(resp_with_chapters, chapters):
@@ -143,3 +143,26 @@ def test_enrol_user_tags(python_birds, client_with_lead, mocker, logged_user):
     resp = client_with_lead.get(reverse('modules:enrol', kwargs={'slug': python_birds.slug}))
     tag_as.assert_called_once_with(logged_user.email, logged_user.id, python_birds.slug)
     assert resp.status_code == 200
+
+
+@pytest.fixture
+def topics(chapters):
+    result = []
+    for chapter in chapters:
+        result.extend(baker.make(Topic, 2, chapter=chapter))
+    return result
+
+
+@pytest.fixture
+def resp_with_topics(client_with_lead, python_birds, topics):
+    return _resp_module_detail(client_with_lead, python_birds)
+
+
+def test_topic_titles(resp_with_topics, topics):
+    for topic in topics:
+        dj_assert_contains(resp_with_topics, topic.title)
+
+
+def test_topic_urls(resp_with_topics, topics):
+    for topic in topics:
+        dj_assert_contains(resp_with_topics, topic.get_absolute_url())

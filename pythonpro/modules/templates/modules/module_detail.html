@@ -19,7 +19,8 @@
                     <dt>Duração: 4 semanas</dt>
                     <dd>
                         <ul>
-                            <li><a class="btn-success btn" href="{% url 'modules:enrol' slug=module.slug %}">Quero receber minhas metas por email &raquo;</a></li>
+                            <li><a class="btn-success btn" href="{% url 'modules:enrol' slug=module.slug %}">Quero
+                                receber minhas metas por email &raquo;</a></li>
                         </ul>
                     </dd>
                 {% endif %}
@@ -44,15 +45,25 @@
                                 <ol>
                                     {% for chapter in section.chapters %}
                                         <li><a href="{{ chapter.get_absolute_url }}">{{ chapter.title }}</a></li>
+                                        <dd>
+                                            <ol>
+                                                {% for topic in chapter.topics %}
+                                                    <li><a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a>
+                                                    </li>
+                                                {% empty %}
+                                                    <li>Nenhum Capítulo definido ainda</li>
+                                                {% endfor %}
+                                            </ol>
+                                        </dd>
                                     {% empty %}
                                         <li>Nenhum Capítulo definido ainda</li>
                                     {% endfor %}
-                                </ol>
+                            </ol>
                             </dd>
                         {% empty %}
                             <li>Nenhuma seção definida ainda</li>
                         {% endfor %}
-                    </ol>
+                </ol>
                 </dd>
             </div>
         </div>
