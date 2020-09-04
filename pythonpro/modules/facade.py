@@ -5,7 +5,6 @@ from django.core.cache import cache as _cache
 from django.db.models import Prefetch as _Prefetch
 from django.urls import reverse
 
-
 from pythonpro.modules.models import (
     Chapter as _Chapter, Module as _Module, Section as _Section, Topic as _Topic,
 )
@@ -50,7 +49,13 @@ def get_module_with_contents(slug):
             queryset=_Section.objects.order_by('order').prefetch_related(
                 _Prefetch(
                     'chapter_set',
-                    queryset=_Chapter.objects.order_by('order'),
+                    queryset=_Chapter.objects.order_by('order').prefetch_related(
+                        _Prefetch(
+                            'topic_set',
+                            queryset=_Topic.objects.order_by(
+                                'order'),
+                            to_attr='topics')
+                    ),
                     to_attr='chapters'
                 )
             ),
@@ -141,13 +146,13 @@ def get_tree(module):
     sections = list(_Section.objects.filter(module=module).order_by('order').prefetch_related(
         _Prefetch(
             'chapter_set',
-            queryset=_Chapter.objects.order_by(
-                'order').prefetch_related(
+            queryset=_Chapter.objects.order_by('order').prefetch_related(
                 _Prefetch(
                     'topic_set',
                     queryset=_Topic.objects.order_by(
                         'order'),
-                    to_attr='topics')),
+                    to_attr='topics')
+            ),
             to_attr='chapters')))
     module.sections = sections
     return sections
