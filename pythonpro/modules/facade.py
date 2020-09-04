@@ -72,7 +72,13 @@ def get_section_with_contents(slug):
     return _Section.objects.filter(slug=slug).select_related('module').prefetch_related(
         _Prefetch(
             'chapter_set',
-            queryset=_Chapter.objects.order_by('order'),
+            queryset=_Chapter.objects.order_by('order').prefetch_related(
+                _Prefetch(
+                    'topic_set',
+                    queryset=_Topic.objects.order_by(
+                        'order'),
+                    to_attr='topics')
+            ),
             to_attr='chapters'
         )
     ).get()
