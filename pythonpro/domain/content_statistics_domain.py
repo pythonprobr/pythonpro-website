@@ -14,7 +14,11 @@ from pythonpro.core import facade as core_facade
 from pythonpro.dashboard.models import TopicInteraction
 from pythonpro.email_marketing import facade as email_marketing_facade
 from pythonpro.modules.facade import (
-    get_entire_content_forest, get_topic_with_contents_by_id, get_tree, topics_user_interacted_queryset,
+    get_entire_content_forest,
+    get_topic_with_contents_by_id,
+    get_tree,
+    topics_user_interacted_queryset,
+    get_tree_by_module_slug,
 )
 
 __all = [
@@ -54,9 +58,21 @@ def calculate_modules_progresses(user):
     return _calculate_modules_statistics(modules, user)
 
 
+def calculate_module_progresses_using_slug(user, module_slug):
+    """
+    Calculate the user progress on this module
+    :param module_slug: Module slug progresses will be calculated
+    :param user:
+    :return:
+    """
+
+    module = get_tree_by_module_slug(module_slug)
+    return _calculate_modules_statistics([module], user)[0]
+
+
 def calculate_module_progresses(user, module):
     """
-    Calculate the user progress on all modules
+    Calculate the user progress on this module
     :param module: Module progresses will be calculated
     :param user:
     :return:

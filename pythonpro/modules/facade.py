@@ -20,6 +20,8 @@ __all__ = [
     'get_entire_content_forest',
     'get_tree',
     'topics_user_interacted_queryset',
+    'get_tree_by_module_slug',
+    'add_modules_purchase_link'
 ]
 
 
@@ -193,3 +195,9 @@ def add_modules_purchase_link(modules):
         module.purchase_link = purchase_links[module.slug]
 
     return modules
+
+
+def get_tree_by_module_slug(module_slug: str):
+    module = _Module.objects.get(slug=module_slug)
+    module.sections = get_tree(module)
+    return module
