@@ -2,13 +2,14 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from rolepermissions.checkers import has_object_permission
 
+from pythonpro.domain.content_statistics_domain import calculate_module_progresses_using_slug
 from pythonpro.email_marketing.facade import tag_as
 from pythonpro.modules.facade import get_all_modules, get_module_with_contents, add_modules_purchase_link
 
 
 @login_required
 def detail(request, slug):
-    module = get_module_with_contents(slug)
+    module = calculate_module_progresses_using_slug(request.user, slug)
     return render(request, 'modules/module_detail.html', context={'module': module})
 
 
