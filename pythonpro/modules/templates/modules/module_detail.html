@@ -8,7 +8,13 @@
     <div class="container">
         <div class="row mb-5">
             <div class="col">
-                <h1 class="mt-4 mb-3">{{ module.title }}</h1>
+                <h1 class="mt-4 mb-3">{{ module.title }} -
+                    {% if module.finished_topics_count == module.topics_count %}
+                        <span class="badge badge-pill btn-success">{{ module.finished_topics_count }}/{{ module.topics_count }}</span>
+                    {% else %}
+                        <span class="badge badge-pill btn-danger">{{ module.finished_topics_count }}/{{ module.topics_count }}</span>
+                    {% endif %}
+                </h1>
                 <dt>Objetivo</dt>
                 <dd>
                     <ul>
@@ -19,7 +25,8 @@
                     <dt>Duração: 4 semanas</dt>
                     <dd>
                         <ul>
-                            <li><a class="btn-success btn" href="{% url 'modules:enrol' slug=module.slug %}">Quero receber minhas metas por email &raquo;</a></li>
+                            <li><a class="btn-success btn" href="{% url 'modules:enrol' slug=module.slug %}">Quero
+                                receber minhas metas por email &raquo;</a></li>
                         </ul>
                     </dd>
                 {% endif %}
@@ -39,20 +46,49 @@
                 <dd>
                     <ol>
                         {% for section in module.sections %}
-                            <li><a href="{{ section.get_absolute_url }}">{{ section.title }}</a></li>
+                            <li><a href="{{ section.get_absolute_url }}">{{ section.title }}</a> -
+                                {% if section.finished_topics_count == section.topics_count %}
+                                    <span class="badge badge-pill btn-success">{{ section.finished_topics_count }}/{{ section.topics_count }}</span>
+                                {% else %}
+                                    <span class="badge badge-pill btn-danger">{{ section.finished_topics_count }}/{{ section.topics_count }}</span>
+                                {% endif %}
+                            </li>
                             <dd>
                                 <ol>
                                     {% for chapter in section.chapters %}
-                                        <li><a href="{{ chapter.get_absolute_url }}">{{ chapter.title }}</a></li>
+                                        <li><a href="{{ chapter.get_absolute_url }}">{{ chapter.title }} -
+                                            {% if chapter.finished_topics_count == chapter.topics_count %}
+                                                <span class="badge badge-pill btn-success">{{ chapter.finished_topics_count }}/{{ chapter.topics_count }}</span>
+                                            {% else %}
+                                                <span class="badge badge-pill btn-danger">{{ chapter.finished_topics_count }}/{{ chapter.topics_count }}</span>
+                                            {% endif %}
+                                        </a></li>
+                                        <dd>
+                                            <ol>
+                                                {% for topic in chapter.topics %}
+                                                    <li><a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a>
+                                                        {% if topic.finished_topics_count == 1 %}
+                                                            -
+                                                            <span class="badge badge-pill badge-success">✓</span>
+                                                        {% else %}
+                                                            -
+                                                            <span class="badge badge-pill badge-danger">X</span>
+                                                        {% endif %}
+                                                    </li>
+                                                {% empty %}
+                                                    <li>Nenhuma aula foi definida ainda</li>
+                                                {% endfor %}
+                                            </ol>
+                                        </dd>
                                     {% empty %}
                                         <li>Nenhum Capítulo definido ainda</li>
                                     {% endfor %}
-                                </ol>
+                            </ol>
                             </dd>
                         {% empty %}
                             <li>Nenhuma seção definida ainda</li>
                         {% endfor %}
-                    </ol>
+                </ol>
                 </dd>
             </div>
         </div>

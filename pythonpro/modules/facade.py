@@ -5,7 +5,6 @@ from django.core.cache import cache as _cache
 from django.db.models import Prefetch as _Prefetch
 from django.urls import reverse
 
-
 from pythonpro.modules.models import (
     Chapter as _Chapter, Module as _Module, Section as _Section, Topic as _Topic,
 )
@@ -21,6 +20,8 @@ __all__ = [
     'get_entire_content_forest',
     'get_tree',
     'topics_user_interacted_queryset',
+    'get_tree_by_module_slug',
+    'add_modules_purchase_link'
 ]
 
 
@@ -50,7 +51,13 @@ def get_module_with_contents(slug):
             queryset=_Section.objects.order_by('order').prefetch_related(
                 _Prefetch(
                     'chapter_set',
-                    queryset=_Chapter.objects.order_by('order'),
+                    queryset=_Chapter.objects.order_by('order').prefetch_related(
+                        _Prefetch(
+                            'topic_set',
+                            queryset=_Topic.objects.order_by(
+                                'order'),
+                            to_attr='topics')
+                    ),
                     to_attr='chapters'
                 )
             ),
@@ -67,7 +74,13 @@ def get_section_with_contents(slug):
     return _Section.objects.filter(slug=slug).select_related('module').prefetch_related(
         _Prefetch(
             'chapter_set',
-            queryset=_Chapter.objects.order_by('order'),
+            queryset=_Chapter.objects.order_by('order').prefetch_related(
+                _Prefetch(
+                    'topic_set',
+                    queryset=_Topic.objects.order_by(
+                        'order'),
+                    to_attr='topics')
+            ),
             to_attr='chapters'
         )
     ).get()
@@ -141,13 +154,13 @@ def get_tree(module):
     sections = list(_Section.objects.filter(module=module).order_by('order').prefetch_related(
         _Prefetch(
             'chapter_set',
-            queryset=_Chapter.objects.order_by(
-                'order').prefetch_related(
+            queryset=_Chapter.objects.order_by('order').prefetch_related(
                 _Prefetch(
                     'topic_set',
                     queryset=_Topic.objects.order_by(
                         'order'),
-                    to_attr='topics')),
+                    to_attr='topics')
+            ),
             to_attr='chapters')))
     module.sections = sections
     return sections
@@ -182,3 +195,9 @@ def add_modules_purchase_link(modules):
         module.purchase_link = purchase_links[module.slug]
 
     return modules
+
+
+def get_tree_by_module_slug(module_slug: str):
+    module = _Module.objects.get(slug=module_slug)
+    module.sections = get_tree(module)
+    return module
