@@ -1,3 +1,4 @@
+import posthog
 import pytest
 from faker import Faker
 from model_bakery import baker
@@ -247,6 +248,14 @@ def turn_ssl_rediret_off_for_tests(settings):
     There is no need to place secure=True in all client requests
     """
     settings.SECURE_SSL_REDIRECT = False
+
+
+@pytest.fixture(autouse=True)
+def turn_posthog_off_for_tests(settings):
+    """
+    There is no need to place secure=True in all client requests
+    """
+    posthog.disabled = True
 
 
 pytest_plugins = ['pythonpro.modules.tests.test_topics_view']

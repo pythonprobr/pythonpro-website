@@ -1,10 +1,9 @@
 from unittest import mock
 
 import pytest
-
 from django.urls import reverse
 
-from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains
+from pythonpro.django_assertions import dj_assert_contains
 
 
 @pytest.fixture
@@ -44,9 +43,6 @@ def test_should_load_name_and_email_from_GET_when_user_is_logged(client_with_use
     dj_assert_contains(resp, 'Moacir')
     dj_assert_contains(resp, 'moacir@python.pro.br')
     dj_assert_contains(resp, '(11) 99999-9999')
-
-    dj_assert_not_contains(resp, logged_user.first_name)
-    dj_assert_not_contains(resp, logged_user.email)
 
 
 @pytest.fixture
