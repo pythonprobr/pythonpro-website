@@ -35,6 +35,7 @@ django-two-factor-auth = "*"
 django-recaptcha = "*"
 django-pagarme = "*"
 django-redis = "*"
+posthog = "*"
 
 [dev-packages]
 faker = "*"
