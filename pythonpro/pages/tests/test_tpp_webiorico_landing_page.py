@@ -16,11 +16,6 @@ def test_should_return_200_when_load_invite_page(client):
     assert resp.status_code == 200
 
 
-def test_should_return_200_when_load_thank_you_page(client):
-    resp = client.get(reverse('pages:tpp_webiorico_thank_you_page'))
-    assert resp.status_code == 200
-
-
 @pytest.fixture
 def create_or_update_with_no_role(mocker):
     return mocker.patch('pythonpro.email_marketing.facade.create_or_update_with_no_role.delay')
