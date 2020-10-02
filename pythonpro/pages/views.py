@@ -85,3 +85,8 @@ class BootcampVipLandingPage(BasePhoneLandingPageView):
 
 class BootcampVipThankYouPage(BaseThankYouView):
     pass
+
+
+class TppWebioricoLandingPage(BaseLandingPageView):
+    success_url = reverse_lazy('pages:ds_webinar_thank_you_page')
+    email_marketing_tag = 'tpp-webiorico'

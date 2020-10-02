@@ -40,4 +40,14 @@ urlpatterns = [
         views.BootcampVipThankYouPage.as_view(),
         name='bootcamp_vip_thank_you_page'
     ),
+    path(
+        'rumo-a-primeira-vaga/inscricao',
+        views.TppWebioricoLandingPage.as_view(),
+        name='tpp_webiorico_landing_page'
+    ),
+    path(
+        'rumo-a-primeira-vaga/obrigado',
+        views.DsWebinarThankYouPage.as_view(),
+        name='tpp_webiorico_thank_you_page'
+    ),
 ]
