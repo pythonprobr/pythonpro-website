@@ -1,0 +1,139 @@
+{% extends 'pages/base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block title %}MASTERCLASS RUMO A PRIMEIRA VAGA! Inscreva-se Grátis!{% endblock %}
+{% block description %}{% endblock %}
+
+{% block content %}
+    <div class='bg-black'>
+        <div class="container">
+            <div class="row text-center text-light">
+                <div class="col hero">
+                    <h1 class='font-weight-bold'>
+                        <u>RUMO A PRIMEIRA VAGA!</u>
+                    </h1>
+                    
+                    <h3 class='font-weight-bold mb-4'>
+                        O caminho mais rápido para você conquistar sua primeira oportunidade
+                        como programador e iniciar uma carreira à prova de crise.
+                    </h3>
+                    
+                    <h4 class='' id="topo">
+                        Workshop Online e Gratuito.
+                    </h4>                    
+
+                    <h4 class=''>
+                        <b class='text-uppercase'>Dia 07/10 às 21h, Horário de Brasília</b>
+                    </h4>                    
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class='offset-md-2 col-md-8 col-sm-12 text-light'>
+                    
+                    <span class=' font-weight-bold' style='font-size: 16pt'>Preencha o formulário:</span>
+                    <form method="POST" class='mb-5 text-center'>
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+
+                        <button type='submit' class='btn btn-warning text-center cta'>
+                            <b>CONFIRMAR MINHA INSCRIÇÃO!</b>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='mt-5 mb-5 content'>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2 class='font-weight-bold text-center mb-5 text-uppercase'>
+                        O que você vai aprender nesta aula?
+                    </h2>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col text-center">
+                    <span class="ec ec-bulb"></span>
+                    <p><h3 class='font-weight-bold'>Princípio de Pareto</h3></p>
+                    <p>Faça apenas o mínimo, necessário e suficiente</p>
+                </div>
+                
+                <div class="col text-center">
+                    <span class="ec ec-muscle"></span>
+                    <p><h3 class='font-weight-bold'>Testar o Mercado</h3></p>
+                    <p>Se candidate para todas as vagas em aberto</p>
+                </div>
+                
+                <div class="col text-center">
+                    <span class="ec ec-money-mouth-face"></span>
+                    <p><h3 class='font-weight-bold'>Vender p/ não ser Vendido</h3></p>
+                    <p>Aprenda como se vender nos processos seletivos</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block footer %}
+    <div class=''>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5 text-center">
+                    <i>
+                        {% now "Y" %} Python Pro. Todos os direitos reservados. <br>
+                        CNPJ: 31.080.715/0001-25<br>
+                        +55 84 99464-4699 - {{ DEFAULT_FROM_EMAIL }}
+                    </i>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock  %}
+
+{% block styles %}
+    {{ block.super }}
+    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+    
+    <style>
+        .bg-black {
+            background-color: #0c1b33 !important;
+        }
+        .content .ec {
+            font-size: 100pt;
+        }
+        .content .col h3 {
+            font-size: 17pt;
+            margin: -20px 0;
+        }
+
+        @media only screen and (min-device-width : 320px) and (max-device-width : 1024px) {
+            .hero h1 {
+                font-size: 20pt;
+            }
+            .hero h4 {
+                font-size: 14pt;
+            }
+            .cta {
+                font-size: 14pt !important;
+                padding: 10px 20px;
+            }
+            h2 {
+                font-size: 18pt;
+            }
+            p {
+                font-size: 12pt;
+            }
+        }
+    </style>
+
+{% endblock %}
+
+{% block scripts %}{% endblock %}
