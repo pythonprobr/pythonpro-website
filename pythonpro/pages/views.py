@@ -88,5 +88,5 @@ class BootcampVipThankYouPage(BaseThankYouView):
 
 
 class TppWebioricoLandingPage(BaseLandingPageView):
-    success_url = reverse_lazy('pages:ds_webinar_thank_you_page')
+    success_url = 'https://www.python.pro.br/r/grupo-rumo-a-primeira-vaga'
     email_marketing_tag = 'tpp-webiorico'
