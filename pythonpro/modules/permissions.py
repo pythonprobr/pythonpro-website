@@ -11,7 +11,7 @@ from pythonpro.modules.models import Content
 
 _LEAD_MODULES = {'python-birds'}
 _CLIENT_MODULES = {'python-birds', 'pytools'}
-_WEBDEV_MODULES = {'python-birds', 'pytools', 'django'}
+_WEBDEV_MODULES = {'python-birds', 'pytools', 'django', 'entrevistas-tecnicas'}
 _BOOTCAMPER_MODULES = {'python-birds', 'pytools', 'django', 'entrevistas-tecnicas'}
 _PYTHONISTA_MODULES = {'python-birds', 'objetos-pythonicos', 'python-para-pythonistas', 'python-patterns'}
 

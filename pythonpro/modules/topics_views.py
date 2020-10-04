@@ -8,7 +8,7 @@ from pythonpro.modules.models import Content
 
 
 def content_landing_page(content: Content):
-    if content.module_slug() in {'pytools', 'django'}:
+    if content.module_slug() in {'pytools', 'django', 'entrevistas-tecnicas'}:
         redirect_path = reverse('checkout:webdev_landing_page')
     else:
         redirect_path = reverse('checkout:bootcamp_lp')
