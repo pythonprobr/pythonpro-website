@@ -81,6 +81,23 @@ def test_item_config_pytools_done(first_pagarme_form_config):
            )
 
 
+def test_webinar(first_pagarme_form_config):
+    item_config = facade.find_payment_item_config('treinamento-devpro-webinar')
+    assert (
+               item_config.name,
+               item_config.slug,
+               item_config.price,
+               item_config.tangible,
+               item_config.default_config,
+           ) == (
+               'Treinamento DevPro com 30% de Desconto',
+               'treinamento-devpro-webinar',
+               99700,
+               False,
+               first_pagarme_form_config
+           )
+
+
 def test_item_membership(first_pagarme_form_config):
     item_config = facade.find_payment_item_config('membership')
     assert (

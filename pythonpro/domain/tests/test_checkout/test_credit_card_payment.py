@@ -129,7 +129,7 @@ def test_user_is_promoted(resp, django_user_model, active_product_item):
 def assert_user_promoted(user, slug):
     if slug.startswith('membership'):
         assert core_facade.is_member(user)
-    elif slug.startswith('webdev'):
+    elif slug.startswith('webdev') or slug == 'treinamento-devpro-webinar':
         assert core_facade.is_webdev(user)
     elif slug.startswith('data-science'):
         assert core_facade.is_data_scientist(user)
@@ -152,7 +152,8 @@ def test_user_is_subscribed_to_cohort(resp, django_user_model, cohort, active_pr
 
 
 def asssert_subscribed_to_cohort(cohort, slug, user):
-    if not (slug.startswith('webdev') or slug.startswith('data-science') or slug == 'pacote-proximo-nivel-67-discount'):
+    if not (slug.startswith('webdev') or slug == 'treinamento-devpro-webinar' or slug.startswith(
+            'data-science') or slug == 'pacote-proximo-nivel-67-discount'):
         assert cohort.students.first() == user
 
 

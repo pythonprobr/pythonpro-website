@@ -11,6 +11,7 @@ webdev_migration_module = import_module('pythonpro.checkout.migrations.0002_webd
 data_science_migration_module = import_module('pythonpro.checkout.migrations.0003_data_science_setup')
 bootcamp_migration_module = import_module('pythonpro.checkout.migrations.0004_bootcamp_setup')
 python_avancado_migration_module = import_module('pythonpro.checkout.migrations.0005_python_avancado_setup')
+webinar_migration_module = import_module('pythonpro.checkout.migrations.0006_webinar_setup')
 
 ALL_ACTIVE_PRODUCTS = [
 
@@ -24,6 +25,7 @@ ALL_ACTIVE_PRODUCTS = [
     'bootcamp-webdev-35-discount',
     'bootcamp-webdev-50-discount',
     'pacote-proximo-nivel-67-discount',
+    'treinamento-devpro-webinar',
 ]
 ALL_INACTIVE_PRODUCTS = [
     'pytools',
@@ -45,6 +47,7 @@ def execute_migration(db, pytestconfig):
         data_science_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
         bootcamp_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
         python_avancado_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
+        webinar_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
 
 
 @pytest.fixture(autouse=True)
