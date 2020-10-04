@@ -214,31 +214,32 @@ def test_level_one_user_acces_level_one_content(resp_level_one_user_accesing_lev
     dj_assert_template_used(resp_level_one_user_accesing_level_one_content, 'topics/topic_detail.html')
 
 
-@pytest.fixture
-def module_webdev(db):
-    return baker.make(Module, slug='django')
+@pytest.fixture(params='django entrevistas-tecnicas'.split())
+def module_level_two(db, request):
+    slug = request.param
+    return baker.make(Module, slug=slug)
 
 
 @pytest.fixture
-def section_webdev(module_webdev):
-    return baker.make(Section, module=module_webdev)
+def section_level_two(module_level_two):
+    return baker.make(Section, module=module_level_two)
 
 
 @pytest.fixture
-def chapter_webdev(section_webdev):
-    return baker.make(Chapter, section=section_webdev)
+def chapter_level_two(section_level_two):
+    return baker.make(Chapter, section=section_level_two)
 
 
 @pytest.fixture
-def topic_webdev(chapter_webdev):
-    return baker.make(Topic, chapter=chapter_webdev)
+def topic_level_two(chapter_level_two):
+    return baker.make(Topic, chapter=chapter_level_two)
 
 
 @pytest.fixture
-def resp_not_level_two_accesing_level_two_content(client_with_not_level_two_roles, topic_webdev):
+def resp_not_level_two_accesing_level_two_content(client_with_not_level_two_roles, topic_level_two):
     return client_with_not_level_two_roles.get(
         reverse('modules:topic_detail',
-                kwargs={'module_slug': topic_webdev.module_slug(), 'topic_slug': topic_webdev.slug}),
+                kwargs={'module_slug': topic_level_two.module_slug(), 'topic_slug': topic_level_two.slug}),
     )
 
 
@@ -248,10 +249,10 @@ def test_not_level_two_hitting_webdev_landing_page_oto(resp_not_level_two_accesi
 
 
 @pytest.fixture
-def resp_level_two_accessing_webdev_content(client_with_level_two_roles, topic_webdev):
+def resp_level_two_accessing_webdev_content(client_with_level_two_roles, topic_level_two):
     return client_with_level_two_roles.get(
         reverse('modules:topic_detail',
-                kwargs={'module_slug': topic_webdev.module_slug(), 'topic_slug': topic_webdev.slug}),
+                kwargs={'module_slug': topic_level_two.module_slug(), 'topic_slug': topic_level_two.slug}),
         secure=True)
 
 
@@ -259,46 +260,46 @@ def test_webdev_access_webdev_content(resp_level_two_accessing_webdev_content):
     dj_assert_template_used(resp_level_two_accessing_webdev_content, 'topics/topic_detail.html')
 
 
-@pytest.fixture
-def module_level_three(db):
-    return baker.make(Module, slug='entrevistas-tecnicas')
+# @pytest.fixture
+# def module_level_three(db):
+#     return baker.make(Module, slug='entrevistas-tecnicas')
+#
+#
+# @pytest.fixture
+# def section_level_three(module_level_three):
+#     return baker.make(Section, module=module_level_three)
+#
+#
+# @pytest.fixture
+# def chapter_level_three(section_level_three):
+#     return baker.make(Chapter, section=section_level_three)
+#
+#
+# @pytest.fixture
+# def topic_level_three(chapter_level_three):
+#     return baker.make(Topic, chapter=chapter_level_three)
+#
+#
+# @pytest.fixture
+# def resp_not_level_three_accesing_level_three_content(client_with_not_level_three_roles, topic_level_three):
+#     return client_with_not_level_three_roles.get(
+#         reverse('modules:topic_detail',
+#                 kwargs={'module_slug': topic_level_three.module_slug(), 'topic_slug': topic_level_three.slug}),
+#     )
+#
+#
+# def test_not_level_three_hitting_level_three_landing_page(resp_not_level_three_accesing_level_three_content):
+#     assert resp_not_level_three_accesing_level_three_content.status_code == 302
+#     assert resp_not_level_three_accesing_level_three_content.url == reverse('checkout:bootcamp_lp')
 
 
-@pytest.fixture
-def section_level_three(module_level_three):
-    return baker.make(Section, module=module_level_three)
-
-
-@pytest.fixture
-def chapter_level_three(section_level_three):
-    return baker.make(Chapter, section=section_level_three)
-
-
-@pytest.fixture
-def topic_level_three(chapter_level_three):
-    return baker.make(Topic, chapter=chapter_level_three)
-
-
-@pytest.fixture
-def resp_not_level_three_accesing_level_three_content(client_with_not_level_three_roles, topic_level_three):
-    return client_with_not_level_three_roles.get(
-        reverse('modules:topic_detail',
-                kwargs={'module_slug': topic_level_three.module_slug(), 'topic_slug': topic_level_three.slug}),
-    )
-
-
-def test_not_level_three_hitting_level_three_landing_page(resp_not_level_three_accesing_level_three_content):
-    assert resp_not_level_three_accesing_level_three_content.status_code == 302
-    assert resp_not_level_three_accesing_level_three_content.url == reverse('checkout:bootcamp_lp')
-
-
-@pytest.fixture
-def resp_level_three_accessing_level_three_content(client_with_level_three_roles, topic_level_three):
-    return client_with_level_three_roles.get(
-        reverse('modules:topic_detail',
-                kwargs={'module_slug': topic_level_three.module_slug(), 'topic_slug': topic_level_three.slug}),
-        secure=True)
-
-
-def test_level_three_access_level_three_content(resp_level_three_accessing_level_three_content):
-    dj_assert_template_used(resp_level_three_accessing_level_three_content, 'topics/topic_detail.html')
+# @pytest.fixture
+# def resp_level_three_accessing_level_three_content(client_with_level_three_roles, topic_level_three):
+#     return client_with_level_three_roles.get(
+#         reverse('modules:topic_detail',
+#                 kwargs={'module_slug': topic_level_three.module_slug(), 'topic_slug': topic_level_three.slug}),
+#         secure=True)
+#
+#
+# def test_level_three_access_level_three_content(resp_level_three_accessing_level_three_content):
+#     dj_assert_template_used(resp_level_three_accessing_level_three_content, 'topics/topic_detail.html')

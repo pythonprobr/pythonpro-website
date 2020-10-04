@@ -93,6 +93,7 @@ def test_module_client_user_can_not_access(modules_dct, resp_client_user, slug):
     'python-birds',
     'pytools',
     'django',
+    'entrevistas-tecnicas',
 ])
 def test_module_webdev_user_can_access(modules_dct, resp_webdev_user, slug):
     """ Assert that user with a webdev role can access the right content """
@@ -103,7 +104,6 @@ def test_module_webdev_user_can_access(modules_dct, resp_webdev_user, slug):
     'objetos-pythonicos',
     'python-para-pythonistas',
     'python-patterns',
-    'entrevistas-tecnicas',
 ])
 def test_module_webdev_user_can_not_access(modules_dct, resp_webdev_user, slug):
     """ Assert that user with a webdev role can not access some contents """
