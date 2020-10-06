@@ -19,6 +19,9 @@ class Cohort(models.Model):
     def get_absolute_url(self):
         return reverse('cohorts:detail', kwargs={'slug': self.slug})
 
+    def __str__(self):
+        return f'Turma: {self.title}'
+
     @property
     def recorded_webinars(self):
         return [w for w in self.webinars if w.vimeo_id]
