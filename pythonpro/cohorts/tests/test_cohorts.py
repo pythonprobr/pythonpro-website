@@ -58,6 +58,10 @@ def test_status_code(resp):
     assert 200 == resp.status_code
 
 
+def test_str(cohort):
+    assert str(cohort) == f'Turma: {cohort.title}'
+
+
 @pytest.mark.parametrize('property_name', 'title forum_post'.split())
 def test_cohort_properties(cohort, resp, property_name):
     dj_assert_contains(resp, getattr(cohort, property_name))
