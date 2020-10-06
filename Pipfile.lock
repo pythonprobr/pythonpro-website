@@ -890,11 +890,10 @@
         },
         "model-bakery": {
             "hashes": [
-                "sha256:320d9e78fad1605a08bfb93affae42ba027300e2e973a235e12b102f78e97f7d",
-                "sha256:e2f0522a4b7d3cc1b6f88e95ac87cefd9317516274bb126f54488f47fe3aaafd"
+                "sha256:088698cdf62e5ccedeb97e55ceb966c974cc79e2514928aec9beab27a8c1faf4",
+                "sha256:b25f400b392067f02d841a0ef33e861543c04b1702dc004020bdd50e1dbce05f"
             ],
-            "index": "pypi",
-            "version": "==1.1.1"
+            "version": "==1.2.0"
         },
         "packaging": {
             "hashes": [
