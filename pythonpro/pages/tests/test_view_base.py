@@ -8,6 +8,7 @@ from pythonpro.pages.views import BaseLandingPageView
 class TestView(BaseLandingPageView):
     success_url = '/'
     email_marketing_tag = 'test-tag'
+    __test__ = False
 
 
 def test_should_return_default_template_name():
