@@ -15,8 +15,12 @@ def pre_request():
     return request
 
 
+def dummy_get_response(request):
+    return None
+
+
 def _get_request_with_session_setted(pre_request):
-    middleware = SessionMiddleware()
+    middleware = SessionMiddleware(dummy_get_response)
     middleware.process_request(pre_request)
     pre_request.session.save()
     return pre_request
@@ -35,7 +39,7 @@ def mocked_request_2(pre_request):
 @pytest.fixture
 def mocked_request_logged(pre_request, logged_user):
     pre_request.user = logged_user
-    middleware = SessionMiddleware()
+    middleware = SessionMiddleware(dummy_get_response)
     middleware.process_request(pre_request)
     pre_request.session.save()
 
