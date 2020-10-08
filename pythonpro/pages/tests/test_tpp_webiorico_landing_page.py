@@ -1,7 +1,10 @@
+from datetime import datetime
+
 from unittest import mock
 
 import pytest
 from django.urls import reverse
+from django.utils import timezone
 
 from pythonpro.django_assertions import dj_assert_contains
 
@@ -62,3 +65,20 @@ def test_should_inform_form_error(create_or_update_with_no_role, client, cohort)
 
     assert resp.status_code == 200
     dj_assert_contains(resp, 'is-invalid')
+
+
+def test_should_get_next_wed(mocker, client):
+    fake_today = timezone.make_aware(datetime(2020, 10, 8))
+    mocker.patch('pythonpro.pages.views.timezone.now', return_value=fake_today)
+
+    resp = client.get(reverse('pages:tpp_webiorico_landing_page'))
+
+    assert resp.status_code == 200
+    dj_assert_contains(resp, '14/10')
+
+
+def test_should_set_date_by_url(client):
+    resp = client.get(reverse('pages:tpp_webiorico_landing_page_date_var', args=['13-10']))
+
+    assert resp.status_code == 200
+    dj_assert_contains(resp, '13/10')

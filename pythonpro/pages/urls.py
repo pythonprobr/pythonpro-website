@@ -41,6 +41,11 @@ urlpatterns = [
         name='bootcamp_vip_thank_you_page'
     ),
     path(
+        'rumo-a-primeira-vaga/inscricao-<slug:date>',
+        views.TppWebioricoLandingPage.as_view(),
+        name='tpp_webiorico_landing_page_date_var'
+    ),
+    path(
         'rumo-a-primeira-vaga/inscricao',
         views.TppWebioricoLandingPage.as_view(),
         name='tpp_webiorico_landing_page'
