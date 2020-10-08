@@ -13,32 +13,38 @@
                     <h1 class='font-weight-bold'>
                         <u>RUMO A PRIMEIRA VAGA!</u>
                     </h1>
-                    
+
                     <h3 class='font-weight-bold mb-4'>
                         O caminho mais rápido para você conquistar sua primeira oportunidade
                         como programador e iniciar uma carreira à prova de crise.
                     </h3>
-                    
-                    <h4 class='' id="topo">
-                        Workshop Online e Gratuito.
-                    </h4>                    
-
-                    <h4 class=''>
-                        <b class='text-uppercase'>Dia 07/10 às 21h, Horário de Brasília</b>
-                    </h4>                    
                 </div>
             </div>
             
             <div class="row">
-                <div class='offset-md-2 col-md-8 col-sm-12 text-light'>
-                    
-                    <span class=' font-weight-bold' style='font-size: 16pt'>Preencha o formulário:</span>
+                <div class='col-md-6 col-sm-12'>
+                    <img class="photo-renzo" src="{% static 'img/spp/footer/renzo-nuccitelli-footer-desktop.png' %}">
+                </div>
+                
+                <div class='col-md-6 col-sm-12 text-light main-form'>
+                    <h4 class='' id="topo">
+                        Workshop Online e Gratuito.
+                    </h4>                    
+
+                    <h4 class='mb-5'>
+                        <b class='text-uppercase'>Dia 14/10 às 21h, Horário de Brasília</b>
+                    </h4>                    
+
+                    <span class='' style='font-size: 16pt'>Preencha o formulário:</span>
                     <form method="POST" class='mb-5 text-center'>
                         {% csrf_token %}
                         {% bootstrap_form form %}
 
                         <button type='submit' class='btn btn-warning text-center cta'>
-                            <b>CONFIRMAR MINHA INSCRIÇÃO!</b>
+                            <b>
+                                EU QUERO A MINHA PRIMEIRA VAGA! 
+                                <span class="ec ec-rocket"></span>
+                            </b>
                         </button>
                     </form>
                 </div>
@@ -57,19 +63,19 @@
             </div>
             
             <div class="row">
-                <div class="col text-center">
+                <div class="col-sm-12 col-md-4 text-center">
                     <span class="ec ec-bulb"></span>
                     <p><h3 class='font-weight-bold'>Princípio de Pareto</h3></p>
                     <p>Faça apenas o mínimo, necessário e suficiente</p>
                 </div>
                 
-                <div class="col text-center">
+                <div class="col-sm-12 col-md-4 text-center">
                     <span class="ec ec-muscle"></span>
                     <p><h3 class='font-weight-bold'>Testar o Mercado</h3></p>
                     <p>Se candidate para todas as vagas em aberto</p>
                 </div>
                 
-                <div class="col text-center">
+                <div class="col-sm-12 col-md-4 text-center">
                     <span class="ec ec-money-mouth-face"></span>
                     <p><h3 class='font-weight-bold'>Vender p/ não ser Vendido</h3></p>
                     <p>Aprenda como se vender nos processos seletivos</p>
@@ -81,6 +87,28 @@
 {% endblock content %}
 
 {% block footer %}
+    <div class='bg-black'>
+        <div class="container">
+            <div class="row">
+                <div class='offset-md-2 col-md-8 col-sm-12 text-light mt-5'>
+                    
+                    <span class=' font-weight-bold' style='font-size: 16pt'>Inscreva-se Grátis:</span>
+                    <form method="POST" class='mb-5 text-center'>
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+
+                        <button type='submit' class='btn btn-warning text-center cta'>
+                            <b>
+                                EU QUERO A MINHA PRIMEIRA VAGA! 
+                                <span class="ec ec-rocket"></span>
+                            </b>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class=''>
         <div class="container">
             <div class="row">
@@ -114,15 +142,27 @@
             margin: -20px 0;
         }
 
+        .photo-renzo {
+            margin-top: -80px;
+        }
+
+        .cta {
+            font-size: 15pt !important;
+        }
+
         @media only screen and (min-device-width : 320px) and (max-device-width : 1024px) {
             .hero h1 {
                 font-size: 20pt;
+            }
+            .hero h3 {
+                font-size: 14pt;
+                font-family: 'Gilroy-Regular';
             }
             .hero h4 {
                 font-size: 14pt;
             }
             .cta {
-                font-size: 14pt !important;
+                font-size: 12pt !important;
                 padding: 10px 20px;
             }
             h2 {
@@ -130,6 +170,17 @@
             }
             p {
                 font-size: 12pt;
+            }
+            .photo-renzo {
+                margin-top: -50px;
+                margin-bottom: 20px;
+                width: 300px;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .main-form {
+                text-align: center;
             }
         }
     </style>
