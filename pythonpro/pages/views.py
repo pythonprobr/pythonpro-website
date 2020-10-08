@@ -1,7 +1,9 @@
+from datetime import timedelta
 from inflection import underscore
 
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
+from django.utils import timezone
 
 from pythonpro.cohorts.facade import find_most_recent_cohort
 from pythonpro.pages.forms import NameEmailForm, NameEmailPhoneForm
@@ -90,3 +92,21 @@ class BootcampVipThankYouPage(BaseThankYouView):
 class TppWebioricoLandingPage(BaseLandingPageView):
     success_url = 'https://www.python.pro.br/r/grupo-rumo-a-primeira-vaga'
     email_marketing_tag = 'tpp-webiorico'
+
+    def get_next_wed(self):
+        if self.kwargs.get('date') is not None:
+            return self.kwargs.get('date').replace('-', '/')
+
+        now = timezone.now()
+        days_ahead = 2 - now.weekday()
+
+        if days_ahead - 2 <= 0:
+            days_ahead += 7
+
+        final_date = now + timedelta(days=days_ahead)
+        return final_date.strftime("%d/%m")
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['date'] = self.get_next_wed()
+        return context
