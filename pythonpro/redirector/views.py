@@ -9,6 +9,7 @@ def redirect(request, slug: str):
     url = get_redirect_url(redirect)
 
     if redirect.use_javascript is False:
+        url = f'{url}?{request.GET.urlencode()}'
         return redirect_url(url)
 
     ctx = {'url': url}
