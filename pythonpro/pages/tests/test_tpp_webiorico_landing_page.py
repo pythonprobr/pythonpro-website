@@ -82,3 +82,8 @@ def test_should_set_date_by_url(client):
 
     assert resp.status_code == 200
     dj_assert_contains(resp, '13/10')
+
+
+def test_should_return_200_when_load_thank_you_page(client):
+    resp = client.get(reverse('pages:tpp_webiorico_thank_you_page'))
+    assert resp.status_code == 200
