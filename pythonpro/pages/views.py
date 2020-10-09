@@ -90,7 +90,7 @@ class BootcampVipThankYouPage(BaseThankYouView):
 
 
 class TppWebioricoLandingPage(BaseLandingPageView):
-    success_url = 'https://www.python.pro.br/r/grupo-rumo-a-primeira-vaga'
+    success_url = reverse_lazy('pages:tpp_webiorico_thank_you_page')
     email_marketing_tag = 'tpp-webiorico'
 
     def get_next_wed(self):
@@ -110,3 +110,7 @@ class TppWebioricoLandingPage(BaseLandingPageView):
         context = super().get_context_data(*args, **kwargs)
         context['date'] = self.get_next_wed()
         return context
+
+
+class TppWebioricoThankYouPage(BaseThankYouView):
+    pass
