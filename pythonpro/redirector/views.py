@@ -8,8 +8,12 @@ def redirect(request, slug: str):
     redirect = Redirect.objects.get(slug=slug)
     url = get_redirect_url(redirect)
 
-    if redirect.use_javascript is False:
+    if '?' in url and request.GET:
+        url = f'{url}&{request.GET.urlencode()}'
+    elif request.GET:
         url = f'{url}?{request.GET.urlencode()}'
+
+    if redirect.use_javascript is False:
         return redirect_url(url)
 
     ctx = {'url': url}
