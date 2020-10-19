@@ -869,11 +869,10 @@
         },
         "humanize": {
             "hashes": [
-                "sha256:8ff8f292c9bf52bbefdc620410e7defd1c95e7eeb1a5cfc2859aaea4b1877ff5",
-                "sha256:b67f41ad9689bd8539fe02695385989d8c789019a90c450d3d2f8891e9e4bb32"
+                "sha256:6790d9ba139ce09761ae901be9b22bd32a131fa65ecc82cdfc4d86f377f7395d",
+                "sha256:fd3eb915310335c63a54d4507289ecc7b3a7454cd2c22ac5086d061a3cbfd592"
             ],
-            "markers": "python_version >= '3.6'",
-            "version": "==3.0.1"
+            "version": "==3.1.0"
         },
         "iniconfig": {
             "hashes": [
