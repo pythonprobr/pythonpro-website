@@ -8,7 +8,7 @@ from django.views.static import serve
 from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.cohorts.facade import find_most_recent_cohort
 from pythonpro.domain import user_domain
-from pythonpro.email_marketing import facade as email_marketing_facade
+from pythonpro.domain import subscription_domain
 from pythonpro.launch.facade import (
     get_launch_status,
     get_opened_cpls,
@@ -40,13 +40,16 @@ def lead_form(request):
     email = form.cleaned_data['email']
     first_name = form.cleaned_data['name']
     user = request.user
+    session_id = request.session.session_key
     if user.is_authenticated:
-        email_marketing_facade.create_or_update_with_no_role.delay(
+        subscription_domain.subscribe_with_no_role.delay(
+            session_id,
             first_name,
             email,
             f'turma-{find_most_recent_cohort().slug}-semana-do-programador', id=user.id)
     else:
-        email_marketing_facade.create_or_update_with_no_role.delay(
+        subscription_domain.subscribe_with_no_role.delay(
+            session_id,
             first_name,
             email,
             f'turma-{find_most_recent_cohort().slug}-semana-do-programador')
