@@ -46,37 +46,42 @@ def test_should_load_name_and_email_from_GET_when_user_is_logged(client_with_use
 
 
 @pytest.fixture
-def create_or_update_with_no_role(mocker):
-    return mocker.patch('pythonpro.email_marketing.facade.create_or_update_with_no_role.delay')
+def subscribe_with_no_role(mocker):
+    return mocker.patch('pythonpro.domain.subscription_domain.subscribe_with_no_role.delay')
 
 
 # TODO: move this phone tests do generic context
-def test_should_call_update_when_with_correct_parameters(create_or_update_with_no_role, client):
+def test_should_call_update_when_with_correct_parameters(subscribe_with_no_role, client):
     client.post(
         reverse('pages:bootcamp_vip_landing_page'),
         {'name': 'Moacir', 'email': 'moacir@python.pro.br', 'phone': '(11) 99999-9999'},
         secure=True
     )
 
-    create_or_update_with_no_role.assert_called_with(
-        'Moacir', 'moacir@python.pro.br', mock.ANY, phone='+5511999999999'
+    subscribe_with_no_role.assert_called_with(
+        None, 'Moacir', 'moacir@python.pro.br', mock.ANY, phone='+5511999999999'
     )
 
 
 # TODO: move this phone tests do generic context
-def test_should_call_update_when_logged_with_correct_parameters(create_or_update_with_no_role, client_with_user):
-    client_with_user.post(
+def test_should_call_update_when_logged_with_correct_parameters(subscribe_with_no_role, client_with_user):
+    resp_with_user = client_with_user.post(
         reverse('pages:bootcamp_vip_landing_page'),
         {'name': 'Moacir', 'email': 'moacir@python.pro.br', 'phone': '(11) 99999-9999'},
         secure=True
     )
 
-    create_or_update_with_no_role.assert_called_with(
-        'Moacir', 'moacir@python.pro.br', mock.ANY, id=mock.ANY, phone='+5511999999999'
+    subscribe_with_no_role.assert_called_with(
+        resp_with_user.cookies['sessionid'].value,
+        'Moacir',
+        'moacir@python.pro.br',
+        mock.ANY,
+        id=mock.ANY,
+        phone='+5511999999999'
     )
 
 
-def test_should_run_form_ok(create_or_update_with_no_role, client, cohort):
+def test_should_run_form_ok(subscribe_with_no_role, client, cohort):
     resp = client.post(
         reverse('pages:bootcamp_vip_landing_page'),
         {'name': 'Moacir', 'email': 'moacir@python.pro.br', 'phone': '(11) 99999-9999'},
@@ -86,7 +91,7 @@ def test_should_run_form_ok(create_or_update_with_no_role, client, cohort):
     assert resp.status_code == 302
 
 
-def test_should_inform_form_error(create_or_update_with_no_role, client, cohort):
+def test_should_inform_form_error(subscribe_with_no_role, client, cohort):
     resp = client.post(
         reverse('pages:bootcamp_vip_landing_page'),
         {'name': 'Moacir', 'email': 'moacir@python.pro.br'},

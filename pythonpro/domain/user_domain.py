@@ -13,6 +13,7 @@ from pythonpro.core import facade as _core_facade
 from pythonpro.core.models import User as _User
 from pythonpro.discourse.facade import MissingDiscourseAPICredentials, generate_sso_payload_and_signature
 from pythonpro.email_marketing import facade as _email_marketing_facade
+from pythonpro.domain.subscription_domain import subscribe_with_no_role
 
 _logger = Logger(__file__)
 
@@ -232,23 +233,25 @@ def member_generated_boleto(user):
     _core_facade.member_generated_boleto(user, None)
 
 
-def subscribe_to_waiting_list(user: _User, phone: str, source: str) -> None:
+def subscribe_to_waiting_list(session_id, user: _User, phone: str, source: str) -> None:
     """
     Subscribe user to waiting list
+    :param session_id:
     :param user:
     :param phone:
     :param source:
     :return:
     """
     _core_facade.subscribe_to_waiting_list(user, source)
-    _email_marketing_facade.create_or_update_with_no_role.delay(
-        user.first_name, user.email, 'lista-de-espera', id=user.id, phone=phone
+    subscribe_with_no_role.delay(
+        session_id, user.first_name, user.email, 'lista-de-espera', id=user.id, phone=phone
     )
 
 
-def subscribe_anonymous_user_to_waiting_list(email: str, name: str, phone: str, source: str) -> None:
+def subscribe_anonymous_user_to_waiting_list(session_id, email: str, name: str, phone: str, source: str) -> None:
     """
     Subscribe anonymous user to waiting list
+    :param session_id:
     :param email:
     :param name:
     :param phone:
@@ -258,9 +261,9 @@ def subscribe_anonymous_user_to_waiting_list(email: str, name: str, phone: str, 
     try:
         user = _core_facade.find_user_by_email(email)
     except _User.DoesNotExist:
-        _email_marketing_facade.create_or_update_with_no_role.delay(name, email, 'lista-de-espera', phone=phone)
+        subscribe_with_no_role.delay(session_id, name, email, 'lista-de-espera', phone=phone)
     else:
-        subscribe_to_waiting_list(user, phone, source)
+        subscribe_to_waiting_list(session_id, user, phone, source)
 
 
 def activate_user(user: _User, source: str) -> None:

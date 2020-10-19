@@ -7,7 +7,7 @@ from django.utils import timezone
 
 from pythonpro.cohorts.facade import find_most_recent_cohort
 from pythonpro.pages.forms import NameEmailForm, NameEmailPhoneForm
-from pythonpro.email_marketing.facade import create_or_update_with_no_role
+from pythonpro.domain.subscription_domain import subscribe_with_no_role
 
 
 class TemplateNameMixin:
@@ -31,7 +31,8 @@ class BaseLandingPageView(TemplateNameMixin, FormView):
                 kwargs['id'] = self.request.user.id
             kwargs['phone'] = f"+55{form.cleaned_data['phone']}"
 
-        create_or_update_with_no_role.delay(*args, **kwargs)
+        session_id = self.request.session.session_key
+        subscribe_with_no_role.delay(session_id, *args, **kwargs)
         return super().form_valid(form)
 
 

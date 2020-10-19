@@ -35,11 +35,12 @@ def bootcamp_lp(request):
         if form.is_valid():
             source = request.GET.get('utm_source', default='unknown')
             data = form.cleaned_data
+            session_id = request.session.session_key
             if request.user.is_authenticated:
-                user_domain.subscribe_to_waiting_list(request.user, data['phone'], source)
+                user_domain.subscribe_to_waiting_list(session_id, request.user, data['phone'], source)
             else:
                 user_domain.subscribe_anonymous_user_to_waiting_list(
-                    data['email'], data['first_name'], data['phone'], source
+                    session_id, data['email'], data['first_name'], data['phone'], source
                 )
             return redirect(reverse('checkout:waiting_list_ty'))
         return render(request, 'checkout/bootcamp_lp_subscription_closed.html', {'form': form})
