@@ -4,7 +4,6 @@ services:
   database:
     container_name: pythonpro_database
     image: postgres:11.5
-    restart: always
     volumes:
       - ./.pgdata:/var/lib/postgresql/data
     environment:
@@ -16,12 +15,10 @@ services:
   celery_broker:
     container_name: pythonpro_celery_broker
     image: rabbitmq:3.8.2
-    restart: always
     ports:
       - 5672:5672
   redis:
     container_name: pythonpro_redis
     image: redis:5.0.7
-    restart: always
     ports:
       - 6379:6379

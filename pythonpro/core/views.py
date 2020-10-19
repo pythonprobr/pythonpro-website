@@ -193,10 +193,7 @@ def _lead_form(request, *args, **kwargs):
 
     login(request, user)
 
-    if kwargs.get('redirect_to_OTO') is False:
-        return redirect(reverse('core:thanks'))
-
-    return redirect(reverse('checkout:webdev_landing_page_oto'))
+    return redirect(reverse('core:thanks'))
 
 
 def lead_form(request):
