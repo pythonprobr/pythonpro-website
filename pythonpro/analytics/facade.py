@@ -1,4 +1,8 @@
 import json
+import logging
+
+import posthog
+from django.conf import settings
 
 from pythonpro.analytics.models import UserSession, PageView
 
@@ -55,3 +59,11 @@ def create_pageview(request):
         user_session_id = request.session['analytics']['id']
         PageView.objects.create(session_id=user_session_id,
                                 meta=_get_serialized_meta(request.META))
+
+
+def posthog_alias(session_id, email):
+    if settings.POSTHOG_API_KEY and settings.POSTHOG_API_URL:
+        posthog.alias(session_id, email)
+    else:
+        logger = logging.getLogger(__name__)
+        logger.info(f'The value of session_id is {session_id} and email is {email}')

@@ -16,11 +16,11 @@ def test_should_return_200_when_load_thank_you_page(client):
 
 
 @pytest.fixture
-def create_or_update_with_no_role(mocker):
-    return mocker.patch('pythonpro.email_marketing.facade.create_or_update_with_no_role.delay')
+def subscribe_with_no_role(mocker):
+    return mocker.patch('pythonpro.domain.subscription_domain.subscribe_with_no_role.delay')
 
 
-def test_should_run_form_ok(create_or_update_with_no_role, client):
+def test_should_run_form_ok(subscribe_with_no_role, client):
     resp = client.post(
         reverse('pages:ds_webinar_landing_page'),
         {'name': 'Moacir', 'email': 'moacir@python.pro.br'},
@@ -30,7 +30,7 @@ def test_should_run_form_ok(create_or_update_with_no_role, client):
     assert resp.status_code == 302
 
 
-def test_should_inform_form_error(create_or_update_with_no_role, client):
+def test_should_inform_form_error(subscribe_with_no_role, client):
     resp = client.post(
         reverse('pages:ds_webinar_landing_page'),
         {'name': 'Moacir', 'email': 'moacirpython.pro.br'},
