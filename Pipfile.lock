@@ -429,22 +429,21 @@
         },
         "newrelic": {
             "hashes": [
-                "sha256:0eaab77f295f6efa16887ef8594ec8601b1f1071fef8fc78818d71334e5545d4",
-                "sha256:4ac8ca6118124c4c060454c1facbcb9679ac848c5a0aaa58b6ad8a0ade7742b8",
-                "sha256:5fc4e6234d4eb06b9c6f0b052260b2d65537c25f393afae3cfe55848935d3fa9",
-                "sha256:643723e1bc82b106b232968820437f0db113d1efbe140e7adcd4425a2c735aa8",
-                "sha256:99847f587383d81c700d67b6eefdbc66d85512306276c62111af5af19d47f90f",
-                "sha256:9b9df45dc3badeec31a1d8adc4153a601b2fe25ee9d3a98a502c6fa8239d2b71",
-                "sha256:a4503269d1cf204e652c41607bf1cbd73f0b37b4e1de237096f895ab37502bb4",
-                "sha256:b184a293e94f0eb87f344d3ef80eedbc35c7e25e60a42101513d55c3a29fe08e",
-                "sha256:b3441f0328645e9c2664341bed34ac4d5cadd58b88111b0680e2128d0f2be170",
-                "sha256:ba03e55ef5ede5b11b702068025bc982869ab6a2b87597635b2ef5e4af37c29a",
-                "sha256:c21f8fff642760aa8f9d58816f5c801d5809da48ecafccf92735485f3ed3fbcb",
-                "sha256:eb465af68f572a3a1e502022d8ac111439be90dffa768317a347491f52fe0523",
-                "sha256:f10a7ca15d87dfc516daf69e379ae979e07699dd723dda319f1ae462552a3bc3"
+                "sha256:065e2437f2e998a4c632b9bb1d8c9e30103adfcde1f8b0ec77c5660d4fa7730f",
+                "sha256:289317b53de0270bfc29ece0bcc09ca828f09f235c13dc87d87a6df97387fd91",
+                "sha256:2e7052431a9142c9f9a0c77670aca092b4bc2b41341018cdf42308f3349150ba",
+                "sha256:553993bf58d2f373291ba18d4268e641b3c50ee45a7d8da5a52f3b90ecbdea58",
+                "sha256:5e45000d82ef65c4a8503e0c780e305e378f479e7634c9413014928769a0fa17",
+                "sha256:712dcfa70a13fdbe677c70a4f9254a3a26927138c05cc3bfb3e5d9f5b206510f",
+                "sha256:74b3e9f525fd920817c67877b1ea8b4b1c3aa481d20c9bb90179e86eeb007c2c",
+                "sha256:80eab39ca0c2797ab49cf1d6d700cae1da494fa55840a5c5cfbcb1a3f1a41049",
+                "sha256:9d6aa3277b047e5c7da16d927237eb5254382ff28a3ef433bc97fcee8696e0be",
+                "sha256:aa1ea42443898e77481d98f62f03fa73c89d6e1f74af6427be5ed7cfd7503918",
+                "sha256:aad39ee4da98c6da85dc9ff5016bd006ffcde2f7d54f6570bd92c21d1dcfa956",
+                "sha256:c6d1165437bdc47b5905ef7564a33691e2c6c66e3efe8fbd53f5d85a7dc7b98d",
+                "sha256:e4285567a3e3e1341581476aaedbc617ef0c3f6bf0745ecd98abcc2474d1f2ee"
             ],
-            "index": "pypi",
-            "version": "==5.20.1.150"
+            "version": "==5.22.0.151"
         },
         "pagarme-python": {
             "editable": true,
