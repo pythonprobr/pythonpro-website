@@ -206,7 +206,7 @@
 {% endblock %}
 
 {% block scripts %}
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44718512-1"></script>
+    {% comment %} <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44718512-1"></script>
     {#    Google Tag Manager#}
     <script>(function (w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -221,5 +221,5 @@
             'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
         f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', '{{GOOGLE_TAG_MANAGER_ID}}');</script>
-    {#     End Google Tag Manager#}
+    {#     End Google Tag Manager#} {% endcomment %}
 {% endblock %}
