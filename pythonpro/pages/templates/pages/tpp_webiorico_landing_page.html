@@ -46,7 +46,8 @@
                 </div>
 
                 <div class='col-md-6 col-sm-12'>
-                    <img class="photo-renzo" src="{% static 'img/spp/footer/renzo-nuccitelli-footer-desktop.png' %}">
+                    <img class="photo-renzo not-iphone" src="{% static 'img/spp/footer/renzo-nuccitelli-footer-desktop.webp' %}">
+                    <img class="photo-renzo only-iphone" src="{% static 'img/spp/footer/renzo-nuccitelli-footer-desktop.png' %}">
                 </div>
             </div>
         </div>
@@ -206,7 +207,7 @@
 {% endblock %}
 
 {% block scripts %}
-    {% comment %} <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44718512-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44718512-1"></script>
     {#    Google Tag Manager#}
     <script>(function (w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -221,5 +222,5 @@
             'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
         f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', '{{GOOGLE_TAG_MANAGER_ID}}');</script>
-    {#     End Google Tag Manager#} {% endcomment %}
+    {#     End Google Tag Manager#}
 {% endblock %}

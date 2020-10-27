@@ -10,7 +10,8 @@
             <div class="row">
                 <div class="col">
                     
-                    <img class="img-renzo float-right" src="{% static 'img/spp/renzo/about-renzo-nuccitelli-desktop.png' %}" alt="Renzo Nuccitelli com braços cruzados, olhando para foto. Fundo verde abacate com códigos escritos em branco. Imagem grande">
+                    <img class="img-renzo float-right not-iphone" src="{% static 'img/spp/renzo/about-renzo-nuccitelli-desktop.webp' %}" alt="Renzo Nuccitelli com braços cruzados, olhando para foto. Fundo verde abacate com códigos escritos em branco. Imagem grande">
+                    <img class="img-renzo float-right only-iphone" src="{% static 'img/spp/renzo/about-renzo-nuccitelli-desktop.png' %}" alt="Renzo Nuccitelli com braços cruzados, olhando para foto. Fundo verde abacate com códigos escritos em branco. Imagem grande">
                     <h2 class='mt-5 font-weight-bold'><u>CONHEÇA SEU PROFESSOR!</u></h2>
                     
                     <p>
@@ -47,6 +48,18 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <style>
+        @supports not (-webkit-touch-callout: none) {
+            .only-iphone {
+                /* CSS for other than iOS devices */ 
+                display: none;
+            }
+        }
+        @supports (-webkit-touch-callout: none) {
+            .not-iphone {
+               /* CSS specific to iOS devices */ 
+               display: none;
+            }
+        }
         @font-face {
             font-family: 'Gilroy-Bold';
             font-style: normal;
