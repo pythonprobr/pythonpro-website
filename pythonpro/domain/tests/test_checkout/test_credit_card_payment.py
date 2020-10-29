@@ -1,3 +1,5 @@
+from unittest import mock
+
 import pytest
 import responses
 from django.urls import reverse
@@ -172,6 +174,15 @@ def test_payment_linked_with_created_user(resp, django_user_model):
     user = User.objects.first()
     payment = django_pagarme_facade.find_payment_by_transaction(str(TRANSACTION_ID))
     assert user == payment.user
+
+
+def test_phone_in_the_parameters(resp, create_or_update_lead_mock):
+    create_or_update_lead_mock.assert_called_once_with(
+        'Agora',
+        'captura@gmail.com',
+        id=mock.ANY,
+        phone='+5512997411854'
+    )
 
 
 # Tests user logged

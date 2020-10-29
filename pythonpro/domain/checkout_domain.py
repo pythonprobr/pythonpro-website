@@ -39,7 +39,8 @@ def user_factory(pagarme_transaction):
     customer = pagarme_transaction['customer']
     customer_email = customer['email'].lower()
     customer_first_name = customer['name'].split()[0]
-    return user_domain.force_register_lead(customer_first_name, customer_email)
+    customer_phone = customer['phone_numbers'][0]
+    return user_domain.force_register_lead(customer_first_name, customer_email, customer_phone)
 
 
 django_pagarme_facade.set_user_factory(user_factory)

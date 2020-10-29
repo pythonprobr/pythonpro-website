@@ -1,3 +1,5 @@
+from unittest import mock
+
 import pytest
 import responses
 from django.urls import reverse
@@ -99,6 +101,15 @@ def test_created_user_tagged_with_boleto(resp, django_user_model, tag_as_mock, a
     User = django_user_model
     user = User.objects.first()
     tag_as_mock.assert_called_once_with(user.email, user.id, f'{active_product_item.slug}-boleto')
+
+
+def test_phone_in_the_parameters(resp, create_or_update_lead_mock):
+    create_or_update_lead_mock.assert_called_once_with(
+        'Foo',
+        'foo@email.com',
+        id=mock.ANY,
+        phone='+5512999999999'
+    )
 
 
 # Tests user logged

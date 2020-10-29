@@ -48,18 +48,19 @@ def register_lead(first_name: str, email: str, source: str = 'unknown', tags: li
     return lead
 
 
-def force_register_lead(first_name: str, email: str, source: str = 'unknown') -> _User:
+def force_register_lead(first_name: str, email: str, phone: str, source: str = 'unknown') -> _User:
     """
     Create a new user on the system generation a random password.
     An Welcome email is sent to the user informing his password with the link to change it.
     User is also registered on Email Marketing. But she will be registered even if api call fails
     :param first_name: User's first name
     :param email: User's email
+    :param phone: User's phone
     :param source: source of User traffic
     :return: User
     """
     user = _core_facade.register_lead(first_name, email, source)
-    _email_marketing_facade.create_or_update_lead.delay(first_name, email, id=user.id)
+    _email_marketing_facade.create_or_update_lead.delay(first_name, email, id=user.id, phone=phone)
     return user
 
 
