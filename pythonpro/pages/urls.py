@@ -50,9 +50,4 @@ urlpatterns = [
         views.TppWebioricoLandingPage.as_view(),
         name='tpp_webiorico_landing_page'
     ),
-    path(
-        'rumo-a-primeira-vaga/obrigado',
-        views.TppWebioricoThankYouPage.as_view(),
-        name='tpp_webiorico_thank_you_page'
-    ),
 ]
