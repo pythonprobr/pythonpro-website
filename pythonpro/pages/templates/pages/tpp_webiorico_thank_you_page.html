@@ -1,44 +1,54 @@
 {% extends "pages/base_thank_you.html" %}
+{% load static %}
 
 {% block body %}
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
-    <style type="text/css">body {
-        background: rgba(237,242,247,1);
-        background-size: cover;
-        background-repeat: no-repeat;
+    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap');
+        body {
+            background-color: #075B50;
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: #fff;
+            padding: 10px;
         }
-        .body-text {
-        color: rgba(0,0,0,1);
-        }
-        .box-background {
-        background: rgba(255,255,255,1);
-        max-width: 500px;
-        }
-        .button-background {
-        background: rgba(66,153,225,1);
-        }
-        .button-text {
-        color: rgba(255,255,255,1);
+        h1, h2, p {
+            font-family: 'Fira Sans', sans-serif !important;
+            line-height: 150%;
+            letter-spacing: 100%;
+            margin: 30px 0;
         }
         h1 {
-            margin: 10px 0 20px 0;
             font-weight: bold;
+            font-size: 35pt;
+            padding-top: 50px;
+            margin: 0px 0;
+        }
+        h2 {
+            font-weight: bold;
+            font-size: 22pt;
+            margin: 0px 0;
+        }
+        p {
+            font-weight: bold;
+            font-size: 14pt;
         }
     </style>
     <body>
         <div class="flex justify-center items-center w-screen h-screen">
-            <div class="box-background rounded p-6 text-center">
-                <img src="" style="max-width: 200px; margin: 0 auto 10px;"> 
-                <svg class="mx-auto" width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling">
-                    <circle cx="50" cy="50" fill="none" stroke="rgba(51,122,183,1)" stroke-width="10" r="35" stroke-dasharray="164.93361431346415 56.97787143782138" transform="rotate(155.901 50 50)">
-                        <animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform>
-                    </circle>
-                </svg>
-                <h1 class="body-text font-bold text-xl">Parabéns, sua vaga foi reservada! 😀</h1>
-                <p class="body-text">
+            <div class="p-6 text-center">
+                <h1 class="font-weight-bold"><u>PARABÉNS!</u> <span class="ec ec-grinning"></span></h1>
+                <h2 class="body-text font-weight-bold">SUA VAGA FOI RESERVADA!</h2>
+                <p class="body-text font-weight-bold">
                     Você está sendo redirecionado(a) para o grupo da Masterclass. 
-                    Lá enviaremos o link de acesso à aula e o material.
                 </p>
+                <img src="{% static 'img/whatsapp-loader.gif' %}" style="max-width: 50px; margin: 0 auto 10px;"> 
+                <p class="body-text font-weight-bold">
+                    <span class="ec ec-stop-sign"></span>
+ É <u>MUITO IMPORTANTE</u> que você entre no grupo, 
+                    pois lá enviaremos o link de acesso à aula e o material.
+                </p>
+
             </div>
         </div>
         <script>
