@@ -696,11 +696,10 @@
         },
         "urllib3": {
             "hashes": [
-                "sha256:91056c15fa70756691db97756772bb1eb9678fa585d9184f24534b100dc60f4a",
-                "sha256:e7983572181f5e1522d9c98453462384ee92a0be7fac5f1413a1e35c56cc0461"
+                "sha256:4849f132941d68144df0a3785ccc4fe423430ba5db0108d045c8cadbc90f517a",
+                "sha256:bad31cb622ceee0ab46c4c884cf61957def0ff2e644de0a7a093678844c9ccac"
             ],
-            "markers": "python_version != '3.4'",
-            "version": "==1.25.10"
+            "version": "==1.26.0"
         },
         "vine": {
             "hashes": [
