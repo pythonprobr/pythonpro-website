@@ -17,7 +17,7 @@ class RedirectorAdmin(admin.ModelAdmin):
     list_filter = ['use_javascript', 'created']
     inlines = (RedirectLinkAdmin, )
     exclude = ['created', 'updated']
-    ordering = ['-created']
+    ordering = ['-updated', '-created', 'slug']
 
     def get_redirect_link(self, obj):
         return format_html(
