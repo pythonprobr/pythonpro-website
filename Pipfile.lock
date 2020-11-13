@@ -469,10 +469,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:aa63b5910ab2a1cd9cd5c22ca6439972e80f2e1bdf2638b98f610469cd572aa9",
-                "sha256:e92b8f82ee6248ebd13248762b6b1d136dcb574c9c6f90d60745833412f3bd18"
+                "sha256:25acb2c1286b6b13231e3ba62e38bf50ee3785f670b40a94208e8233affdff71",
+                "sha256:4b91c5e5a12b7c9aa8b5d56c4e61168f6dccc878953c6968a88a6ad98b56515d"
             ],
-            "version": "==8.12.11"
+            "version": "==8.12.13"
         },
         "pickleshare": {
             "hashes": [
