@@ -94,6 +94,15 @@ class TppWebioricoLandingPage(BaseLandingPageView):
     success_url = reverse_lazy('pages:tpp_webiorico_thank_you_page')
     email_marketing_tag = 'tpp-webiorico'
 
+    def get_template_names(self, *args, **kwargs):
+        version = self.kwargs.get('version')
+        template_name = super().get_template_names(*args, **kwargs)
+
+        if version is not None:
+            template_name[0] = template_name[0].replace('.html', f'_{version}.html')
+
+        return template_name
+
     def get_next_wed(self):
         if self.kwargs.get('date') is not None:
             return self.kwargs.get('date').replace('-', '/')
