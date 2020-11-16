@@ -93,3 +93,10 @@ def test_should_set_date_by_url(client):
 def test_should_return_200_when_load_thank_you_page(client):
     resp = client.get(reverse('pages:tpp_webiorico_thank_you_page'))
     assert resp.status_code == 200
+
+
+def test_should_set_page_version_by_url(client):
+    resp = client.get(reverse('pages:tpp_webiorico_landing_page_date_page_var', args=['13-10', 'v2']))
+
+    assert resp.status_code == 200
+    assert resp.templates[0].name == 'pages/tpp_webiorico_landing_page_v2.html'
