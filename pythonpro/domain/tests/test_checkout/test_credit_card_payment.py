@@ -131,7 +131,7 @@ def test_user_is_promoted(resp, django_user_model, active_product_item):
 def assert_user_promoted(user, slug):
     if slug.startswith('membership'):
         assert core_facade.is_member(user)
-    elif slug.startswith('webdev') or slug == 'treinamento-devpro-webinar':
+    elif slug.startswith('webdev') or slug.startswith('treinamento-devpro'):
         assert core_facade.is_webdev(user)
     elif slug.startswith('data-science'):
         assert core_facade.is_data_scientist(user)
@@ -150,11 +150,11 @@ def test_user_is_subscribed_to_cohort(resp, django_user_model, cohort, active_pr
     User = django_user_model
     user = User.objects.first()
     slug = active_product_item.slug
-    asssert_subscribed_to_cohort(cohort, slug, user)
+    assert_subscribed_to_cohort(cohort, slug, user)
 
 
-def asssert_subscribed_to_cohort(cohort, slug, user):
-    if not (slug.startswith('webdev') or slug == 'treinamento-devpro-webinar' or slug.startswith(
+def assert_subscribed_to_cohort(cohort, slug, user):
+    if not (slug.startswith('webdev') or slug.startswith('treinamento-devpro') or slug.startswith(
             'data-science') or slug == 'pacote-proximo-nivel-67-discount'):
         assert cohort.students.first() == user
 
@@ -208,7 +208,7 @@ def test_payment_linked_with_logged_user(resp_logged_user, logged_user):
 
 
 def test_logged_user_is_subscribed_to_cohort(resp_logged_user, logged_user, cohort, active_product_item):
-    asssert_subscribed_to_cohort(cohort, active_product_item.slug, logged_user)
+    assert_subscribed_to_cohort(cohort, active_product_item.slug, logged_user)
 
 
 def test_logged_user_is_synced_on_discourse(resp_logged_user, logged_user, sync_on_discourse_mock, active_product_item,

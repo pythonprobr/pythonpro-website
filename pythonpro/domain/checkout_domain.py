@@ -81,7 +81,7 @@ def _promote(user, slug: str):
         user_domain.promote_member(user, 'unknown')
     elif slug == 'pacote-proximo-nivel-67-discount':
         user_domain.promote_pythonista(user, 'unknown')
-    elif slug.startswith('webdev') or slug == 'treinamento-devpro-webinar':
+    elif slug.startswith('webdev') or slug.startswith('treinamento-devpro'):
         user_domain.promote_webdev(user, 'unknown')
     elif slug.startswith('data-science'):
         user_domain.promote_data_scientist(user, 'unknown')
