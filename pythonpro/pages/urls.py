@@ -60,4 +60,14 @@ urlpatterns = [
         views.TppWebioricoThankYouPage.as_view(),
         name='tpp_webiorico_thank_you_page'
     ),
+    path(
+        'gravacao-rumo-a-primeira-vaga/inscricao',
+        views.TppMasterclassLandingPage.as_view(),
+        name='tpp_masterclass_landing_page'
+    ),
+    path(
+        'gravacao-rumo-a-primeira-vaga/masterclass',
+        views.TppMasterclassThankYouPage.as_view(),
+        name='tpp_masterclass_thank_you_page'
+    ),
 ]

@@ -4,6 +4,7 @@ from inflection import underscore
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django_pagarme import facade
 
 from pythonpro.cohorts.facade import find_most_recent_cohort
 from pythonpro.pages.forms import NameEmailForm, NameEmailPhoneForm
@@ -124,3 +125,24 @@ class TppWebioricoLandingPage(BaseLandingPageView):
 
 class TppWebioricoThankYouPage(BaseThankYouView):
     pass
+
+
+class TppMasterclassLandingPage(BaseLandingPageView):
+    success_url = reverse_lazy('pages:tpp_masterclass_thank_you_page')
+    email_marketing_tag = 'tpp-masterclass-gravacao'
+
+
+class TppMasterclassThankYouPage(BaseThankYouView):
+    def get_context_data(self, *args, **kwargs):
+        payment_item_config = facade.find_payment_item_config('treinamento-devpro-masterclass-oto')
+        user = self.request.user
+        if user.is_authenticated:
+            data = {'name': user.first_name, 'email': user.email}
+            form = facade.ContactForm(data)
+        else:
+            form = facade.ContactForm()
+
+        ctx = super().get_context_data(*args, **kwargs)
+        ctx['payment_item_config'] = payment_item_config
+        ctx['contact_form'] = form
+        return ctx
