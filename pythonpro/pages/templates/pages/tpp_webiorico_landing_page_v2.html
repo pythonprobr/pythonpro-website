@@ -5,10 +5,6 @@
 {% block first_fold %}
     <div class='bg-black'>
         <div class="container">
-            <div class="row text-center text-light">
-                
-            </div>
-            
             <div class="row">
                 <div class='col-md-7 col-sm-12 text-light main-form'>
                     <div class="hero">
@@ -23,8 +19,15 @@
                             mesmo que você nunca tenha escrito uma linha de código.
                         </h3>
                     </div>
-                    <span class='' style='font-size: 16pt'>Preencha o formulário:</span>
-                    <form method="POST" class='mb-5 text-center'>
+                    
+                    <h4 class=''>
+                        <b class=''>Dia {{ date }} às 20h</b>
+                    </h4>                    
+                    
+                    <span class='' style='font-size: 11pt; text-align: left;'>
+                        Preencha para garantir sua vaga:
+                    </span>
+                    <form method="POST" class='mb-3 text-center'>
                         {% csrf_token %}
                         {% bootstrap_form form %}
 
@@ -36,17 +39,13 @@
                         </button>
                     </form>
 
-                    <h4 class=''>
-                        <b class='text-uppercase'>Dia {{ date }} às 20h, Horário de Brasília</b>
-                    </h4>                    
-
                     <h4 class='' id="topo">
                         Evento Online e 100% Gratuito.
                     </h4>                    
                 </div>
 
                 <div class='col-md-5 col-sm-12'>
-                    <img width="400px" class="photo-renzo not-iphone" src="{% static 'img/spp/footer/renzo-nuccitelli-v2.png' %}">
+                    <img width="400px" class="photo-renzo not-iphone" src="{% static 'img/spp/footer/renzo-nuccitelli-v2.webp' %}">
                 </div>
             </div>
         </div>
@@ -77,7 +76,6 @@
         }
         .content .col h3 {
             font-size: 17pt;
-            margin: -20px 0;
         }
 
         .photo-renzo {
