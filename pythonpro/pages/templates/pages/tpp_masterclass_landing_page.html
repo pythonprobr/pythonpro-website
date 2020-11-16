@@ -1,0 +1,136 @@
+{% extends "pages/tpp_webiorico_landing_page_v2.html" %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block first_fold %}
+    <div class='bg-black'>
+        <div class="container">
+            <div class="row">
+                <div class='col-md-7 col-sm-12 text-light main-form'>
+                    <div class="hero">
+                        <h1 class='font-weight-bold'>
+                            <span class="ec ec-rotating-light"></span>
+                            Pode parecer loucura... mas a <b class='text-uppercase danger'><u>Faculdade Não te Prepara para o Mercado de Trabalho!</b></u>
+                        </h1>
+
+                        <h3 class='mb-4'>
+                            Pensando nisso, eu preparei uma Masterclass para te mostrar o <b><u>caminho 
+                            mais rápido para você conquistar sua PRIMEIRA OPORTUNIDADE</b></u> como programador,
+                            mesmo que você nunca tenha escrito uma linha de código.
+                        </h3>
+                    </div>
+                    
+                    <span class='' style='font-size: 11pt; text-align: left;'>
+                        Cadastre-se para eu liberar seu acesso:
+                    </span>
+                    <form method="POST" class='mb-3 text-center'>
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+
+                        <button type='submit' class='btn btn-warning text-center cta'>
+                            <b>
+                                EU QUERO A MINHA PRIMEIRA VAGA! 
+                                <span class="ec ec-rocket"></span>
+                            </b>
+                        </button>
+                    </form>
+
+                    <h4 class='' id="topo">
+                        Evento Online e 100% Gratuito.
+                    </h4>                    
+                </div>
+
+                <div class='col-md-5 col-sm-12'>
+                    <img width="400px" class="photo-renzo not-iphone" src="{% static 'img/spp/footer/renzo-nuccitelli-v2.webp' %}">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block styles %}
+    {{ block.super }}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+    
+    <style>
+        * {
+            font-family: 'Fira Sans', sans-serif !important;
+        }
+        .hero .danger {
+            color: #F42C04;
+        }
+        .hero b {
+            color: #ffc107;
+        }
+        .bg-black {
+            background-color: #0c1b33 !important;
+        }
+        .content .ec {
+            font-size: 100pt;
+        }
+        .content .col h3 {
+            font-size: 17pt;
+        }
+
+        .photo-renzo {
+            margin-top: 100px;
+        }
+
+        .cta {
+            font-size: 15pt !important;
+        }
+        
+        .hero {
+            margin: 20px 0;
+        }
+        
+        .hero h1 {
+            text-transform: inherit;
+            margin-bottom: 30px;
+        }
+        @media only screen and (min-device-width : 320px) and (max-device-width : 1024px) {
+            .hero h1 {
+                font-size: 21pt;
+            }
+            .hero h3 {
+                font-size: 14pt;
+                line-height: 20pt;
+            }
+            .hero h4 {
+                font-size: 14pt;
+            }
+            .cta {
+                font-size: 12pt !important;
+                padding: 10px;
+            }
+            h2 {
+                font-size: 18pt;
+            }
+            p {
+                font-size: 12pt;
+            }
+            .photo-renzo {
+                margin-top: 10px;
+                width: 300px;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .main-form {
+                text-align: center;
+            }
+            .content .ec {
+                font-size: 50pt;
+            }
+            .content h3 {
+                margin-bottom: -10px;
+            }
+            .content .block {
+                margin: 10px;
+            }
+        }
+    </style>
+
+{% endblock %}

@@ -1,0 +1,518 @@
+{% extends 'pages/base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% load django_pagarme %}
+{% load tz %}
+
+{% block title %}MASTERCLASS RUMO A PRIMEIRA VAGA!{% endblock %}
+{% block description %}Assista a aula e descubra caminho mais rápido para você conquistar sua 
+PRIMEIRA OPORTUNIDADE como programador, mesmo que você nunca tenha escrito uma linha de código!{% endblock %}
+
+{% block content %}
+    <div class='bg-black'>
+        <div class="container">
+            <div class="row">
+                <div class='col-12 text-light text-center'>
+                    <div class="hero">
+                        <h3 class='mb-3 mt-4'>
+                            Assista a aula e descubra <b><u>caminho mais rápido para você conquistar sua 
+                            PRIMEIRA OPORTUNIDADE</b></u> como programador,
+                            mesmo que você nunca tenha escrito uma linha de código!
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class='col-12 text-light text-center'>
+                    <style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style>
+                    <div class='embed-container mb-5'>
+                        <iframe id='player' src="https://www.youtube.com/embed/zRAl8hQ7BWg?enablejsapi=1&controls=0&autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='show-after' style="display: none">
+        <div class="container">
+
+            <div class='desktop d-none d-sm-block d-md-block'>
+                <div class="row">
+                    <div class="col mb-5 mt-5">
+                        <h2 class='text-center text-uppercase mb-5 '>
+                            Você já imaginou que bom seria se você estivesse preparado o suficiente para
+                            <b><u>empregos que pagam 5... 10... 15... até 20 mil reais por mês de salário?</u></b>
+                        </h2>
+
+                        <h4 class='text-center'>
+                            A faculdade não te prepara para o mercado de trabalho...
+                            <b class='text-uppercase'>Mas, fique tranquilo, o <u>Treinamento DevPro</u> vai te
+                                preparar!</b>
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="row text-center mb-3">
+                    <div class='col'>
+                        <h3>
+                            <span class="ec ec-white-check-mark"></span>
+                            Curso Python Birds
+                            <span class='price-through'>R$ 297</span>
+                        </h3>
+                        <h3>
+                            <span class="ec ec-white-check-mark"></span>
+                            Curso PyTools
+                            <span class='price-through'>R$ 697</span>
+                        </h3>
+                        <h3>
+                            <span class="ec ec-white-check-mark"></span>
+                            Curso Django Pro
+                            <span class='price-through'>R$ 997</span>
+                        </h3>
+                        <h3>
+                            <span class="ec ec-white-check-mark"></span>
+                            Fórum para Dúvidas
+                            <span class='price-through'>R$ ?????</span>
+                        </h3>
+                        <h3>
+                            <span class="ec ec-gift"></span> 
+                            Workshop Carreira Pro
+                            <span class='price-through'>R$ 297</span>
+                        </h3>
+                        <h3>
+                            <span class="ec ec-gift"></span> 
+                            Curso de Entrevistas Técnicas
+                            <span class='price-through'>R$ 997</span>
+                        </h3>
+                        <h3>
+                            <span class="ec ec-gift"></span> 
+                            <b>Monitoria DevPro</b>
+                            <span class='price-through'>R$ 4.656</span>
+                        </h3>
+                        <h1>
+                            <span class="ec ec-gift"></span> 
+                            <b>TOTAL:</b>
+                            <span class='price-through'>R$ 7.941</span>
+                        </h1>
+                    </div>
+                </div>
+                <div class="row text-center mb-3">
+                    <div class="col">
+                        <h1 class='price-parcelado'>
+                            <span class='parcela'>12x</span>
+                            <b>{{ payment_item_config.max_installment_amount_after_interest|cents_to_brl }}</b>
+                        </h1>
+                        <p class='price-a-vista'>(ou à vista com 15% de desconto,
+                            por {{ payment_item_config.price|cents_to_brl }})</p>
+                    </div>
+                </div>
+
+                {% if not is_promotion_expired %}
+                    <div class="row text-center mb-5">
+                        <div class="col">
+                            <div class='text-center initiate-checkout d-none d-sm-block d-md-block'>
+                                <a href="#lead-form-header" class="cta-compra btn btn-warning initiate-checkout"
+                                    data-toggle="modal" data-target="#modal-waiting-capture">
+                                    EU QUERO SER UM <b class='initiate-checkout'>PROGRAMADOR PROFISSIONAL!</b>
+                                    <br><span
+                                        class='sub'>Clique aqui para fazer sua matrícula com acesso vitalício!</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="row mt-5 mb-5 text-center">
+                    <div class="col">
+                        <img src='{% static "img/garantia.png" %}'>
+                    </div>
+
+                    <div class="col">
+                        <img width="330px" src='{% static "img/banner-pagarme.png" %}'>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class='mobile d-block d-lg-none d-xl-none'>
+                <div class="row">
+                    <div class="col mb-5 mt-5">
+                        <h2 class='text-center text-uppercase mb-5 '>
+                            Você já imaginou que bom seria se você estivesse preparado o suficiente para
+                            <b><u>empregos que pagam 5... 10... 15... até 20 mil reais por mês de salário?</u></b>
+                        </h2>
+
+                        <h4 class='text-center'>
+                            A faculdade não te prepara para o mercado de trabalho...
+                            <b class='text-uppercase'>Mas, fique tranquilo, o <u>Cusro Django Pro</u> vai te
+                                preparar!</b>
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="row text-center mb-3 cursos">
+                    <div class='col'>
+                        <p>
+                            <span class="ec ec-white-check-mark"></span>
+                            Curso Python Birds
+                            <span class='price-through'>R$ 297</span>
+                        </p>
+                        <p>
+                            <span class="ec ec-white-check-mark"></span>
+                            Curso PyTools
+                            <span class='price-through'>R$ 697</span>
+                        </p>
+                        <p>
+                            <span class="ec ec-white-check-mark"></span>
+                            Curso Django Pro
+                            <span class='price-through'>R$ 997</span>
+                        </p>
+                        <p>
+                            <span class="ec ec-white-check-mark"></span>
+                            Fórum para Dúvidas
+                            <span class='price-through'>R$ ?????</span>
+                        </p>
+                        <p>
+                            <span class="ec ec-gift"></span> 
+                            Workshop Carreira Pro
+                            <span class='price-through'>R$ 297</span>
+                        </p>
+                        <p>
+                            <span class="ec ec-gift"></span> 
+                            Curso de Entrevistas Técnicas
+                            <span class='price-through'>R$ 997</span>
+                        </p>
+                        <p>
+                            <span class="ec ec-gift"></span> 
+                            <b>Monitoria DevPro</b>
+                            <span class='price-through'>R$ 4.656</span>
+                        </p>
+                        <h1>
+                            <span class="ec ec-gift"></span> 
+                            <b>TOTAL:</b>
+                            <span class='price-through'>R$ 7.941</span>
+                        </h1>
+                    </div>
+                </div>
+
+                <div class="row text-center mb-3">
+                    <div class="col">
+                        <h1 class='price-parcelado'>
+                            <span class='parcela'>12x</span>
+                            <b>{{ payment_item_config.max_installment_amount_after_interest|cents_to_brl }}</b>
+                        </h1>
+                        <p class='price-a-vista'>(ou à vista com 15% de desconto,
+                            por {{ payment_item_config.price|cents_to_brl }})</p>
+                    </div>
+                </div>
+
+                {% if not is_promotion_expired %}
+                    <div class="row text-center mb-5">
+                        <div class="col">
+                            <div class='text-center initiate-checkout d-block d-lg-none d-xl-none'>
+                                <a href="#lead-form-header" class="cta-compra btn btn-warning initiate-checkout"
+                                    data-toggle="modal" data-target="#modal-waiting-capture">
+                                    SIM! EU QUERO SER UM <br><b class='initiate-checkout'>PROGRAMADOR
+                                    PROFISSIONAL!</b>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="row mt-5 mb-5 text-center">
+                    <div class="col">
+                        <img src='{% static "img/garantia.png" %}'>
+                    </div>
+
+                    <div class="col">
+                        <img width="330px" src='{% static "img/banner-pagarme.png" %}'>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='bg-black show-after' style="display: none">
+        <div class="container">
+            <div class="row text-light text-center">
+                <div class="col mt-5 mb-5">
+                    <h1 class='font-weight-bold'>
+                        <span class="ec ec-rotating-light"></span>
+                        <u>PRESTE ATENÇÃO!</u>
+                    </h1>
+                    
+                    <h2 class='font-weight-bold mb-5'>
+                        Esta promoção vai <u>EXPIRAR EM 5 DIAS</u>,
+                        contando a partir do momento do seu cadastro na Masterclass.
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-waiting-capture" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Vamos lá!</h5>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Preencha os dados abaixo e em seguida clique no botão <i>Continuar</i> para que possamos
+                        reservar sua vaga.
+                    </p>
+
+                    <form id="contact_form"
+                            action="{% url 'django_pagarme:contact_info' slug=payment_item_config.slug %}"
+                            method="post">
+                        {% csrf_token %}
+                        {% bootstrap_form contact_form %}
+                        <button id="submit_button" type="submit" disabled="disabled" class="btn float-right">
+                            Continuar →
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="application/javascript">
+            let phoneInput = document.getElementById('id_phone');
+            phoneInput.addEventListener('input', function (e) {
+                let originalNumber = e.target.value;
+                if (!originalNumber.startsWith('+')) {
+                    var x = originalNumber.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+                    e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+                }
+            });
+
+            let submitButton = document.getElementById('submit_button');
+            document.getElementById('contact_form').addEventListener('input', function (e) {
+                if (phoneInput.value.search(/\(\d\d\) \d\d\d\d\d-\d\d\d\d/) === 0 || phoneInput.value.search(/\+\d{13}/) === 0) {
+                    submitButton.removeAttribute('disabled');
+                } else {
+                    submitButton.setAttribute('disabled', 'disabled');
+                }
+            });
+    </script>
+
+        
+
+    <div style="display: none" class='bg-secondary show-after'>
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5 mb-5">
+                    <div class='social-proof'>
+                        {% include 'core/social_proof.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}{{ block.super }}
+    <script type="application/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script>
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                
+            });
+        }
+
+        window.setInterval(function() {
+            if (player.getCurrentTime() >= 5020 || {% if request.GET.debug %}true{% else %}false{% endif %}) {
+                var all = document.getElementsByClassName("show-after")
+                for (var i = 0; i < all.length; i++) {
+                    all[i].style.display = "block";
+                }
+            }
+        }, 1000);      
+    </script>
+{% endblock %}
+
+{% block professor %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block styles %}
+    {{ block.super }}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+    
+    <style>
+        * {
+            font-family: 'Fira Sans', sans-serif !important;
+        }
+        .hero .danger {
+            color: #F42C04;
+        }
+        .hero b {
+            color: #ffc107;
+        }
+        .bg-black {
+            background-color: #0c1b33 !important;
+        }
+        .content .ec {
+            font-size: 100pt;
+        }
+        .content .col h3 {
+            font-size: 17pt;
+        }
+
+        .photo-renzo {
+            margin-top: 100px;
+        }
+
+        .cta {
+            font-size: 15pt !important;
+        }
+        
+        .hero {
+            margin: 20px 0;
+        }
+        
+        .hero h1 {
+            text-transform: inherit;
+            margin-bottom: 30px;
+        }
+        .desktop .title-sub {
+            font-size: 1.5rem;
+        }
+
+        .price-parcelado {
+            color: #4c7f0a;
+        }
+
+        .desktop .price-parcelado {
+            font-size: 60pt;
+        }
+
+        .desktop .price-parcelado .parcela {
+            font-size: 30pt;
+            margin-right: -10px;
+        }
+
+        .desktop .price-a-vista {
+            margin-top: -15px;
+            font-size: 12pt;
+        }
+
+        .desktop .cta-compra {
+            line-height: 25px;
+            padding: 20px 50px;
+            font-size: 20pt;
+        }
+
+        .desktop .cta-compra .sub {
+            font-size: 12pt;
+        }
+
+        .mobile h1 {
+            font-size: 1.5rem;
+        }
+
+        .mobile .title-sub {
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .mobile h2 {
+            font-size: 1.5rem;
+        }
+
+        .mobile h4 {
+            font-size: 1.2rem;
+        }
+
+        .mobile .price-parcelado {
+            font-size: 50pt;
+        }
+
+        .mobile .price-parcelado .parcela {
+            font-size: 14pt;
+        }
+
+        .mobile .price-a-vista {
+            font-size: 10pt;
+        }
+
+        .mobile .cta-compra {
+            padding: 20px 40px;
+            font-size: 14pt;
+        }
+
+        .bg-black .text-light h1 {
+            font-size: 40pt;
+            color: #C33149 !important;
+        }
+        
+        .bg-black .text-light h2 {
+            color: #ffc107 !important;
+            font-size: 30pt;
+        }
+
+        .bg-black .text-light .countdown {
+            font-size: 60pt;
+        }
+
+        .price-through {
+            text-decoration: line-through;
+            color: #F42C04;
+            font-weight: bold;
+        }
+        .mobile .cursos p {
+            margin: 0;
+        }
+        @media only screen and (min-device-width : 320px) and (max-device-width : 1024px) {
+            .hero h1 {
+                font-size: 21pt;
+            }
+            .hero h3 {
+                font-size: 14pt;
+                line-height: 20pt;
+            }
+            .hero h4 {
+                font-size: 14pt;
+            }
+            .cta {
+                font-size: 12pt !important;
+                padding: 10px;
+            }
+            h2 {
+                font-size: 18pt;
+            }
+            p {
+                font-size: 12pt;
+            }
+            .photo-renzo {
+                margin-top: 10px;
+                width: 300px;
+                display: none;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .main-form {
+                text-align: center;
+            }
+            .content .ec {
+                font-size: 50pt;
+            }
+            .content h3 {
+                margin-bottom: -10px;
+            }
+            .content .block {
+                margin: 10px;
+            }
+        }
+    </style>
+
+{% endblock %}
