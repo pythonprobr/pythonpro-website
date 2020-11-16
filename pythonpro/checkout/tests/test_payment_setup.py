@@ -98,6 +98,91 @@ def test_webinar(first_pagarme_form_config):
            )
 
 
+def test_webinar_boleto(first_pagarme_form_config):
+    item_config = facade.find_payment_item_config('treinamento-devpro-webinar-boleto')
+    assert (
+               item_config.name,
+               item_config.slug,
+               item_config.price,
+               item_config.tangible,
+               item_config.default_config,
+           ) == (
+               'Treinamento DevPro com 30% de Desconto',
+               'treinamento-devpro-webinar-boleto',
+               99700,
+               False,
+               first_pagarme_form_config
+           )
+
+
+def test_webserie(first_pagarme_form_config):
+    item_config = facade.find_payment_item_config('treinamento-devpro-webserie')
+    assert (
+               item_config.name,
+               item_config.slug,
+               item_config.price,
+               item_config.tangible,
+               item_config.default_config,
+           ) == (
+               'Treinamento DevPro com 30% de Desconto',
+               'treinamento-devpro-webserie',
+               99700,
+               False,
+               first_pagarme_form_config
+           )
+
+
+def test_webserie_boleto(first_pagarme_form_config):
+    item_config = facade.find_payment_item_config('treinamento-devpro-webserie-boleto')
+    assert (
+               item_config.name,
+               item_config.slug,
+               item_config.price,
+               item_config.tangible,
+               item_config.default_config,
+           ) == (
+               'Treinamento DevPro com 30% de Desconto',
+               'treinamento-devpro-webserie-boleto',
+               99700,
+               False,
+               first_pagarme_form_config
+           )
+
+
+def test_masterclass_oto(first_pagarme_form_config):
+    item_config = facade.find_payment_item_config('treinamento-devpro-masterclass-oto')
+    assert (
+               item_config.name,
+               item_config.slug,
+               item_config.price,
+               item_config.tangible,
+               item_config.default_config,
+           ) == (
+               'Treinamento DevPro com 30% de Desconto',
+               'treinamento-devpro-masterclass-oto',
+               99700,
+               False,
+               first_pagarme_form_config
+           )
+
+
+def test_masterclass_oto_boleto(first_pagarme_form_config):
+    item_config = facade.find_payment_item_config('treinamento-devpro-masterclass-oto-boleto')
+    assert (
+               item_config.name,
+               item_config.slug,
+               item_config.price,
+               item_config.tangible,
+               item_config.default_config,
+           ) == (
+               'Treinamento DevPro com 30% de Desconto',
+               'treinamento-devpro-masterclass-oto-boleto',
+               99700,
+               False,
+               first_pagarme_form_config
+           )
+
+
 def test_item_membership(first_pagarme_form_config):
     item_config = facade.find_payment_item_config('membership')
     assert (
