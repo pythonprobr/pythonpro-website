@@ -313,3 +313,7 @@ HOTZAPP_API_URL = config('HOTZAPP_API_URL')
 # PostHog configuration
 POSTHOG_API_URL = config('POSTHOG_API_URL')
 POSTHOG_API_KEY = config('POSTHOG_API_KEY')
+
+# needed to allow iframes in pixeling system
+X_FRAME_OPTIONS = 'ALLOWALL'
+XS_SHARING_ALLOWED_METHODS = ['GET']

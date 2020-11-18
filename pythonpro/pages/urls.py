@@ -70,4 +70,9 @@ urlpatterns = [
         views.TppMasterclassThankYouPage.as_view(),
         name='tpp_masterclass_thank_you_page'
     ),
+    path(
+        'pixeling/<str:endpoint>',
+        views.PixelingPage.as_view(),
+        name='pixeling'
+    ),
 ]

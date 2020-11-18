@@ -146,3 +146,7 @@ class TppMasterclassThankYouPage(BaseThankYouView):
         ctx['payment_item_config'] = payment_item_config
         ctx['contact_form'] = form
         return ctx
+
+
+class PixelingPage(BaseThankYouView):
+    pass
