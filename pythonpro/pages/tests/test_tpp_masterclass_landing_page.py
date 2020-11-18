@@ -73,3 +73,8 @@ def test_should_inform_form_error(subscribe_with_no_role, client, cohort):
 def test_should_return_200_when_load_thank_you_page(client):
     resp = client.get(reverse('pages:tpp_masterclass_thank_you_page'))
     assert resp.status_code == 200
+
+
+def test_should_return_google_tag_manager_when_load_pixeling_endpoint(client):
+    resp = client.get(reverse('pages:pixeling', args=['sample']))
+    dj_assert_contains(resp, 'www.googletagmanager.com/gtm.js')

@@ -9,6 +9,8 @@
 PRIMEIRA OPORTUNIDADE como programador, mesmo que você nunca tenha escrito uma linha de código!{% endblock %}
 
 {% block content %}
+    <iframe id='pixeling' style='display: none' src='{% url "pages:pixeling" "masterclass-first-load" %}'></iframe>
+    
     <div class='bg-black'>
         <div class="container">
             <div class="row">
@@ -322,20 +324,49 @@ PRIMEIRA OPORTUNIDADE como programador, mesmo que você nunca tenha escrito uma 
 
     <script>
         var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                
-            });
+        var loopSize = 10 * 1000;
+        var ctaMinute = {% if request.GET.debug %}0{% else %}(1 * 60 * 60) + (60 * 23) + 40{% endif %};
+        var ctaShowed = false;
+
+        function convertSecondtoMinute(second) {
+            return (second - (second % 60)) / 60
+        }
+        
+        function setTimeWatched(second) {
+            var baseUrl = "{% url "pages:pixeling" "masterclass-watched--minute--minutes" %}"
+            var pixelingController = document.getElementById('pixeling');
+
+            minute = convertSecondtoMinute(second)
+            pixelingController.src = baseUrl.replace("-minute-", minute);
+            console.log(pixelingController.src);
         }
 
         window.setInterval(function() {
-            if (player.getCurrentTime() >= 5020 || {% if request.GET.debug %}true{% else %}false{% endif %}) {
+            setTimeWatched(player.getCurrentTime());
+        }, 60 * 1000);      
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                events: {
+                    onStateChange: showCta
+                }
+            });
+        }
+        
+        function showCta(event) {
+            if (ctaShowed === false && (player.getCurrentTime() >= ctaMinute)) {
                 var all = document.getElementsByClassName("show-after")
                 for (var i = 0; i < all.length; i++) {
                     all[i].style.display = "block";
                 }
+                ctaShowed = true
+                console.log('CTA showed at ' + player.getCurrentTime())
             }
-        }, 1000);      
+        }
+
+        window.setInterval(function() {
+            showCta();
+        }, loopSize);      
     </script>
 {% endblock %}
 
