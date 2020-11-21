@@ -27,6 +27,10 @@ class BaseLandingPageView(TemplateNameMixin, FormView):
         args = [form.cleaned_data['name'], form.cleaned_data['email'], self.get_email_marketing_tag()]
         kwargs = {}
 
+        for key, value in self.request.GET.items():
+            if key.startswith('utm_'):
+                args.append(f"{key}={value}")
+
         if form.cleaned_data.get('phone') is not None:
             if self.request.user.is_authenticated is True:
                 kwargs['id'] = self.request.user.id
