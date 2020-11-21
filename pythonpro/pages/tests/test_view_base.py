@@ -1,6 +1,7 @@
 from unittest import mock
 
 import pytest
+from django.urls import reverse
 
 from pythonpro.pages.views import BaseLandingPageView
 
@@ -18,14 +19,22 @@ def test_should_return_default_template_name():
 
 
 @pytest.fixture
-def form():
-    form = mock.Mock()
-    form.cleaned_data = {'name': 'Moacir', 'email': 'moacir@python.pro.br'}
-    return form
+def subscribe_with_no_role(mocker):
+    return mocker.patch('pythonpro.domain.subscription_domain.subscribe_with_no_role.delay')
 
 
-def test_should_send_email_to_active_campaign_with_defined_tag(mocker, form):
-    mocked = mocker.patch('pythonpro.domain.subscription_domain.subscribe_with_no_role.delay')
+def test_should_send_utm_tags_to_active_campaign(client, subscribe_with_no_role):
+    client.post(
+        reverse('pages:ds_webinar_landing_page') + "?utm_source=test&utm_medium=test",
+        {'name': 'Moacir', 'email': 'moacir@python.pro.br'},
+        secure=True
+    )
 
-    TestView().form_valid(form)
-    mocked.assert_called_with('1234', 'Moacir', 'moacir@python.pro.br', 'test-tag')
+    subscribe_with_no_role.assert_called_with(
+        mock.ANY,
+        'Moacir',
+        'moacir@python.pro.br',
+        'webinario-data-science',
+        'utm_source=test',
+        'utm_medium=test',
+    )
