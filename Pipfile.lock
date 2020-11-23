@@ -518,11 +518,10 @@
         },
         "posthog": {
             "hashes": [
-                "sha256:3cb1ade59be37b02ef5f984babf28d1b5b3f699a9b950751929688762228dd6d",
-                "sha256:cbdd8365f06a6d78bd3068edd957f269aa6ee95ffc8e30f74a10189e61659890"
+                "sha256:33c042c68b529cdef41fe7cbd3e3ed5d1b8ab751f7dc12e30981f9815e2e73c9",
+                "sha256:f0b712892f8e5c7085e904e15dbb46cc843102ddcd647d8b421c7fe3c43205d4"
             ],
-            "index": "pypi",
-            "version": "==1.1.1"
+            "version": "==1.1.3"
         },
         "prompt-toolkit": {
             "hashes": [
