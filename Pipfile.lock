@@ -838,11 +838,10 @@
         },
         "django-test-migrations": {
             "hashes": [
-                "sha256:d120d0287e1dd82ed62fe083747a1e99c0398d56beda52594e8391b94a41bef5",
-                "sha256:e5747e2ad0b7e4d3b8d9ccd40d414b0f186316d3757af022b4bbdec700897521"
+                "sha256:27c0127552920bbdc339a84de360f1792abc8c353e2c8d2b86af92dc1ade6703",
+                "sha256:7ea17dac1a0b0c8084681899c6563d85f4262832f2fbb0c6240b12e554333934"
             ],
-            "index": "pypi",
-            "version": "==1.0.0"
+            "version": "==1.1.0"
         },
         "faker": {
             "hashes": [
