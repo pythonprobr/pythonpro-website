@@ -19,7 +19,7 @@ def client_with_user(client, logged_user):
 
 
 _all_roles = set('data_scientist lead client webdev bootcamper pythonista member'.split())
-_advanced_roles = set('member pythonista'.split())
+_advanced_roles = set('member pythonista bootcamper'.split())
 _level_zero_roles = set('lead client webdev bootcamper member'.split())
 _level_one_roles = set('client webdev bootcamper member'.split())
 _level_two_roles = set('webdev bootcamper member'.split())

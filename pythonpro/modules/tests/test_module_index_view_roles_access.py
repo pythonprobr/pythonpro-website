@@ -115,20 +115,13 @@ def test_module_webdev_user_can_not_access(modules_dct, resp_webdev_user, slug):
     'pytools',
     'django',
     'entrevistas-tecnicas',
-])
-def test_module_bootcamper_user_can_access(modules_dct, resp_bootcamper_user, slug):
-    """ Assert that user with a bootcamper role can access the right content """
-    dj_assert_contains(resp_bootcamper_user, modules_dct[slug].get_absolute_url())
-
-
-@pytest.mark.parametrize('slug', [
     'objetos-pythonicos',
     'python-para-pythonistas',
     'python-patterns',
 ])
-def test_module_bootcamper_user_can_not_access(modules_dct, resp_bootcamper_user, slug):
-    """ Assert that user with a bootcamper role can not access some contents """
-    dj_assert_not_contains(resp_bootcamper_user, modules_dct[slug].get_absolute_url())
+def test_module_bootcamper_user_can_access(modules_dct, resp_bootcamper_user, slug):
+    """ Assert that user with a bootcamper role can access the right content """
+    dj_assert_contains(resp_bootcamper_user, modules_dct[slug].get_absolute_url())
 
 
 @pytest.mark.parametrize('slug', [
