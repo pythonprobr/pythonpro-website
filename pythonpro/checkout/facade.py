@@ -2,10 +2,10 @@ from datetime import datetime
 
 from django.utils import timezone
 
-launch_datetime_begin = timezone.make_aware(datetime(2020, 8, 16, 19, 0, 0))
-discount_50_percent_datetime_limit = timezone.make_aware(datetime(2020, 8, 17, 23, 59, 59))
-discount_35_percent_datetime_limit = timezone.make_aware(datetime(2020, 8, 18, 23, 59, 59))
-launch_datetime_finish = timezone.make_aware(datetime(2020, 8, 31, 23, 59, 59))
+launch_datetime_begin = timezone.make_aware(datetime(2021, 1, 5, 0, 0, 0))
+discount_50_percent_datetime_limit = timezone.make_aware(datetime(2021, 1, 18, 23, 59, 59))
+discount_35_percent_datetime_limit = timezone.make_aware(datetime(2021, 1, 19, 23, 59, 59))
+launch_datetime_finish = timezone.make_aware(datetime(2021, 1, 20, 23, 59, 59))
 
 
 def is_launch_open():

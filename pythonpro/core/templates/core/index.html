@@ -28,16 +28,16 @@
                     </div>
                 </div>
                 <div class="col-12 col-md text-light">
-                    {% if is_launch_open %}
-                    <h3 class="mb-3">Inscrições Abertas!</h3>
-                    <p>Aulas da turma começam em agosto. Garanta sua matrícula, vagas limitadas!</p>
-                    <a class="btn btn-warning p-4 font-weight-bold" href="{% url 'checkout:bootcamp_lp' %}?utm_source=pythonpro-home" role="button">SIM! Quero me matricular &raquo;</a>
-    
-                    {% else %}
+{#                    {% if is_launch_open %}#}
+{#                    <h3 class="mb-3">Inscrições Abertas!</h3>#}
+{#                    <p>Aulas da turma começam em janeiro. Garanta sua matrícula, vagas limitadas!</p>#}
+{#                    <a class="btn btn-warning p-4 font-weight-bold" href="{% url 'checkout:bootcamp_lp' %}?utm_source=pythonpro-home" role="button">SIM! Quero me matricular &raquo;</a>#}
+{#    #}
+{#                    {% else %}#}
                     <h3 class="mb-3">Curso Python Birds Grátis</h3>
                     <p>Cadastre seu email para ganhar um curso básico de Programação!</p>
                     <a class="btn btn-warning p-4 font-weight-bold" href="{% url 'core:lead_landing' %}" role="button">SIM! Quero meu curso grátis &raquo;</a>
-                    {% endif %}
+{#                    {% endif %}#}
 
                     <h5 class="mt-4 mb-2">Já tem conta?</h5>
                     <a class="btn btn-light my-2 my-sm-0 text-dark" href="{% url 'two_factor:login' %}?next={% url 'dashboard:home' %}" role="button">Entrar</a>
