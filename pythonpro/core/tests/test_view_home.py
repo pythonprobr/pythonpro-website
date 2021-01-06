@@ -66,6 +66,7 @@ def home_resp_open_subscriptions(client, mocker):
     return _resp(client)
 
 
+@pytest.mark.skip('Temporary not showing subscription link')
 def test_payment_link_is_present(home_resp_open_subscriptions):
     """
     Assert Payment link is present on home page when subscriptions are open
