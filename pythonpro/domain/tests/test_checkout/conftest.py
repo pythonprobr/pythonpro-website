@@ -13,9 +13,9 @@ bootcamp_migration_module = import_module('pythonpro.checkout.migrations.0004_bo
 python_avancado_migration_module = import_module('pythonpro.checkout.migrations.0005_python_avancado_setup')
 webinar_migration_module = import_module('pythonpro.checkout.migrations.0006_webinar_setup')
 webserie_migration_module = import_module('pythonpro.checkout.migrations.0007_webserie_and_webinar_boleto')
+thiago_avelino_migration_module = import_module('pythonpro.checkout.migrations.0008_thiago_avelino_checkouts')
 
 ALL_ACTIVE_PRODUCTS = [
-
     'webdev',
     'webdev-oto',
     'data-science',
@@ -25,13 +25,16 @@ ALL_ACTIVE_PRODUCTS = [
     'bootcamp-webdev',
     'bootcamp-webdev-35-discount',
     'bootcamp-webdev-50-discount',
-    'pacote-proximo-nivel-67-discount',
+    'bootcamp-d1-boleto',
     'treinamento-devpro-webinar',
     'treinamento-devpro-webinar-boleto',
     'treinamento-devpro-webserie',
     'treinamento-devpro-webserie-boleto',
     'treinamento-devpro-masterclass-oto',
     'treinamento-devpro-masterclass-oto-boleto',
+    'webdev-downsell-boleto',
+    'webdev-downsell',
+    'aps',
 ]
 ALL_INACTIVE_PRODUCTS = [
     'pytools',
@@ -41,6 +44,7 @@ ALL_INACTIVE_PRODUCTS = [
     'membership-client',
     'membership-client-first-day',
     'membership-first-day',
+    'pacote-proximo-nivel-67-discount',
 ]
 ALL_PRODUCTS = ALL_ACTIVE_PRODUCTS + ALL_INACTIVE_PRODUCTS
 
@@ -55,6 +59,7 @@ def execute_migration(db, pytestconfig):
         python_avancado_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
         webinar_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
         webserie_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
+        thiago_avelino_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
 
 
 @pytest.fixture(autouse=True)
