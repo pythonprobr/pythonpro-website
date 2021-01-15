@@ -1,47 +1,9 @@
-{% extends 'django_pagarme/pagarme.html' %}
+{% extends 'django_pagarme/pagarme_bootcamp.html' %}
 {% block sidebar %}
     <div class="sidebar-item">
         <h4 class="white-txt">35% de desconto</h4>
         <div>R$ 700,00 de desconto comprando o curso agora!</div>
     </div>
-    <div class="sidebar-item">
-        <h4 class="white-txt">8 Encontros</h4>
-        <div>online para tirar TODAS suas dúvidas</div>
-    </div>
-    <div class="sidebar-item">
-        <h4 class="white-txt">4 Webnários</h4>
-        <div>com especialistas renomados</div>
-    </div>
-    <div class="sidebar-item">
-        <h4 class="white-txt">3 Cursos Completos</h4>
-        <div>Com aulas curtas e objetivas para te levar pro mercado</div>
-    </div>
-    <div class="sidebar-item">
-        <h4 class="white-txt">Ferramentas de Desenvolvimento</h4>
-    </div>
-    <div class="sidebar-item">
-        <h4 class="white-txt">Acesso ao Fórum</h4>
-        <div>tire todas suas dúvidas de 300 vídeo-aulas</div>
-    </div>
-    <div class="sidebar-item">
-        <h4 class="white-txt">Acesso Vitalício</h4>
-    </div>
-    <div class="sidebar-item">
-        <h4 class="white-txt">4 Bonus Imperdíveis</h4>
-        <ol role="list">
-            <li>Acesso aos Webinários das turmas passadas</li>
-            <li>Acesso às aulas das turmas passadas</li>
-            <li>Acesso ao Workshop Carreira Pro</li>
-            <li>Acesso ao Curso de Entrevistas Técnicas</li>
-        </ol>
-    </div>
-    <div class="sidebar-item">
-        <h4 class="white-txt">Acesso a todas as aulas das turmas passadas</h4>
-    </div>
-    <div class="sidebar-item">
-        <h4 class="white-txt">15 dias de garantia</h4>
-    </div>
-    <div class="sidebar-item">
-        <h4 class="white-txt">Acesso imediato, liberado logo após a confirmação do pagamento</h4>
-    </div>
+    {{ block.super }}
+
 {% endblock sidebar %}
