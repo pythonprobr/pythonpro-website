@@ -142,6 +142,8 @@ def assert_user_promoted(user, slug):
         assert core_facade.is_bootcamper(user)
     elif slug == 'pacote-proximo-nivel-67-discount':
         assert core_facade.is_pythonista(user)
+    elif slug == 'aps':
+        pass  # no promotion required
     else:
         pytest.fail(f'Invalid slug prefix {slug}')
 
@@ -155,7 +157,7 @@ def test_user_is_subscribed_to_cohort(resp, django_user_model, cohort, active_pr
 
 def assert_subscribed_to_cohort(cohort, slug, user):
     if not (slug.startswith('webdev') or slug.startswith('treinamento-devpro') or slug.startswith(
-            'data-science') or slug == 'pacote-proximo-nivel-67-discount'):
+            'data-science') or slug == 'pacote-proximo-nivel-67-discount' or slug == 'aps'):
         assert cohort.students.first() == user
 
 
@@ -165,6 +167,8 @@ def test_user_synced_on_discourse(resp, django_user_model, sync_on_discourse_moc
     if active_product_item.slug in {'bootcamp', 'bootcamp-webdev'}:
         user_sync_call = mocker.call(user.id)
         assert sync_on_discourse_mock.mock_calls == [user_sync_call, user_sync_call]
+    elif active_product_item.slug == 'aps':
+        assert sync_on_discourse_mock.call_count == 0
     else:
         sync_on_discourse_mock.assert_called_once_with(user.id)
 
@@ -216,6 +220,8 @@ def test_logged_user_is_synced_on_discourse(resp_logged_user, logged_user, sync_
     if active_product_item.slug in {'bootcamp', 'bootcamp-webdev'}:
         user_sync_call = mocker.call(logged_user.id)
         assert sync_on_discourse_mock.mock_calls == [user_sync_call, user_sync_call]
+    elif active_product_item.slug == 'aps':
+        assert sync_on_discourse_mock.call_count == 0
     else:
         sync_on_discourse_mock.assert_called_once_with(logged_user.id)
 

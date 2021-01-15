@@ -427,6 +427,23 @@ def test_item_bootcamp_webdev_50_discount(second_pagarme_form_config):
            )
 
 
+def test_item_bootcamp_d1_boleto(second_pagarme_form_config):
+    item_config = facade.find_payment_item_config('bootcamp-d1-boleto')
+    assert (
+               item_config.name,
+               item_config.slug,
+               item_config.price,
+               item_config.tangible,
+               item_config.default_config,
+           ) == (
+               'Bootcamp DevPro - R$1000 Off',
+               'bootcamp-d1-boleto',
+               199700,
+               False,
+               second_pagarme_form_config
+           )
+
+
 @pytest.fixture
 def free_interest_form_config():
     return PagarmeFormConfig.objects.order_by('id').all()[2]
@@ -466,4 +483,56 @@ def test_item_python_avancado(free_interest_form_config):
                free_interest_form_config
            )
     for payment_item in PagarmeItemConfig.objects.filter(slug__startswith='bootcamp').all():
-        assert payment_item.upsell_id == item_config.id
+        if not payment_item.slug.startswith('bootcamp-d'):
+            assert payment_item.upsell_id == item_config.id
+
+
+def test_item_webdev_downsell(second_pagarme_form_config):
+    item_config = facade.find_payment_item_config('webdev-downsell')
+    assert (
+               item_config.name,
+               item_config.slug,
+               item_config.price,
+               item_config.tangible,
+               item_config.default_config,
+           ) == (
+               'Treinamento Webdev Django',
+               'webdev-downsell',
+               49700,
+               False,
+               second_pagarme_form_config
+           )
+
+
+def test_item_webdev_downsell_boleto(second_pagarme_form_config):
+    item_config = facade.find_payment_item_config('webdev-downsell-boleto')
+    assert (
+               item_config.name,
+               item_config.slug,
+               item_config.price,
+               item_config.tangible,
+               item_config.default_config,
+           ) == (
+               'Treinamento Webdev Django',
+               'webdev-downsell-boleto',
+               49700,
+               False,
+               second_pagarme_form_config
+           )
+
+
+def test_item_aps(second_pagarme_form_config):
+    item_config = facade.find_payment_item_config('aps')
+    assert (
+               item_config.name,
+               item_config.slug,
+               item_config.price,
+               item_config.tangible,
+               item_config.default_config,
+           ) == (
+               'Acompanhamento de Processos Seletivos',
+               'aps',
+               50000,
+               False,
+               second_pagarme_form_config
+           )

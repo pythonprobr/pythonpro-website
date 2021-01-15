@@ -12,6 +12,7 @@ bootcamp_migration_module = import_module('pythonpro.checkout.migrations.0004_bo
 python_avancado_migration_module = import_module('pythonpro.checkout.migrations.0005_python_avancado_setup')
 webinar_migration_module = import_module('pythonpro.checkout.migrations.0006_webinar_setup')
 webserie_migration_module = import_module('pythonpro.checkout.migrations.0007_webserie_and_webinar_boleto')
+thiago_avelino_migration_module = import_module('pythonpro.checkout.migrations.0008_thiago_avelino_checkouts')
 
 
 @pytest.fixture(autouse=True)
@@ -24,6 +25,7 @@ def execute_migration(db, pytestconfig):
         python_avancado_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
         webinar_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
         webserie_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
+        thiago_avelino_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
 
 
 @pytest.fixture(autouse=True)
