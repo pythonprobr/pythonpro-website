@@ -486,10 +486,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:896c31884a7defd0c64b70afdbdceca8e846e732931d86e621b4fae45c564c19",
-                "sha256:a51f4dc9223c46cf13939966d5e439af83c96d268a831e28776ba241031d6dd2"
+                "sha256:40cafead7d2fa7076ecfc97a30317e45a5b53d7ed44b688edd17fbe09bf0fefd",
+                "sha256:83d11430f4a5f545d8e9df0c29d66cc41467f8f4e9ac62c30c3ad5c5fbaa3edd"
             ],
-            "version": "==8.12.15"
+            "version": "==8.12.17"
         },
         "pickleshare": {
             "hashes": [
