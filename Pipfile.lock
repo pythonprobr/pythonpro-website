@@ -485,10 +485,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:40cafead7d2fa7076ecfc97a30317e45a5b53d7ed44b688edd17fbe09bf0fefd",
-                "sha256:83d11430f4a5f545d8e9df0c29d66cc41467f8f4e9ac62c30c3ad5c5fbaa3edd"
+                "sha256:25a5ca93e90dc761fa01054d1e147876928e3812ebe54f8967e9efbbfd23d349",
+                "sha256:a6c62793b1862cfe9539062143f1d03af3c49db8919746b8ea0ed024fa268957"
             ],
-            "version": "==8.12.17"
+            "version": "==8.12.18"
         },
         "pickleshare": {
             "hashes": [
