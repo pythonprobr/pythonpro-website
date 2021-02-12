@@ -545,11 +545,10 @@
         },
         "prompt-toolkit": {
             "hashes": [
-                "sha256:7e966747c18ececaec785699626b771c1ba8344c8d31759a1915d6b12fad6525",
-                "sha256:c96b30925025a7635471dc083ffb6af0cc67482a00611bd81aeaeeeb7e5a5e12"
+                "sha256:0fa02fa80363844a4ab4b8d6891f62dd0645ba672723130423ca4037b80c1974",
+                "sha256:62c811e46bd09130fb11ab759012a4ae385ce4fb2073442d1898867a824183bd"
             ],
-            "markers": "python_full_version >= '3.6.1'",
-            "version": "==3.0.14"
+            "version": "==3.0.16"
         },
         "psycopg2-binary": {
             "hashes": [
