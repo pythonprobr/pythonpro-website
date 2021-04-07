@@ -479,10 +479,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:b96d2bfc4d6006268719bd4a2b159fdb9bad636c05f1600ef49929bda381f208",
-                "sha256:e065d6b11e66a7aa42817c41146c822a7859989a9c9295996d19a4438fcca936"
+                "sha256:134de25059aa8fb7dd5f1adc8f19d21a1d3ce2a45b051e04dea393046dce442b",
+                "sha256:8506182760241ea922f47f4c4273f0e1bdaa3d5d3d3288ee6720627284d8608c"
             ],
-            "version": "==8.12.20"
+            "version": "==8.12.21"
         },
         "pickleshare": {
             "hashes": [
