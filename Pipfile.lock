@@ -883,11 +883,10 @@
         },
         "humanize": {
             "hashes": [
-                "sha256:0ebeb71e0b8f5d1cbb2f8b19cc0f5f6e6abfcdb8e3d152424b20effbab68ace5",
-                "sha256:8bf7abd672b867f38b8b04593829b85b9b6199a61ef6586bf3629cc06458ff35"
+                "sha256:096b9ae6d1d56321d3d81f17117c2068179d7b4f7f73ba4baf302726923b48ec",
+                "sha256:d292736d81da462b84b78eee0c9bba26bdbfa10112e302c4fcddb6621d2a08dd"
             ],
-            "markers": "python_version >= '3.6'",
-            "version": "==3.3.0"
+            "version": "==3.4.0"
         },
         "iniconfig": {
             "hashes": [
