@@ -158,6 +158,8 @@ default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 if 'localhost' not in ALLOWED_HOSTS:
     dburl = partial(dburl, conn_max_age=600, ssl_require=True)
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 DATABASES = {
     'default': config('DATABASE_URL', default=default_db_url, cast=dburl),
 }

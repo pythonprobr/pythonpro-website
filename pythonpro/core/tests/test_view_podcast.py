@@ -13,10 +13,5 @@ def test_status_code(resp):
     assert 200 == resp.status_code
 
 
-def test_link_on_home(client):
-    resp = client.get('/')
-    dj_assert_contains(resp, reverse('core:podcast'))
-
-
 def test_podcast_link(resp):
     dj_assert_contains(resp, 'https://anchor.fm/renzoprocast/embed')
