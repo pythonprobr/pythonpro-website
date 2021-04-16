@@ -265,15 +265,11 @@
             "version": "==0.25"
         },
         "django-phonenumber-field": {
-            "extras": [
-                "phonenumberslite"
-            ],
             "hashes": [
-                "sha256:1eb7af3a108744665f7c3939d38aa15b3728c57d13d45d656b0a2aa11e8cdc3c",
-                "sha256:adb46905cc4ecb19d8494424e1c4352f24946bb472340a2a17257d44bf8228e6"
+                "sha256:48724ba235ee8248a474204faa0934c5baf9536f429859d05cb131fbd6b1c695",
+                "sha256:9eda963ac15b363393f677cc084efd45c3bd97bb5a0cdb4a06409ac99e05dd4b"
             ],
-            "markers": "python_version >= '3.5'",
-            "version": "==5.0.0"
+            "version": "==5.1.0"
         },
         "django-recaptcha": {
             "hashes": [
