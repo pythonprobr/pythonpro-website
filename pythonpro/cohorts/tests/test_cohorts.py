@@ -44,16 +44,6 @@ def test_cohort_links_for_logged_user(client, django_user_model):
         dj_assert_contains(resp, c.get_absolute_url())
 
 
-@pytest.mark.django_db
-def test_cohort_links_not_avaliable_for_no_user(client):
-    image = SimpleUploadedFile(name='renzo-nuccitelli.jpeg', content=open(img_path, 'rb').read(),
-                               content_type='image/png')
-    cohorts = baker.make(Cohort, 4, image=image)
-    resp = client.get('/')
-    for c in cohorts:
-        dj_assert_not_contains(resp, c.get_absolute_url())
-
-
 def test_status_code(resp):
     assert 200 == resp.status_code
 
