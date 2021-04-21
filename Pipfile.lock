@@ -243,11 +243,10 @@
         },
         "django-ordered-model": {
             "hashes": [
-                "sha256:29af6624cf3505daaf0df00e2df1d0726dd777b95e08f304d5ad0264092aa934",
-                "sha256:d867166ed4dd12501139e119cbbc5b4d19798a3e72740aef0af4879ba97102cf"
+                "sha256:3a8a0259bfd73a0c0b124932bb1fe59a6d2f4cbea096b20634d2a2d1f5d585cc",
+                "sha256:5aa58277b81b4ca93fb18caf15069af604bac5c5146d2c29aae56da07a86ef1b"
             ],
-            "index": "pypi",
-            "version": "==3.4.1"
+            "version": "==3.4.3"
         },
         "django-otp": {
             "hashes": [
