@@ -251,10 +251,10 @@
         },
         "django-otp": {
             "hashes": [
-                "sha256:381a15e65293b8b06d47b7d6b306e0b7af2e104137ac92f6c566d3b9b90b6244",
-                "sha256:f4ab096b424c33ffe69453620356e1b7517f30dfb9ba13bfeaa1d1f20faddc13"
+                "sha256:75a815747a0542cc5442e3a6396dfd272c49a0866bee2149ac57ecc36ddd3961",
+                "sha256:cc657a0e7266cda6ab42f861bdc3840ed24f7e441bc7f249916174dd1a6375a0"
             ],
-            "version": "==1.0.3"
+            "version": "==1.0.5"
         },
         "django-pagarme": {
             "hashes": [
