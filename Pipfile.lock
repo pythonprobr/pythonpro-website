@@ -478,10 +478,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:134de25059aa8fb7dd5f1adc8f19d21a1d3ce2a45b051e04dea393046dce442b",
-                "sha256:8506182760241ea922f47f4c4273f0e1bdaa3d5d3d3288ee6720627284d8608c"
+                "sha256:232ef19db1d8a87ed92f70af23ab71f0043edaffa581fee932a9562ade344d38",
+                "sha256:871bddf454e9946946f1d3073d5cb0bc9daa1a1d1dc9d8a5ab1c3ff2128d4e40"
             ],
-            "version": "==8.12.21"
+            "version": "==8.12.23"
         },
         "pickleshare": {
             "hashes": [
