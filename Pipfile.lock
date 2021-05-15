@@ -181,11 +181,10 @@
         },
         "decorator": {
             "hashes": [
-                "sha256:6f201a6c4dac3d187352661f508b9364ec8091217442c9478f1f83c003a0f060",
-                "sha256:945d84890bb20cc4a2f4a31fc4311c0c473af65ea318617f13a7257c9a58bc98"
+                "sha256:77a3141f7f5837b5de43569c35508ca4570022ba501db8c8a2a8b292bd35772a",
+                "sha256:bff00cfb18698f9a19fa6400451fd7ea894f3845cedd7b8b7b0ce9c53171fefb"
             ],
-            "markers": "python_version >= '3.5'",
-            "version": "==5.0.7"
+            "version": "==5.0.8"
         },
         "dj-database-url": {
             "hashes": [
