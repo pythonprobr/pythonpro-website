@@ -50,10 +50,10 @@ class LiveClass(models.Model):
 
 class Webinar(models.Model):
     cohort = models.ForeignKey(Cohort, on_delete=models.DO_NOTHING)
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=128)
     speaker = models.CharField(max_length=50)
     speaker_title = models.CharField(max_length=50)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, max_length=128)
     vimeo_id = models.CharField(max_length=11, db_index=False, blank=True)
     start = models.DateTimeField()
     discourse_topic_id = models.CharField(max_length=11, db_index=False)
