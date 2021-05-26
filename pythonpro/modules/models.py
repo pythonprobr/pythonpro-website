@@ -191,6 +191,7 @@ class Topic(Content):
     discourse_topic_id = models.CharField(max_length=11, db_index=False)
     order_with_respect_to = 'chapter'
     duration = models.IntegerField(default=0)
+    memberkit_url = models.URLField(max_length=1024, blank=True, default='')
 
     class Meta:
         ordering = ['chapter', 'order']
