@@ -44,6 +44,6 @@ class ChapterAdmin(BaseAdmin):
 
 @admin.register(Topic)
 class TopicAdmin(BaseAdmin):
-    list_display = 'title slug chapter order move_up_down_links page_link'.split()
+    list_display = 'title slug chapter order move_up_down_links page_link memberkit_url'.split()
     list_filter = ('chapter',)
     prepopulated_fields = {'slug': ('title',)}
