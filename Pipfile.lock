@@ -498,10 +498,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:232ef19db1d8a87ed92f70af23ab71f0043edaffa581fee932a9562ade344d38",
-                "sha256:871bddf454e9946946f1d3073d5cb0bc9daa1a1d1dc9d8a5ab1c3ff2128d4e40"
+                "sha256:adcffce508613ec4169ce0eb1b6662cfd31a054c02fd7231c5d672d9a81e4dc8",
+                "sha256:bb4c480330ab225376eaab5ba8e494e6f044adf7685b466716bd92614102f064"
             ],
-            "version": "==8.12.23"
+            "version": "==8.12.24"
         },
         "pickleshare": {
             "hashes": [
