@@ -40,6 +40,11 @@ PAGARME_API_KEY = config('PAGARME_API_KEY')
 CHAVE_PAGARME_API_PRIVADA = PAGARME_API_KEY
 CHAVE_PAGARME_CRIPTOGRAFIA_PUBLICA = PAGARME_CRYPTO_KEY
 
+# Memberkit integration
+
+MEMBERKIT_API_KEY = config('MEMBERKIT_API_KEY')
+MEMBERKIT_ON = config('MEMBERKIT_ON', cast=bool, default=False)
+
 # Email Configuration
 
 DEFAULT_FROM_EMAIL = 'suporte@python.pro.br'
@@ -82,6 +87,7 @@ INSTALLED_APPS = [
     'pythonpro.checkout',
     'pythonpro.redirector',
     'pythonpro.pages',
+    'pythonpro.memberkit',
     'captcha',
     'rolepermissions',
     'ordered_model',
