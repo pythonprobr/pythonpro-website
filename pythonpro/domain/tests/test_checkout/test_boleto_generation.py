@@ -142,8 +142,7 @@ def remove_tags_mock(mocker):
 
 
 def test_payment_tag_removed_after_payment(resp_logged_user, active_product_item, remove_tags_mock, logged_user,
-                                           tag_as_mock,
-                                           mocker):
+                                           tag_as_mock, mocker):
     payment = django_pagarme_facade.find_payment_by_transaction(TRANSACTION_ID)
     baker.make(django_pagarme_facade.PagarmeNotification, status=django_pagarme_facade.PAID, payment=payment)
     promote_mock = mocker.patch('pythonpro.domain.checkout_domain._promote')

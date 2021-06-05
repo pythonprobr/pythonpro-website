@@ -4,6 +4,7 @@ from django_pagarme.models import PagarmePayment, PagarmeNotification, PagarmeIt
 from model_bakery import baker
 
 from pythonpro.domain import checkout_domain
+from pythonpro.memberkit.models import SubscriptionType, Subscription, PaymentItemConfigToSubscriptionType
 
 
 @pytest.fixture
@@ -31,6 +32,9 @@ def test_pagarme_payment_paid_boleto(db, tag_as_mock, remove_tags_mock, promote_
     payment = baker.make(PagarmePayment, payment_method=facade.BOLETO, user=logged_user)
     baker.make(PagarmeNotification, status=facade.PAID, payment=payment)
     config = baker.make(PagarmeItemConfig, payments=[payment])
+    subscription_type = baker.make(SubscriptionType)
+    PaymentItemConfigToSubscriptionType.objects.create(payment_item=config, subscription_type=subscription_type)
+
     checkout_domain.payment_handler_task(payment.id)
     assert tag_as_mock.called is False
     remove_tags_mock.assert_called_once_with(
@@ -40,11 +44,31 @@ def test_pagarme_payment_paid_boleto(db, tag_as_mock, remove_tags_mock, promote_
     send_purchase_notification_mock.asser_called_once_with(payment.id)
 
 
+def test_subscription_creation(db, tag_as_mock, remove_tags_mock, promote_user_mock, logged_user,
+                               send_purchase_notification_mock):
+    payment = baker.make(PagarmePayment, payment_method=facade.BOLETO, user=logged_user)
+    baker.make(PagarmeNotification, status=facade.PAID, payment=payment)
+    config = baker.make(PagarmeItemConfig, payments=[payment])
+    subscription_type = baker.make(SubscriptionType)
+    PaymentItemConfigToSubscriptionType.objects.create(payment_item=config, subscription_type=subscription_type)
+    checkout_domain.payment_handler_task(payment.id)
+    subscription = Subscription.objects.first()
+    assert subscription is not None
+    assert subscription.subscriber_id == payment.user_id
+    assert subscription.status == Subscription.Status.INACTIVE
+    assert subscription.payment_id == payment.id
+    assert list(subscription.subscription_types.all()) == [subscription_type]
+    assert subscription.responsible is None
+    assert subscription.observation == 'Criação como resposta de pagamento no Pagarme'
+
+
 def test_pagarme_payment_paid_credit_card(db, tag_as_mock, remove_tags_mock, promote_user_mock, logged_user,
                                           send_purchase_notification_mock):
     payment = baker.make(PagarmePayment, payment_method=facade.CREDIT_CARD, user=logged_user)
     baker.make(PagarmeNotification, status=facade.PAID, payment=payment)
     config = baker.make(PagarmeItemConfig, payments=[payment])
+    subscription_type = baker.make(SubscriptionType)
+    PaymentItemConfigToSubscriptionType.objects.create(payment_item=config, subscription_type=subscription_type)
     checkout_domain.payment_handler_task(payment.id)
     assert tag_as_mock.called is False
     remove_tags_mock.assert_called_once_with(

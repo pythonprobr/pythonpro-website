@@ -6,7 +6,7 @@ from django_pagarme.models import PagarmeItemConfig
 
 # Register your models here.
 from pythonpro.memberkit import facade
-from pythonpro.memberkit.models import SubscriptionType, PaymentItemConfigToSubscriptionType
+from pythonpro.memberkit.models import SubscriptionType, PaymentItemConfigToSubscriptionType, Subscription
 
 
 class PaymentItemConfigInline(admin.TabularInline):
@@ -45,3 +45,15 @@ admin.site.unregister(PagarmeItemConfig)
 @admin.register(PagarmeItemConfig)
 class NewPagarmeItemConfigAdmin(PagarmeItemConfigAdmin):
     inlines = [PaymentItemConfigInline]
+
+
+@admin.register(Subscription)
+class SubscriptionAdmin(admin.ModelAdmin):
+    fields = ['subscriber', 'subscription_types', 'observation']
+    list_display = ['subscriber', 'responsible', 'status', 'created_at', 'updated_at']
+    autocomplete_fields = ['subscriber']
+    search_fields = ['subscriber__email']
+    list_filter = ['status', 'subscription_types']
+
+    def has_delete_permission(self, request, obj=None):
+        return False
