@@ -3,8 +3,10 @@ from importlib import import_module
 import pytest
 from django_pagarme import facade
 from django_pagarme.models import PagarmeFormConfig, PagarmeItemConfig
+from model_bakery import baker
 
 # Workaround since module beginning with number can't be imported in regular way
+from pythonpro.memberkit.models import SubscriptionType, PaymentItemConfigToSubscriptionType
 
 migration_module = import_module('pythonpro.checkout.migrations.0001_payment_setup')
 webdev_migration_module = import_module('pythonpro.checkout.migrations.0002_webdev_setup')
@@ -60,6 +62,13 @@ def execute_migration(db, pytestconfig):
         webinar_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
         webserie_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
         thiago_avelino_migration_module.setup_payment_configs_function(PagarmeFormConfig, PagarmeItemConfig)
+    subscription_type = baker.make(SubscriptionType)
+    PaymentItemConfigToSubscriptionType.objects.bulk_create(
+        [
+            PaymentItemConfigToSubscriptionType(payment_item=config, subscription_type=subscription_type)
+            for config in PagarmeItemConfig.objects.all()
+        ]
+    )
 
 
 @pytest.fixture(autouse=True)
