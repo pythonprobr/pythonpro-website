@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path
+from django.utils.html import format_html
 from django_pagarme.admin import PagarmeItemConfigAdmin
 from django_pagarme.models import PagarmeItemConfig
 
@@ -47,13 +48,44 @@ class NewPagarmeItemConfigAdmin(PagarmeItemConfigAdmin):
     inlines = [PaymentItemConfigInline]
 
 
+class PaymentListFilter(admin.SimpleListFilter):
+    title = 'Por Pagamento'
+    parameter_name = 'has_payment'
+
+    def lookups(self, request, model_admin):
+        return [('yes', 'Com Pagamento'), ('no', 'Sem Pagamento')]
+
+    def queryset(self, request, queryset):
+        if self.value() == 'yes':
+            return queryset.filter(payment_id__isnull=False)
+        elif self.value() == 'no':
+            return queryset.filter(payment_id__isnull=True)
+        return queryset
+
+
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
-    fields = ['subscriber', 'subscription_types', 'observation']
-    list_display = ['subscriber', 'responsible', 'status', 'created_at', 'updated_at']
+    fields = ['payment', 'subscriber', 'subscription_types', 'observation']
+    list_display = ['subscriber', 'pagarme_url_field', 'responsible', 'status', 'created_at', 'updated_at']
     autocomplete_fields = ['subscriber']
-    search_fields = ['subscriber__email']
-    list_filter = ['status', 'subscription_types']
+    search_fields = ['subscriber__email', 'payment__transaction_id']
+    list_filter = ['status', PaymentListFilter, 'subscription_types']
+    ordering = ['-updated_at']
+
+    def get_queryset(self, request):
+        return Subscription.objects.select_related('payment').select_related('subscriber').select_related('responsible')
+
+    def pagarme_url_field(self, obj):
+        if obj.payment is None:
+            return '----'
+        link = (
+            f'<a href="https://beta.dashboard.pagar.me/#/transactions/'
+            f'{obj.payment.transaction_id}">{obj.payment.transaction_id}</a>'
+        )
+        return format_html(link)
+
+    pagarme_url_field.allow_tags = True
+    pagarme_url_field.short_description = 'Link Pagarme'
 
     def has_delete_permission(self, request, obj=None):
         return False
