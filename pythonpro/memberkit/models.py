@@ -43,3 +43,6 @@ class Subscription(models.Model):
     responsible = models.ForeignKey(get_user_model(), on_delete=models.DO_NOTHING, null=True,
                                     related_name='created_subscriptions')
     observation = models.TextField(verbose_name='Observação', blank=True, default='')
+
+    def __str__(self):
+        return f'Assinatura: {self.id} de {self.subscriber}'
