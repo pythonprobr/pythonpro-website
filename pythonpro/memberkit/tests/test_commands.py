@@ -1,7 +1,9 @@
+import pytest as pytest
 from django.core import management
 from django_pagarme import facade as pagarme_facade
 from django_pagarme.models import PagarmePayment, PagarmeItemConfig, PagarmeNotification
 from model_bakery import baker
+from rolepermissions.roles import assign_role
 
 from pythonpro.core.models import User
 from pythonpro.memberkit.models import SubscriptionType, PaymentItemConfigToSubscriptionType, Subscription
@@ -75,3 +77,91 @@ def _make_subscriptions_with_payment(payment_config, status):
     payment.items.set([payment_config])
     baker.make(PagarmeNotification, payment=payment, status=status)
     return baker.make(Subscription, payment=payment, status=Subscription.Status.INACTIVE)
+
+
+@pytest.fixture
+def subscription_types(db):
+    role_to_subscription_type_dct = {
+        'data_scientist': 4456,
+        'webdev': 4426,
+        'member': 4424,
+        'bootcamper': 4423,
+        'client': 4420,
+    }
+    return [
+        baker.make(SubscriptionType, id=v, name=k)
+        for k, v in role_to_subscription_type_dct.items()
+    ]
+
+
+def test_subscription_not_created_for_lead(django_user_model):
+    lead = baker.make(django_user_model)
+    assign_role(lead, 'lead')
+    management.call_command('create_subscriptions_for_roles')
+    assert not Subscription.objects.exists()
+
+
+role_to_subscription = pytest.mark.parametrize(
+    'role,subscription_type_id',
+    [
+        ('data_scientist', 4456),
+        ('client', 4420),
+        ('webdev', 4426),
+        ('member', 4424),
+        ('pythonista', 4423),
+        ('bootcamper', 4423),
+    ]
+)
+
+
+@role_to_subscription
+def test_subscription_created(role, subscription_type_id, subscription_types, django_user_model):
+    user_with_role = baker.make(django_user_model)
+    assign_role(user_with_role, role)
+    management.call_command('create_subscriptions_for_roles')
+    subscription = Subscription.objects.first()
+    assert subscription.subscriber == user_with_role
+    assert subscription.status == Subscription.Status.INACTIVE
+    assert subscription.subscription_types.first().id == subscription_type_id
+
+
+@role_to_subscription
+def test_subscription_creation_idempotence(role, subscription_type_id, subscription_types, django_user_model):
+    user_with_role = baker.make(django_user_model)
+    assign_role(user_with_role, role)
+    previous_subscription = baker.make(Subscription, subscriber=user_with_role)
+    previous_subscription.subscription_types.add(subscription_type_id)
+    management.call_command('create_subscriptions_for_roles')
+    management.call_command('create_subscriptions_for_roles')
+    assert Subscription.objects.count() == 1, 'Subscription should not be created'
+
+
+@pytest.mark.parametrize(
+    'role,subscription_type_id',
+    [
+        ('data_scientist', 4424),
+        ('client', 4424),
+        ('webdev', 4424),
+        ('member', 4420),
+        ('pythonista', 4424),
+        ('bootcamper', 4424),
+    ]
+)
+def test_subscription_creation_another_subscription_type(role, subscription_type_id, subscription_types,
+                                                         django_user_model):
+    """
+    Check all ids from parametrize area different from role_to_subscription
+    :param role:
+    :param subscription_type_id:
+    :param subscription_types:
+    :param django_user_model:
+    :return:
+    """
+    user_with_role = baker.make(django_user_model)
+    assign_role(user_with_role, role)
+    previous_subscription = baker.make(Subscription, subscriber=user_with_role)
+    previous_subscription.subscription_types.add(subscription_type_id)
+    management.call_command('create_subscriptions_for_roles')
+    assert Subscription.objects.count() == 2, 'New Subscription should be created'
+    management.call_command('create_subscriptions_for_roles')
+    assert Subscription.objects.count() == 2, 'New Subscription should be created only once'
