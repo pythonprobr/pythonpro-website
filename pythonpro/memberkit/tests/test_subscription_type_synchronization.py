@@ -1,6 +1,8 @@
 import pytest
+from model_bakery import baker
 
 from pythonpro.memberkit import api, facade
+from pythonpro.memberkit.models import SubscriptionType
 
 
 @pytest.fixture
@@ -24,15 +26,18 @@ def test_syncronize_memberkit_subscriptions(responses, api_key, settings):
     api_response = [
         {
             'classroom_ids': [39668, 39731, 40566],
-            'id': 13, 'name': 'Clientes', 'trial_period': 0},
+            'id': 13, 'name': 'Clientes', 'trial_period': 0
+        },
         {
             'classroom_ids': [40531, 40532, 40533, 40534, 40535, 39668, 39731, 40566],
             'id': 14,
-            'name': 'Bootcampers', 'trial_period': 0},
+            'name': 'Bootcampers', 'trial_period': 0
+        },
         {
             'classroom_ids': [40531, 40532, 40533, 40534, 40535, 39668, 39731, 40566],
             'id': 15, 'name': 'Membros',
-            'trial_period': 0},
+            'trial_period': 0
+        },
         {
             'classroom_ids': [40531, 40532, 39731, 40566],
             'id': 16, 'name': 'Webdevs', 'trial_period': 0},
@@ -62,3 +67,27 @@ def test_syncronize_memberkit_subscriptions(responses, api_key, settings):
     subscription_types = facade.synchronize_subscription_types()
 
     assert id_name_dct == {s.id: s.name for s in subscription_types}
+
+
+def test_changes_on_subscription_name(responses, api_key, settings):
+    settings.MEMBERKIT_ON = True
+    subscription_id = 13
+    old_name = 'Clientes'
+    new_name = 'Clientes Alterados'
+    api_response = [
+        {
+            'classroom_ids': [39668, 39731, 40566],
+            'id': subscription_id, 'name': new_name, 'trial_period': 0
+        },
+    ]
+    responses.add(
+        responses.GET,
+        f'https://memberkit.com.br/api/v1/membership_levels?api_key={api_key}',
+        json=api_response
+    )
+
+    subscription_type = baker.make(SubscriptionType, id=subscription_id, name=old_name)
+
+    facade.synchronize_subscription_types()
+    subscription_type.refresh_from_db()
+    assert subscription_type.name == new_name
