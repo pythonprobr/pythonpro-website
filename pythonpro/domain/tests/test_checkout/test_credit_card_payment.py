@@ -39,6 +39,10 @@ def create_or_update_lead_mock(mocker):
 
 @pytest.fixture
 def payment_handler_task_mock(mocker):
+    mocker.patch(
+        'pythonpro.domain.checkout_domain.subscription_domain.create_subscription_and_activate_services'
+    )
+
     return mocker.patch(
         'pythonpro.domain.checkout_domain.payment_handler_task.delay',
         side_effect=checkout_domain.payment_handler_task
