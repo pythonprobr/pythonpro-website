@@ -14,11 +14,6 @@ def test_link_for_logged_user(client_with_user):
     dj_assert_contains(resp, reverse('cohorts:webinars'))
 
 
-def test_link_unavailable_for_non_users(client):
-    resp = client.get('/')
-    dj_assert_not_contains(resp, reverse('cohorts:webinars'))
-
-
 def test_status_code(resp):
     assert resp.status_code == 200
 

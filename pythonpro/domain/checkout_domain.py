@@ -6,6 +6,7 @@ from pythonpro.core import facade as core_facade
 from pythonpro.domain import user_domain
 from pythonpro.domain.hotzapp_domain import verify_purchase, send_purchase_notification
 from pythonpro.email_marketing import facade as email_marketing_facade
+from pythonpro.memberkit import facade as memberkit_facade
 
 __all__ = ['contact_info_listener', 'user_factory', 'payment_handler_task', 'payment_change_handler']
 
@@ -56,6 +57,7 @@ def payment_handler_task(payment_id):
     else:
         status = payment.status()
         if status == django_pagarme_facade.PAID:
+            memberkit_facade.create_new_subscription(payment, 'Criação como resposta de pagamento no Pagarme')
             user = payment.user
             if payment.payment_method == django_pagarme_facade.BOLETO:
                 email_marketing_facade.remove_tags.delay(user.email, user.id, f'{slug}-boleto', f'{slug}-refused')

@@ -4,7 +4,7 @@ from django.utils.safestring import mark_safe
 from pythonpro.cohorts.models import Cohort, LiveClass, Webinar
 
 
-class ClassInline(admin.TabularInline):
+class ClassInline(admin.StackedInline):
     extra = 1
     model = LiveClass
     ordering = ('start',)

@@ -1,0 +1,12 @@
+{% extends 'admin/change_list.html' %}
+
+{% block object-tools %}
+    <div>
+        <form action="sincronizar" method="POST">
+            {% csrf_token %}
+                <button type="submit">Sincronizar com Memberkit</button>
+        </form>
+    </div>
+    <br />
+    {{ block.super }}
+{% endblock %}

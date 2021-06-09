@@ -6,11 +6,10 @@ from django.contrib.auth.views import PasswordChangeView, PasswordResetView
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, UpdateView
+from django.views.generic import UpdateView
 from django_sitemaps import Sitemap
 from rolepermissions.checkers import has_role
 
-from pythonpro.checkout.facade import is_launch_open
 from pythonpro.core import facade as core_facade
 from pythonpro.core.forms import LeadForm, UserEmailForm, UserSignupForm, PythonProResetForm
 from pythonpro.core.models import User
@@ -20,8 +19,7 @@ from pythonpro.domain import user_domain
 def index(request):
     if request.user.is_authenticated:
         return redirect(reverse('dashboard:home'))
-
-    return render(request, 'core/index.html', {'form': UserSignupForm(), 'is_launch_open': is_launch_open()})
+    return redirect('https://pythonpro.com.br')
 
 
 def thanks(request):
@@ -117,13 +115,6 @@ class _ProfileChangePassword(PasswordChangeView):
 
 
 profile_password = _ProfileChangePassword.as_view()
-
-
-class _WaitingListView(TemplateView):
-    template_name = 'core/waiting_list.html'
-
-
-waiting_list = _WaitingListView.as_view()
 
 
 def _lead_landing(request, template_name='core/lead_landing_page.html', form_action=None):

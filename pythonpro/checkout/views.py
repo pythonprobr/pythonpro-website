@@ -225,7 +225,7 @@ def bootcamp_lp_d3_webdev(request):
 
 
 def waiting_list_ty(request):
-    return render(request, 'checkout/waiting_list_ty.html', {'email': request.user.email})
+    return redirect("https://forms.gle/b2JxGZPvbBYsr5UKA")
 
 
 @login_required

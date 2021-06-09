@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from django_sitemaps import robots_txt
 
 from . import views
+from pythonpro.checkout.views import waiting_list_ty
 
 app_name = 'core'
 urlpatterns = [
@@ -23,6 +24,6 @@ urlpatterns = [
     path('perfil/nome', views.profile_name, name='profile_name'),
     path('perfil/email', views.profile_email, name='profile_email'),
     path('perfil/senha', views.profile_password, name='profile_password'),
-    path('lista-de-espera', views.waiting_list, name='waiting_list'),
+    path('lista-de-espera', waiting_list_ty, name='waiting_list'),
     path('unsubscribe', TemplateView.as_view(template_name='core/unsubscribe.html'), name='unsubscribe'),
 ]

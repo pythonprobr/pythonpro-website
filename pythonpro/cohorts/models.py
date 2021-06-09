@@ -43,6 +43,7 @@ class LiveClass(models.Model):
     cohort = models.ForeignKey(Cohort, models.CASCADE)
     discourse_topic_id = models.CharField(max_length=11, db_index=False, null=True, default='726')
     description = models.TextField(blank=True, default='Aula Pendente')
+    memberkit_url = models.URLField(max_length=1024, blank=True, default='')
 
     def get_absolute_url(self):
         return reverse('cohorts:live_class', kwargs={'pk': self.id})
@@ -50,15 +51,16 @@ class LiveClass(models.Model):
 
 class Webinar(models.Model):
     cohort = models.ForeignKey(Cohort, on_delete=models.DO_NOTHING)
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=128)
     speaker = models.CharField(max_length=50)
     speaker_title = models.CharField(max_length=50)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, max_length=128)
     vimeo_id = models.CharField(max_length=11, db_index=False, blank=True)
     start = models.DateTimeField()
     discourse_topic_id = models.CharField(max_length=11, db_index=False)
     description = models.TextField()
     image = models.ImageField(upload_to='webinars/', null=True, blank=True)
+    memberkit_url = models.URLField(max_length=1024, blank=True, default='')
 
     def get_absolute_url(self):
         return reverse('cohorts:webinar', kwargs={'slug': self.slug})
