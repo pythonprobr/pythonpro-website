@@ -7,13 +7,13 @@ from django.conf import settings
 from django_pagarme import facade as pagarme_facade
 from django_pagarme.models import PagarmePayment
 
+from pythonpro.cohorts import facade as cohort_facade
 from pythonpro.discourse import facade as discourse_facade
 from pythonpro.discourse.facade import MissingDiscourseAPICredentials
 from pythonpro.email_marketing import facade as email_marketing_facade
 from pythonpro.email_marketing.facade import create_or_update_with_no_role
 from pythonpro.memberkit import facade as memberkit_facade
 from pythonpro.memberkit.models import Subscription
-from pythonpro.cohorts import facade as cohort_facade
 
 _logger = Logger(__file__)
 run_until_available = shared_task(autoretry_for=(JSONDecodeError,), retry_backoff=True, max_retries=None)
@@ -93,7 +93,7 @@ def activate_subscription_on_all_services(subscription: Subscription, responsibl
         subscriber.email,
         None,
         *tags,
-        id=subscription.id,
+        id=subscriber.id,
         phone=phone
     )
     return subscription
