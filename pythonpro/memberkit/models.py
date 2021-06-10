@@ -59,14 +59,14 @@ class Subscription(models.Model):
         tags = []
         for s in self.subscription_types.all():
             tags.extend(s.email_marketing_tags)
-        return [s.email_marketing_tags for s in self.subscription_types.all()]
+        return tags
 
     @property
     def discourse_groups(self):
         groups = []
         for s in self.subscription_types.all():
-            groups.extend(s.email_marketing_tags)
-        return [s.discourse_groups for s in self.subscription_types.all()]
+            groups.extend(s.discourse_groups)
+        return groups
 
     def __str__(self):
         return f'Assinatura: {self.id} de {self.subscriber}'
