@@ -97,7 +97,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
             return '----'
         link = (
             f'<a href="https://plataforma.dev.pro.br/members/{obj.memberkit_user_id}/edit">'
-            f'{obj.subscriber.short_name}</a>'
+            f'{obj.subscriber.first_name}</a>'
         )
         return format_html(link)
 
