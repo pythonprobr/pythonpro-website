@@ -1,5 +1,3 @@
-from itertools import chain
-
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
@@ -58,7 +56,17 @@ class Subscription(models.Model):
 
     @property
     def email_marketing_tags(self):
-        return chain(s.email_marketing_tags for s in self.subscription_types.all())
+        tags = []
+        for s in self.subscription_types.all():
+            tags.extend(s.email_marketing_tags)
+        return [s.email_marketing_tags for s in self.subscription_types.all()]
+
+    @property
+    def discourse_groups(self):
+        groups = []
+        for s in self.subscription_types.all():
+            groups.extend(s.email_marketing_tags)
+        return [s.discourse_groups for s in self.subscription_types.all()]
 
     def __str__(self):
         return f'Assinatura: {self.id} de {self.subscriber}'
