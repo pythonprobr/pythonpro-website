@@ -42,7 +42,7 @@ class Subscription(models.Model):
     status = models.CharField(max_length=1, choices=Status.choices)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    payment = models.OneToOneField('django_pagarme.PagarmePayment', on_delete=models.DO_NOTHING, null=True)
+    payment = models.OneToOneField('django_pagarme.PagarmePayment', on_delete=models.DO_NOTHING, null=True, blank=True)
     subscription_types = models.ManyToManyField(SubscriptionType, related_name='subscriptions')
     subscriber = models.ForeignKey(get_user_model(), on_delete=models.DO_NOTHING, null=True,
                                    related_name='subscriptions')

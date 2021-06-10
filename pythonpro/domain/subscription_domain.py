@@ -83,14 +83,17 @@ def activate_subscription_on_all_services(subscription: Subscription, responsibl
     memberkit_facade.activate(subscription, responsible, observation)
     sync_user_on_discourse(subscription)
     subscriber = subscription.subscriber
+    tags = list(subscription.email_marketing_tags)
+    if subscription.include_on_cohort:
+        cohort_facade.subscribe_to_last_cohort(subscriber)
+        cohort = cohort_facade.find_most_recent_cohort()
+        tags.append(f'turma-{cohort.slug}')
     email_marketing_facade.create_or_update_user.delay(
         subscriber.get_full_name(),
         subscriber.email,
         None,
-        *subscription.email_marketing_tags,
+        *tags,
         id=subscription.id,
         phone=phone
     )
-    if subscription.include_on_cohort:
-        cohort_facade.subscribe_to_last_cohort(subscriber)
     return subscription
