@@ -1,4 +1,4 @@
-from datetime import timedelta
+import datetime
 
 import pytest
 from django.urls import reverse
@@ -23,8 +23,8 @@ def subscribe_to_waiting_list_mock(mocker):
 
 
 begin_and_finish = [
-    facade.launch_datetime_finish + timedelta(seconds=1),  # after finish
-    facade.launch_datetime_begin - timedelta(seconds=1),  # before begin
+    facade.launch_datetime_finish + datetime.timedelta(seconds=1),  # after finish
+    facade.launch_datetime_begin - datetime.timedelta(seconds=1),  # before begin
 ]
 after_and_before_launch = pytest.fixture(params=begin_and_finish)
 
@@ -95,3 +95,13 @@ def test_post_absent_user(dt, client, freezer, subscribe_anonymous_user_to_waiti
     )
     subscribe_anonymous_user_to_waiting_list_mock.assert_called_once_with(
         None, 'jhon@email.com', 'Jhon', '+5512999999999', 'google')
+
+
+def test_year_in_footer_on_register_page(resp):
+    """ Test the current year that is in the footer
+
+    Args:
+        resp (fixture): Give access to endpoint 'checkout:bootcamp_lp'
+    """
+    year = datetime.datetime.now().year
+    dj_assert_contains(resp, f'Python Pro. { year } Todos os direitos reservados.')
