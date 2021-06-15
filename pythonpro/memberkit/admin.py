@@ -67,9 +67,10 @@ class PaymentListFilter(admin.SimpleListFilter):
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
     fields = ['payment', 'subscriber', 'subscription_types', 'observation']
-    list_display = ['subscriber', 'pagarme_url_field', 'memberkit_user_url_field', 'responsible', 'status',
-                    'created_at', 'updated_at',
-                    'activated_at']
+    list_display = [
+        'id', 'subscriber', 'pagarme_url_field', 'memberkit_user_url_field', 'responsible', 'status',
+        'created_at', 'updated_at', 'activated_at'
+    ]
     autocomplete_fields = ['subscriber']
     search_fields = ['subscriber__email', 'payment__transaction_id']
     list_filter = ['status', PaymentListFilter, 'subscription_types']
@@ -82,11 +83,15 @@ class SubscriptionAdmin(admin.ModelAdmin):
 
     def pagarme_url_field(self, obj):
         if obj.payment is None:
-            return '----'
-        link = (
-            f'<a href="https://beta.dashboard.pagar.me/#/transactions/'
-            f'{obj.payment.transaction_id}">{obj.payment.transaction_id}</a>'
-        )
+            link = (
+                f'<a href="https://beta.dashboard.pagar.me/#/transactions?search='
+                f'{obj.subscriber.email}" target="_blank">Buscar</a>'
+            )
+        else:
+            link = (
+                f'<a href="https://beta.dashboard.pagar.me/#/transactions/'
+                f'{obj.payment.transaction_id}" target="_blank">{obj.payment.transaction_id}</a>'
+            )
         return format_html(link)
 
     pagarme_url_field.allow_tags = True
