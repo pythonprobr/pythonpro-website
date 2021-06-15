@@ -152,8 +152,6 @@ def test_pagarme_payment_waiting_payment_boleto(mock_subscription_creation, db, 
     [
         facade.PROCESSING,
         facade.AUTHORIZED,
-        facade.REFUNDED,
-        facade.PENDING_REFUND,
     ]
 )
 def test_pagarme_payment_with_item_but_do_nothing_status(db, tag_as_mock, remove_tags_mock, promote_user_mock, status):
@@ -164,6 +162,37 @@ def test_pagarme_payment_with_item_but_do_nothing_status(db, tag_as_mock, remove
     assert tag_as_mock.called is False
     assert remove_tags_mock.called is False
     assert promote_user_mock.called is False
+
+
+@pytest.fixture
+def inactivate_subscription_on_all_services(mocker):
+    return mocker.patch(
+        'pythonpro.domain.checkout_domain.subscription_domain.inactivate_subscription_on_all_services')
+
+
+@pytest.mark.parametrize(
+    'status',
+    [
+        facade.REFUNDED,
+        facade.PENDING_REFUND,
+    ]
+)
+def test_pagarme_subscription_inactivation(
+        db, tag_as_mock, remove_tags_mock, promote_user_mock, status, inactivate_subscription_on_all_services):
+    payment = baker.make(PagarmePayment)
+    baker.make(PagarmeNotification, status=status, payment=payment)
+    config = baker.make(PagarmeItemConfig, payments=[payment])
+    subscription_type = baker.make(SubscriptionType)
+    subscription = baker.make(Subscription, payment=payment)
+    subscription.subscription_types.add(subscription_type)
+    PaymentItemConfigToSubscriptionType.objects.create(payment_item=config, subscription_type=subscription_type)
+
+    checkout_domain.payment_handler_task(payment.id)
+
+    assert tag_as_mock.called is False
+    assert remove_tags_mock.called is False
+    assert promote_user_mock.called is False
+    inactivate_subscription_on_all_services.assert_called_once_with(subscription)
 
 
 @pytest.mark.parametrize(

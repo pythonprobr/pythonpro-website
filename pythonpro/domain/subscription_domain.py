@@ -28,7 +28,7 @@ def subscribe_with_no_role(session_id, name: str, email: str, *tags, id='0', pho
 def sync_user_on_discourse(subscription: Subscription):
     """
     Synchronize user data on forum if API is configured
-    :param user_or_id: Django user or his id
+    :param subscription
     :return: returns result of hitting Discourse api
     """
     can_make_api_call = bool(settings.DISCOURSE_API_KEY and settings.DISCOURSE_API_USER)
@@ -46,6 +46,74 @@ def sync_user_on_discourse(subscription: Subscription):
         'external_id': subscriber.id,
         'require_actisubscription.discourse_groups': 'false',
         'groups': ','.join(subscription.discourse_groups)
+    }
+    sso_payload, signature = discourse_facade.generate_sso_payload_and_signature(params)
+    # query_string = parse.urlencode()
+    url = f'{settings.DISCOURSE_BASE_URL}/admin/users/sync_sso'
+    headers = {
+        'content-type': 'multipart/form-data',
+        'Api-Key': settings.DISCOURSE_API_KEY,
+        'Api-Username': settings.DISCOURSE_API_USER,
+    }
+
+    requests.post(url, data={'sso': sso_payload, 'sig': signature}, headers=headers)
+
+
+def remove_from_discourse(subscription: Subscription):
+    """
+    Synchronize user data on forum if API is configured
+    :param subscription
+    :return: returns result of hitting Discourse api
+    """
+    can_make_api_call = bool(settings.DISCOURSE_API_KEY and settings.DISCOURSE_API_USER)
+    can_work_without_sync = not (settings.DISCOURSE_BASE_URL or can_make_api_call)
+    if can_work_without_sync:
+        _logger.info('Discourse Integration not available')
+        return
+    elif not can_make_api_call:
+        raise MissingDiscourseAPICredentials('Must define both DISCOURSE_API_KEY and DISCOURSE_API_USER configs')
+
+    # https://meta.discourse.org/t/sync-sso-user-data-with-the-sync-sso-route/84398
+    subscriber = subscription.subscriber
+    params = {
+        'email': subscriber.email,
+        'external_id': subscriber.id,
+        'require_actisubscription.discourse_groups': 'false',
+        'remove_groups': ','.join(subscription.discourse_groups)
+    }
+    sso_payload, signature = discourse_facade.generate_sso_payload_and_signature(params)
+    # query_string = parse.urlencode()
+    url = f'{settings.DISCOURSE_BASE_URL}/admin/users/sync_sso'
+    headers = {
+        'content-type': 'multipart/form-data',
+        'Api-Key': settings.DISCOURSE_API_KEY,
+        'Api-Username': settings.DISCOURSE_API_USER,
+    }
+
+    requests.post(url, data={'sso': sso_payload, 'sig': signature}, headers=headers)
+
+
+def remove_user_from_discourse(subscription: Subscription):
+    """
+    Synchronize user data on forum if API is configured
+    :param user_or_id: Django user or his id
+    :return: returns result of hitting Discourse api
+    """
+    can_make_api_call = bool(settings.DISCOURSE_API_KEY and settings.DISCOURSE_API_USER)
+    can_work_without_sync = not (settings.DISCOURSE_BASE_URL or can_make_api_call)
+    if can_work_without_sync:
+        _logger.info('Discourse Integration not available')
+        return
+    elif not can_make_api_call:
+        raise MissingDiscourseAPICredentials('Must define both DISCOURSE_API_KEY and DISCOURSE_API_USER configs')
+
+    # https://meta.discourse.org/t/sync-sso-user-data-with-the-sync-sso-route/84398
+    subscriber = subscription.subscriber
+    params = {
+        'email': subscriber.email,
+        'external_id': subscriber.id,
+        'require_actisubscription.discourse_groups': 'false',
+        'remove_groups': ','.join(subscription.discourse_groups)
     }
     sso_payload, signature = discourse_facade.generate_sso_payload_and_signature(params)
     # query_string = parse.urlencode()
@@ -97,3 +165,26 @@ def activate_subscription_on_all_services(subscription: Subscription, responsibl
         phone=phone
     )
     return subscription
+
+
+def inactivate_subscription_on_all_services(subscription: Subscription, responsible=None,
+                                            observation='') -> Subscription:
+    """
+    Inactivate user account on Memberkit, Active Campaign and Discourse
+    :param subscription:
+    :return:
+    """
+    remove_user_from_discourse(subscription)
+    memberkit_facade.inactivate(subscription, responsible, observation)
+    subscriber = subscription.subscriber
+    tags = list(subscription.email_marketing_tags)
+    email_marketing_facade.remove_tags.delay(
+        subscriber.email,
+        subscriber.id,
+        *tags
+    )
+    return subscription
+
+
+def inactivate_payment_subscription(payment: PagarmePayment):
+    inactivate_subscription_on_all_services(payment.subscription)

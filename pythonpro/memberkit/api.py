@@ -49,8 +49,8 @@ def list_membership_levels(*, api_key=_ApiKeyNone):
 
 
 @_configure_api_key
-def user_detail(email, *, api_key=_ApiKeyNone):
-    response = requests.get(f'{_base_url}/api/v1/users/{email}?api_key={api_key}')
+def user_detail(email_or_memberkit_user_id, *, api_key=_ApiKeyNone):
+    response = requests.get(f'{_base_url}/api/v1/users/{email_or_memberkit_user_id}?api_key={api_key}')
     return response.json()
 
 
@@ -70,3 +70,20 @@ def activate_user(full_name: str, email: str, subscription_type_id: int, expires
     }
     requests.post(f'{_base_url}/api/v1/users?api_key={api_key}', json=data)
     return user_detail(email)
+
+
+@_configure_api_key
+def inactivate_user(memberkit_user_id: int, subscription_type_id: int, *,
+                    api_key=_ApiKeyNone):
+    user_json = user_detail(memberkit_user_id, api_key=api_key)
+    data = {
+        'full_name': user_json['full_name'],
+        'email': user_json['email'],
+        'status': 'expired',
+        'blocked': False,
+        'membership_level_id': subscription_type_id,
+        'unlimited': False,
+        'expires_at': date.today().strftime('%d/%m/%Y'),
+    }
+    response = requests.post(f'{_base_url}/api/v1/users?api_key={api_key}', json=data)
+    return response.json()
