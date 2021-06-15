@@ -917,11 +917,10 @@
         },
         "humanize": {
             "hashes": [
-                "sha256:5eaafcd584fd01ab9a59f040e20b3daa35a24e8125d4c84788392d799be2012a",
-                "sha256:8b1463a17bf722c06712ac9d31f7e46efd048dd4e76fafeac9f3b8f972b0b8e3"
+                "sha256:2cc4f7d2f5994ea9fcddd4b681ddea9abd23baa8cc64bd0af041a0162636f31c",
+                "sha256:892a5b7b87763c4c6997a58382c2b1f4614048a2e01c23ef1bb0456e6f9d4d5d"
             ],
-            "markers": "python_version >= '3.6'",
-            "version": "==3.7.0"
+            "version": "==3.9.0"
         },
         "idna": {
             "hashes": [
