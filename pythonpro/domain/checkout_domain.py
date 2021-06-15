@@ -72,6 +72,8 @@ def payment_handler_task(payment_id):
             user = payment.user
             email_marketing_facade.tag_as.delay(user.email, user.id, f'{slug}-boleto')
             send_purchase_notification.delay(payment.id)
+        elif status in {django_pagarme_facade.REFUNDED, django_pagarme_facade.PENDING_REFUND}:
+            subscription_domain.inactivate_payment_subscription(payment)
 
 
 def _promote(user, slug: str):

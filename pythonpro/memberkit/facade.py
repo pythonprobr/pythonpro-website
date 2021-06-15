@@ -48,3 +48,20 @@ def activate(subscription, responsible=None, observation=''):
         subscription.responsible = responsible
     subscription.save()
     return subscription
+
+
+def inactivate(subscription, responsible=None, observation=''):
+    for subscription_type in subscription.subscription_types.all().only('id'):
+        api.inactivate_user(subscription.memberkit_user_id, subscription_type.id)
+    subscription.status = Subscription.Status.INACTIVE
+    subscription.activated_at = None
+    if responsible is not None:
+        subscription.responsible = responsible
+    if subscription.observation:
+        subscription.observation += f'\n\n {observation}'
+    else:
+        subscription.observation = observation
+    subscription.save(update_fields=[
+        'status', 'activated_at', 'responsible', 'observation'
+    ])
+    return subscription

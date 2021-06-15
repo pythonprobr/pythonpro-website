@@ -1,3 +1,5 @@
+from time import strftime
+
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path
@@ -76,7 +78,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
     list_filter = ['status', PaymentListFilter, 'subscription_types']
     ordering = ['-updated_at']
     readonly_fields = ['activated_at', 'memberkit_user_id']
-    actions = ['activate']
+    actions = ['activate', 'inactivate']
 
     def get_queryset(self, request):
         return Subscription.objects.select_related('payment').select_related('subscriber').select_related('responsible')
@@ -119,6 +121,18 @@ class SubscriptionAdmin(admin.ModelAdmin):
             )
 
     activate.short_descriptions = 'Ativar'
+
+    def inactivate(self, request, queryset):
+        responsible = request.user
+        strftime('d%/%m/%Y H%:%M:%S')
+        for subscription in queryset:
+            subscription_domain.inactivate_subscription_on_all_services(
+                subscription,
+                responsible,
+                f'Desativada em via admin por Usuário com id {responsible.id} e email {responsible.email}'
+            )
+
+    inactivate.short_descriptions = 'Desativar'
 
     def has_delete_permission(self, request, obj=None):
         return False
