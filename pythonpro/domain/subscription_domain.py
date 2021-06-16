@@ -45,7 +45,7 @@ def sync_user_on_discourse(subscription: Subscription):
         'email': subscriber.email,
         'external_id': subscriber.id,
         'require_activation': 'false',
-        'add_groups': ','.join(subscription.discourse_groups)
+        'groups': ','.join(subscription.discourse_groups)
     }
     sso_payload, signature = discourse_facade.generate_sso_payload_and_signature(params)
     # query_string = parse.urlencode()
