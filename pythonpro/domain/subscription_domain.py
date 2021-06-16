@@ -131,9 +131,11 @@ def create_subscription_and_activate_services(payment: PagarmePayment) -> Subscr
     subscription = memberkit_facade.create_new_subscription(payment, 'Criação como resposta de pagamento no Pagarme')
     phone = None
     try:
-        phone = pagarme_facade.get_user_payment_profile(subscription.subscriber)
+        phone = pagarme_facade.get_user_payment_profile(subscription.subscriber).phone
     except pagarme_facade.UserPaymentProfileDoesNotExist:
         phone = None
+    if phone:
+        phone = str(phone)
     return activate_subscription_on_all_services(
         subscription,
         observation='Ativados serviços no Memberkit, Discourse e Active Campaign',
