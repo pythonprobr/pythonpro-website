@@ -44,8 +44,8 @@ def sync_user_on_discourse(subscription: Subscription):
     params = {
         'email': subscriber.email,
         'external_id': subscriber.id,
-        'require_actisubscription.discourse_groups': 'false',
-        'groups': ','.join(subscription.discourse_groups)
+        'require_activation': 'false',
+        'add_groups': ','.join(subscription.discourse_groups)
     }
     sso_payload, signature = discourse_facade.generate_sso_payload_and_signature(params)
     # query_string = parse.urlencode()
@@ -78,7 +78,7 @@ def remove_from_discourse(subscription: Subscription):
     params = {
         'email': subscriber.email,
         'external_id': subscriber.id,
-        'require_actisubscription.discourse_groups': 'false',
+        'require_activation': 'false',
         'remove_groups': ','.join(subscription.discourse_groups)
     }
     sso_payload, signature = discourse_facade.generate_sso_payload_and_signature(params)

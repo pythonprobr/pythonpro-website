@@ -87,3 +87,11 @@ def inactivate_user(memberkit_user_id: int, subscription_type_id: int, *,
     }
     response = requests.post(f'{_base_url}/api/v1/users?api_key={api_key}', json=data)
     return response.json()
+
+
+@_configure_api_key
+def generate_token(memberkit_user_id: int, *, api_key=_ApiKeyNone):
+    user_json = user_detail(memberkit_user_id, api_key=api_key)
+    data = {'email': user_json['email']}
+    response = requests.post(f'{_base_url}/api/v1/tokens?api_key={api_key}', json=data)
+    return response.json()['token']
