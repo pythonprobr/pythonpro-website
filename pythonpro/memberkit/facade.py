@@ -1,3 +1,4 @@
+from builtins import Exception
 from typing import List
 
 from django.utils import timezone
@@ -65,3 +66,17 @@ def inactivate(subscription, responsible=None, observation=''):
         'status', 'activated_at', 'responsible', 'observation'
     ])
     return subscription
+
+
+class InactiveUserException(Exception):
+    pass
+
+
+def create_login_url(user):
+    subscription = Subscription.objects.filter(
+        subscriber=user, status=Subscription.Status.ACTIVE
+    ).exclude(activated_at__isnull=True).only('memberkit_user_id').first()
+    if not subscription:
+        raise InactiveUserException(str(user))
+    token = api.generate_token(subscription.memberkit_user_id)
+    return f'https://plataforma.dev.pro.br?token={token}'
