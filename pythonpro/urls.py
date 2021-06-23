@@ -26,7 +26,7 @@ from django.views.generic.base import RedirectView
 from two_factor.urls import urlpatterns as tf_urls
 
 from pythonpro.core import views as core_views
-from pythonpro.memberkit.views import login_on_memberkit
+from pythonpro.memberkit.views import migrate_to_memberkit
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -50,7 +50,7 @@ urlpatterns = [
     path('r/', include('pythonpro.redirector.urls')),
     path('p/', include('pythonpro.pages.urls')),
     path('checkout/', include('django_pagarme.urls')),
-    path('memberkit/', login_on_memberkit),
+    path('memberkit', migrate_to_memberkit, name='migrate_to_memberkit'),
 
     # unused pages
     path(

@@ -1,0 +1,20 @@
+{% extends 'core/base_without_nav.html' %}
+{% load static %}
+
+{% block title %}Migração para nova plataforma{% endblock %}
+
+{% block body %}
+    <div class="container mb-5 mt-5">
+        <div class="row">
+            <div class="col-8">
+                <h1 class="mt-2">Migração com problemas</h1>
+                <h2></h2>
+                <p>Olá {{ request.user.first_name }}.</p>
+                <p>Infelizmente a sua migração não aconteceu automaticamente.</p>
+                <p>Um email já foi enviado para resolvermos. Mas você pode adiantar o processo entrando em contato com o
+                    <a href="t.me/renzoprobr">Renzo no Telegram</a> e avisando que isso aconteceu. Informe seu email na
+                    mensagem: {{ request.user.email }}.</p>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
