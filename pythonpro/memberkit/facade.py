@@ -80,3 +80,11 @@ def create_login_url(user):
         raise InactiveUserException(str(user))
     token = api.generate_token(subscription.memberkit_user_id)
     return f'https://plataforma.dev.pro.br?token={token}'
+
+
+def migrate_when_status_active(user):
+    status_active_but_not_activated = Subscription.objects.filter(
+        subscriber=user, status=Subscription.Status.ACTIVE
+    ).exclude(activated_at__isnull=False)
+    for subscription in status_active_but_not_activated:
+        activate(subscription, observation='Migrado automaticamente da plataforma antiga para nova')
