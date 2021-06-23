@@ -462,17 +462,16 @@
         },
         "newrelic": {
             "hashes": [
-                "sha256:57016c20306804025af2d19a22d64e279c06e8cf5dd8862f599581ea04b1dac1",
-                "sha256:7b50a05f555936622b805c3cdb3cae62f6f3631ff5128c63dfc9834e21281bb3",
-                "sha256:82a772b61395b4546788796612307c2ef6f7d44dad68c6d1a712cbb060288185",
-                "sha256:82c69d6791e85773d0e267eb77f7f96e47487e2c8206a736fc54dfbe5de0d652",
-                "sha256:8878564de69846f0f2ddc61f6926446ec1a31eabf1ce91dbf432f2b0064cb92a",
-                "sha256:93b14f0696743cd7da4664cafc241a27fe9d87faffa89b29ac5ba2962aa3738c",
-                "sha256:b649010775d4e796761442b4430e7bb5161c4657e0ba01f072df772596a0d4c6",
-                "sha256:f79af35c23f71911de5a12d9b8455fa0e0c2825f5b1ef878398bb0c4e574896f"
+                "sha256:031da3850cd3b980573e84a91d76a0e72e3da331e20f31e744d49b1a644262b5",
+                "sha256:4582053dabeb369c4fedb6ba68fdb19b57a2d460a7df96e5b43a4440045376fc",
+                "sha256:4cdc205e39c7ba7227f4c7b7705bef2a4b1dcdf4b37a77595b9a536c0fca2a6a",
+                "sha256:904035d4ec3d24a32fda913923fa30356c7b15c15542e12f4e7d2d85a73f5ccd",
+                "sha256:95d9ee7caa97596c71a09afc522b4aeadef1038ffdf195ba309e7c9a69e0a3e0",
+                "sha256:99ad828de42eac17a301473fd5e1fe1cf1c2fe28c585fb21138a7cbd54d7f7f1",
+                "sha256:9c00c95f94796b99038b63956d0e7482f161d546ce183b7e717191577e68c837",
+                "sha256:c92a6b5f15ed901d002cc4f339546a509838e424843f6d67c0e3aac48c54efc2"
             ],
-            "index": "pypi",
-            "version": "==6.4.0.157"
+            "version": "==6.4.3.160"
         },
         "pagarme-python": {
             "editable": true,
