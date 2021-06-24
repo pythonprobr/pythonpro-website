@@ -62,7 +62,6 @@ def payment_handler_task(payment_id):
                 email_marketing_facade.remove_tags.delay(user.email, user.id, f'{slug}-boleto', f'{slug}-refused')
             else:
                 email_marketing_facade.remove_tags.delay(user.email, user.id, f'{slug}-refused')
-            _promote(user, slug)
             send_purchase_notification.delay(payment.id)
         elif status == django_pagarme_facade.REFUSED:
             user = payment.user
@@ -74,26 +73,6 @@ def payment_handler_task(payment_id):
             send_purchase_notification.delay(payment.id)
         elif status in {django_pagarme_facade.REFUNDED, django_pagarme_facade.PENDING_REFUND}:
             subscription_domain.inactivate_payment_subscription(payment)
-
-
-def _promote(user, slug: str):
-    if slug.startswith('membership'):
-        user_domain.promote_member(user, 'unknown')
-    elif slug == 'pacote-proximo-nivel-67-discount':
-        user_domain.promote_pythonista(user, 'unknown')
-    elif slug.startswith('webdev') or slug.startswith('treinamento-devpro'):
-        user_domain.promote_webdev(user, 'unknown')
-    elif slug.startswith('data-science'):
-        user_domain.promote_data_scientist(user, 'unknown')
-    elif slug in {'bootcamp', 'bootcamp-webdev'}:
-        user_domain.promote_bootcamper(user, 'unknown')
-        user_domain.promote_pythonista(user, 'unknown')
-    elif slug.startswith('bootcamp'):
-        user_domain.promote_bootcamper(user, 'unknown')
-    elif slug == 'aps':
-        pass  # no action required
-    else:
-        raise ValueError(f'{slug} should contain webdev or membership or data-science')
 
 
 def payment_change_handler(payment_id):
