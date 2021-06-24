@@ -5,6 +5,7 @@ from rolepermissions.checkers import has_permission
 
 from pythonpro.cohorts import facade
 from pythonpro.core.roles import access_cohorts
+from pythonpro.memberkit import facade as memberkit_facade
 
 
 @login_required
@@ -19,9 +20,13 @@ def webinars(request):
 
 @login_required
 def webinar(request, slug):
-    if not has_permission(request.user, access_cohorts):
-        return redirect(reverse('checkout:bootcamp_lp'), permanent=False)
-    return render(request, 'cohorts/webinar_detail.html', {'webinar': facade.find_webinar(slug=slug)})
+    user = request.user
+    if memberkit_facade.has_memberkit_account(user):
+        webinar = facade.find_webinar(slug=slug)
+        return redirect(webinar.memberkit_url, permanent=True)
+    if memberkit_facade.has_any_subscription(user):
+        return redirect(reverse('migrate_to_memberkit'), permanent=True)
+    return redirect(reverse('checkout:bootcamp_lp'), permanent=False)
 
 
 @login_required
