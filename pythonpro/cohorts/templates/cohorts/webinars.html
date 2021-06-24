@@ -15,8 +15,7 @@
 
                 {% for webinar in webinars %}
 
-                    <h2 class="mt-4 mb-3"><a href="{{ webinar.get_absolute_url }}"
-                                             target="_blank">{{ webinar.title }}</a></h2>
+                    <h2 class="mt-4 mb-3"><a href="{{ webinar.get_absolute_url }}">{{ webinar.title }}</a></h2>
                     <img src="{{ webinar.image.url }}" class="rounded float-left mr-3"
                          alt="Foto de {{ webinar.speaker }}"
                          width="200px" height="200px">
