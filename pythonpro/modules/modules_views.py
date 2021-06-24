@@ -18,7 +18,7 @@ def index(request):
     modules = add_modules_purchase_link(modules)
 
     for module in modules:
-        module.has_access = True if has_object_permission('access_content', request.user, module) else False
+        module.has_access = has_object_permission('access_content', request.user, module)
 
     return render(request, 'modules/module_index.html', context={'modules': modules})
 

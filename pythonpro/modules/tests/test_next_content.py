@@ -8,7 +8,7 @@ from pythonpro.modules.models import Chapter, Module, Section, Topic
 
 @pytest.fixture
 def module(db):
-    return baker.make(Module)
+    return baker.make(Module, slug='python-birds')
 
 
 @pytest.fixture
