@@ -1,10 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from rolepermissions.checkers import has_permission
 
 from pythonpro.cohorts import facade
-from pythonpro.core.roles import access_cohorts
 from pythonpro.memberkit import facade as memberkit_facade
 
 
@@ -31,6 +29,10 @@ def webinar(request, slug):
 
 @login_required
 def live_class(request, pk):
-    if not has_permission(request.user, access_cohorts):
-        return redirect(reverse('checkout:bootcamp_lp'), permanent=False)
-    return render(request, 'cohorts/live_class_detail.html', {'live_class': facade.find_live_class(pk=pk)})
+    user = request.user
+    if memberkit_facade.has_memberkit_account(user):
+        live_class = facade.find_live_class(pk=pk)
+        return redirect(live_class.memberkit_url, permanent=True)
+    if memberkit_facade.has_any_subscription(user):
+        return redirect(reverse('migrate_to_memberkit'), permanent=True)
+    return redirect(reverse('checkout:bootcamp_lp'), permanent=False)

@@ -5,8 +5,8 @@ from django.urls import reverse
 from django.utils import timezone
 from model_bakery import baker
 
-from pythonpro.cohorts.models import Cohort, LiveClass
-from pythonpro.django_assertions import dj_assert_contains, dj_assert_not_contains
+from pythonpro.cohorts.models import LiveClass
+from pythonpro.memberkit.models import Subscription
 
 
 @pytest.fixture
@@ -17,17 +17,19 @@ def live_class(db, cohort, fake) -> LiveClass:
         cohort=cohort,
         vimeo_id='1212',
         start=now + timedelta(days=1),
-        description=fake.paragraph(nb_sentences=3, variable_nb_sentences=True, ext_word_list=None)
+        description=fake.paragraph(nb_sentences=3, variable_nb_sentences=True, ext_word_list=None),
+        memberkit_url='https://plataforma.dev.pro.br'
     )
 
 
 @pytest.fixture
-def resp(client_with_level_three_roles, live_class: LiveClass):
-    return client_with_level_three_roles.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
+def resp(client_with_user, live_class: LiveClass):
+    return client_with_user.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
 
 
 def test_logged_user(resp):
-    assert resp.status_code == 200
+    assert resp.status_code == 302
+    assert resp.url == reverse('checkout:bootcamp_lp')
 
 
 def test_link_unavailable_for_non_users(client):
@@ -35,50 +37,26 @@ def test_link_unavailable_for_non_users(client):
     assert resp.status_code == 302
 
 
-@pytest.mark.parametrize('property_name', 'description vimeo_id discourse_topic_id'.split())
-def test_basic_contents(resp, live_class, property_name):
-    dj_assert_contains(resp, getattr(live_class, property_name))
-
-
-def test_cohort_title(cohort, resp):
-    dj_assert_contains(resp, cohort.title)
-
-
-@pytest.fixture
-def resp_video_not_recorded(client_with_level_three_roles, live_class: LiveClass):
-    live_class.vimeo_id = ''
-    live_class.save()
-    return client_with_level_three_roles.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
-
-
-def test_pending_live_class_msg(resp_video_not_recorded):
-    dj_assert_contains(
-        resp_video_not_recorded,
-        'Ainda não temos máquina do tempo, essa aula ainda não foi gravada'
+def test_redirect_user_not_migrated_to_memberkit(client_with_user, live_class, logged_user):
+    baker.make(
+        Subscription,
+        subscriber=logged_user,
+        activated_at=None,
+        memberkit_user_id=None
     )
+    resp = client_with_user.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
+    assert resp.status_code == 301
+    assert resp.url == reverse('migrate_to_memberkit')
 
-    dj_assert_contains(
-        resp_video_not_recorded,
-        'Retornar à página da turma'
+
+def test_redirect_user_migrated_to_memberkit(client_with_user, live_class, logged_user):
+    baker.make(
+        Subscription,
+        status=Subscription.Status.ACTIVE,
+        subscriber=logged_user,
+        activated_at=timezone.now(),
+        memberkit_user_id=1
     )
-
-
-def test_vimeo_player_not_present(resp_video_not_recorded):
-    dj_assert_not_contains(
-        resp_video_not_recorded,
-        'src="https://player.vimeo.com/video/"'
-    )
-
-
-def test_cohort_url(cohort: Cohort, resp):
-    dj_assert_contains(resp, cohort.get_absolute_url())
-
-
-@pytest.fixture
-def resp_not_level_three(client_with_not_level_three_roles, live_class: LiveClass, logged_user):
-    return client_with_not_level_three_roles.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
-
-
-def test_live_class_landing_for_not_level_three_users(cohort, resp_not_level_three):
-    assert resp_not_level_three.status_code == 302
-    assert resp_not_level_three.url == reverse('checkout:bootcamp_lp')
+    resp = client_with_user.get(reverse('cohorts:live_class', kwargs={'pk': live_class.id}))
+    assert resp.status_code == 301
+    assert resp.url == live_class.memberkit_url
