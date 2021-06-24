@@ -5,7 +5,6 @@ import responses
 from django.urls import reverse
 from django_pagarme import facade as django_pagarme_facade
 
-from pythonpro.core import facade as core_facade
 from pythonpro.domain import checkout_domain
 from pythonpro.email_marketing import facade as email_marketing_facade
 
@@ -125,58 +124,6 @@ def test_user_is_created(resp, django_user_model):
     assert User.objects.exists()
 
 
-def test_user_is_promoted(resp, django_user_model, active_product_item):
-    User = django_user_model
-    user = User.objects.first()
-    slug = active_product_item.slug
-    assert_user_promoted(user, slug)
-
-
-def assert_user_promoted(user, slug):
-    if slug.startswith('membership'):
-        assert core_facade.is_member(user)
-    elif slug.startswith('webdev') or slug.startswith('treinamento-devpro'):
-        assert core_facade.is_webdev(user)
-    elif slug.startswith('data-science'):
-        assert core_facade.is_data_scientist(user)
-    elif slug in {'bootcamp', 'bootcamp-webdev'}:
-        assert core_facade.is_bootcamper(user)
-        assert core_facade.is_pythonista(user)  # bonus because of full paid price
-    elif slug.startswith('bootcamp'):
-        assert core_facade.is_bootcamper(user)
-    elif slug == 'pacote-proximo-nivel-67-discount':
-        assert core_facade.is_pythonista(user)
-    elif slug == 'aps':
-        pass  # no promotion required
-    else:
-        pytest.fail(f'Invalid slug prefix {slug}')
-
-
-def test_user_is_subscribed_to_cohort(resp, django_user_model, cohort, active_product_item):
-    User = django_user_model
-    user = User.objects.first()
-    slug = active_product_item.slug
-    assert_subscribed_to_cohort(cohort, slug, user)
-
-
-def assert_subscribed_to_cohort(cohort, slug, user):
-    if not (slug.startswith('webdev') or slug.startswith('treinamento-devpro') or slug.startswith(
-            'data-science') or slug == 'pacote-proximo-nivel-67-discount' or slug == 'aps'):
-        assert cohort.students.first() == user
-
-
-def test_user_synced_on_discourse(resp, django_user_model, sync_on_discourse_mock, active_product_item, mocker):
-    User = django_user_model
-    user = User.objects.first()
-    if active_product_item.slug in {'bootcamp', 'bootcamp-webdev'}:
-        user_sync_call = mocker.call(user.id)
-        assert sync_on_discourse_mock.mock_calls == [user_sync_call, user_sync_call]
-    elif active_product_item.slug == 'aps':
-        assert sync_on_discourse_mock.call_count == 0
-    else:
-        sync_on_discourse_mock.assert_called_once_with(user.id)
-
-
 def test_payment_linked_with_created_user(resp, django_user_model):
     User = django_user_model
     user = User.objects.first()
@@ -206,28 +153,9 @@ def resp_logged_user(client_with_user, pagarme_responses, payment_handler_task_m
     )
 
 
-def test_logged_user_become_member(resp_logged_user, logged_user, active_product_item):
-    assert_user_promoted(logged_user, active_product_item.slug)
-
-
 def test_payment_linked_with_logged_user(resp_logged_user, logged_user):
     payment = django_pagarme_facade.find_payment_by_transaction(TRANSACTION_ID)
     assert logged_user == payment.user
-
-
-def test_logged_user_is_subscribed_to_cohort(resp_logged_user, logged_user, cohort, active_product_item):
-    assert_subscribed_to_cohort(cohort, active_product_item.slug, logged_user)
-
-
-def test_logged_user_is_synced_on_discourse(resp_logged_user, logged_user, sync_on_discourse_mock, active_product_item,
-                                            mocker):
-    if active_product_item.slug in {'bootcamp', 'bootcamp-webdev'}:
-        user_sync_call = mocker.call(logged_user.id)
-        assert sync_on_discourse_mock.mock_calls == [user_sync_call, user_sync_call]
-    elif active_product_item.slug == 'aps':
-        assert sync_on_discourse_mock.call_count == 0
-    else:
-        sync_on_discourse_mock.assert_called_once_with(logged_user.id)
 
 
 @pytest.fixture

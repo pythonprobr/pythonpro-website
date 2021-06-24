@@ -149,12 +149,10 @@ def test_payment_tag_removed_after_payment(resp_logged_user, active_product_item
                                            tag_as_mock, mocker):
     payment = django_pagarme_facade.find_payment_by_transaction(TRANSACTION_ID)
     baker.make(django_pagarme_facade.PagarmeNotification, status=django_pagarme_facade.PAID, payment=payment)
-    promote_mock = mocker.patch('pythonpro.domain.checkout_domain._promote')
     checkout_domain.payment_handler_task(payment.id)
     remove_tags_mock.assert_called_once_with(
         logged_user.email, logged_user.id, f'{active_product_item.slug}-boleto', f'{active_product_item.slug}-refused'
     )
-    promote_mock.assert_called_once_with(logged_user, payment.first_item_slug())
 
 
 @pytest.fixture
