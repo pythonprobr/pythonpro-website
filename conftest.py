@@ -70,12 +70,6 @@ def not_advanced_role(logged_user, request):
     return logged_user
 
 
-@pytest.fixture
-def client_with_not_advanced_roles(client, not_advanced_role):
-    client.force_login(not_advanced_role)
-    return client
-
-
 @pytest.fixture(params=_level_one_roles)
 @pytest.mark.django_db
 def level_one_role(logged_user, request):

@@ -111,6 +111,15 @@ def get_topic_with_contents(slug):
         'chapter__section__module').get()
 
 
+def get_topic_memberkit_url(slug):
+    """
+    Search for a topic respective to slug with it's module, section and chapter
+    :param slug: topic's slug
+    :return: Topic
+    """
+    return _Topic.objects.only('memberkit_url').get(slug=slug).memberkit_url
+
+
 def get_topic_with_contents_by_id(id: int) -> _Topic:
     """
     Search for a topic respective to slug with it's module, section and chapter
@@ -180,19 +189,9 @@ def add_modules_purchase_link(modules):
     :param modules - a list of modules
     :return modules - a list of modules with a purchase link
     """
-    purchase_links = {
-        'python-birds': reverse('core:lead_landing'),
-        'pytools': reverse('checkout:webdev_landing_page'),
-        'django': reverse('checkout:webdev_landing_page'),
-        'entrevistas-tecnicas': reverse('checkout:webdev_landing_page'),
-        'objetos-pythonicos': reverse('checkout:bootcamp_lp'),
-        'python-para-pythonistas': reverse('checkout:bootcamp_lp'),
-        'python-patterns': reverse('checkout:bootcamp_lp'),
-
-    }
-
+    link = reverse('checkout:bootcamp_lp')
     for module in modules:
-        module.purchase_link = purchase_links[module.slug]
+        module.purchase_link = link
 
     return modules
 

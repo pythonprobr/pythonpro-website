@@ -72,6 +72,16 @@ class InactiveUserException(Exception):
     pass
 
 
+def has_memberkit_account(user):
+    return Subscription.objects.filter(
+        subscriber=user, status=Subscription.Status.ACTIVE
+    ).exclude(activated_at__isnull=True).exists()
+
+
+def has_any_subscription(user):
+    return Subscription.objects.filter(subscriber=user).exists()
+
+
 def create_login_url(user):
     subscription = Subscription.objects.filter(
         subscriber=user, status=Subscription.Status.ACTIVE
