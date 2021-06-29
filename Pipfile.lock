@@ -640,10 +640,9 @@
         },
         "qrcode": {
             "hashes": [
-                "sha256:3996ee560fc39532910603704c82980ff6d4d5d629f9c3f25f34174ce8606cf5",
-                "sha256:505253854f607f2abf4d16092c61d4e9d511a3b4392e60bff957a68592b04369"
+                "sha256:963046df808fbcc9f28200108ce235128921af225302145238981913705ecaff"
             ],
-            "version": "==6.1"
+            "version": "==7.0"
         },
         "redis": {
             "hashes": [
