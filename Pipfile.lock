@@ -895,11 +895,10 @@
         },
         "flower": {
             "hashes": [
-                "sha256:8d6d6ac03e60b3a4227d156da489eb435e2442d82e89922d413df9054b9221eb",
-                "sha256:cf27a254268bb06fd4972408d0518237fcd847f7da4b4cd8055e228150ace8f3"
+                "sha256:2e17c4fb55c569508f3bfee7fe41f44b8362d30dbdf77b604a9d9f4740fe8cbd",
+                "sha256:a4fcf959881135303e98a74cc7533298b7dfeb48abcd1d90c5bd52cb789430a8"
             ],
-            "index": "pypi",
-            "version": "==0.9.7"
+            "version": "==1.0.0"
         },
         "freezegun": {
             "hashes": [
