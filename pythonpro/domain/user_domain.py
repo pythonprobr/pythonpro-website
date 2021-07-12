@@ -12,8 +12,8 @@ from pythonpro.cohorts import facade as _cohorts_facade
 from pythonpro.core import facade as _core_facade
 from pythonpro.core.models import User as _User
 from pythonpro.discourse.facade import MissingDiscourseAPICredentials, generate_sso_payload_and_signature
-from pythonpro.email_marketing import facade as _email_marketing_facade
 from pythonpro.domain.subscription_domain import subscribe_with_no_role
+from pythonpro.email_marketing import facade as _email_marketing_facade
 
 _logger = Logger(__file__)
 
@@ -43,7 +43,7 @@ def register_lead(first_name: str, email: str, source: str = 'unknown', tags: li
         source = 'unknown'
     _core_facade.validate_user(first_name, email, source)
     lead = _core_facade.register_lead(first_name, email, source)
-    _email_marketing_facade.create_or_update_lead.delay(first_name, email, *tags, id=lead.id)
+    _email_marketing_facade.create_or_update_lead.delay(first_name, email, *tags, id=lead.id, utm_source=source)
 
     return lead
 

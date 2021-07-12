@@ -189,7 +189,7 @@ def test_user_has_role(resp_lead_creation, django_user_model):
 def test_user_created_as_lead_on_email_marketing(resp_lead_creation, django_user_model, create_lead_mock: Mock):
     user = django_user_model.objects.first()
     create_lead_mock.assert_called_once_with(user.first_name, user.email, 'offer-funnel-0', 'utm_source=facebook',
-                                             id=user.id)
+                                             id=user.id, utm_source='facebook')
 
 
 def test_user_source_was_saved_from_url(resp_lead_creation, django_user_model, create_lead_mock: Mock):
@@ -292,7 +292,8 @@ def test_should_send_utms_to_email_marketing_as_tags(create_lead_mock, resp_lead
             "utm_campaign=a00f00",
             "utm_content=content",
             "utm_term=term",
-            id=ANY
+            id=ANY,
+            utm_source='facebook-ads'
         )
     ]
     create_lead_mock.assert_has_calls(calls)
