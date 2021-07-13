@@ -31,8 +31,8 @@ def create_or_update_with_no_role(name: str, email: str, *tags, id='0', phone=No
 
 
 @run_until_available
-def create_or_update_lead(name: str, email: str, *tags, id='0', phone=None):
-    return create_or_update_user(name, email, LEAD, *tags, id=id, phone=phone)
+def create_or_update_lead(name: str, email: str, *tags, id='0', phone=None, utm_source=None):
+    return create_or_update_user(name, email, LEAD, *tags, id=id, phone=phone, utm_source=utm_source)
 
 
 @run_until_available
