@@ -95,8 +95,8 @@ def create_or_update_user(name: str, email: str, role: str, *tags, id='0', phone
     }
     if phone is not None:
         data['phone'] = phone
-    if utm_source is not None:
-        data['field[%utm_source%]'] = utm_source
+    # if utm_source is not None:
+    #     data['field[%utm_source%]'] = utm_source
     if id == _normalise_id('0'):
         contact = _client.contacts.create_contact(data)
     else:
