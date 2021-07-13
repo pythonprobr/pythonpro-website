@@ -19,7 +19,10 @@ from pythonpro.domain import user_domain
 def index(request):
     if request.user.is_authenticated:
         return redirect(reverse('dashboard:home'))
-    return redirect('https://pythonpro.com.br')
+    # Redirect retorna após campanha L7
+    # return redirect('https://pythonpro.com.br')
+    return redirect('https://pythonpro.com.br/jornada-rumo-a-primeira-vaga-inscricao-l7-v1/?'+
+                    'utm_source=home&utm_medium=trafego-organico&utm_campaign=L7')
 
 
 def thanks(request):
