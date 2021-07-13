@@ -22,7 +22,7 @@ def index(request):
     # Redirect retorna após campanha L7
     # return redirect('https://pythonpro.com.br')
     return redirect('https://pythonpro.com.br/jornada-rumo-a-primeira-vaga-inscricao-l7-v1/?'+
-                    'utm_source=home&utm_medium=trafego-organico&utm_campaign=L7')
+                    'utm_source=iscas&utm_medium=trafego-organico&utm_campaign=L7')
 
 
 def thanks(request):
