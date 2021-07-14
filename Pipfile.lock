@@ -46,11 +46,10 @@
         },
         "backoff": {
             "hashes": [
-                "sha256:48373089ccc81b094281884e48305cbf879b4fc7a80ab7c6de2011e2f741267b",
-                "sha256:dfaca81d40554e271a53a5f0e7c920100c948d38f5448600de0eab551fcd4fed"
+                "sha256:61928f8fa48d52e4faa81875eecf308eccfb1016b018bb6bd21e05b5d90a96c5",
+                "sha256:ccb962a2378418c667b3c979b504fdeb7d9e0d29c0579e3b13b86467177728cb"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
-            "version": "==1.11.0"
+            "version": "==1.11.1"
         },
         "beautifulsoup4": {
             "hashes": [
