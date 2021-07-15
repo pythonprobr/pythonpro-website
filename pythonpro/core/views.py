@@ -21,7 +21,7 @@ def index(request):
         return redirect(reverse('dashboard:home'))
     # Redirect retorna após campanha L7
     # return redirect('https://pythonpro.com.br')
-    return redirect('https://pythonpro.com.br/jornada-rumo-a-primeira-vaga-inscricao-l7-v2/?'+
+    return redirect('https://pythonpro.com.br/jornada-rumo-a-primeira-vaga-inscricao-l7-v2/?' +
                     'utm_source=iscas&utm_medium=trafego-organico&utm_campaign=L7')
 
 
