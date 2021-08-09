@@ -248,8 +248,8 @@ def resp_lead_creation_with_no_offer(client, db, fake: Faker, create_lead_mock, 
     )
 
 
-# def test_should_redirect_to_thanks_page_direclty(resp_lead_creation_with_no_offer):
-#     assert resp_lead_creation_with_no_offer['Location'] == reverse('core:thanks')
+def test_should_redirect_to_thanks_page_direclty(resp_lead_creation_with_no_offer):
+    assert resp_lead_creation_with_no_offer['Location'] == reverse('core:thanks')
 
 
 @pytest.fixture
