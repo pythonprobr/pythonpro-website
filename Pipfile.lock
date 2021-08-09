@@ -497,10 +497,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:67cf8515ef718dde0eea1442d33bb9e58c8101eb4f8ad282170b5af287d3f2fc",
-                "sha256:7d528239e694892b43e19456d6e3010c57ffa9d155750bd49e5e2c7cabc8802e"
+                "sha256:8089a3567ed2b682c0d4c69429e58a95db1ab80842d040c0a79a487ac968b8a5",
+                "sha256:d638f5d6fd233be215435791ef7fa9fd8ea5a5485d219ba1f9e95ed5c5ee45e0"
             ],
-            "version": "==8.12.27"
+            "version": "==8.12.29"
         },
         "pickleshare": {
             "hashes": [
