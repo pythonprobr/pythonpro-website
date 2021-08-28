@@ -357,11 +357,10 @@
         },
         "ipython": {
             "hashes": [
-                "sha256:54bbd1fe3882457aaf28ae060a5ccdef97f212a741754e420028d4ec5c2291dc",
-                "sha256:aa21412f2b04ad1a652e30564fff6b4de04726ce875eab222c8430edc6db383a"
+                "sha256:58b55ebfdfa260dad10d509702dc2857cb25ad82609506b070cf2d7b7df5af13",
+                "sha256:75b5e060a3417cf64f138e0bb78e58512742c57dc29db5a5058a2b1f0c10df02"
             ],
-            "index": "pypi",
-            "version": "==7.25.0"
+            "version": "==7.27.0"
         },
         "ipython-genutils": {
             "hashes": [
