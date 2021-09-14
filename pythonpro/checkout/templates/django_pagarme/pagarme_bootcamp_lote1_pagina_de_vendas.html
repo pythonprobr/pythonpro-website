@@ -1,0 +1,9 @@
+{% extends 'django_pagarme/pagarme_bootcamp.html' %}
+{% block sidebar %}
+    <div class="sidebar-item">
+        <h4 class="white-txt">Desconto de Primeiro Lote</h4>
+        <div>R$ 1000,00 de desconto comprando o curso agora!</div>
+    </div>
+    {{ block.super }}
+
+{% endblock sidebar %}
