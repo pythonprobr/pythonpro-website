@@ -21,7 +21,7 @@ class PaymentItemConfigInline(admin.TabularInline):
 @admin.register(SubscriptionType)
 class SubscriptionTypeAdmin(admin.ModelAdmin):
     change_list_template = 'memberkit/subscriptiontype/synchronize_button.html'
-    fields = ['id', 'name', 'email_marketing_tags', 'discourse_groups', 'include_on_cohort']
+    fields = ['id', 'name', 'email_marketing_tags', 'discourse_groups', 'include_on_cohort', 'days_of_access']
     list_display = fields
     readonly_fields = ['id', 'name']
     inlines = [PaymentItemConfigInline]
@@ -68,10 +68,10 @@ class PaymentListFilter(admin.SimpleListFilter):
 
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
-    fields = ['payment', 'subscriber', 'subscription_types', 'observation']
+    fields = ['payment', 'subscriber', 'subscription_types', 'observation', 'days_of_access']
     list_display = [
         'id', 'subscriber', 'pagarme_url_field', 'memberkit_user_url_field', 'responsible', 'status',
-        'created_at', 'updated_at', 'activated_at'
+        'created_at', 'updated_at', 'activated_at', 'expires_at'
     ]
     autocomplete_fields = ['subscriber']
     search_fields = ['subscriber__email', 'payment__transaction_id']

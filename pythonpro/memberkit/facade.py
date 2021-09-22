@@ -1,4 +1,5 @@
 from builtins import Exception
+from datetime import timedelta
 from typing import List
 
 from django.utils import timezone
@@ -22,11 +23,16 @@ def create_new_subscription(payment, observation: str = '') -> Subscription:
     if len(subscription_types) == 0:
         raise ValueError(f"Payment {payment} doesn't have subscription types")
 
+    # For now subscriptions has only one subscription type, so it's assumed to take
+    # days of access from the first one
+    days_of_access = subscription_types[0].days_of_access
+
     subscription = Subscription.objects.create(
         status=Subscription.Status.INACTIVE,
         payment=payment,
         subscriber=payment.user,
-        observation=observation
+        observation=observation,
+        days_of_access=days_of_access
     )
     subscription.subscription_types.set(subscription_types)
     return subscription
@@ -34,9 +40,11 @@ def create_new_subscription(payment, observation: str = '') -> Subscription:
 
 def activate(subscription, responsible=None, observation=''):
     user = subscription.subscriber
+    subscription.activated_at = timezone.now()
     for subscription_type in subscription.subscription_types.all():
+        expires_at = subscription.activated_at + timedelta(days=subscription_type.days_of_access)
         response_json = api.activate_user(
-            user.get_full_name(), user.email, subscription_type.id
+            user.get_full_name(), user.email, subscription_type.id, expires_at
         )
     subscription.memberkit_user_id = response_json['id']
     subscription.status = Subscription.Status.ACTIVE
@@ -44,7 +52,6 @@ def activate(subscription, responsible=None, observation=''):
         subscription.observation += f'\n\n {observation}'
     else:
         subscription.observation = observation
-    subscription.activated_at = timezone.now()
     if responsible:
         subscription.responsible = responsible
     subscription.save()

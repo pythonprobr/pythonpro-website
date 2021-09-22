@@ -1,0 +1,13 @@
+{% extends 'django_pagarme/pagarme_bootcamp.html' %}
+{% block sidebar %}
+    <div class="sidebar-item">
+        <h4 class="white-txt">50% de desconto</h4>
+        <div>R$ 1000,00 de desconto comprando o Bootcamp agora!</div>
+    </div>
+    <div class="sidebar-item">
+        <h4 class="white-txt">R$ 497,00 de Desconto</h4>
+        <div>Por já ter comprado o curso Django Pro!</div>
+    </div>
+    {{ block.super }}
+
+{% endblock sidebar %}
