@@ -834,9 +834,10 @@
         },
         "click-didyoumean": {
             "hashes": [
-                "sha256:112229485c9704ff51362fe34b2d4f0b12fc71cc20f6d2b3afabed4b8bfa6aeb"
+                "sha256:00136c217f7fb2ab2999c272cfbd0c14cd2d6c7a643318a954357e2fc3ea7beb",
+                "sha256:4a49fefdddaed47fe316d259e8255a2d0e9e1189aa6dde9f13ec524163860a30"
             ],
-            "version": "==0.0.3"
+            "version": "==0.2.0"
         },
         "click-plugins": {
             "hashes": [
