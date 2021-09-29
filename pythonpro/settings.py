@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
-import os
 from functools import partial
+from pathlib import Path
 
 import sentry_sdk
 from decouple import Csv, config
@@ -19,8 +19,8 @@ from dj_database_url import parse as dburl
 from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk.integrations.django import DjangoIntegration
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
@@ -161,7 +161,7 @@ WSGI_APPLICATION = 'pythonpro.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+default_db_url = 'sqlite:///' + str(BASE_DIR / 'db.sqlite3')
 
 if 'localhost' not in ALLOWED_HOSTS:
     dburl = partial(dburl, conn_max_age=600, ssl_require=True)
@@ -240,9 +240,9 @@ USE_TZ = True
 
 # Configuration for dev environment
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+MEDIA_ROOT = str(BASE_DIR / 'mediafiles')
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = str(BASE_DIR / 'staticfiles')
 COLLECTFAST_ENABLED = False
 
 # STORAGE CONFIGURATION IN S3 AWS
