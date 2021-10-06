@@ -960,11 +960,10 @@
         },
         "humanize": {
             "hashes": [
-                "sha256:06c79af7873473c47477840010ccb9b11b0d431f37f4a81b71edd653211936be",
-                "sha256:4160cdc63fcd0daac27d2e1e218a31bb396fc3fe5712d153675d89432a03778f"
+                "sha256:4c71c4381f0209715cd993058e717c1b74d58ae2f8c6da7bdb59ab66473b9ab0",
+                "sha256:5ec1a66e230a3e31fb3f184aab9436ea13d4e37c168e0ffc345ae5bb57e58be6"
             ],
-            "markers": "python_version >= '3.6'",
-            "version": "==3.11.0"
+            "version": "==3.12.0"
         },
         "idna": {
             "hashes": [
