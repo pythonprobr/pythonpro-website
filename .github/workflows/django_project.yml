@@ -20,7 +20,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
-        ports: ['5432:5432']
+        ports: [ '5432:5432' ]
 
     steps:
     - uses: actions/checkout@v2
@@ -43,6 +43,6 @@ jobs:
         pipenv run pytest pythonpro --cov=pythonpro
     - name: Posting Coverage
       env:
-        CODECOV_TOKEN: "a25e3e4c-71da-4e0c-9dd2-db308c481bb4"
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       run: |
         pipenv run codecov

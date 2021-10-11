@@ -6,96 +6,11 @@
 {% block body_class %}clean-body{% endblock %}
 {% block scripts %}{% endblock scripts %}
 {% block head %}
-    <meta content="Agora que você já é um programador profissional, com certeza vão surgir novos desafios. Serão problemas mais complexos, que vão exigir de você novas fontes de conhecimento."
-          name="description">
-    <meta content="Oportunidade Única Python Pro!" property="og:title">
-    <meta content="Agora que você já é um programador profissional, com certeza vão surgir novos desafios. Serão problemas mais complexos, que vão exigir de você novas fontes de conhecimento."
-          property="og:description">
-    <meta content="Oportunidade Única Python Pro!" property="twitter:title">
-    <meta content="Agora que você já é um programador profissional, com certeza vão surgir novos desafios. Serão problemas mais complexos, que vão exigir de você novas fontes de conhecimento."
-          property="twitter:description">
-    <meta property="og:type" content="website">
-    <meta content="summary_large_image" name="twitter:card">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <meta content="Webflow" name="generator">
-    <link href="{% static 'thanks/css/normalize.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'thanks/css/webflow.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'thanks/css/python-pro.webflow.css' %}" rel="stylesheet" type="text/css">
-    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        WebFont.load({
-            google: {
-                families: ["Poppins:regular,500,600,700,800,900"]
-            }
-        });
-    </script>
-    <!-- [if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"
-            type="text/javascript"></script><![endif] -->
-    <script type="text/javascript">
-        !function (o, c) {
-            var n = c.documentElement,
-                t = " w-mod-";
-            n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch")
-        }(window, document);
-    </script>
-    <link href="{% static 'thanks/images/webclip.png' %}" rel="apple-touch-icon">
+    <meta http-equiv="refresh"
+          content="0; URL='https://pythonpro.com.br/jornada-rumo-a-primeira-vaga-acesso-vip-obrigado-l8/'"/>
 {% endblock head %}
 {% block body %}
-    <div class="header blue">
-        <div class="header-section">
-            <div class="header-container">
-                <div id="w-node-6ab841cb6b5f-dd0aa7ab" class="headline-container centered">
-                    <div class="auto-headline">
-                        <h1 class="dumbo-heading">{% block page_main_title %}Parabéns por se registrar no
-                            {{ payment_item_config.name }}!{% endblock page_main_title %}</h1>
-                        <div class="dumbo-description">Rever copy da lista vip</div>
-                        <img src="{% static 'thanks/images/down-arrow.svg' %}"
-                             data-w-id="32f53c33-6610-0d97-9540-539ac6e9b39f"
-                             style="-webkit-transform:translate3d(0, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
-                             alt="" class="image-4"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="content custom-bg">
-        <div class="overlap-container">
-            <div class="video-container">
-                {% with thanks_video_id='bexSB6jw2m8' %}
-                    {% block thanks_video %}
-                        <div style="padding-top:56.17021276595745%" class="video w-video w-embed">
-                            <iframe class="embedly-embed"
-                                    src="//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.youtube.com%2Fembed%2F{{ thanks_video_id }}%3Ffeature%3Doembed&display_name=YouTube&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D{{ thanks_video_id }}&image=https%3A%2F%2Fi.ytimg.com%2Fvi%2F{{ thanks_video_id }}%2Fhqdefault.jpg&key=96f1f04c5f4143bcb0f2e68c87d65feb&type=text%2Fhtml&schema=youtube"
-                                    scrolling="no" title="YouTube embed" frameborder="0" allow="autoplay; fullscreen"
-                                    allowfullscreen="true"></iframe>
-                        </div>
-                    {% endblock thanks_video %}
-                {% endwith %}
-            </div>
-        </div>
-    </div>
-
-    <div class="content custom-bg bg-v2">
-        <div class="container">
-            {% block upsell %}
-                <div id="w-node-b11fafc8de25-dd0aa7ab" class="container-content">
-                    <h3><a class="btn btn-success" href="{% url 'modules:detail' slug='python-birds' %}">Acessar
-                        Primeiro Curso &raquo;</a></h3>
-                </div>
-            {% endblock upsell %}
-            <div id="w-node-2878d38ff948-dd0aa7ab" class="container-content">
-                <div class="credits">2020 Python Pro. Todos os direitos reservados.<br>CNPJ: 31.080.715/0001-25<br>+55
-                    12 99141-5422 - suporte@python.pro.br
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js?site=5f07a1c9ac6e0b5937b108a7"
-            type="text/javascript" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
-    <script src="{% static 'thanks/js/webflow.js' %}" type="text/javascript"></script>
-    {% include 'core/_scripts.html' %}
-    <!-- [if lte IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+    O conteúdo desta página foi movido permanentemente para o link:
+    <a href="https://pythonpro.com.br/jornada-rumo-a-primeira-vaga-acesso-vip-obrigado-l8/">https://pythonpro.com.br/jornada-rumo-a-primeira-vaga-acesso-vip-obrigado-l8/</a>
 {% endblock body %}
 {% block footer %}{% endblock footer %}
