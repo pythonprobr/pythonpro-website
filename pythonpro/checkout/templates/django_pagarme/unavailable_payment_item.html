@@ -7,7 +7,9 @@
             <div class="col mb-5">
                 <h1 class="mt-5">Curso {{ payment_item_config.name }} Indisponível</h1>
 
-                <p>Infelizmente essa oferta não está mais disponível. Confira abaixo todos nossos cursos:</p>
+                <p>Infelizmente essa oferta não está mais disponível.
+                    Ela ficou válida até {{ payment_item_config.available_until }}.</p>
+                <p>Confira abaixo todos nossos cursos:</p>
                 <a class="btn btn-primary &raquo;" href="{% url 'modules:index' %}">Ver módulos</a>
             </div>
         </div>
