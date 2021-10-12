@@ -28,7 +28,7 @@ django-extensions = "*"
 activecampaign-python = {editable = true,git = "https://github.com/renzon/activecampaign-python.git",ref = "update-list"}
 codecov = "*"
 django-bootstrap4 = "*"
-celery = "<5.0.0"
+celery = "*"
 redis = "*"
 inflection = "*"
 django-two-factor-auth = "*"
