@@ -926,11 +926,10 @@
         },
         "faker": {
             "hashes": [
-                "sha256:429a91d73dbac02609d6b616ef15bd4c3f22ed6532dcfceb46f3b8c28c78257a",
-                "sha256:cdd9e9af2fba5c96ee2ec4ac8419bba458e26b58a2b98c1f6467ee66096bee52"
+                "sha256:072b61422be9da464b0bb40cdb44267dd584582056b77a2982d7c66c767f044c",
+                "sha256:8ffd1ca479364a2ea78fe23a5710d5f940c50576f45c3f62edf9f7f9242cec0b"
             ],
-            "index": "pypi",
-            "version": "==9.3.1"
+            "version": "==9.6.0"
         },
         "flake8": {
             "hashes": [
