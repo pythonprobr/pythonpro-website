@@ -958,11 +958,10 @@
         },
         "humanize": {
             "hashes": [
-                "sha256:4c71c4381f0209715cd993058e717c1b74d58ae2f8c6da7bdb59ab66473b9ab0",
-                "sha256:5ec1a66e230a3e31fb3f184aab9436ea13d4e37c168e0ffc345ae5bb57e58be6"
+                "sha256:12f113f2e369dac7f35d3823f49262934f4a22a53a6d3d4c86b736f50db88c7b",
+                "sha256:a6f7cc1597db69a4e571ad5e19b4da07ee871da5a9de2b233dbfab02d98e9754"
             ],
-            "markers": "python_version >= '3.6'",
-            "version": "==3.12.0"
+            "version": "==3.13.1"
         },
         "idna": {
             "hashes": [
