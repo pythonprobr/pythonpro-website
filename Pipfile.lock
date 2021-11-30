@@ -298,11 +298,10 @@
         },
         "django-redis": {
             "hashes": [
-                "sha256:048f665bbe27f8ff2edebae6aa9c534ab137f1e8fa7234147ef470df3f3aa9b8",
-                "sha256:97739ca9de3f964c51412d1d7d8aecdfd86737bb197fce6e1ff12620c63c97ee"
+                "sha256:98fb3d31633a1addea1aeb558a647359908bbcf78c0833f99496c5348fe3c1b4",
+                "sha256:bf75bce0d6f65c3a6165dd6789506c8d22238f3bfaf7c4ad447e55afbc5b68cb"
             ],
-            "index": "pypi",
-            "version": "==5.0.0"
+            "version": "==5.1.0"
         },
         "django-role-permissions": {
             "hashes": [
