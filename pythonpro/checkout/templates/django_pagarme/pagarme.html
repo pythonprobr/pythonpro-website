@@ -83,17 +83,26 @@
 {#                <div class="div-block-5"><label class="w-checkbox check-button"><div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div><input type="checkbox" id="offer-check" name="offer-check" data-name="offer-check" style="opacity:0;position:absolute;z-index:-1"><span for="offer-check" data-w-id="4dc26794-96eb-494b-7cad-32b91822fadb" class="checkbox-label w-form-label">adicionar</span></label></div>#}
 {#              </div>#}
 {#            </div>#}
-            <div id="w-node-9b30621be75f-1eb108a8" class="div-block-4">
-              <div>
-                <div class="product-container"><img src="{% static 'checkout/images/62-626208_python-logo-png-transparent-background-python-logo-png.jpg' %}" alt=""></div>
+              <div id="w-node-9b30621be75f-1eb108a8" class="div-block-4">
+                  <div>
+                      <div class="product-container"><img
+                              src="{% static 'checkout/images/62-626208_python-logo-png-transparent-background-python-logo-png.jpg' %}"
+                              alt=""></div>
+                  </div>
+                  <div class="div-block-3">
+                      <h5>{{ payment_item.name }}</h5>
+                      <div class="product-price">{{ payment_item.max_installments }}x
+                          de {{ payment_item.max_installment_amount_after_interest|cents_to_brl }}*/Mês
+                      </div>
+                      <div class="txt-gray">* {{ payment_item.price|cents_to_brl }} à vista</div>
+                  </div>
               </div>
-              <div class="div-block-3">
-                <h5>{{ payment_item.name }}</h5>
-                <div class="product-price">{{ payment_item.max_installments }}x de {{ payment_item.max_installment_amount_after_interest|cents_to_brl}}*/Mês</div>
-                <div class="txt-gray">* {{ payment_item.price|cents_to_brl}} à vista</div>
-              </div>
-            </div><button data-wait="Enviando seu pedido" id="w-node-d2c34207d2e9-1eb108a8" class="submit-button w-button pay-button">Finalizar Compra com Cartão de Crédito</button>
-            <button class="submit-button w-button pay-button" target="_blank" href="https://api.whatsapp.com/send?phone=5512991415422&text=Olá! Gostaria de finalizar minha compra '{{ payment_item.name }}' através do PIX. Você pode me ajudar?" style="
+              <button data-wait="Enviando seu pedido" id="w-node-d2c34207d2e9-1eb108a8"
+                      class="submit-button w-button pay-button">Finalizar Compra com Cartão de Crédito
+              </button>
+              <a class="submit-button w-button pay-button text-center" target="_blank"
+                 href="https://api.whatsapp.com/send?phone=5512991415422&text=Olá! Gostaria de finalizar minha compra '{{ payment_item.name }}' através do PIX. Você pode me ajudar?"
+                 style="
               -ms-grid-row: span 1;
               grid-row-start: span 1;
               -ms-grid-row-span: 1;
@@ -105,13 +114,14 @@
               background-color: #32BCAD;
               box-shadow: 0 4px 0 0 #2b998d;
               color: #fff;
-              height: 35px;">Finalizar Compra com PIX</button>
+              height: 35px;">Finalizar Compra com PIX</a>
 
-            <div id="w-node-014eae02debd-1eb108a8" class="separator"></div>
-            <div id="w-node-222d67e0f07c-1eb108a8" class="form-footer">
-              <p class="small">Dúvidas? Fale com nosso suporte através do número <a href='tel:5512991415422'>+55 12 99141-5422</a>,
-                    tanto por telefone quanto por <a href='https://wa.me/5512991415422' target="_blank">WhatsApp</a>.
-                  <br><br>Python Pro © {% now "Y" %}. Todos os direitos reservados. CNPJ: 31.080.715/0001-25<br></p>
+              <div id="w-node-014eae02debd-1eb108a8" class="separator"></div>
+              <div id="w-node-222d67e0f07c-1eb108a8" class="form-footer">
+                  <p class="small">Dúvidas? Fale com nosso suporte através do número <a href='tel:5512991415422'>+55 12
+                      99141-5422</a>,
+                      tanto por telefone quanto por <a href='https://wa.me/5512991415422' target="_blank">WhatsApp</a>.
+                      <br><br>Python Pro © {% now "Y" %}. Todos os direitos reservados. CNPJ: 31.080.715/0001-25<br></p>
             </div>
           </div>
           <div class="w-form-done">
