@@ -92,7 +92,20 @@
                 <div class="product-price">{{ payment_item.max_installments }}x de {{ payment_item.max_installment_amount_after_interest|cents_to_brl}}*/Mês</div>
                 <div class="txt-gray">* {{ payment_item.price|cents_to_brl}} à vista</div>
               </div>
-            </div><button data-wait="Enviando seu pedido" id="w-node-d2c34207d2e9-1eb108a8" class="submit-button w-button pay-button">Finalizar Compra</button>
+            </div><button data-wait="Enviando seu pedido" id="w-node-d2c34207d2e9-1eb108a8" class="submit-button w-button pay-button">Finalizar Compra com Cartão de Crédito</button>
+            <button class="submit-button w-button pay-button" target="_blank" href="https://api.whatsapp.com/send?phone=5512991415422&text=Olá! Gostaria de finalizar minha compra '{{ payment_item.name }}' através do PIX. Você pode me ajudar?" style="
+              -ms-grid-row: span 1;
+              grid-row-start: span 1;
+              -ms-grid-row-span: 1;
+              grid-row-end: span 1;
+              -ms-grid-column: span 6;
+              grid-column-start: span 6;
+              -ms-grid-column-span: 6;
+              grid-column-end: span 6;
+              background-color: #32BCAD;
+              box-shadow: 0 4px 0 0 #2b998d;
+              color: #fff;
+              height: 35px;">Finalizar Compra com PIX</button>
 
             <div id="w-node-014eae02debd-1eb108a8" class="separator"></div>
             <div id="w-node-222d67e0f07c-1eb108a8" class="form-footer">
