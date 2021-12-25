@@ -537,10 +537,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:1001fd304ccf5ec7f926fd039ef07eefffa9880573698baede00a3becb8de6ad",
-                "sha256:5b77990b6832675fa3a2e60a05e738af0bf96908352a8ee90b4d4ec964a03977"
+                "sha256:153885eefec397058c8ce91fb987f55545b2cfa945f22a904584ddf162aa82b1",
+                "sha256:e6fe6cad1091f8928e34a98570cade4758f4cf4e70e9e32ff7eca517ce98e273"
             ],
-            "version": "==8.12.39"
+            "version": "==8.12.40"
         },
         "pickleshare": {
             "hashes": [
