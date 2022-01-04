@@ -1051,11 +1051,10 @@
         },
         "model-bakery": {
             "hashes": [
-                "sha256:32f4c993242afd1024f0d5a6aa913850788bc2694db5a69e6d44b20936b52f60",
-                "sha256:4e44f5d58f11a8e1f733264f3d3659bd8e6d9c731779f91a3c70281df5066cd2"
+                "sha256:a89befaae667380f5e2352981d45fed36747941f5c3e9dffa962fc6ba8d661d1",
+                "sha256:c29fb821c81cda2c37dfbdcb1dd2218cda179ecb96c6edb6cd9cdaa146706d92"
             ],
-            "index": "pypi",
-            "version": "==1.3.3"
+            "version": "==1.4.0"
         },
         "packaging": {
             "hashes": [
