@@ -1105,11 +1105,10 @@
         },
         "humanize": {
             "hashes": [
-                "sha256:12f113f2e369dac7f35d3823f49262934f4a22a53a6d3d4c86b736f50db88c7b",
-                "sha256:a6f7cc1597db69a4e571ad5e19b4da07ee871da5a9de2b233dbfab02d98e9754"
+                "sha256:32bcf712ac98ff5e73627a9d31e1ba5650619008d6d13543b5d53b48e8ab8d43",
+                "sha256:60dd8c952b1df1ad83f0903844dec50a34ba7a04eea22a6b14204ffb62dbb0a4"
             ],
-            "markers": "python_version >= '3.6'",
-            "version": "==3.13.1"
+            "version": "==3.14.0"
         },
         "idna": {
             "hashes": [
