@@ -1,6 +1,7 @@
 from django.urls import path
 
 from pythonpro.pages import views
+from django.views.generic.base import RedirectView
 
 
 app_name = 'pages'
@@ -42,7 +43,7 @@ urlpatterns = [
     ),
     path(
         'rumo-a-primeira-vaga/inscricao-<str:date>_<str:version>',
-        views.TppWebioricoLandingPage.as_view(),
+        RedirectView.as_view(url="www.rumoaprimeiravaga.com.br"),
         name='tpp_webiorico_landing_page_date_page_var'
     ),
     path(
