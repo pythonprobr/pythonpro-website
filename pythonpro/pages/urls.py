@@ -43,7 +43,7 @@ urlpatterns = [
     ),
     path(
         'rumo-a-primeira-vaga/inscricao-<str:date>_<str:version>',
-        RedirectView.as_view(url="www.rumoaprimeiravaga.com.br"),
+        RedirectView.as_view(url="https://www.rumoaprimeiravaga.com.br"),
         name='tpp_webiorico_landing_page_date_page_var'
     ),
     path(
