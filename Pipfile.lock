@@ -414,11 +414,10 @@
         },
         "kombu": {
             "hashes": [
-                "sha256:81a90c1de97e08d3db37dbf163eaaf667445e1068c98bfd89f051a40e9f6dbbd",
-                "sha256:eeaeb8024f3a5cfc71c9250e45cddb8493f269d74ada2f74909a93c59c4b4179"
+                "sha256:37cee3ee725f94ea8bb173eaab7c1760203ea53bbebae226328600f9d2799610",
+                "sha256:8b213b24293d3417bcf0d2f5537b7f756079e3ea232a8386dcc89a59fd2361a4"
             ],
-            "markers": "python_version >= '3.7'",
-            "version": "==5.2.3"
+            "version": "==5.2.4"
         },
         "lxml": {
             "hashes": [
@@ -1128,11 +1127,10 @@
         },
         "kombu": {
             "hashes": [
-                "sha256:81a90c1de97e08d3db37dbf163eaaf667445e1068c98bfd89f051a40e9f6dbbd",
-                "sha256:eeaeb8024f3a5cfc71c9250e45cddb8493f269d74ada2f74909a93c59c4b4179"
+                "sha256:37cee3ee725f94ea8bb173eaab7c1760203ea53bbebae226328600f9d2799610",
+                "sha256:8b213b24293d3417bcf0d2f5537b7f756079e3ea232a8386dcc89a59fd2361a4"
             ],
-            "markers": "python_version >= '3.7'",
-            "version": "==5.2.3"
+            "version": "==5.2.4"
         },
         "mccabe": {
             "hashes": [
