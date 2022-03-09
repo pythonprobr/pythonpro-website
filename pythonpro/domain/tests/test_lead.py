@@ -15,7 +15,9 @@ def sync_user_delay(mocker):
 
 def test_creation(db, django_user_model, create_or_update_lead_mock, sync_user_delay):
     user = user_domain.register_lead('Renzo Nuccitelli', 'renzo@python.pro.br', 'google_ads')
-    create_or_update_lead_mock.assert_called_once_with(user.first_name, user.email, id=user.id, utm_source='google_ads')
+    create_or_update_lead_mock.assert_called_once_with(
+        user.first_name, user.email, id=user.id, phone='', utm_source='google_ads'
+    )
     assert not sync_user_delay.called
     assert django_user_model.objects.all().get() == user
 
@@ -23,10 +25,10 @@ def test_creation(db, django_user_model, create_or_update_lead_mock, sync_user_d
 def test_should_create_lead_with_extra_tags(
         db, django_user_model, create_or_update_lead_mock, sync_user_delay):
     user = user_domain.register_lead(
-        'Renzo Nuccitelli', 'renzo@python.pro.br', 'google_ads', tags=['tag-1', 'tag-2']
+        'Renzo Nuccitelli', 'renzo@python.pro.br', 'google_ads', phone='11966922655', tags=['tag-1', 'tag-2']
     )
     create_or_update_lead_mock.assert_called_once_with(
-        user.first_name, user.email, 'tag-1', 'tag-2', id=user.id, utm_source='google_ads'
+        user.first_name, user.email, 'tag-1', 'tag-2', id=user.id,  phone='11966922655', utm_source='google_ads'
     )
     assert not sync_user_delay.called
     assert django_user_model.objects.all().get() == user
