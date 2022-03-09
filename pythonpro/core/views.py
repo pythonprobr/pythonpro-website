@@ -168,7 +168,7 @@ def _lead_form(request, *args, **kwargs):
     if request.method == 'GET':
         form = UserSignupForm()
         return render(request, 'core/lead_form_errors.html', context={'form': form})
-    
+
     # TODO: tudo isso deveria ser feito dentro do validation do form. Fiquei com preguiça de arrumar agora
     source = request.GET.get('utm_source', default='unknown')
     first_name = request.POST.get('first_name')
@@ -178,11 +178,11 @@ def _lead_form(request, *args, **kwargs):
     for key, value in request.GET.items():
         if key.startswith('utm_'):
             tags.append(f"{key}={value}")
-    
+
     phone = phone.replace('(', '')
     phone = phone.replace(')', '')
     phone = phone.replace(' ', '')
-    
+
     try:
         user = user_domain.register_lead(first_name, email, source, phone=phone, tags=tags)
     except user_domain.UserCreationException as e:
