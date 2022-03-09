@@ -34,6 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     source = models.CharField(_('source'), max_length=255, default='unknown')
+    phone = models.CharField(blank=True, null=True, max_length=20, help_text='WhatsApp')
 
     objects = UserManager()
 

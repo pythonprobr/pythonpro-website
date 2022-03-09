@@ -89,6 +89,7 @@ def resp_lead_creation(client, db, fake: Faker, create_lead_mock, email):
         data={
             'first_name': fake.name(),
             'email': email,
+            'phone': '(11)966922655'
         },
         secure=True
     )
@@ -101,6 +102,7 @@ def test_email_error_subscribing_with_email_variation(resp_lead_creation, email:
         data={
             'first_name': fake.name(),
             'email': email_upercase,
+            'phone': '(11)966922655'
         },
         secure=True
     )
@@ -116,6 +118,7 @@ def resp_email_upper_case(client, db, fake: Faker, create_lead_mock, email):
         data={
             'first_name': fake.name(),
             'email': email,
+            'phone': '(11)966922655'
         },
         secure=True
     )
@@ -165,6 +168,7 @@ def resp_lead_creation_without_source(client, db, fake: Faker, create_lead_mock)
         data={
             'first_name': fake.name(),
             'email': fake.email(),
+            'phone': '(11)966922655'
         },
         secure=True
     )
@@ -189,7 +193,12 @@ def test_user_has_role(resp_lead_creation, django_user_model):
 def test_user_created_as_lead_on_email_marketing(resp_lead_creation, django_user_model, create_lead_mock: Mock):
     user = django_user_model.objects.first()
     create_lead_mock.assert_called_once_with(user.first_name, user.email, 'offer-funnel-0', 'utm_source=facebook',
-                                             id=user.id, utm_source='facebook')
+                                             phone='(11)966922655', id=user.id, utm_source='facebook')
+
+
+def test_lead_register_with_phone(resp_lead_creation_without_source, django_user_model):
+    user = django_user_model.objects.get()
+    assert user.phone == '+5511966922655'
 
 
 def test_user_source_was_saved_from_url(resp_lead_creation, django_user_model, create_lead_mock: Mock):
@@ -276,6 +285,7 @@ def resp_lead_creation_with_utms(client, db, fake: Faker, create_lead_mock, emai
         data={
             'first_name': fake.name(),
             'email': email,
+            'phone': '(11)966922655'
         },
         secure=True
     )
@@ -293,6 +303,7 @@ def test_should_send_utms_to_email_marketing_as_tags(create_lead_mock, resp_lead
             "utm_content=content",
             "utm_term=term",
             id=ANY,
+            phone='(11)966922655',
             utm_source='facebook-ads'
         )
     ]

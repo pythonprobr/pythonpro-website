@@ -27,7 +27,7 @@ __all__ = [
 ]
 
 
-def register_lead(first_name: str, email: str, source: str = 'unknown', tags: list = []) -> _User:
+def register_lead(first_name: str, email: str, source: str = 'unknown', phone: str = '', tags: list = []) -> _User:
     """
     Create a new user on the system generation a random password.
     An Welcome email is sent to the user informing his password with the link to change it.
@@ -41,9 +41,11 @@ def register_lead(first_name: str, email: str, source: str = 'unknown', tags: li
     """
     if not source:
         source = 'unknown'
-    _core_facade.validate_user(first_name, email, source)
-    lead = _core_facade.register_lead(first_name, email, source)
-    _email_marketing_facade.create_or_update_lead.delay(first_name, email, *tags, id=lead.id, utm_source=source)
+    _core_facade.validate_user(first_name, email, source, phone)
+    lead = _core_facade.register_lead(first_name, email, source, phone)
+    _email_marketing_facade.create_or_update_lead.delay(
+        first_name, email, phone=phone, *tags, id=lead.id, utm_source=source
+    )
 
     return lead
 

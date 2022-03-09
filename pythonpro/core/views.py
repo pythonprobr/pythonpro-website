@@ -172,13 +172,14 @@ def _lead_form(request, *args, **kwargs):
     source = request.GET.get('utm_source', default='unknown')
     first_name = request.POST.get('first_name')
     email = request.POST.get('email')
+    phone = request.POST.get('phone')
     tags = [kwargs.get('offer_tag', 'offer-funnel-0')]
     for key, value in request.GET.items():
         if key.startswith('utm_'):
             tags.append(f"{key}={value}")
 
     try:
-        user = user_domain.register_lead(first_name, email, source, tags=tags)
+        user = user_domain.register_lead(first_name, email, source, phone=phone, tags=tags)
     except user_domain.UserCreationException as e:
         return render(request, 'core/lead_form_errors.html', context={'form': e.form}, status=400)
 

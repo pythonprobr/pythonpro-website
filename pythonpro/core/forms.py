@@ -41,7 +41,7 @@ class UserEmailForm(ModelForm, NormalizeEmailMixin):
 class UserSignupForm(UserCreationForm, NormalizeEmailMixin):
     class Meta:
         model = User
-        fields = ('first_name', 'email', 'source')
+        fields = ('first_name', 'email', 'source', 'phone')
 
     def __init__(self, *args, **kwargs):
         self.plain_password = User.objects.make_random_password(30)
@@ -61,6 +61,14 @@ class UserSignupForm(UserCreationForm, NormalizeEmailMixin):
         if 'password1' not in data and 'password2' not in data:
             data['password1'] = data['password2'] = self.plain_password
 
+    def clean(self):
+        cleaned_data = super().clean()
+        phone = cleaned_data.get('phone')
+        if phone:
+            phone = phone.replace('(', '').replace(')', '')
+            cleaned_data['phone'] = f"+55{phone}"
+        return cleaned_data
+
     password1 = forms.CharField(
         label=_("Password"),
         strip=False,
@@ -76,17 +84,22 @@ class UserSignupForm(UserCreationForm, NormalizeEmailMixin):
         help_text=_("Enter the same password as before, for verification."),
     )
 
+    phone = forms.CharField(widget=forms.HiddenInput())
+
 
 class LeadForm(UserSignupForm):
     class Meta:
         model = User
-        fields = ('first_name', 'email')
+        fields = ('first_name', 'email', 'phone')
 
     first_name = forms.CharField(
         label=str(), widget=forms.TextInput(attrs={'placeholder': 'Qual Seu Nome?'})
     )
     email = forms.EmailField(
         label=str(), widget=forms.EmailInput(attrs={'placeholder': 'Qual seu MELHOR e-mail?'})
+    )
+    phone = forms.CharField(
+        label=str(), widget=forms.TextInput(attrs={'placeholder': 'Qual o seu número de WHATSAPP?'})
     )
     source = forms.CharField(widget=forms.HiddenInput())
     password1 = forms.CharField(widget=forms.HiddenInput())

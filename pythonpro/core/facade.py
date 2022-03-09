@@ -26,7 +26,7 @@ class UserRoleException(Exception):
     pass
 
 
-def validate_user(first_name: str, email: str, source: str) -> UserSignupForm:
+def validate_user(first_name: str, email: str, source: str, phone: str) -> UserSignupForm:
     """
     Validate a user
     :param first_name:
@@ -34,7 +34,7 @@ def validate_user(first_name: str, email: str, source: str) -> UserSignupForm:
     :param source:
     :return:
     """
-    data = {'first_name': first_name, 'email': email, 'source': source}
+    data = {'first_name': first_name, 'email': email, 'source': source, 'phone': phone}
 
     form = UserSignupForm(data)
     if not form.is_valid():
@@ -42,25 +42,26 @@ def validate_user(first_name: str, email: str, source: str) -> UserSignupForm:
     return form
 
 
-def register_lead(first_name: str, email: str, source: str) -> User:
+def register_lead(first_name: str, email: str, source: str, phone: str) -> User:
     """
     Create a new user on the system generating a random password.
     :param first_name: User's first name
     :param email: User's email
     :param source: source of User traffic
+    :param phone: phone
     :return: User
     """
     try:
         user = User.objects.filter(email=email).get()
     except User.DoesNotExist:
-        user = save_and_sent_password_email(first_name, email, source)
+        user = save_and_sent_password_email(first_name, email, source, phone)
         UserInteraction(category=UserInteraction.BECOME_LEAD, source=source, user=user).save()
     assign_role(user, 'lead')
     return user
 
 
-def save_and_sent_password_email(first_name, email, source):
-    form = validate_user(first_name, email, source)
+def save_and_sent_password_email(first_name, email, source, phone):
+    form = validate_user(first_name, email, source, phone)
     user = form.save()
     subject = 'Confira sua senha do Python Pro'
     change_password_uri = build_absolute_uri(reverse('core:profile_password'))
