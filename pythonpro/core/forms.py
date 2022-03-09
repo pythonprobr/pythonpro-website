@@ -65,8 +65,8 @@ class UserSignupForm(UserCreationForm, NormalizeEmailMixin):
         cleaned_data = super().clean()
         phone = cleaned_data.get('phone')
         if phone:
-            phone = phone.replace('(', '').replace(')', '')
-            cleaned_data['phone'] = f"+55{phone}"
+            phone = phone.replace('(', '').replace(')', '').replace(' ', '')
+            cleaned_data['phone'] = phone
         return cleaned_data
 
     password1 = forms.CharField(
@@ -84,7 +84,7 @@ class UserSignupForm(UserCreationForm, NormalizeEmailMixin):
         help_text=_("Enter the same password as before, for verification."),
     )
 
-    phone = forms.CharField(widget=forms.HiddenInput())
+    phone = forms.CharField(widget=forms.HiddenInput(), required=False)
 
 
 class LeadForm(UserSignupForm):

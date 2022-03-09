@@ -198,7 +198,7 @@ def test_user_created_as_lead_on_email_marketing(resp_lead_creation, django_user
 
 def test_lead_register_with_phone(resp_lead_creation_without_source, django_user_model):
     user = django_user_model.objects.get()
-    assert user.phone == '+5511966922655'
+    assert user.phone == '11966922655'
 
 
 def test_user_source_was_saved_from_url(resp_lead_creation, django_user_model, create_lead_mock: Mock):
