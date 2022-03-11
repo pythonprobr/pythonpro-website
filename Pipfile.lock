@@ -553,10 +553,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:dd79978de1d75198ed5d5239a80e70458d420f8877c61340740fa61c5119ce5e",
-                "sha256:ee8cbd7de516af9e2032b8bc0f8e758232b9c41fe34c673c9237b185ceccaa0c"
+                "sha256:1e7a2659d0ecd5017c4d0edd18d75dbe307909646a800ecda26865ad08bf2f00",
+                "sha256:ebfe83dd6c3eb8c2487cc135ebff2c246ee3888069ca0a83ab4dac63a24df077"
             ],
-            "version": "==8.12.41"
+            "version": "==8.12.45"
         },
         "pickleshare": {
             "hashes": [
