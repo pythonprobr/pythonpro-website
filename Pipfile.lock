@@ -390,11 +390,10 @@
         },
         "ipython": {
             "hashes": [
-                "sha256:346c74db7312c41fa566d3be45d2e759a528dcc2994fe48aac1a03a70cd668a3",
-                "sha256:4c4234cdcc6b8f87c5b5c7af9899aa696ac5cfcf0e9f6d0688018bbee5c73bce"
+                "sha256:1b672bfd7a48d87ab203d9af8727a3b0174a4566b4091e9447c22fb63ea32857",
+                "sha256:70e5eb132cac594a34b5f799bd252589009905f05104728aea6a403ec2519dc1"
             ],
-            "index": "pypi",
-            "version": "==7.31.0"
+            "version": "==8.2.0"
         },
         "jedi": {
             "hashes": [
