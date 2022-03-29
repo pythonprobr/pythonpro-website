@@ -191,7 +191,7 @@ def _lead_form(request, *args, **kwargs):
     login(request, user)
 
     return redirect(reverse('core:thanks'))
-    #return redirect('https://pythonpro.com.br/jornada-rumo-a-primeira-vaga-inscricao-l12-v2-iscas/'
+    # return redirect('https://pythonpro.com.br/jornada-rumo-a-primeira-vaga-inscricao-l12-v2-iscas/'
     #                '?utm_source=iscas&utm_medium=trafego-organico&utm_campaign=L12')
 
 
