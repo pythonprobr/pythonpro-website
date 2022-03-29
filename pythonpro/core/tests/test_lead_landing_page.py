@@ -247,6 +247,7 @@ def resp_lead_creation_with_no_offer(client, db, fake: Faker, create_lead_mock, 
         data={
             'first_name': fake.name(),
             'email': email,
+            'phone': "(11)966922655",
         },
         secure=True
     )
