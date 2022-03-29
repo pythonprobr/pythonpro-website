@@ -48,27 +48,27 @@ urlpatterns = [
     ),
     path(
         'rumo-a-primeira-vaga/inscricao-<str:date>',
-        views.TppWebioricoLandingPage.as_view(),
+        RedirectView.as_view(url="https://www.rumoaprimeiravaga.com.br"),
         name='tpp_webiorico_landing_page_date_var'
     ),
     path(
         'rumo-a-primeira-vaga/inscricao',
-        views.TppWebioricoLandingPage.as_view(),
+        RedirectView.as_view(url="https://www.rumoaprimeiravaga.com.br"),
         name='tpp_webiorico_landing_page'
     ),
     path(
         'rumo-a-primeira-vaga/obrigado',
-        views.TppWebioricoThankYouPage.as_view(),
+        RedirectView.as_view(url="https://www.rumoaprimeiravaga.com.br"),
         name='tpp_webiorico_thank_you_page'
     ),
     path(
         'gravacao-rumo-a-primeira-vaga/inscricao',
-        views.TppMasterclassLandingPage.as_view(),
+        RedirectView.as_view(url="https://www.rumoaprimeiravaga.com.br"),
         name='tpp_masterclass_landing_page'
     ),
     path(
         'gravacao-rumo-a-primeira-vaga/masterclass',
-        views.TppMasterclassThankYouPage.as_view(),
+        RedirectView.as_view(url="https://www.rumoaprimeiravaga.com.br"),
         name='tpp_masterclass_thank_you_page'
     ),
     path(
