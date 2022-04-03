@@ -85,11 +85,10 @@
         },
         "celery": {
             "hashes": [
-                "sha256:8aacd02fc23a02760686d63dde1eb0daa9f594e735e73ea8fb15c2ff15cb608c",
-                "sha256:e2cd41667ad97d4f6a2f4672d1c6a6ebada194c619253058b5f23704aaadaa82"
+                "sha256:19247ba189b72f82cf387fe5130f8d972f1c41255f87002f3198452849bf3a97",
+                "sha256:1f31c196e61dde344e322f9c0d33d1bb88c0dbaccbab5019fbb519a43d44706d"
             ],
-            "index": "pypi",
-            "version": "==5.2.3"
+            "version": "==5.2.5"
         },
         "certifi": {
             "hashes": [
@@ -951,11 +950,10 @@
         },
         "celery": {
             "hashes": [
-                "sha256:8aacd02fc23a02760686d63dde1eb0daa9f594e735e73ea8fb15c2ff15cb608c",
-                "sha256:e2cd41667ad97d4f6a2f4672d1c6a6ebada194c619253058b5f23704aaadaa82"
+                "sha256:19247ba189b72f82cf387fe5130f8d972f1c41255f87002f3198452849bf3a97",
+                "sha256:1f31c196e61dde344e322f9c0d33d1bb88c0dbaccbab5019fbb519a43d44706d"
             ],
-            "index": "pypi",
-            "version": "==5.2.3"
+            "version": "==5.2.5"
         },
         "certifi": {
             "hashes": [
