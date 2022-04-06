@@ -1,10 +1,15 @@
 from django.urls import path
 
 from pythonpro.checkout import views
+from django.views.generic.base import RedirectView
 
 app_name = 'checkout'
 urlpatterns = [
-    path('inscricao', views.bootcamp_lp, name='bootcamp_lp'),
+    path(
+        'inscricao',
+        RedirectView.as_view(url="https://pythonpro.com.br/bootcamp-devpro-matriculas-abertas/"),
+        name='bootcamp_lp'
+    ),
     path('bootcamp/inscricao-d1', views.bootcamp_lp_d1, name='bootcamp_lp_d1'),
     path('bootcamp/inscricao-djangopro-d1', views.bootcamp_lp_d1_webdev, name='bootcamp_lp_d1_webdev'),
     path('bootcamp/inscricao-d2', views.bootcamp_lp_d2, name='bootcamp_lp_d2'),
@@ -16,5 +21,9 @@ urlpatterns = [
     path(
         'curso-desenvolvimento-web-django-50-off', views.webdev_landing_page_50_off, name='webdev_landing_page_50_off'
     ),
-    path('curso-de-django', views.webdev_landing_page, name='webdev_landing_page'),
+    path(
+        'curso-de-django',
+        RedirectView.as_view(url="https://pythonpro.com.br/curso-djangopro/"),
+        name='webdev_landing_page'
+    ),
 ]
