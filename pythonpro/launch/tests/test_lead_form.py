@@ -81,7 +81,7 @@ def resp_with_user(client_with_user, logged_user, cohort, subscribe_with_no_role
 
 def test_user_first_name(resp_with_user, logged_user, subscribe_with_no_role, cohort):
     subscribe_with_no_role.assert_called_once_with(
-        resp_with_user.cookies['sessionid'].value,
+        None,
         'Moacir',
         logged_user.email,
         f'turma-{cohort.slug}-semana-do-programador',

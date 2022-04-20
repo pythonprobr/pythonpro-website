@@ -65,14 +65,14 @@ def test_should_call_update_when_with_correct_parameters(subscribe_with_no_role,
 
 # TODO: move this phone tests do generic context
 def test_should_call_update_when_logged_with_correct_parameters(subscribe_with_no_role, client_with_user):
-    resp_with_user = client_with_user.post(
+    client_with_user.post(
         reverse('pages:bootcamp_vip_landing_page'),
         {'name': 'Moacir', 'email': 'moacir@python.pro.br', 'phone': '(11) 99999-9999'},
         secure=True
     )
 
     subscribe_with_no_role.assert_called_with(
-        resp_with_user.cookies['sessionid'].value,
+        None,
         'Moacir',
         'moacir@python.pro.br',
         mock.ANY,
