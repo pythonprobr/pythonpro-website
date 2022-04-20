@@ -120,7 +120,6 @@ MIDDLEWARE = [
     'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'pythonpro.analytics.middleware.AnalyticsMiddleware',
 ]
 
 if DEBUG:

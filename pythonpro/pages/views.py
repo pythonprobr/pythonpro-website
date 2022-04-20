@@ -1,14 +1,14 @@
 from datetime import timedelta
-from inflection import underscore
 
-from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.views.generic import FormView, TemplateView
 from django_pagarme import facade
+from inflection import underscore
 
 from pythonpro.cohorts.facade import find_most_recent_cohort
-from pythonpro.pages.forms import NameEmailForm, NameEmailPhoneForm
 from pythonpro.domain.subscription_domain import subscribe_with_no_role
+from pythonpro.pages.forms import NameEmailForm, NameEmailPhoneForm
 
 
 class TemplateNameMixin:
@@ -36,8 +36,7 @@ class BaseLandingPageView(TemplateNameMixin, FormView):
                 kwargs['id'] = self.request.user.id
             kwargs['phone'] = f"+55{form.cleaned_data['phone']}"
 
-        session_id = self.request.session.session_key
-        subscribe_with_no_role.delay(session_id, *args, **kwargs)
+        subscribe_with_no_role.delay(None, *args, **kwargs)
         return super().form_valid(form)
 
 

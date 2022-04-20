@@ -247,7 +247,7 @@ def subscribe_to_waiting_list(session_id, user: _User, phone: str, source: str) 
     """
     _core_facade.subscribe_to_waiting_list(user, source)
     subscribe_with_no_role.delay(
-        session_id, user.first_name, user.email, 'lista-de-espera', id=user.id, phone=phone
+        None, user.first_name, user.email, 'lista-de-espera', id=user.id, phone=phone
     )
 
 
@@ -264,9 +264,9 @@ def subscribe_anonymous_user_to_waiting_list(session_id, email: str, name: str, 
     try:
         user = _core_facade.find_user_by_email(email)
     except _User.DoesNotExist:
-        subscribe_with_no_role.delay(session_id, name, email, 'lista-de-espera', phone=phone)
+        subscribe_with_no_role.delay(None, name, email, 'lista-de-espera', phone=phone)
     else:
-        subscribe_to_waiting_list(session_id, user, phone, source)
+        subscribe_to_waiting_list(None, user, phone, source)
 
 
 def activate_user(user: _User, source: str) -> None:
