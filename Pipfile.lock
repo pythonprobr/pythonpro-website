@@ -92,10 +92,10 @@
         },
         "billiard": {
             "hashes": [
-                "sha256:299de5a8da28a783d51b197d496bef4f1595dd023a93a4f59dde1886ae905547",
-                "sha256:87103ea78fa6ab4d5c751c4909bcff74617d985de7fa8b672cf8618afd5a875b"
+                "sha256:344d9a1d7d3addf171eb2c596c9e98d1eff81b0e03f1f9398939a3518ca263a9",
+                "sha256:5d48c4168456d906c0057f2facc1f6316daa26d611b4b37766d5112057efa22d"
             ],
-            "version": "==3.6.4.0"
+            "version": "==4.0.0"
         },
         "boto3": {
             "hashes": [
@@ -988,10 +988,10 @@
         },
         "billiard": {
             "hashes": [
-                "sha256:299de5a8da28a783d51b197d496bef4f1595dd023a93a4f59dde1886ae905547",
-                "sha256:87103ea78fa6ab4d5c751c4909bcff74617d985de7fa8b672cf8618afd5a875b"
+                "sha256:344d9a1d7d3addf171eb2c596c9e98d1eff81b0e03f1f9398939a3518ca263a9",
+                "sha256:5d48c4168456d906c0057f2facc1f6316daa26d611b4b37766d5112057efa22d"
             ],
-            "version": "==3.6.4.0"
+            "version": "==4.0.0"
         },
         "celery": {
             "hashes": [
