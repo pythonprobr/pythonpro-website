@@ -636,11 +636,10 @@
         },
         "posthog": {
             "hashes": [
-                "sha256:0defbfd59f2426e5b5825e595d607b7318e7d188e0b9a525f3b4eb0e79391ddb",
-                "sha256:a4d0966b8fb40c24e8472089b5da50d8f4ffdeb5c9076aceadf0dd8df43d8ed9"
+                "sha256:9804d8b427024f6444773e77ccbb902569e68b821a7bc71550cb9f47463e40be",
+                "sha256:d924276c6f906be51b95d451584ee062121adb10f587e043d63421e21f7a3422"
             ],
-            "index": "pypi",
-            "version": "==1.4.6"
+            "version": "==1.4.7"
         },
         "prompt-toolkit": {
             "hashes": [
