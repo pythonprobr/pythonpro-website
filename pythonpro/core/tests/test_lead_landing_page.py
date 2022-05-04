@@ -224,11 +224,6 @@ def test_should_has_a_normal_version(resp):
     dj_assert_template_used(resp, 'core/lead_landing_page.html')
 
 
-def test_should_has_a_lite_version(client):
-    resp = client.get(reverse('core:lead_landing_lite'))
-    dj_assert_template_used(resp, 'core/lead_landing_lite_page.html')
-
-
 def test_should_use_lead_form_with_no_offer(client):
     resp = client.get(reverse('core:lead_landing_with_no_offer'))
     dj_assert_not_contains(resp, reverse('core:lead_form') + '"')
@@ -320,3 +315,35 @@ def resp_with_utm(client, qs_with_utms):
 
 def test_should_send_utms_to_form_action(qs_with_utms, resp_with_utm):
     dj_assert_contains(resp_with_utm, qs_with_utms)
+
+
+def test_lead_creation_with_no_registration_status_code(client):
+    resp = client.get(reverse('core:lead_landing_with_no_registration'))
+    assert 200 == resp.status_code
+
+
+def test_lead_creation_with_no_registration(create_lead_mock, fake, client):
+    name = fake.name()
+    email = fake.email()
+    url = reverse('core:lead_landing_with_no_registration')
+    url = url + '?utm_source=facebook&utm_medium=trafego-organico&utm_campaign=L12'
+
+    client.post(
+        url,
+        data={
+            'first_name': name,
+            'email': email,
+            'phone': '(11)966922655',
+        },
+        secure=True
+    )
+
+    create_lead_mock.assert_called_once_with(
+        name,
+        email,
+        'utm_source=facebook',
+        'utm_medium=trafego-organico',
+        'utm_campaign=L12',
+        phone='11966922655',
+        utm_source='facebook',
+    )
