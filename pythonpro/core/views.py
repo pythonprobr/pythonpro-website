@@ -11,6 +11,7 @@ from django_sitemaps import Sitemap
 from rolepermissions.checkers import has_role
 
 from pythonpro.core import facade as core_facade
+from pythonpro.email_marketing import facade as email_marketing_facade
 from pythonpro.core.forms import LeadForm, UserEmailForm, UserSignupForm, PythonProResetForm
 from pythonpro.core.models import User
 from pythonpro.domain import user_domain
@@ -212,3 +213,29 @@ class _PythonProResetView(PasswordResetView):
 
 
 password_reset = _PythonProResetView.as_view()
+
+
+def lead_landing_with_no_registration(request, *args, **kwargs):
+    if request.method == 'GET':
+        form_action = reverse('core:lead_landing_with_no_registration')
+        form_action = f"{form_action}?{request.GET.urlencode(safe='&')}"
+        return render(request, 'core/lead_landing_page.html', context={'form': LeadForm(), 'form_action': form_action})
+
+    source = request.GET.get('utm_source', default='unknown')
+    first_name = request.POST.get('first_name')
+    email = request.POST.get('email')
+    phone = request.POST.get('phone')
+    tags = []
+    for key, value in request.GET.items():
+        if key.startswith('utm_'):
+            tags.append(f"{key}={value}")
+
+    phone = phone.replace('(', '')
+    phone = phone.replace(')', '')
+    phone = phone.replace(' ', '')
+
+    email_marketing_facade.create_or_update_lead.delay(
+        first_name, email, phone=phone, *tags, utm_source=source
+    )
+
+    return redirect('https://pythonpro.com.br/python-birds-obrigado/')
