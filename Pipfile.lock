@@ -1111,11 +1111,10 @@
         },
         "faker": {
             "hashes": [
-                "sha256:5cefb998adcc2030f569710aa5fdcc220df33de293a7394c1a8cbc71a4be007f",
-                "sha256:9b7d5875b3081cd7782f290ae0e067c1c71cb2c47ac789155423ca88f73ae129"
+                "sha256:7b25b2b980d3f0e61c586ec6365a39c797bae095f594890cc7bfb6f5ee8e66b4",
+                "sha256:f1b6dccdd57261918830b974a7cfa5b6a9044cf05d17d57bcbc757e0220db56f"
             ],
-            "index": "pypi",
-            "version": "==13.3.5"
+            "version": "==13.11.0"
         },
         "flake8": {
             "hashes": [
