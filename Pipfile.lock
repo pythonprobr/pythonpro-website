@@ -831,11 +831,10 @@
         },
         "traitlets": {
             "hashes": [
-                "sha256:059f456c5a7c1c82b98c2e8c799f39c9b8128f6d0d46941ee118daace9eb70c7",
-                "sha256:2d313cc50a42cd6c277e7d7dc8d4d7fedd06a2c215f78766ae7b1a66277e0033"
+                "sha256:70815ecb20ec619d1af28910ade523383be13754283aef90528eb3d47b77c5db",
+                "sha256:f44b708d33d98b0addb40c29d148a761f44af740603a8fd0e2f8b5b27cf0f087"
             ],
-            "markers": "python_version >= '3.7'",
-            "version": "==5.1.1"
+            "version": "==5.2.1.post0"
         },
         "typing-extensions": {
             "hashes": [
