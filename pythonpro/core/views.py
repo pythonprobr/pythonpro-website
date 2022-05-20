@@ -3,18 +3,21 @@ from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import UpdateView
 from django_sitemaps import Sitemap
 from rolepermissions.checkers import has_role
+from django.views.decorators.http import require_http_methods
+from django.core.exceptions import PermissionDenied
 
 from pythonpro.core import facade as core_facade
 from pythonpro.email_marketing import facade as email_marketing_facade
 from pythonpro.core.forms import LeadForm, UserEmailForm, UserSignupForm, PythonProResetForm
 from pythonpro.core.models import User
 from pythonpro.domain import user_domain
+from pythonpro.memberkit.facade import create_new_subscription_without_payment, activate
 
 
 def index(request):
@@ -242,3 +245,30 @@ def lead_landing_with_no_registration(request, *args, **kwargs):
                     '?utm_source=iscas&utm_medium=trafego-organico&utm_campaign=MVP-CDP'
                     f'&nome={first_name}&email={email}&phone={phone}')
     # return redirect('https://pythonpro.com.br/python-birds-obrigado/')
+
+
+@require_http_methods(["POST"])
+def api_register_and_subscribe_fellow(request):
+    if not core_facade.is_api_key_valid(request.GET.get('key')):
+        raise PermissionDenied()
+
+    first_name = request.POST['first_name']
+    email = request.POST['email']
+    subscription_type_ids = request.POST['subscription_types']
+    source = request.POST['source']
+
+    # create user and promote to fellow
+    user = user_domain.register_lead(first_name, email, source)
+    user_domain.promote_fellow(user, 'api')
+
+    # create new subscription
+    subscription = create_new_subscription_without_payment(
+        user,
+        subscription_types=subscription_type_ids,
+        observation='Usuário registrado via API'
+    )
+
+    # activating user on memberkit
+    activate(subscription, observation='Usuário ativado via API')
+
+    return HttpResponse()

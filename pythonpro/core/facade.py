@@ -4,10 +4,10 @@ from typing import Union
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.conf import settings
 from rolepermissions.checkers import has_role
 from rolepermissions.roles import assign_role, remove_role
 
-from pythonpro import settings
 from pythonpro.absolute_uri import build_absolute_uri
 from pythonpro.core.forms import UserSignupForm
 from pythonpro.core.models import User, UserInteraction
@@ -138,6 +138,22 @@ def promote_to_webdev(user: User, source: str) -> None:
     remove_role(user, 'client')
 
 
+def promote_to_fellow(user: User, source: str) -> None:
+    """
+    Promote a user do Fellow. Raises exception in case user is a member
+    :param user:
+    """
+    if has_role(user, 'member'):
+        raise UserRoleException('User is already a member')
+    elif has_role(user, 'fellow'):
+        raise UserRoleException('User is already a fellow')
+
+    UserInteraction(category=UserInteraction.BECOME_FELLOW, source=source, user=user).save()
+    assign_role(user, 'fellow')
+    remove_role(user, 'lead')
+    remove_role(user, 'client')
+
+
 def promote_to_data_scientist(user, source):
     UserInteraction(category=UserInteraction.BECOME_DATA_SCIENTIST, source=source, user=user).save()
     assign_role(user, 'data_scientist')
@@ -255,3 +271,7 @@ def is_bootcamper(user):
 
 def is_pythonista(user):
     return has_role(user, 'pythonista')
+
+
+def is_api_key_valid(key):
+    return key == settings.LOCAL_API_KEY

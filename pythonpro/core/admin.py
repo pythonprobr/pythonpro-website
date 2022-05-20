@@ -53,13 +53,22 @@ class UserAdmin(RolePermissionsUserAdminMixin, admin.ModelAdmin):
     search_fields = ('first_name', 'email')
     ordering = ('first_name',)
     filter_horizontal = ('groups', 'user_permissions',)
-    actions = ['make_bootcamper', 'make_webdev', 'make_member', 'make_data_scientist', 'make_pythonista']
+    actions = ['make_fellow', 'make_bootcamper', 'make_webdev', 'make_member',
+               'make_data_scientist', 'make_pythonista']
 
     def make_webdev(self, request, queryset):
         from pythonpro.domain import user_domain
         for user in queryset:
             try:
                 user_domain.promote_webdev(user, 'django_admin')
+            except UserRoleException:
+                pass  # No need to handle on admin
+
+    def make_fellow(self, request, queryset):
+        from pythonpro.domain import user_domain
+        for user in queryset:
+            try:
+                user_domain.promote_fellow(user, 'django_admin')
             except UserRoleException:
                 pass  # No need to handle on admin
 

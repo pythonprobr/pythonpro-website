@@ -26,4 +26,9 @@ urlpatterns = [
     path('perfil/senha', views.profile_password, name='profile_password'),
     path('lista-de-espera', waiting_list_ty, name='waiting_list'),
     path('unsubscribe', TemplateView.as_view(template_name='core/unsubscribe.html'), name='unsubscribe'),
+    path(
+        'api/v1/register-and-subscribe',
+        views.api_register_and_subscribe_fellow,
+        name='api_register_and_subscribe_fellow'
+    ),
 ]

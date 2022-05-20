@@ -12,6 +12,7 @@ LEAD = 'lead'
 CLIENT = 'client'
 MEMBER = 'member'
 WEBDEV = 'webdev'
+FELLOW = 'fellow'
 BOOTCAMPER = 'bootcamper'
 DATA_SCIENTIST = 'data-scientist'
 PYTHONISTA = 'pythonista'
@@ -63,6 +64,11 @@ def create_or_update_member(name: str, email: str, *tags, id='0', phone=None):
 @run_until_available
 def create_or_update_webdev(name: str, email: str, *tags, id='0', phone=None):
     return create_or_update_user(name, email, WEBDEV, *tags, id=id, phone=phone)
+
+
+@run_until_available
+def create_or_update_fellow(name: str, email: str, *tags, id='0', phone=None):
+    return create_or_update_user(name, email, FELLOW, *tags, id=id, phone=phone)
 
 
 def _normalise_id(id):

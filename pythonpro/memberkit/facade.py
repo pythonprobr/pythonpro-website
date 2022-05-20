@@ -5,7 +5,7 @@ from typing import List
 from django.utils import timezone
 
 from pythonpro.memberkit import api
-from pythonpro.memberkit.models import SubscriptionType, Subscription
+from pythonpro.memberkit.models import SubscriptionType, Subscription, _ETERNAL_IN_HUMAM_LIFE_DAYS
 
 
 def synchronize_subscription_types() -> List[SubscriptionType]:
@@ -16,6 +16,21 @@ def synchronize_subscription_types() -> List[SubscriptionType]:
         )[0]
         for dct in api.list_membership_levels()
     ]
+
+
+def create_new_subscription_without_payment(
+    user, days_of_access=_ETERNAL_IN_HUMAM_LIFE_DAYS, subscription_types=[],
+    observation: str = ''
+) -> Subscription:
+
+    subscription = Subscription.objects.create(
+        status=Subscription.Status.INACTIVE,
+        subscriber=user,
+        observation=observation,
+        days_of_access=days_of_access,
+    )
+    subscription.subscription_types.set(subscription_types)
+    return subscription
 
 
 def create_new_subscription(payment, observation: str = '') -> Subscription:

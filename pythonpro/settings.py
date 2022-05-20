@@ -326,3 +326,6 @@ POSTHOG_API_KEY = config('POSTHOG_API_KEY')
 # needed to allow iframes in pixeling system
 X_FRAME_OPTIONS = 'ALLOWALL'
 XS_SHARING_ALLOWED_METHODS = ['GET']
+
+# api key for subscribe users
+LOCAL_API_KEY = config('LOCAL_API_KEY', default='')

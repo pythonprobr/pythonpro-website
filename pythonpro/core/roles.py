@@ -45,6 +45,18 @@ class Webdev(AbstractUserRole):
     }
 
 
+watch_fellow_modules = 'watch_fellow_modules'
+
+
+class Fellow(AbstractUserRole):
+    available_permissions = {
+        access_forum: True,
+        watch_lead_modules: True,
+        watch_client_modules: True,
+        watch_fellow_modules: True,
+    }
+
+
 watch_bootcamp_modules = 'watch_bootcamp_modules'
 access_cohorts = 'access_cohorts'
 
