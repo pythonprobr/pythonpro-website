@@ -134,6 +134,19 @@ def promote_webdev(user: _User, source: str) -> _User:
     return user
 
 
+def promote_fellow(user: _User, source: str) -> _User:
+    """
+    Promote a user to Fellow role and change it's role on Email Marketing. Will not fail in case API call fails.
+    :param source: source of traffic
+    :param user:
+    :return:
+    """
+    _core_facade.promote_to_fellow(user, source)
+    sync_user_on_discourse.delay(user.id)
+    _email_marketing_facade.create_or_update_fellow.delay(user.first_name, user.email, id=user.id)
+    return user
+
+
 def promote_data_scientist(user: _User, source: str) -> _User:
     """
     Promote a user to DataScientist role and change it's role on Email Marketing. Will not fail in case API call fails.
