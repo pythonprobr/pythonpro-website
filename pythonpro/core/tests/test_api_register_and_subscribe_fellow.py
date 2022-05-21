@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from django.urls import reverse
 from model_bakery import baker
@@ -51,12 +53,13 @@ def resp(
     settings.LOCAL_API_KEY = 'correct'
     resp = client.post(
         reverse('core:api_register_and_subscribe_fellow') + '?key=correct',
-        data={
+        json.dumps({
             'first_name': 'Nome',
             'email': 'teste@teste.com',
             'subscription_types': [1],
             'source': 'test',
-        }
+        }),
+        content_type="application/json"
     )
 
     return resp
