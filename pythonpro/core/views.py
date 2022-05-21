@@ -3,6 +3,7 @@ import json
 from django.conf import settings
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView
 from django.http import HttpResponseRedirect, HttpResponse
@@ -249,6 +250,7 @@ def lead_landing_with_no_registration(request, *args, **kwargs):
     # return redirect('https://pythonpro.com.br/python-birds-obrigado/')
 
 
+@csrf_exempt
 @require_http_methods(["POST"])
 def api_register_and_subscribe_fellow(request):
     if not core_facade.is_api_key_valid(request.GET.get('key')):
