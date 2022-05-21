@@ -266,6 +266,9 @@ def api_register_and_subscribe_fellow(request):
     # create user
     user = user_domain.get_or_create_user(first_name, email, source)
 
+    # promote to fellow
+    user_domain.promote_fellow(user, source)
+
     # create new subscription
     subscription = create_new_subscription_without_payment(
         user,
