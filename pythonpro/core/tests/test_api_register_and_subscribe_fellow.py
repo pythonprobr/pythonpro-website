@@ -96,3 +96,25 @@ def test_should_subscriber_has_correct_type(resp):
 
 def test_should_subscriber_has_been_activated(resp, activate_mocked):
     assert activate_mocked.called
+
+
+def test_should_able_to_subscribe_existing_user(
+    client, settings, create_or_update_lead_mock, create_or_update_fellow_mock, sync_user_delay_mock,
+    activate_mocked
+):
+    baker.make("SubscriptionType", id=1)
+    user = baker.make("core.User")
+    settings.LOCAL_API_KEY = 'correct'
+
+    resp = client.post(
+        reverse('core:api_register_and_subscribe_fellow') + '?key=correct',
+        json.dumps({
+            'first_name': user.first_name,
+            'email': user.email,
+            'subscription_types': [1],
+            'source': 'test',
+        }),
+        content_type="application/json"
+    )
+
+    assert resp.status_code == 200

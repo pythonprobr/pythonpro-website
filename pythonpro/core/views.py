@@ -258,13 +258,13 @@ def api_register_and_subscribe_fellow(request):
 
     data = json.loads(request.body.decode('utf-8'))
 
-    first_name = data['first_name']
+    first_name = data['first_name'][:29]
     email = data['email']
     subscription_type_ids = data['subscription_types']
     source = data['source']
 
-    # create user and promote to fellow
-    user = user_domain.register_lead(first_name, email, source)
+    # create user
+    user = user_domain.get_or_create_user(first_name, email, source)
 
     # create new subscription
     subscription = create_new_subscription_without_payment(

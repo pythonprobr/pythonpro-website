@@ -360,3 +360,13 @@ def sync_user_on_discourse(user_or_id):
     }
 
     requests.post(url, data={'sso': sso_payload, 'sig': signature}, headers=headers)
+
+
+def get_or_create_user(first_name, email, source='', *args, **kwargs):
+    user, _ = _User.objects.get_or_create(email=email)
+    user.first_name = first_name
+    user.email = email
+    user.source = source
+    user.save()
+
+    return user
