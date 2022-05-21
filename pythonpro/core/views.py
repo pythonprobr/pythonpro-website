@@ -1,3 +1,5 @@
+import json
+
 from django.conf import settings
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -252,14 +254,15 @@ def api_register_and_subscribe_fellow(request):
     if not core_facade.is_api_key_valid(request.GET.get('key')):
         raise PermissionDenied()
 
-    first_name = request.POST['first_name']
-    email = request.POST['email']
-    subscription_type_ids = request.POST['subscription_types']
-    source = request.POST['source']
+    data = json.loads(request.body.decode('utf-8'))
+
+    first_name = data['first_name']
+    email = data['email']
+    subscription_type_ids = data['subscription_types']
+    source = data['source']
 
     # create user and promote to fellow
     user = user_domain.register_lead(first_name, email, source)
-    user_domain.promote_fellow(user, 'api')
 
     # create new subscription
     subscription = create_new_subscription_without_payment(
