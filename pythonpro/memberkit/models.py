@@ -4,7 +4,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
-_ETERNAL_IN_HUMAM_LIFE_DAYS = 365 * 200
+YEAR_IN_DAYS = 365
+_ETERNAL_IN_HUMAM_LIFE_DAYS = YEAR_IN_DAYS * 200
 
 
 class SubscriptionType(models.Model):
@@ -13,7 +14,7 @@ class SubscriptionType(models.Model):
     email_marketing_tags = ArrayField(models.CharField(max_length=64), default=list)
     discourse_groups = ArrayField(models.CharField(max_length=64), default=list)
     include_on_cohort = models.BooleanField(default=False, verbose_name='Incluir na última turma')
-    days_of_access = models.IntegerField(default=_ETERNAL_IN_HUMAM_LIFE_DAYS)
+    days_of_access = models.IntegerField(default=YEAR_IN_DAYS)
 
     def __str__(self):
         return f'Assinatura: {self.name}'
@@ -45,7 +46,7 @@ class Subscription(models.Model):
     status = models.CharField(max_length=1, choices=Status.choices)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    days_of_access = models.IntegerField(default=_ETERNAL_IN_HUMAM_LIFE_DAYS)
+    days_of_access = models.IntegerField(default=YEAR_IN_DAYS)
     payment = models.OneToOneField('django_pagarme.PagarmePayment', on_delete=models.DO_NOTHING, null=True, blank=True)
     subscription_types = models.ManyToManyField(SubscriptionType, related_name='subscriptions')
     subscriber = models.ForeignKey(get_user_model(), on_delete=models.DO_NOTHING, null=True,
