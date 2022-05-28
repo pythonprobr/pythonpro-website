@@ -578,10 +578,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:752555fb0cb9e442054c93fd23ab2ac1b741aea30e6e990be560ef75cac55c21",
-                "sha256:93aa86c9e9e4b15dda89c4b0e7b9a3b6b854e009441a941a29d3b0202fa575bd"
+                "sha256:134dddb6e1245e3f10e5ebde40d98395e510360d64f2394d9de69170e1c4f4ec",
+                "sha256:e92965fc0745a1dcc6baa3b3a469fdd32a751fb32b2f79b6b4a3a0df0b4955ab"
             ],
-            "version": "==8.12.46"
+            "version": "==8.12.49"
         },
         "pickleshare": {
             "hashes": [
