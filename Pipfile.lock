@@ -767,11 +767,10 @@
         },
         "redis": {
             "hashes": [
-                "sha256:0107dc8e98a4f1d1d4aa00100e044287f77121a1e6d2085545c4b7fa94a7a27f",
-                "sha256:4e95f4ec5f49e636efcf20061a5a9110c20852f607cfca6865c07aaa8a739ee2"
+                "sha256:b30a2dc3f27cab69284829d6d423643beee88f279967c42e9014a2ffb7c2a84c",
+                "sha256:b989406ea786a9d151066a683b32a437a48f043c3ffd3795ec5ad9d344ee9e8c"
             ],
-            "index": "pypi",
-            "version": "==4.2.2"
+            "version": "==4.3.2"
         },
         "requests": {
             "hashes": [
