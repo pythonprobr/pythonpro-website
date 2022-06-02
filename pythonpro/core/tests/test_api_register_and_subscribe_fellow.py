@@ -24,8 +24,8 @@ def test_should_not_allow_requests_with_wrong_key(client):
 
 
 @pytest.fixture
-def create_or_update_lead_mock(mocker):
-    return mocker.patch('pythonpro.domain.user_domain._email_marketing_facade.create_or_update_lead.delay')
+def create_or_update_with_no_role_mock(mocker):
+    return mocker.patch('pythonpro.domain.user_domain._email_marketing_facade.create_or_update_with_no_role.delay')
 
 
 @pytest.fixture
@@ -45,7 +45,7 @@ def activate_mocked(mocker):
 
 @pytest.fixture
 def resp(
-    client, settings, create_or_update_lead_mock, create_or_update_fellow_mock, sync_user_delay_mock,
+    client, settings, create_or_update_with_no_role_mock, create_or_update_fellow_mock, sync_user_delay_mock,
     activate_mocked
 ):
     baker.make("SubscriptionType", id=1)
@@ -69,8 +69,8 @@ def test_should_allow_requests_with_correct_key_and_parameters(resp):
     assert 200 == resp.status_code
 
 
-def test_should_called_create_or_update_lead(resp, create_or_update_lead_mock):
-    assert create_or_update_lead_mock.callec
+def test_should_called_create_or_update_with_no_role(resp, create_or_update_with_no_role_mock):
+    assert create_or_update_with_no_role_mock.callec
 
 
 def test_should_called_create_or_update_fellow(resp, create_or_update_fellow_mock):
@@ -99,7 +99,7 @@ def test_should_subscriber_has_been_activated(resp, activate_mocked):
 
 
 def test_should_able_to_subscribe_existing_user(
-    client, settings, create_or_update_lead_mock, create_or_update_fellow_mock, sync_user_delay_mock,
+    client, settings, create_or_update_with_no_role_mock, create_or_update_fellow_mock, sync_user_delay_mock,
     activate_mocked
 ):
     baker.make("SubscriptionType", id=1)
