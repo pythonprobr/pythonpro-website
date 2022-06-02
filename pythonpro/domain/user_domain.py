@@ -374,5 +374,5 @@ def register_user(first_name, email, source='', *args, **kwargs):
     user.source = source
     user.save()
 
-    _email_marketing_facade.create_or_update_lead.delay(first_name, email)
+    _email_marketing_facade.create_or_update_with_no_role.delay(first_name, email)
     return user
