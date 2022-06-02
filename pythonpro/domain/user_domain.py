@@ -141,7 +141,12 @@ def promote_fellow(user: _User, source: str) -> _User:
     :param user:
     :return:
     """
-    _core_facade.promote_to_fellow(user, source)
+
+    try:
+        _core_facade.promote_to_fellow(user, source)
+    except _core_facade.UserRoleException:
+        pass
+
     sync_user_on_discourse.delay(user.id)
     _email_marketing_facade.create_or_update_fellow.delay(user.first_name, user.email, id=user.id)
     return user
@@ -362,11 +367,12 @@ def sync_user_on_discourse(user_or_id):
     requests.post(url, data={'sso': sso_payload, 'sig': signature}, headers=headers)
 
 
-def get_or_create_user(first_name, email, source='', *args, **kwargs):
+def register_user(first_name, email, source='', *args, **kwargs):
     user, _ = _User.objects.get_or_create(email=email)
     user.first_name = first_name
     user.email = email
     user.source = source
     user.save()
 
+    _email_marketing_facade.create_or_update_lead.delay(first_name, email)
     return user
