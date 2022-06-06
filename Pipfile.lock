@@ -382,11 +382,10 @@
         },
         "django-two-factor-auth": {
             "hashes": [
-                "sha256:3fac266d12472ac66475dd737bb18f2992484313bf56acf5a2eea5e824291ee6",
-                "sha256:44fb9f6a52dbf83229de52c6f642eb2e0feafdb919854f3dc0e7716877c340ba"
+                "sha256:b414ef51cc84335e0049e3f98ef89ac15a09187efa381f3acd321651afae95b3",
+                "sha256:d18290f02766f400537b88937df06aa0a2d6d6d37937fbfb84896c4790a9e59b"
             ],
-            "index": "pypi",
-            "version": "==1.13.2"
+            "version": "==1.14.0"
         },
         "gunicorn": {
             "hashes": [
