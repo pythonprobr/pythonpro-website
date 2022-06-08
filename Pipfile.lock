@@ -54,11 +54,10 @@
         },
         "backoff": {
             "hashes": [
-                "sha256:61928f8fa48d52e4faa81875eecf308eccfb1016b018bb6bd21e05b5d90a96c5",
-                "sha256:ccb962a2378418c667b3c979b504fdeb7d9e0d29c0579e3b13b86467177728cb"
+                "sha256:940106766389b50aa85d008a7b24051965c4aa97e46b0c3a7268b61db5896995",
+                "sha256:cf3410724f1c23e0a7fdd20fcfdd26a58d49062158d86830c8bc0b4c1ba1b27c"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
-            "version": "==1.11.1"
+            "version": "==2.1.1"
         },
         "backports.zoneinfo": {
             "hashes": [
