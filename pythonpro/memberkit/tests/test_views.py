@@ -27,7 +27,6 @@ def mock_activate(mocker):
 
 def test_migrate_page_status_code(client_with_user, mock_generater_token):
     resp = client_with_user.get(reverse('migrate_to_memberkit'))
-    dj_assert_template_used(resp, 'memberkit/migration_form.html')
     assert resp.status_code == 200
     assert not mock_generater_token.called
 
