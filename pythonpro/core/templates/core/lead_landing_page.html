@@ -80,27 +80,32 @@
           </h4>
 
           <form method="POST" action="{% autoescape off %}{{ form_action }}{% endautoescape %}" class="header__group__form__item">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            <div class="header__group__form__item__div">
-              <button class="header__group__form__button text-uppercase fw-700 main-transition">Sim, quero aprender Python!</button>
-              <div class="header__group__form__item__div__bottom"></div>
-            </div>
+              {% csrf_token %}
+              {% bootstrap_form form %}
+              <div class="header__group__form__item__div">
+                  <button class="header__group__form__button text-uppercase fw-700 main-transition">Sim, quero aprender
+                      Python!
+                  </button>
+                  <div class="header__group__form__item__div__bottom"></div>
+              </div>
           </form>
         </div>
       </div>
     </div>
-    <img class="header__mobile-bottom" src="{% static 'img/python-birds/header/header-renzo-bottom-mobile.jpg' %}" alt="Renzo Nuccitelli olhando para frente; sorriso sem mostrar os dentes; braços cruzados; camiseta preta do Python Pro; fundo amarelo">
-  </header>
+        <img class="header__mobile-bottom" src="{% static 'img/python-birds/header/header-renzo-bottom-mobile.jpg' %}"
+             alt="Renzo Nuccitelli olhando para frente; sorriso sem mostrar os dentes; braços cruzados; camiseta preta do Dev Pro; fundo amarelo">
+    </header>
 
-  <a name='carga-horaria'></a>
-  <main role="main">
+    <a name='carga-horaria'></a>
+    <main role="main">
     <section class="learning">
-      <div class="learning__group">
-        <h2 class="text-blue font-highlighted fw-900">Que Tal Aprender a Programar Com a Linguagem Mais Simples e Poderosa?</h2>
-        <h3 class="fw-500">Este é o curso de introdução a programação Python que eu venho ministrando ao longo dos anos para ensinar as pessoas a programarem.</h3>
+        <div class="learning__group">
+            <h2 class="text-blue font-highlighted fw-900">Que Tal Aprender a Programar Com a Linguagem Mais Simples e
+                Poderosa?</h2>
+            <h3 class="fw-500">Este é o curso de introdução a programação Python que eu venho ministrando ao longo dos
+                anos para ensinar as pessoas a programarem.</h3>
 
-        <div class="learning__group__content">
+            <div class="learning__group__content">
           <img class="learning__group__content__detail-top" src="{% static 'img/python-birds/learning/learning-detail-top.jpg' %}" alt="Detalhe de pedaço de madeira com 2 pontas ao lado direito">
           <img class="learning__group__content__detail-right" src="{% static 'img/python-birds/learning/learning-detail-right.jpg' %}" alt="Concreto no formato de um quadrado com furo grande ao centro">
 
@@ -142,7 +147,7 @@
             {% static 'img/python-birds/learning/learning-2_ihqj3j_c_scale,w_349.jpg' %} 349w,
             {% static 'img/python-birds/learning/learning-2_ihqj3j_c_scale,w_659.jpg' %} 659w"
             src="{% static 'img/python-birds/learning/learning-2_ihqj3j_c_scale,w_659.jpg' %}"
-            alt="Renzo Nuccitelli; sorrindo; fazendo 'joinha'; camiseta do Python Pro'">
+            alt="Renzo Nuccitelli; sorrindo; fazendo 'joinha'; camiseta do Dev Pro'">
 
             <img class="learning__group__content__detail-bottom" src="{% static 'img/python-birds/learning/learning-detail-bottom.jpg' %}" alt="Detalhe de pedaço de madeira com 2 pontas ao lado direito e abaixo">
         </div>

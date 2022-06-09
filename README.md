@@ -1,4 +1,4 @@
-# Python Pro Website
+# Dev Pro Website
 
 Source code of website www.python.pro.br
 
@@ -70,8 +70,8 @@ docker-compose up -d
 
 #License Details
 
-The AGPL license here cover everything relate to source code but Python Pro logo and Image.
-So you need to change this data for you own trademark.
+The AGPL license here cover everything relate to source code but Dev Pro logo and Image. So you need to change this data
+for you own trademark.
 
 
 Have fun!

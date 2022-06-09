@@ -1,6 +1,6 @@
 Olá {{ user.first_name }},
 
-Recebemos a confirmação de seu pagamento para a próxima turma Python Pro.
+Recebemos a confirmação de seu pagamento para a próxima turma Dev Pro.
 
 Faça login com sua conta e acesse a página de detalhes da turma em {{ cohort_detail_url }} para conferir as datas das atividades.
 

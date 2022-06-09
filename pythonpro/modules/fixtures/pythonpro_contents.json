@@ -143,8 +143,8 @@
     "pk": 1,
     "fields": {
       "order": 0,
-      "title": "Curso Python Pro",
-      "description": "V\u00eddeo explicando como funciona o curso Python Pro.",
+      "title": "Curso Dev Pro",
+      "description": "V\u00eddeo explicando como funciona o curso Dev Pro.",
       "slug": "curso-python-pro",
       "chapter": 1,
       "vimeo_id": "258681672",

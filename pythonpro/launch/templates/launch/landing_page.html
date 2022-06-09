@@ -43,57 +43,75 @@
   {#    Google Tag Manager#}
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','{{GOOGLE_TAG_MANAGER_ID}}');</script>
-  {#     End Google Tag Manager#}
+      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', '{{GOOGLE_TAG_MANAGER_ID}}');</script>
+    {#     End Google Tag Manager#}
 
-  {% block extrahead %}{% endblock extrahead %}
+    {% block extrahead %}{% endblock extrahead %}
 </head>
 <body>
-  {% block body %}
-  <nav class="navbar">
-    <img class="navbar__icon" src="{% static 'svg/spp/logo-python-pro.svg' %}" alt="Logo Python Pro">
-  </nav>
+{% block body %}
+    <nav class="navbar">
+        <img class="navbar__icon" src="{% static 'svg/spp/logo-python-pro.svg' %}" alt="Logo Dev Pro">
+    </nav>
 
-  <header class="header">
-    <div class="header__content">
-      <h1 class="header__content__title text-uppercase fw-300 font-highlighted">Descubra o caminho para se tornar um <span class="fw-800">programador profissional em pouco tempo</span></h1>
-      <h2 class="header__content__subtitle fw-400">A <span class="text-underline">Semana do Programador Profissional</span> é um evento gratuito onde vou te mostrar o passo a passo que vai te dar acesso a um mercado que paga altos salários e milhares de vagas em aberto!</h2>
-      <h3 class="header__content__description font-highlighted fw-700">Preencha os campos abaixo para garantir sua vaga:</h3>
-    </div>
-
-    <img class="header__renzo-mobile" src="{% static 'img/spp/header/renzo-nuccitelli-mobile.png' %}" alt="Renzo Nuccitelli com camiseta preta da Python Pro, sorrindo, indicador da mão direita apontando para baixo">
-
-    <div class="header__content__form">
-      <form action="{% url 'launch:lead_form' %}" method="POST" class="header__content__form__item">{% csrf_token %}
-        <input class="form__group__item__input" name="name" type="text" placeholder="Nome" value="{{ user.first_name }}" required>
-          <input class="form__group__item__input" type="email" name="email" placeholder="Insira seu melhor e-mail" inputmode="email" value="{{ user.email }}" required>
-        <button type="submit" class="header__content__form__item__button text-uppercase fw-700 main-transition">Sim, eu quero me tornar um profissional!</button>
-      </form>
-    </div>
-
-    <div class="header__date">
-      <span class="header__date__title text-uppercase fw-800 font-highlighted">10 a 14 de agosto</span>
-    </div>
-
-    <div class="header__disclaimer">
-      <span class="header__disclaimer__title text-uppercase fw-800">100% online e grátis</span>
-    </div>
-  </header>
-
-  <img class="header__image" src="{% static 'img/spp/header/renzo-nuccitelli-desktop.jpg' %}" alt="Renzo Nuccitelli com camiseta preta da Python Pro, sorrindo, indicador da mão direita apontando para baixo. Círculo azul atrás">
-
-  <main role="main">
-    <section class="countdown">
-      <div class="countdown__group">
-        <div class="countdown__group__content">
-          <h2 class="countdown__group__title text-uppercase text-green fw-800">A contagem regressiva <span class="break-mobile text-blue">já começou.</span></h2>
-          <h3 class="countdown__group__subtitle fw-300 text-blue">Não perca tempo e garanta já a sua vaga :)</h3>
-          <img class="countdown__group__content__detail" src="{% static 'img/spp/countdown/countdown-detail.png' %}" alt="Pequenos círculos na cor amarela formando um quadrado">
+    <header class="header">
+        <div class="header__content">
+            <h1 class="header__content__title text-uppercase fw-300 font-highlighted">Descubra o caminho para se tornar
+                um <span class="fw-800">programador profissional em pouco tempo</span></h1>
+            <h2 class="header__content__subtitle fw-400">A <span class="text-underline">Semana do Programador Profissional</span>
+                é um evento gratuito onde vou te mostrar o passo a passo que vai te dar acesso a um mercado que paga
+                altos salários e milhares de vagas em aberto!</h2>
+            <h3 class="header__content__description font-highlighted fw-700">Preencha os campos abaixo para garantir sua
+                vaga:</h3>
         </div>
 
-        <div class="countdown__group__numbers">
+        <img class="header__renzo-mobile" src="{% static 'img/spp/header/renzo-nuccitelli-mobile.png' %}"
+             alt="Renzo Nuccitelli com camiseta preta da Dev Pro, sorrindo, indicador da mão direita apontando para baixo">
+
+        <div class="header__content__form">
+            <form action="{% url 'launch:lead_form' %}" method="POST"
+                  class="header__content__form__item">{% csrf_token %}
+                <input class="form__group__item__input" name="name" type="text" placeholder="Nome"
+                       value="{{ user.first_name }}" required>
+                <input class="form__group__item__input" type="email" name="email" placeholder="Insira seu melhor e-mail"
+                       inputmode="email" value="{{ user.email }}" required>
+                <button type="submit" class="header__content__form__item__button text-uppercase fw-700 main-transition">
+                    Sim, eu quero me tornar um profissional!
+                </button>
+            </form>
+        </div>
+
+        <div class="header__date">
+            <span class="header__date__title text-uppercase fw-800 font-highlighted">10 a 14 de agosto</span>
+        </div>
+
+        <div class="header__disclaimer">
+            <span class="header__disclaimer__title text-uppercase fw-800">100% online e grátis</span>
+        </div>
+    </header>
+
+    <img class="header__image" src="{% static 'img/spp/header/renzo-nuccitelli-desktop.jpg' %}"
+         alt="Renzo Nuccitelli com camiseta preta da Dev Pro, sorrindo, indicador da mão direita apontando para baixo. Círculo azul atrás">
+
+    <main role="main">
+        <section class="countdown">
+            <div class="countdown__group">
+                <div class="countdown__group__content">
+                    <h2 class="countdown__group__title text-uppercase text-green fw-800">A contagem regressiva <span
+                            class="break-mobile text-blue">já começou.</span></h2>
+                    <h3 class="countdown__group__subtitle fw-300 text-blue">Não perca tempo e garanta já a sua vaga
+                        :)</h3>
+                    <img class="countdown__group__content__detail"
+                         src="{% static 'img/spp/countdown/countdown-detail.png' %}"
+                         alt="Pequenos círculos na cor amarela formando um quadrado">
+                </div>
+
+                <div class="countdown__group__numbers">
           <div class="countdown__group__numbers__item">
             <span class="countdown__group__numbers__item__time text-blue fw-900 font-highlighted days" id="days"></span>
             <span class="countdown__group__numbers__item__description text-uppercase text-green fw-700">Dias</span>
@@ -136,27 +154,36 @@
 
         <form action="{% url 'launch:lead_form' %}" method="rPOST" class="form__group__item">{% csrf_token %}
           <input class="form__group__item__input" name="name" type="text" placeholder="Nome" value="{{ user.first_name }}" required>
-          <input class="form__group__item__input" type="email" name="email" placeholder="Insira seu melhor e-mail" inputmode="email" value="{{ user.email }}" required>
-          <button type="submit" class="form__group__item__button text-uppercase fw-700 main-transition">Sim, eu quero me tornar um profissional!</button>
+            <input class="form__group__item__input" type="email" name="email" placeholder="Insira seu melhor e-mail"
+                   inputmode="email" value="{{ user.email }}" required>
+            <button type="submit" class="form__group__item__button text-uppercase fw-700 main-transition">Sim, eu quero
+                me tornar um profissional!
+            </button>
         </form>
       </div>
     </section>
 
-    <footer class="footer">
-      <div class="footer__group">
-        <img class="footer__group__detail-left-desktop" src="{% static 'img/spp/footer/detail-top-footer.png' %}" alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
-        <div class="footer__group__header">
-          <img class="footer__group__header__logo" src="{% static 'svg/spp/logo-python-pro.svg' %}" alt="Logo Python Pro">
-          <h2 class="footer__group__header__title fw-700 text-blue text-uppercase">Semana do Programador Profissional</h2>
-          <h3 class="footer__group__header__subtitle fw-700 text-blue text-uppercase">10 a 14 de agosto</h3>
-        </div>
+        <footer class="footer">
+            <div class="footer__group">
+                <img class="footer__group__detail-left-desktop"
+                     src="{% static 'img/spp/footer/detail-top-footer.png' %}"
+                     alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
+                <div class="footer__group__header">
+                    <img class="footer__group__header__logo" src="{% static 'svg/spp/logo-python-pro.svg' %}"
+                         alt="Logo Dev Pro">
+                    <h2 class="footer__group__header__title fw-700 text-blue text-uppercase">Semana do Programador
+                        Profissional</h2>
+                    <h3 class="footer__group__header__subtitle fw-700 text-blue text-uppercase">10 a 14 de agosto</h3>
+                </div>
 
-        <div class="footer__group__content">
-          <div class="footer__group__content__item">
-            <img class="footer__group__content__item__icon" src="{% static 'img/spp/footer/phone.jpg' %}" alt="Ícone de um telefone na cor verde abacate">
-            <div>
-              <h4 class="footer__group__content__item__title fw-700 text-blue text-uppercase">Ligue para gente</h4>
-              <p class="footer__group__content__item__description fw-300 text-gray">+55 12 99141-5422</p>
+                <div class="footer__group__content">
+                    <div class="footer__group__content__item">
+                        <img class="footer__group__content__item__icon" src="{% static 'img/spp/footer/phone.jpg' %}"
+                             alt="Ícone de um telefone na cor verde abacate">
+                        <div>
+                            <h4 class="footer__group__content__item__title fw-700 text-blue text-uppercase">Ligue para
+                                gente</h4>
+                            <p class="footer__group__content__item__description fw-300 text-gray">+55 12 99141-5422</p>
             </div>
           </div>
 
@@ -168,26 +195,34 @@
             </div>
           </div>
 
-          <div class="footer__group__content__item">
-            <img class="footer__group__content__item__icon" src="{% static 'img/spp/footer/cpnj.jpg' %}" alt="Ícone de um globo na cor verde abacate">
-            <div>
-              <h4 class="footer__group__content__item__title fw-700 text-blue text-uppercase">CNPJ</h4>
-              <p class="footer__group__content__item__description fw-300 text-gray">31.080.715/0001-25</p>
+                    <div class="footer__group__content__item">
+                        <img class="footer__group__content__item__icon" src="{% static 'img/spp/footer/cpnj.jpg' %}"
+                             alt="Ícone de um globo na cor verde abacate">
+                        <div>
+                            <h4 class="footer__group__content__item__title fw-700 text-blue text-uppercase">CNPJ</h4>
+                            <p class="footer__group__content__item__description fw-300 text-gray">31.080.715/0001-25</p>
+                        </div>
+                    </div>
+                </div>
+
+                <img class="footer__renzo-mobile lazyload"
+                     data-src="{% static 'img/spp/footer/renzo-nuccitelli-footer.png' %}"
+                     alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Dev Pro. Imagem pequena">
+
+                <img class="footer__group__detail" src="{% static 'img/spp/footer/footer-group-detail.jpg' %}"
+                     alt="Pequenos círculos na cor verde abacate formando um retângulo">
             </div>
-          </div>
-        </div>
 
-        <img class="footer__renzo-mobile lazyload" data-src="{% static 'img/spp/footer/renzo-nuccitelli-footer.png' %}" alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Python Pro. Imagem pequena">
+            <div class="footer__copyright">
+                <p class="footer__copyright__title fw-700 text-uppercase text-copyright">&copy; Dev Pro. 2020 Todos os
+                    direitos reservados.</p>
+                <img class="footer__copyright__renzo-desktop" src=""
+                     alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Dev Pro. Imagem grande">
+            </div>
 
-        <img class="footer__group__detail" src="{% static 'img/spp/footer/footer-group-detail.jpg' %}" alt="Pequenos círculos na cor verde abacate formando um retângulo">
-      </div>
-
-      <div class="footer__copyright">
-        <p class="footer__copyright__title fw-700 text-uppercase text-copyright">&copy; Python Pro. 2020 Todos os direitos reservados.</p>
-        <img class="footer__copyright__renzo-desktop" src="" alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Python Pro. Imagem grande">
-      </div>
-
-      <img class="footer__group__detail-right-desktop lazyload" data-src="{% static 'img/spp/footer/renzo-nuccitelli-footer-desktop.png' %}" alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
+            <img class="footer__group__detail-right-desktop lazyload"
+                 data-src="{% static 'img/spp/footer/renzo-nuccitelli-footer-desktop.png' %}"
+                 alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
     </footer>
   </main>
 

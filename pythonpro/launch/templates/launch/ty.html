@@ -86,27 +86,41 @@
   </script>
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44718512-1"></script>
-  {#    Google Tag Manager#}
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','{{GOOGLE_TAG_MANAGER_ID}}');</script>
-  {#     End Google Tag Manager#}
+    {#    Google Tag Manager#}
+    <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', '{{GOOGLE_TAG_MANAGER_ID}}');</script>
+    {#     End Google Tag Manager#}
 </head>
 <body>
-  <nav class="navbar">
-    <img class="navbar__icon" src="{% static 'svg/spp/logo-python-pro.svg' %}" alt="Logo Python Pro">
-  </nav>
+<nav class="navbar">
+    <img class="navbar__icon" src="{% static 'svg/spp/logo-python-pro.svg' %}" alt="Logo Dev Pro">
+</nav>
 
-  <header class="header-thank-you">
+<header class="header-thank-you">
     <div class="header-thank-you__content">
-      <h1 class="header-thank-you__group__title fw-900 text-green text-uppercase font-highlighted">Parabéns! <span class="break text-white">Sua inscrição está feita!</span></h1>
-      <h2 class="header-thank-you__group__subtitle fw-300 text-white">Eu enviei todas as instruções detalhadas de como o workshop vai funcionar lá no seu email. Mas, antes de ir até lá, é <b class="text-green"><u>muito importante</u> que você cumpra os passos abaixo.</b></h2>
+        <h1 class="header-thank-you__group__title fw-900 text-green text-uppercase font-highlighted">Parabéns! <span
+                class="break text-white">Sua inscrição está feita!</span></h1>
+        <h2 class="header-thank-you__group__subtitle fw-300 text-white">Eu enviei todas as instruções detalhadas de como
+            o workshop vai funcionar lá no seu email. Mas, antes de ir até lá, é <b class="text-green"><u>muito
+                importante</u> que você cumpra os passos abaixo.</b></h2>
     </div>
 
     <div class="header-thank-you__video">
-      <iframe class="header-thank-you__video__item" src="https://www.youtube.com/embed/mVSI3QZWcU0?autoplay=1&controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe class="header-thank-you__video__item"
+                src="https://www.youtube.com/embed/mVSI3QZWcU0?autoplay=1&controls=0" frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
     </div>
   </header>
 
@@ -176,27 +190,34 @@
     </section>
 
     <section class="form form--thank-you">
-      <div class="form__group form__group--thank-you">
-        <h2 class="form__group__title form__group__title--thank-you fw-900 text-green text-uppercase font-highlighted">Nos vemos no dia 10!</h2>
-        <h2 class="form__group__title form__group__title--thank-you fw-900 text-blue text-uppercase font-highlighted">Abraços :)</h2>
-      </div>
+        <div class="form__group form__group--thank-you">
+            <h2 class="form__group__title form__group__title--thank-you fw-900 text-green text-uppercase font-highlighted">
+                Nos vemos no dia 10!</h2>
+            <h2 class="form__group__title form__group__title--thank-you fw-900 text-blue text-uppercase font-highlighted">
+                Abraços :)</h2>
+        </div>
     </section>
 
-    <footer class="footer">
-      <div class="footer__group">
-        <img class="footer__group__detail-left-desktop" src="{% static 'img/spp/footer/detail-top-footer.png' %}" alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
-        <div class="footer__group__header">
-          <img class="footer__group__header__logo" src="{% static 'svg/spp/logo-python-pro.svg' %}" alt="Logo Python Pro">
-          <h2 class="footer__group__header__title fw-700 text-blue text-uppercase">Semana do Programador Profissional</h2>
-          <h3 class="footer__group__header__subtitle fw-700 text-blue text-uppercase">10 a 14 de agosto</h3>
-        </div>
+      <footer class="footer">
+          <div class="footer__group">
+              <img class="footer__group__detail-left-desktop" src="{% static 'img/spp/footer/detail-top-footer.png' %}"
+                   alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
+              <div class="footer__group__header">
+                  <img class="footer__group__header__logo" src="{% static 'svg/spp/logo-python-pro.svg' %}"
+                       alt="Logo Dev Pro">
+                  <h2 class="footer__group__header__title fw-700 text-blue text-uppercase">Semana do Programador
+                      Profissional</h2>
+                  <h3 class="footer__group__header__subtitle fw-700 text-blue text-uppercase">10 a 14 de agosto</h3>
+              </div>
 
-        <div class="footer__group__content">
-          <div class="footer__group__content__item">
-            <img class="footer__group__content__item__icon" src="{% static 'img/spp/footer/phone.jpg' %}" alt="Ícone de um telefone na cor verde abacate">
-            <div>
-              <h4 class="footer__group__content__item__title fw-700 text-blue text-uppercase">Ligue para gente</h4>
-              <p class="footer__group__content__item__description fw-300 text-gray">+55 12 99141-5422</p>
+              <div class="footer__group__content">
+                  <div class="footer__group__content__item">
+                      <img class="footer__group__content__item__icon" src="{% static 'img/spp/footer/phone.jpg' %}"
+                           alt="Ícone de um telefone na cor verde abacate">
+                      <div>
+                          <h4 class="footer__group__content__item__title fw-700 text-blue text-uppercase">Ligue para
+                              gente</h4>
+                          <p class="footer__group__content__item__description fw-300 text-gray">+55 12 99141-5422</p>
             </div>
           </div>
 
@@ -208,26 +229,33 @@
             </div>
           </div>
 
-          <div class="footer__group__content__item">
-            <img class="footer__group__content__item__icon" src="{% static 'img/spp/footer/cpnj.jpg' %}" alt="Ícone de um globo na cor verde abacate">
-            <div>
-              <h4 class="footer__group__content__item__title fw-700 text-blue text-uppercase">CNPJ</h4>
-              <p class="footer__group__content__item__description fw-300 text-gray">31.080.715/0001-25</p>
-            </div>
+                  <div class="footer__group__content__item">
+                      <img class="footer__group__content__item__icon" src="{% static 'img/spp/footer/cpnj.jpg' %}"
+                           alt="Ícone de um globo na cor verde abacate">
+                      <div>
+                          <h4 class="footer__group__content__item__title fw-700 text-blue text-uppercase">CNPJ</h4>
+                          <p class="footer__group__content__item__description fw-300 text-gray">31.080.715/0001-25</p>
+                      </div>
+                  </div>
+              </div>
+
+              <img class="footer__renzo-mobile" src="{% static 'img/spp/footer/renzo-nuccitelli-footer.jpg' %}"
+                   alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Dev Pro. Imagem pequena">
+
+              <img class="footer__group__detail" src="{% static 'img/spp/footer/footer-group-detail.jpg' %}"
+                   alt="Pequenos círculos na cor verde abacate formando um retângulo">
           </div>
-        </div>
 
-        <img class="footer__renzo-mobile" src="{% static 'img/spp/footer/renzo-nuccitelli-footer.jpg' %}" alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Python Pro. Imagem pequena">
+          <div class="footer__copyright">
+              <p class="footer__copyright__title fw-700 text-uppercase text-copyright">&copy; Dev Pro. 2020 Todos os
+                  direitos reservados.</p>
+              <img class="footer__copyright__renzo-desktop" src=""
+                   alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Dev Pro. Imagem grande">
+          </div>
 
-        <img class="footer__group__detail" src="{% static 'img/spp/footer/footer-group-detail.jpg' %}" alt="Pequenos círculos na cor verde abacate formando um retângulo">
-      </div>
-
-      <div class="footer__copyright">
-        <p class="footer__copyright__title fw-700 text-uppercase text-copyright">&copy; Python Pro. 2020 Todos os direitos reservados.</p>
-        <img class="footer__copyright__renzo-desktop" src="" alt="Renzo Nuccitelli sorrindo, fazendo 'joinha', com camiseta preta do Python Pro. Imagem grande">
-      </div>
-
-      <img class="footer__group__detail-right-desktop" src="{% static 'img/spp/footer/renzo-nuccitelli-footer-desktop.png' %}" alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
+          <img class="footer__group__detail-right-desktop"
+               src="{% static 'img/spp/footer/renzo-nuccitelli-footer-desktop.png' %}"
+               alt="Detalhe grande com vários círculos pequenos na cor verde abacate formando um quadrado">
     </footer>
   </main>
 </body>
