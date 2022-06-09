@@ -31,7 +31,7 @@ django-bootstrap4 = "*"
 celery = "*"
 redis = "*"
 inflection = "*"
-django-two-factor-auth = "*"
+django-two-factor-auth = {extras = ["phonenumberslite"], version = "*"}
 django-recaptcha = "*"
 django-pagarme = "*"
 django-redis = "*"
@@ -52,4 +52,4 @@ flower = "*"
 pytest-responses = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"
