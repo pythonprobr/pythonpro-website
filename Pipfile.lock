@@ -620,11 +620,10 @@
         },
         "posthog": {
             "hashes": [
-                "sha256:2423283793af6e92d160a2ff21c9aecdcb5ccc18cfc27011fc0b50def2fb4ab2",
-                "sha256:520a147945ca6bb8894a423edea1fe99fb7ec9ee1d66669bcf8b9973f84a90de"
+                "sha256:6f99ca20da4e343be80b7535a719a2652b77cf06c10406e66e3340a9c278f928",
+                "sha256:f2dde13313193a735fc968acfca8298afb78efb5fe67780c496d533211a8f280"
             ],
-            "index": "pypi",
-            "version": "==1.4.8"
+            "version": "==1.4.9"
         },
         "prompt-toolkit": {
             "hashes": [
