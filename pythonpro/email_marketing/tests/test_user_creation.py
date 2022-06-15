@@ -35,7 +35,7 @@ def resps(setup_active_settings):
 def test_lists(resps):
     lists = facade._get_lists()
     assert lists == {
-        'Python Pro': '1', 'Python Birds': '2', 'Pytools': '3', 'Prospects': '4', 'Plantão de Dúvidas': '5',
+        'Dev Pro': '1', 'Python Birds': '2', 'Pytools': '3', 'Prospects': '4', 'Plantão de Dúvidas': '5',
         'Usuários Ativos': '12'
     }
 
@@ -253,7 +253,7 @@ _user_not_found = {
 
 _lists = {
     '0': {
-        'id': '1', 'name': 'Python Pro', 'cdate': '2019-11-28 10:06:18', 'private': '0', 'userid': '1',
+        'id': '1', 'name': 'Dev Pro', 'cdate': '2019-11-28 10:06:18', 'private': '0', 'userid': '1',
         'subscriber_count': 1
     },
     '1': {

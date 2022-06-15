@@ -23,26 +23,26 @@ jobs:
         ports: [ '5432:5432' ]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8
-    - name: Copying configurations
-      run: |
-        cp contrib/env-sample .env
-    - name: Install dependencies
-      run: |
-        pip install pipenv
-        pipenv sync --dev
-    - name: Lint with flake8
-      run: |
-        pipenv run flake8 .
-    - name: Test with pytest
-      run: |
-        pipenv run pytest pythonpro --cov=pythonpro
-    - name: Posting Coverage
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      run: |
-        pipenv run codecov
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+      - name: Copying configurations
+        run: |
+          cp contrib/env-sample .env
+      - name: Install dependencies
+        run: |
+          pip install pipenv
+          pipenv sync --dev
+      - name: Lint with flake8
+        run: |
+          pipenv run flake8 .
+      - name: Test with pytest
+        run: |
+          pipenv run pytest pythonpro --cov=pythonpro
+      - name: Posting Coverage
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: |
+          pipenv run codecov

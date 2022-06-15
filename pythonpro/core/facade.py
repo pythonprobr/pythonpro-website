@@ -1,10 +1,10 @@
 from datetime import datetime
 from typing import Union
 
+from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.conf import settings
 from rolepermissions.checkers import has_role
 from rolepermissions.roles import assign_role, remove_role
 
@@ -62,7 +62,7 @@ def register_lead(first_name: str, email: str, source: str) -> User:
 def save_and_sent_password_email(first_name, email, source):
     form = validate_user(first_name, email, source)
     user = form.save()
-    subject = 'Confira sua senha do Python Pro'
+    subject = 'Confira sua senha do Dev Pro'
     change_password_uri = build_absolute_uri(reverse('core:profile_password'))
     ctx = {
         'first_name': first_name,

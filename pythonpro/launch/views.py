@@ -119,7 +119,7 @@ def cpl4(request):
     title = 'AULA #4: Voando com Python + Resumão'
     description = (
         'Por fim, vamos ver o nosso projeto funcionando! Além disso, nesta aula vamos fazer um '
-        'resumão e te explicar tudo sobre as matrículas do Bootcamp Python Pro'
+        'resumão e te explicar tudo sobre as matrículas do Bootcamp Dev Pro'
     )
     return _render_cpl(description, request, title, user, video_id, visit_function, video_id)
 
