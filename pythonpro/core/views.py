@@ -244,10 +244,9 @@ def lead_landing_with_no_registration(request, *args, **kwargs):
         first_name, email, phone=phone, *tags, utm_source=source
     )
 
-    return redirect('https://pythonpro.com.br/comunidade-devpro-isca/'
+    return redirect('https://pythonpro.com.br/comunidade-devpro-matriculas-abertas-isca/'
                     '?utm_source=python-birds&utm_medium=trafego-organico&utm_campaign=CDP'
                     f'&nome={first_name}&email={email}&phone={phone}')
-    # return redirect('https://pythonpro.com.br/python-birds-obrigado/')
 
 
 @csrf_exempt
