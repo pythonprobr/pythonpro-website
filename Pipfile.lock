@@ -562,10 +562,10 @@
         },
         "phonenumberslite": {
             "hashes": [
-                "sha256:134dddb6e1245e3f10e5ebde40d98395e510360d64f2394d9de69170e1c4f4ec",
-                "sha256:e92965fc0745a1dcc6baa3b3a469fdd32a751fb32b2f79b6b4a3a0df0b4955ab"
+                "sha256:3b54b7481047fdf223203a2822e7d781048723600880c11b93c17a2f69319555",
+                "sha256:6fca372f1742d4930de6954138aa535b448f36d08a39bc0e2b754b15e0364bd4"
             ],
-            "version": "==8.12.49"
+            "version": "==8.12.51"
         },
         "pickleshare": {
             "hashes": [
