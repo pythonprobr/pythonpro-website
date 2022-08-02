@@ -619,12 +619,8 @@
             "version": "==9.1.1"
         },
         "posthog": {
-            "hashes": [
-                "sha256:2423283793af6e92d160a2ff21c9aecdcb5ccc18cfc27011fc0b50def2fb4ab2",
-                "sha256:520a147945ca6bb8894a423edea1fe99fb7ec9ee1d66669bcf8b9973f84a90de"
-            ],
-            "index": "pypi",
-            "version": "==1.4.8"
+            "hashes": [],
+            "version": "==2.0.0"
         },
         "prompt-toolkit": {
             "hashes": [
