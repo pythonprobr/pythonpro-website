@@ -1081,12 +1081,8 @@
             "version": "==13.12.1"
         },
         "flake8": {
-            "hashes": [
-                "sha256:479b1304f72536a55948cb40a32dce8bb0ffe3501e26eaf292c7e60eb5e0428d",
-                "sha256:806e034dda44114815e23c16ef92f95c91e4c71100ff52813adf7132a6ad870d"
-            ],
-            "index": "pypi",
-            "version": "==4.0.1"
+            "hashes": [],
+            "version": "==5.0.4"
         },
         "flower": {
             "hashes": [
