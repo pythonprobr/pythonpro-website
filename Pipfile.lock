@@ -561,11 +561,8 @@
             "version": "==4.8.0"
         },
         "phonenumberslite": {
-            "hashes": [
-                "sha256:134dddb6e1245e3f10e5ebde40d98395e510360d64f2394d9de69170e1c4f4ec",
-                "sha256:e92965fc0745a1dcc6baa3b3a469fdd32a751fb32b2f79b6b4a3a0df0b4955ab"
-            ],
-            "version": "==8.12.49"
+            "hashes": [],
+            "version": "==8.12.53"
         },
         "pickleshare": {
             "hashes": [
