@@ -1089,12 +1089,8 @@
             "version": "==4.0.1"
         },
         "flower": {
-            "hashes": [
-                "sha256:2e17c4fb55c569508f3bfee7fe41f44b8362d30dbdf77b604a9d9f4740fe8cbd",
-                "sha256:a4fcf959881135303e98a74cc7533298b7dfeb48abcd1d90c5bd52cb789430a8"
-            ],
-            "index": "pypi",
-            "version": "==1.0.0"
+            "hashes": [],
+            "version": "==1.2.0"
         },
         "freezegun": {
             "hashes": [
