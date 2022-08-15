@@ -704,12 +704,8 @@
             "version": "==0.7.0"
         },
         "pygments": {
-            "hashes": [
-                "sha256:5eb116118f9612ff1ee89ac96437bb6b49e8f04d8a13b514ba26f620208e26eb",
-                "sha256:dc9c10fb40944260f6ed4c688ece0cd2048414940f1cea51b8b226318411c519"
-            ],
-            "markers": "python_version >= '3.6'",
-            "version": "==2.12.0"
+            "hashes": [],
+            "version": "==2.13.0"
         },
         "pyparsing": {
             "hashes": [
