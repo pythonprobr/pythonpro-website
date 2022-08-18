@@ -37,6 +37,7 @@ urlpatterns = [
          name='password_reset_confirm'),
     path('conta/reiniciar/ok', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('discourse/', include('pythonpro.discourse.urls')),
+    path('discord/', include('pythonpro.discord.urls')),
     path('modulos/', include('pythonpro.modules.module_urls')),
     path('secoes/', include('pythonpro.modules.sections_urls')),
     path('capitulos/', include('pythonpro.modules.chapters_urls')),

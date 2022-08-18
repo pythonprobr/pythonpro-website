@@ -80,6 +80,7 @@ else:
 INSTALLED_APPS = [
     'pythonpro.core',
     'pythonpro.discourse',
+    'pythonpro.discord',
     'pythonpro.modules',
     'pythonpro.cohorts',
     'pythonpro.email_marketing',
@@ -307,6 +308,11 @@ ACTIVE_CAMPAIGN_TURNED_ON = config('ACTIVE_CAMPAIGN_TURNED_ON', cast=bool, defau
 
 # Google Tag Manager Configuration
 GOOGLE_TAG_MANAGER_ID = config('GOOGLE_TAG_MANAGER_ID')
+
+# Discord App Configuration
+DISCORD_APP_CLIENT_ID = config('DISCORD_APP_CLIENT_ID')
+DISCORD_APP_CLIENT_SECRET = config('DISCORD_APP_CLIENT_SECRET')
+DISCORD_APP_BOT_TOKEN = config('DISCORD_APP_BOT_TOKEN')
 
 # Celery config
 
