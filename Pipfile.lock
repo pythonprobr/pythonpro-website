@@ -84,12 +84,8 @@
             "version": "==1.24.6"
         },
         "botocore": {
-            "hashes": [
-                "sha256:97c909a6ec5ad421573c18ae67fc6ea4232502cd30cffaf03bfcb584d9df652d",
-                "sha256:eeebe304161db6828413dc358ea80ece52f4ddbc8ecde4dd58978d5861a09293"
-            ],
-            "markers": "python_version >= '3.7'",
-            "version": "==1.27.6"
+            "hashes": [],
+            "version": "==1.27.55"
         },
         "celery": {
             "hashes": [
