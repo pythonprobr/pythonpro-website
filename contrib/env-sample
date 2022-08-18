@@ -64,3 +64,8 @@ CACHE_TURNED_ON=false
 # Hotzapp Integration
 
 HOTZAPP_API_URL=https://hotzapp.me
+
+# Disdcord configuration
+DISCORD_APP_CLIENT_ID=your-app-client-id
+DISCORD_APP_CLIENT_SECRET=your-app-client-secret
+DISCORD_APP_BOT_TOKEN=your-bot-token
