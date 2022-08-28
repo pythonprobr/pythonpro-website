@@ -49,7 +49,7 @@ MEMBERKIT_ON = config('MEMBERKIT_ON', cast=bool, default=False)
 
 # Email Configuration
 
-DEFAULT_FROM_EMAIL = 'suporte@python.pro.br'
+DEFAULT_FROM_EMAIL = 'suporte@dev.pro.br'
 
 EMAIL_BACKEND = config('EMAIL_BACKEND')
 EMAIL_HOST = config('EMAIL_HOST')
