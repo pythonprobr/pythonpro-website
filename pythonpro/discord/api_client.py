@@ -42,7 +42,7 @@ class DiscordBotClient:
         headers = {
             'Authorization': f'Bot {self._bot_token}'
         }
-        data = {'limit': limit, 'after': after}
+        # data = {'limit': limit, 'after': after}
         r = requests.get(
             f'{_BASE_ENDPOINT_URI}/guilds/{guild_id}/members',
             # data=data,

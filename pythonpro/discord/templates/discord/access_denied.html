@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Acesso negado{% endblock %}
+
+{% block body %}
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-6">
+                <h1 class="mt-4">Acesso Negado</h1>
+                <h2>Veja como proceder</h2>
+                <p>Nosso sistema não encontrou acesso válido para sua conta. Entre em contato com o suporte pelo
+                    email {{ DEFAULT_FROM_EMAIL }}.</p>
+
+            </div>
+        </div>
+    </div>
+{% endblock body %}

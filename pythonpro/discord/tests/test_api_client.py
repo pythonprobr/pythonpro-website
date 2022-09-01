@@ -1,7 +1,13 @@
 import pytest
 from responses import matchers
 
-from pythonpro.discord.api_client import DiscordCredentials, DiscordAppClient, DiscordAppAndBotClient, DiscordBotClient, UnathorizedOperation
+from pythonpro.discord.api_client import (
+    DiscordCredentials,
+    DiscordAppClient,
+    DiscordAppAndBotClient,
+    DiscordBotClient,
+    UnathorizedOperation
+)
 
 
 def test_discord_credentials_generate_app_client(responses):
