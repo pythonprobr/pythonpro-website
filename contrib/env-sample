@@ -69,3 +69,4 @@ HOTZAPP_API_URL=https://hotzapp.me
 DISCORD_APP_CLIENT_ID=your-app-client-id
 DISCORD_APP_CLIENT_SECRET=your-app-client-secret
 DISCORD_APP_BOT_TOKEN=your-bot-token
+DISCORD_GUILD_ID=your-discord_server_id

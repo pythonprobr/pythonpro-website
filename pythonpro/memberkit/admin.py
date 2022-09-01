@@ -21,7 +21,15 @@ class PaymentItemConfigInline(admin.TabularInline):
 @admin.register(SubscriptionType)
 class SubscriptionTypeAdmin(admin.ModelAdmin):
     change_list_template = 'memberkit/subscriptiontype/synchronize_button.html'
-    fields = ['id', 'name', 'email_marketing_tags', 'discourse_groups', 'include_on_cohort', 'days_of_access']
+    fields = [
+        'id',
+        'name',
+        'has_discord_access',
+        'email_marketing_tags',
+        'discourse_groups',
+        'include_on_cohort',
+        'days_of_access'
+    ]
     list_display = fields
     readonly_fields = ['id', 'name']
     inlines = [PaymentItemConfigInline]

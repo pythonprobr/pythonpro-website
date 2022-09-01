@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 YEAR_IN_DAYS = 365
-_ETERNAL_IN_HUMAM_LIFE_DAYS = YEAR_IN_DAYS * 200
+_ETERNAL_IN_HUMAN_LIFE_DAYS = YEAR_IN_DAYS * 200
 
 
 class SubscriptionType(models.Model):
@@ -15,6 +15,7 @@ class SubscriptionType(models.Model):
     discourse_groups = ArrayField(models.CharField(max_length=64), default=list)
     include_on_cohort = models.BooleanField(default=False, verbose_name='Incluir na última turma')
     days_of_access = models.IntegerField(default=YEAR_IN_DAYS)
+    has_discord_access = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Assinatura: {self.name}'
