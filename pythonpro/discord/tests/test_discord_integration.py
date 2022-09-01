@@ -23,6 +23,25 @@ def test_user_added_to_discord_server(client_with_user, logged_user, mocker):
     assert discord_user.discord_email == discord_user_api_response['email']
 
 
+def test_user_updated_to_discord_server(client_with_user, logged_user, mocker):
+    mocker.patch(
+        'pythonpro.discord.views.add_user_to_discord_server',
+        return_value={'user': discord_user_api_response}
+    )
+    subscription_type = baker.make(SubscriptionType, has_discord_access=True)
+    baker.make(
+        Subscription,
+        status=Subscription.Status.ACTIVE,
+        subscriber=logged_user,
+        subscription_types=[subscription_type]
+    )
+    baker.make(DiscordUser, user=logged_user)
+    client_with_user.get(reverse('discord:autorize'), data={'code': 'xpto'})
+    discord_user_id = discord_user_api_response['id']
+    discord_user = DiscordUser.objects.get(discord_id=discord_user_id)
+    assert discord_user.discord_email == discord_user_api_response['email']
+
+
 def test_user_with_inactive_subscription_not_added_to_discord_server(client_with_user, logged_user, mocker):
     subscription_type = baker.make(SubscriptionType, has_discord_access=True)
     baker.make(
