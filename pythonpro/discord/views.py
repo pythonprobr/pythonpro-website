@@ -22,7 +22,12 @@ def autorize(request):
         autorize_uri = request.build_absolute_uri(reverse('discord:autorize'))
         member = add_user_to_discord_server(autorize_uri, code)
         discord_user_dict = member['user']
-        DiscordUser(user=user, discord_id=discord_user_dict['id'], discord_email=discord_user_dict['email']).save()
+        defaults = {
+            'discord_id': discord_user_dict['id'],
+            'discord_email': discord_user_dict['email'],
+            'user': user
+        }
+        DiscordUser.objects.update_or_create(user=user, defaults=defaults)
         return redirect(f'https://discord.com/channels/{settings.DISCORD_GUILD_ID}')
     return render(request, 'discord/access_denied.html', status=403)
 
