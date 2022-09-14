@@ -96,3 +96,39 @@ class Subscription(models.Model):
 
     def __str__(self):
         return f'Assinatura: {self.id} de {self.subscriber}'
+
+
+class UserSubscriptionsSummary:
+    """
+    This class provides summary data about user subscriptions.
+    This is not a model, but a utility class to handle user subscriptions
+    """
+
+    def __init__(self, django_user_or_user_id):
+        if isinstance(django_user_or_user_id, get_user_model()):
+            self.user = django_user_or_user_id
+            self.user_id = django_user_or_user_id.id
+        else:
+            self.user = None
+            self.user_id = django_user_or_user_id
+
+    def has_active_subscriptions(self):
+        return self.active_subscriptions().exists()
+
+    def active_subscriptions(self):
+        return Subscription.objects.filter(
+            subscriber_id=self.user_id, status=Subscription.Status.ACTIVE
+        )
+
+    @classmethod
+    def users_with_active_subscriptions(cls):
+        """
+        Returns query set with user with at least one active subscription
+        :return: Django Use Query Set
+        """
+        return get_user_model().objects.filter(subscriptions__status=Subscription.Status.ACTIVE).distinct()
+
+    def memberkit_user_ids(self) -> set[int]:
+        return set(Subscription.objects.filter(
+            subscriber_id=self.user_id
+        ).values_list('memberkit_user_id', flat=True))

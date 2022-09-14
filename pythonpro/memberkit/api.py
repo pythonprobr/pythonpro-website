@@ -73,6 +73,25 @@ def activate_user(full_name: str, email: str, subscription_type_id: int, expires
 
 
 @_configure_api_key
+def update_user_subscription(memberkit_user_id: int, subscription_type_id: int, status: str, expires_at: date = None, *,
+                             api_key=_ApiKeyNone):
+    user_json = user_detail(memberkit_user_id, api_key=api_key)
+    if expires_at is None:
+        expires_at = date(2200, 1, 1)
+    data = {
+        'full_name': user_json['full_name'],
+        'email': user_json['email'],
+        'status': status,
+        'blocked': False,
+        'membership_level_id': subscription_type_id,
+        'unlimited': False,
+        'expires_at': expires_at.strftime('%d/%m/%Y'),
+    }
+    response = requests.post(f'{_base_url}/api/v1/users?api_key={api_key}', json=data)
+    return response.json()
+
+
+@_configure_api_key
 def inactivate_user(memberkit_user_id: int, subscription_type_id: int, *,
                     api_key=_ApiKeyNone):
     user_json = user_detail(memberkit_user_id, api_key=api_key)
@@ -86,6 +105,19 @@ def inactivate_user(memberkit_user_id: int, subscription_type_id: int, *,
         'expires_at': date.today().strftime('%d/%m/%Y'),
     }
     response = requests.post(f'{_base_url}/api/v1/users?api_key={api_key}', json=data)
+    return response.json()
+
+
+@_configure_api_key
+def delete_user(memberkit_user_id: int, *, api_key=_ApiKeyNone):
+    response = requests.delete(f'{_base_url}/api/v1/users/{memberkit_user_id}?api_key={api_key}')
+    response.raise_for_status()
+
+
+@_configure_api_key
+def list_users(page=0, *, api_key=_ApiKeyNone):
+    response = requests.get(f'{_base_url}/api/v1/users?api_key={api_key}&page={page}')
+    response.raise_for_status()
     return response.json()
 
 
