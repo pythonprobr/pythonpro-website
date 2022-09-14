@@ -22,9 +22,10 @@ def autorize(request):
         autorize_uri = request.build_absolute_uri(reverse('discord:autorize'))
         member = add_user_to_discord_server(autorize_uri, code)
         discord_user_dict = member['user']
+        email = discord_user_dict.get('email', user.email) or user.email
         defaults = {
             'discord_id': discord_user_dict['id'],
-            'discord_email': discord_user_dict.get('email', user.email),
+            'discord_email': email,
             'user': user
         }
         DiscordUser.objects.update_or_create(user=user, defaults=defaults)

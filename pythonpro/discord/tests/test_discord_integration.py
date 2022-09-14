@@ -41,6 +41,24 @@ def test_user_missing_email_added_to_discord_server(client_with_user, logged_use
     assert discord_user.discord_email == logged_user.email
 
 
+def test_user_email_null_added_to_discord_server(client_with_user, logged_user, mocker):
+    mocker.patch(
+        'pythonpro.discord.views.add_user_to_discord_server',
+        return_value={'user': discord_user_email_is_null_api_response}
+    )
+    subscription_type = baker.make(SubscriptionType, has_discord_access=True)
+    baker.make(
+        Subscription,
+        status=Subscription.Status.ACTIVE,
+        subscriber=logged_user,
+        subscription_types=[subscription_type]
+    )
+    client_with_user.get(reverse('discord:autorize'), data={'code': 'xpto'})
+    discord_user_id = discord_user_api_response['id']
+    discord_user = DiscordUser.objects.get(discord_id=discord_user_id)
+    assert discord_user.discord_email == logged_user.email
+
+
 def test_user_updated_to_discord_server(client_with_user, logged_user, mocker):
     mocker.patch(
         'pythonpro.discord.views.add_user_to_discord_server',
@@ -105,19 +123,8 @@ discord_user_missing_email_api_response = {
     'verified': True
 }
 
-discord_user_api_response = {
-    'id': '800764510645256242',
-    'username': 'renzopro',
-    'avatar': '824db4a9821e21f2609e03e5815c23c0',
-    'avatar_decoration': None,
-    'discriminator': '3978',
-    'public_flags': 0,
-    'flags': 0,
-    'banner': None,
-    'banner_color': None,
-    'accent_color': None,
-    'locale': 'pt-BR',
-    'mfa_enabled': True,
-    'email': 'renzo@dev.pro.br',
-    'verified': True
-}
+discord_user_api_response = dict(discord_user_missing_email_api_response)
+discord_user_api_response['email'] = 'renzo@dev.pro.br'
+
+discord_user_email_is_null_api_response = dict(discord_user_missing_email_api_response)
+discord_user_email_is_null_api_response['email'] = None
