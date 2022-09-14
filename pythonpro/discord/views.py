@@ -24,7 +24,7 @@ def autorize(request):
         discord_user_dict = member['user']
         defaults = {
             'discord_id': discord_user_dict['id'],
-            'discord_email': discord_user_dict['email'],
+            'discord_email': discord_user_dict.get('email', user.email),
             'user': user
         }
         DiscordUser.objects.update_or_create(user=user, defaults=defaults)
