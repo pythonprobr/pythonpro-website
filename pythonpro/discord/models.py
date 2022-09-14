@@ -8,5 +8,10 @@ class DiscordUser(models.Model):
     discord_email = models.EmailField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['-created_at'], name='discord_created_at_desc_index'),
+        ]
+
     def __str__(self):
         return self.discord_email
