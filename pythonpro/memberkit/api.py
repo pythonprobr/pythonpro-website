@@ -90,6 +90,19 @@ def inactivate_user(memberkit_user_id: int, subscription_type_id: int, *,
 
 
 @_configure_api_key
+def delete_user(memberkit_user_id: int, *, api_key=_ApiKeyNone):
+    response = requests.delete(f'{_base_url}/api/v1/users/{memberkit_user_id}?api_key={api_key}')
+    response.raise_for_status()
+
+
+@_configure_api_key
+def list_users(page=0, *, api_key=_ApiKeyNone):
+    response = requests.get(f'{_base_url}/api/v1/users?api_key={api_key}&page={page}')
+    response.raise_for_status()
+    return response.json()
+
+
+@_configure_api_key
 def generate_token(memberkit_user_id: int, *, api_key=_ApiKeyNone):
     user_json = user_detail(memberkit_user_id, api_key=api_key)
     data = {'email': user_json['email']}

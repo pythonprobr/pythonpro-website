@@ -165,3 +165,11 @@ def test_subscription_creation_another_subscription_type(role, subscription_type
     assert Subscription.objects.count() == 2, 'New Subscription should be created'
     management.call_command('create_subscriptions_for_roles')
     assert Subscription.objects.count() == 2, 'New Subscription should be created only once'
+
+
+def test_inactivate_expired_subscriptions(django_user_model, mocker):
+    process_expired_subscriptions_mock = mocker.patch('pythonpro.memberkit.facade.process_expired_subscriptions.delay')
+    active_user = baker.make(django_user_model)
+    baker.make(Subscription, status=Subscription.Status.ACTIVE, subscriber=active_user)
+    management.call_command('inactivate_expired_subscriptions')
+    process_expired_subscriptions_mock.assert_called_once_with(active_user.id)
