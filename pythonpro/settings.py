@@ -222,6 +222,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'core.User'
 
+# default password for user creation
+DEFAULT_USER_CREATION_PASSWORD = config('DEFAULT_USER_CREATION_PASSWORD')
+
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 

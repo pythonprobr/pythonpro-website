@@ -3,6 +3,7 @@ from collections import ChainMap
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
 from django import forms
+from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
 from django.core.exceptions import ValidationError
 from django.forms import CharField, ModelForm
@@ -44,7 +45,7 @@ class UserSignupForm(UserCreationForm, NormalizeEmailMixin):
         fields = ('first_name', 'email', 'source')
 
     def __init__(self, *args, **kwargs):
-        self.plain_password = User.objects.make_random_password(30)
+        self.plain_password = settings.DEFAULT_USER_CREATION_PASSWORD
         data = kwargs.get('data', None)
         if data is not None:
             self._set_passwords(data)
