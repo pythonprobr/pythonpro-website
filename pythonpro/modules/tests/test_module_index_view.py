@@ -38,12 +38,6 @@ def test_status_code_not_logged(resp_not_logged):
     assert resp_not_logged.status_code == 200
 
 
-def test_module_index_link_not_logged(resp_not_logged):
-    """ Assert module index link is present when user is not logged """
-    url = reverse('modules:index')
-    dj_assert_contains(resp_not_logged, f'href="{url}"')
-
-
 def test_module_link_not_logged(modules, resp_not_logged):
     """ Assert module links are not present when user is not logged """
     for module in modules:
@@ -51,12 +45,6 @@ def test_module_link_not_logged(modules, resp_not_logged):
             dj_assert_contains(resp_not_logged, f'href="{module.get_absolute_url()}"')
         else:
             dj_assert_not_contains(resp_not_logged, f'href="{module.get_absolute_url()}"')
-
-
-def test_module_index_link_logged(resp):
-    """ Assert module index link is present when user is logged """
-    url = reverse('modules:index')
-    dj_assert_contains(resp, f'href="{url}"')
 
 
 def test_present_attrs(modules, resp_not_logged):

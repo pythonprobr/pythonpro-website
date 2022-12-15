@@ -59,24 +59,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 {% if user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarCohorts" role="button"
-                           data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            Turmas
-                        </a>
-                        <div class="dropdown-menu bg-dark border-light" aria-labelledby="navbarCohorts">
-                            {% for cohort in ALL_COHORTS %}
-                                <a class="dropdown-item text-light"
-                                   href="{{ cohort.get_absolute_url }}">{{ cohort.title }}</a>
-                                {% if not forloop.last %}
-                                    <div class="dropdown-divider"></div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="https://plataforma.dev.pro.br">Curso</a>
+                        <a class="nav-link" href="https://plataforma.dev.pro.br">Cursos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'cohorts:webinars' %}">Webinários</a>

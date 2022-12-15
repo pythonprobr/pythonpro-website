@@ -151,7 +151,6 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'pythonpro.core.context_processors.global_settings',
                 'pythonpro.modules.context_processors.global_settings',
-                'pythonpro.cohorts.context_processors.global_settings',
                 'pythonpro.analytics.context_processors.posthog_configurations',
             ],
         },
