@@ -2,17 +2,15 @@ from django.urls import path
 from django.views.generic import TemplateView
 from django_sitemaps import robots_txt
 
-from . import views
 from pythonpro.checkout.views import waiting_list_ty
+from . import views
 
 app_name = 'core'
 urlpatterns = [
     path('', views.index, name='index'),
     path('sitemap.xml', views.sitemap, name='sitemap'),
     path('robots.txt', robots_txt(timeout=86400), name='robots'),
-    path('tech-talks', views.teck_talks, name='tech_talks'),
     path('linktree', views.linktree, name='linktree'),
-    path('podcast', views.podcast, name='podcast'),
     path('curso-de-python-gratis', views.lead_landing_with_no_registration, name='lead_landing_with_no_registration'),
     path('curso-de-python-gratis-lite', views.lead_landing, name='lead_landing'),
     path('curso-de-python-gratis-no', views.lead_landing_with_no_offer, name='lead_landing_with_no_offer'),

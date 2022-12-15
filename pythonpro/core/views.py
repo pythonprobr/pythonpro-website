@@ -3,23 +3,23 @@ import json
 from django.conf import settings
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 from django.views.generic import UpdateView
 from django_sitemaps import Sitemap
 from rolepermissions.checkers import has_role
-from django.views.decorators.http import require_http_methods
-from django.core.exceptions import PermissionDenied
 
 from pythonpro.core import facade as core_facade
-from pythonpro.email_marketing import facade as email_marketing_facade
 from pythonpro.core.forms import LeadForm, UserEmailForm, UserSignupForm, PythonProResetForm
 from pythonpro.core.models import User
 from pythonpro.domain import user_domain
+from pythonpro.email_marketing import facade as email_marketing_facade
 from pythonpro.memberkit.facade import create_new_subscription_without_payment, activate
 
 
@@ -51,14 +51,6 @@ def lead_change_password(request):
     })
 
 
-def teck_talks(request):
-    return render(request, 'core/tech_talks.html', {})
-
-
-def podcast(request):
-    return render(request, 'core/podcast.html', {})
-
-
 @login_required
 def profile(request):
     return render(request, 'core/profile_detail.html', {})
@@ -71,8 +63,6 @@ def sitemap(request):
         'core:index',
         'core:lead_landing',
         'checkout:bootcamp_lp',
-        'core:podcast',
-        'core:tech_talks',
         'modules:index',
         'launch:landing_page',
         'launch:cpl1',

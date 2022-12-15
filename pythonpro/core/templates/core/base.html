@@ -19,7 +19,7 @@
     })(window, document, 'script', 'dataLayer', '{{GOOGLE_TAG_MANAGER_ID}}');</script>
     <!-- End Google Tag Manager -->
     <meta charset="UTF-8">
-    <title>{% block title %}Dev Pro: Curso da linguagem de programação Python, Presencial Online, do Básico ao
+    <title>{% block title %}Dev Pro: Comunidade de Programação, Presencial Online, do Básico ao
         Avançado!{% endblock %}</title>
 
     <meta name="description" content="{% block description %}{% endblock %}"/>
@@ -76,16 +76,12 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'modules:index' %}">Cursos</a>
+                        <a class="nav-link" href="https://plataforma.dev.pro.br">Curso</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'cohorts:webinars' %}">Webinários</a>
                     </li>
 
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'modules:index' %}">Cursos</a>
-                    </li>
                 {% endif %}
                 {% if user.is_authenticated and DISCOURSE_BASE_URL %}
                     <li class="nav-item">
@@ -93,10 +89,10 @@
                     </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'core:tech_talks' %}">Tech Talks</a>
+                    <a class="nav-link" href="https://www.youtube.com/canaldevpro" target="_blank">Youtube</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'core:podcast' %}">Podcast</a>
+                    <a class="nav-link" href="https://open.spotify.com/show/23i8gD31xHrmPllTm0d3re" target="_blank">Podcast</a>
                 </li>
             </ul>
             {% if user.is_authenticated %}
