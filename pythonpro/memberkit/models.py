@@ -41,8 +41,8 @@ class Subscription(models.Model):
         verbose_name_plural = 'Assinaturas'
 
     class Status(models.TextChoices):
-        ACTIVE = 'A', 'Ativo'
-        INACTIVE = 'I', 'Inativo'
+        ACTIVE = 'A', 'Ativa'
+        INACTIVE = 'I', 'Inativa'
 
     status = models.CharField(max_length=1, choices=Status.choices)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -61,6 +61,10 @@ class Subscription(models.Model):
     @property
     def include_on_cohort(self):
         return self.subscription_types.filter(include_on_cohort=True).exists()
+
+    @property
+    def name(self):
+        return ' - '.join(s.name for s in self.subscription_types.all())
 
     @property
     def expires_at(self):

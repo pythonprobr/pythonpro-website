@@ -12,40 +12,28 @@
     <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col">
-                <h1 class="mb-4">Dashboard</h1>
-                <p>Confira os dados consolidados por tópico</p>
+                <h1 class="mb-4">Assinaturas</h1>
+                <p>Confira suas assinaturas</p>
                 <table class="table table-striped text-center">
                     <thead>
                     <tr>
-                        <th scope="col">Último Acesso</th>
-                        <th scope="col">Módulo</th>
-                        <th scope="col">Aula</th>
-                        <th scope="col" data-toggle="tooltip" data-placement="top"
-                            title="Tempo onde parou de ver o vídeo">Parada <span
-                                class="badge badge-pill badge-dark">?</span></th>
-                        <th scope="col" data-toggle="tooltip" data-placement="top"
-                            title="Tempo total que passou vendo o vídeo">Tempo <span
-                                class="badge badge-pill badge-dark">?</span></th>
-                        <th scope="col" data-toggle="tooltip" data-placement="top"
-                            title="Número de vezes que vc começou a assistir">Visualizações <span
-                                class="badge badge-pill badge-dark">?</span></th>
+                        <th scope="col">Assinatura</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Data de Expiração</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for topic in topics %}
+                    {% for subscription in subscriptions %}
                         <tr>
-                            <td>{{ topic.last_interaction|date:"d/m/Y" }} {{ topic.last_interaction|time:"H:i:s" }}</td>
+                            <td>{{ subscription.name }}</td>
                             <td>
-                                <a href="{{ topic.calculated_module.get_absolute_url }}">{{ topic.calculated_module.title }}</a>
+                                {{ subscription.get_status_display }}
                             </td>
-                            <td><a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a></td>
-                            <td>{{ topic.max_watched_time|duration }}</td>
-                            <td>{{ topic.total_watched_time|duration }}</td>
-                            <td>{{ topic.interactions_count }}</td>
+                            <td>{{ subscription.expires_at|date:"d/m/Y" }} {{ subscription.last_interaction|time:"H:i:s" }}</td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="4">Ainda não existem dados agregados</td>
+                            <td colspan="4">Ainda não assinaturas</td>
                         </tr>
                     {% endfor %}
 
@@ -53,64 +41,5 @@
                 </table>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col">
-                <h2 class="mb-4">Progresso por Módulo</h2>
-                <div class="row">
-                    {% for module_progress in module_progresses %}
-                        <div class="col-12 col-lg-6 mb-md-4 mb-4">
-                            <div class="card">
-                                <div class="card-header bg-primary text-light">
-                                    <a href="{{ module_progress.get_certificate_url }}" class="btn-sm btn-warning">Certificado &raquo;</a>
-                                    <a href="{% url 'modules:detail' slug=module_progress.slug %}" class="btn-sm btn-secondary">
-                                    Módulo: {{ module_progress.title }}</a>                                  
-                                </div>
-                                <div class="card-body">
-
-                                    <dl>
-                                        <dt>Aulas <span data-toggle="tooltip" data-placement="top"
-                                                       title="Quantidade Total de Aulas no Módulo"
-                                                       class="badge badge-pill badge-dark">?</span></dt>
-                                        <dd>{{ module_progress.topics_count }}</dd>
-                                        <dt>Aulas Finalizadas <span data-toggle="tooltip" data-placement="top"
-                                                                   title="Quantidade de Aulas que você viu até o fim"
-                                                                   class="badge badge-pill badge-dark">?</span></dt>
-                                        <dd>{{ module_progress.finished_topics_count }}</dd>
-
-                                        <dt>
-                                            Carga Horária <span data-toggle="tooltip" data-placement="top"
-                                                                     title="Somatório das durações de todas aulas em hora, minuto e segundo"
-                                                                     class="badge badge-pill badge-dark">?</span></dt>
-                                        <dd>{{ module_progress.duration|duration }}</dd>
-                                        <dt>Total Assistido <span data-toggle="tooltip" data-placement="top"
-                                                           title="Somatório do tempo que você assistou aulas"
-                                                           class="badge badge-pill badge-dark">?</span></dt>
-                                        <dd>{{ module_progress.total_watched_time|duration }}</dd>
-                                        <dt>Último Acesso</dt>
-                                        <dd>{% if module_progress.interactions_count %}
-                                            {{ module_progress.last_interaction|date:"d/m/Y" }}
-                                        {% else %}
-                                            --
-                                        {% endif %}
-                                        </dd>
-                                    </dl>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar"
-                                             style="width: {% widthratio module_progress.progress 1 100 %}%"
-                                             aria-valuenow="{% widthratio module_progress.progress 1 100 %}"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100">{% if module_progress.progress > 0.09 %}
-                                            {% widthratio module_progress.progress 1 100 %}%{% endif %}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-
-
     </div>
 {% endblock body %}

@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from pythonpro.dashboard.facade import has_watched_any_topic
 from pythonpro.dashboard.forms import TopicInteractionForm
 from pythonpro.domain import content_statistics_domain, user_domain
+from pythonpro.memberkit.models import Subscription
 from pythonpro.modules.models import Topic
 
 
@@ -22,13 +23,10 @@ def certificate(request, module_slug):
 
 @login_required
 def home(request):
-    topics = list(content_statistics_domain.calculate_topic_interaction_history(request.user))
-
-    for topic in topics:
-        topic.calculated_module = topic.find_module()
-
-    module_progresses = content_statistics_domain.calculate_modules_progresses(request.user)
-    ctx = {'topics': topics, 'module_progresses': module_progresses}
+    subcriptions = Subscription.objects.filter(
+        subscriber=request.user
+    ).order_by('-updated_at').prefetch_related('subscription_types').all()
+    ctx = {'subscriptions': subcriptions}
     return render(
         request,
         'dashboard/home.html',
