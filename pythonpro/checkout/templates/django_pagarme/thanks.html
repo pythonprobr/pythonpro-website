@@ -1,7 +1,7 @@
 {% extends 'core/base_without_nav.html' %}
 {% load django_pagarme %}
 {% load static %}
-{% block title %}Obrigado por se matricular no {{ payment_item_config.name }}{% endblock %}
+{% block title %}Obrigado por se matricular na {{ payment_item_config.name }}{% endblock %}
 {% block styles %}{% endblock %}
 {% block body_class %}clean-body{% endblock %}
 {% block scripts %}{% endblock scripts %}
@@ -36,26 +36,33 @@
           t = " w-mod-";
         n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch")
       }(window, document);
-    </script>
-  <link href="{% static 'thanks/images/webclip.png' %}" rel="apple-touch-icon">
+  </script>
+    <link href="{% static 'thanks/images/webclip.png' %}" rel="apple-touch-icon">
 {% endblock head %}
 {% block body %}
-  <div class="header blue">
-    <div class="header-section">
-      <div class="header-container">
-        <div id="w-node-6ab841cb6b5f-dd0aa7ab" class="headline-container centered">
-          <div class="auto-headline">
-            <h1 class="dumbo-heading">{% block page_main_title %}Parabéns por se registrar no {{ payment_item_config.name }}!{% endblock page_main_title %}</h1>
-            <div class="dumbo-description">Assista o vídeo abaixo e saiba quais são os seus próximos passos</div><img src="{% static 'thanks/images/down-arrow.svg' %}" data-w-id="32f53c33-6610-0d97-9540-539ac6e9b39f" style="-webkit-transform:translate3d(0, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" alt="" class="image-4"></div>
+    <div class="header blue">
+        <div class="header-section">
+            <div class="header-container">
+                <div id="w-node-6ab841cb6b5f-dd0aa7ab" class="headline-container centered">
+                    <div class="auto-headline">
+                        <h1 class="dumbo-heading">{% block page_main_title %}Parabéns por se matricular na
+                            {{ payment_item_config.name }}!{% endblock page_main_title %}</h1>
+                        <div class="dumbo-description">Assista o vídeo abaixo e saiba quais são os seus próximos
+                            passos
+                        </div>
+                        <img src="{% static 'thanks/images/down-arrow.svg' %}"
+                             data-w-id="32f53c33-6610-0d97-9540-539ac6e9b39f"
+                             style="-webkit-transform:translate3d(0, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+                             alt="" class="image-4"></div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <div class="content custom-bg">
-    <div class="overlap-container">
-      <div class="video-container">
-          {% with thanks_video_id='8_1eBKHAue0' %}
-              {% block thanks_video %}
+    <div class="content custom-bg">
+        <div class="overlap-container">
+            <div class="video-container">
+                {% with thanks_video_id='Juhyg6s66hA' %}
+                    {% block thanks_video %}
         <div style="padding-top:56.17021276595745%" class="video w-video w-embed"><iframe class="embedly-embed" src="//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.youtube.com%2Fembed%2F{{ thanks_video_id}}%3Ffeature%3Doembed&display_name=YouTube&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D{{ thanks_video_id}}&image=https%3A%2F%2Fi.ytimg.com%2Fvi%2F{{ thanks_video_id}}%2Fhqdefault.jpg&key=96f1f04c5f4143bcb0f2e68c87d65feb&type=text%2Fhtml&schema=youtube" scrolling="no" title="YouTube embed" frameborder="0" allow="autoplay; fullscreen" allowfullscreen="true"></iframe></div>
               {% endblock thanks_video %}
           {% endwith %}
@@ -67,9 +74,14 @@
         <div class="container">
             {% block upsell %}
                 <div id="w-node-b11fafc8de25-dd0aa7ab" class="container-content">
-                    <h3><a class="btn btn-success" href="https://plataforma.dev.pro.br">Acessar Plataforma Dev Pro
-                        &raquo;</a></h3>
-                </div>
+                <h3><a class="btn btn-success" href="https://plataforma.dev.pro.br">Acessar Plataforma Dev Pro
+                    &raquo;</a></h3>
+                <br/>
+                <p class="small">Dúvidas? Fale com nosso suporte através do email
+                <a href="mailto:suporte@dev.pro.br?subject=Dúvidas%20Acesso">suporte@dev.pro.br</a> ou do número
+                <a href='tel:5511968983377'>+55 11 96898-3377</a>,
+                tanto por telefone quanto por <a href='https://wa.me/5511968983377' target="_blank">WhatsApp</a>.
+
             {% endblock upsell %}
             <div id="w-node-2878d38ff948-dd0aa7ab" class="container-content">
                 <div class="credits">Dev Pro © {% now "Y" %}. Todos os direitos reservados. CNPJ:
