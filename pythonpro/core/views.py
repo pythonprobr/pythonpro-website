@@ -170,7 +170,7 @@ def _lead_form(request, *args, **kwargs):
     source = request.GET.get('utm_source', default='unknown')
     first_name = request.POST.get('first_name')
     email = request.POST.get('email')
-    phone = request.POST.get('phone')
+    phone = request.POST.get('phone', '')
     tags = [kwargs.get('offer_tag', 'offer-funnel-0')]
     for key, value in request.GET.items():
         if key.startswith('utm_'):
@@ -220,7 +220,7 @@ def lead_landing_with_no_registration(request, *args, **kwargs):
     source = request.GET.get('utm_source', default='unknown')
     first_name = request.POST.get('first_name')
     email = request.POST.get('email')
-    phone = request.POST.get('phone')
+    phone = request.POST.get('phone', '')
     tags = []
     for key, value in request.GET.items():
         if key.startswith('utm_'):
