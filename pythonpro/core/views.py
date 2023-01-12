@@ -18,7 +18,7 @@ from rolepermissions.checkers import has_role
 from pythonpro.core import facade as core_facade
 from pythonpro.core.forms import LeadForm, UserEmailForm, UserSignupForm, PythonProResetForm
 from pythonpro.core.models import User
-from pythonpro.domain import user_domain
+from pythonpro.domain import user_domain, subscription_domain
 from pythonpro.email_marketing import facade as email_marketing_facade
 from pythonpro.memberkit.facade import create_new_subscription_without_payment, activate
 
@@ -264,6 +264,8 @@ def api_register_and_subscribe_fellow(request):
         subscription_types=subscription_type_ids,
         observation='Usuário registrado via API'
     )
+
+    subscription_domain.sync_user_on_all_services(user.id)
 
     # activating user on memberkit
     activate(subscription, observation='Usuário ativado via API')

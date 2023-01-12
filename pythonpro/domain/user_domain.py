@@ -12,8 +12,8 @@ from pythonpro.cohorts import facade as _cohorts_facade
 from pythonpro.core import facade as _core_facade
 from pythonpro.core.models import User as _User
 from pythonpro.discourse.facade import MissingDiscourseAPICredentials, generate_sso_payload_and_signature
-from pythonpro.domain.subscription_domain import subscribe_with_no_role
 from pythonpro.email_marketing import facade as _email_marketing_facade
+from pythonpro.email_marketing.facade import create_or_update_with_no_role
 
 _logger = Logger(__file__)
 
@@ -147,7 +147,6 @@ def promote_fellow(user: _User, source: str) -> _User:
     except _core_facade.UserRoleException:
         pass
 
-    sync_user_on_discourse.delay(user.id)
     _email_marketing_facade.create_or_update_fellow.delay(user.first_name, user.email, id=user.id)
     return user
 
@@ -264,8 +263,8 @@ def subscribe_to_waiting_list(session_id, user: _User, phone: str, source: str) 
     :return:
     """
     _core_facade.subscribe_to_waiting_list(user, source)
-    subscribe_with_no_role.delay(
-        None, user.first_name, user.email, 'lista-de-espera', id=user.id, phone=phone
+    create_or_update_with_no_role.delay(
+        user.first_name, user.email, 'lista-de-espera', id=user.id, phone=phone
     )
 
 
@@ -282,7 +281,7 @@ def subscribe_anonymous_user_to_waiting_list(session_id, email: str, name: str, 
     try:
         user = _core_facade.find_user_by_email(email)
     except _User.DoesNotExist:
-        subscribe_with_no_role.delay(None, name, email, 'lista-de-espera', phone=phone)
+        create_or_update_with_no_role.delay(name, email, 'lista-de-espera', phone=phone)
     else:
         subscribe_to_waiting_list(None, user, phone, source)
 
@@ -332,7 +331,7 @@ def visit_cpl3(user: _User, source: str) -> None:
 
 
 @shared_task
-def sync_user_on_discourse(user_or_id):
+def sync_user_on_discourse(user_or_id, *groups):
     """
     Synchronize user data on forum if API is configured
     :param user_or_id: Django user or his id
@@ -351,12 +350,12 @@ def sync_user_on_discourse(user_or_id):
     # https://meta.discourse.org/t/sync-sso-user-data-with-the-sync-sso-route/84398
     params = {
         'email': user.email,
+        'name': user.first_name,
         'external_id': user.id,
         'require_activation': 'false',
-        'groups': ','.join(g.name for g in user.groups.all())
+        'groups': ','.join(groups)
     }
     sso_payload, signature = generate_sso_payload_and_signature(params)
-    # query_string = parse.urlencode()
     url = f'{settings.DISCOURSE_BASE_URL}/admin/users/sync_sso'
     headers = {
         'content-type': 'multipart/form-data',

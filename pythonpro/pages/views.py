@@ -7,7 +7,7 @@ from django_pagarme import facade
 from inflection import underscore
 
 from pythonpro.cohorts.facade import find_most_recent_cohort
-from pythonpro.domain.subscription_domain import subscribe_with_no_role
+from pythonpro.email_marketing.facade import create_or_update_with_no_role
 from pythonpro.pages.forms import NameEmailForm, NameEmailPhoneForm
 
 
@@ -36,7 +36,7 @@ class BaseLandingPageView(TemplateNameMixin, FormView):
                 kwargs['id'] = self.request.user.id
             kwargs['phone'] = f"+55{form.cleaned_data['phone']}"
 
-        subscribe_with_no_role.delay(None, *args, **kwargs)
+        create_or_update_with_no_role.delay(*args, **kwargs)
         return super().form_valid(form)
 
 
