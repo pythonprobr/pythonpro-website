@@ -3,6 +3,7 @@ import responses
 
 import pythonpro.domain.user_domain
 from pythonpro.discourse import facade
+from pythonpro.domain import user_domain
 
 
 @pytest.fixture
@@ -43,8 +44,16 @@ def resps(settings):
         yield r
 
 
-def test_user_sync(logged_user, resps):
-    pythonpro.domain.user_domain.sync_user_on_discourse(logged_user)
+def test_user_sync(logged_user, resps, mocker):
+    generate_mock = mocker.spy(user_domain, 'generate_sso_payload_and_signature')
+    pythonpro.domain.user_domain.sync_user_on_discourse(logged_user, 'fellow', 'member')
+    generate_mock.assert_called_once_with({
+        'email': logged_user.email,
+        'name': logged_user.first_name,
+        'external_id': logged_user.id,
+        'require_activation': 'false',
+        'groups': 'fellow,member'
+    })
 
 
 success_response = {

@@ -1,5 +1,4 @@
 import pytest
-
 from django.urls import reverse
 
 from pythonpro.django_assertions import dj_assert_contains
@@ -17,7 +16,7 @@ def test_should_return_200_when_load_thank_you_page(client):
 
 @pytest.fixture
 def subscribe_with_no_role(mocker):
-    return mocker.patch('pythonpro.domain.subscription_domain.subscribe_with_no_role.delay')
+    return mocker.patch('pythonpro.pages.views.create_or_update_with_no_role.delay')
 
 
 def test_should_run_form_ok(subscribe_with_no_role, client):

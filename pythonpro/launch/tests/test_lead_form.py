@@ -16,7 +16,7 @@ def email_upper(email):
 
 @pytest.fixture
 def subscribe_with_no_role(mocker):
-    return mocker.patch('pythonpro.launch.views.subscription_domain.subscribe_with_no_role.delay')
+    return mocker.patch('pythonpro.launch.views.create_or_update_with_no_role.delay')
 
 
 @pytest.fixture
@@ -39,12 +39,12 @@ def test_status_code(resp):
 
 
 def test_email_marketing_sucess_integration(resp, email, subscribe_with_no_role, cohort):
-    subscribe_with_no_role.assert_called_once_with(None, 'Moacir', email,
+    subscribe_with_no_role.assert_called_once_with('Moacir', email,
                                                    f'turma-{cohort.slug}-semana-do-programador')
 
 
 def test_email_normalization(resp_email_upper, email, subscribe_with_no_role, cohort):
-    subscribe_with_no_role.assert_called_once_with(None, 'Moacir', email,
+    subscribe_with_no_role.assert_called_once_with('Moacir', email,
                                                    f'turma-{cohort.slug}-semana-do-programador')
 
 
@@ -81,7 +81,6 @@ def resp_with_user(client_with_user, logged_user, cohort, subscribe_with_no_role
 
 def test_user_first_name(resp_with_user, logged_user, subscribe_with_no_role, cohort):
     subscribe_with_no_role.assert_called_once_with(
-        None,
         'Moacir',
         logged_user.email,
         f'turma-{cohort.slug}-semana-do-programador',

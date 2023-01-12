@@ -47,7 +47,7 @@ def test_should_load_name_and_email_from_GET_when_user_is_logged(client_with_use
 
 @pytest.fixture
 def subscribe_with_no_role(mocker):
-    return mocker.patch('pythonpro.domain.subscription_domain.subscribe_with_no_role.delay')
+    return mocker.patch('pythonpro.pages.views.create_or_update_with_no_role.delay')
 
 
 # TODO: move this phone tests do generic context
@@ -59,7 +59,7 @@ def test_should_call_update_when_with_correct_parameters(subscribe_with_no_role,
     )
 
     subscribe_with_no_role.assert_called_with(
-        None, 'Moacir', 'moacir@python.pro.br', mock.ANY, phone='+5511999999999'
+        'Moacir', 'moacir@python.pro.br', mock.ANY, phone='+5511999999999'
     )
 
 
@@ -72,7 +72,6 @@ def test_should_call_update_when_logged_with_correct_parameters(subscribe_with_n
     )
 
     subscribe_with_no_role.assert_called_with(
-        None,
         'Moacir',
         'moacir@python.pro.br',
         mock.ANY,

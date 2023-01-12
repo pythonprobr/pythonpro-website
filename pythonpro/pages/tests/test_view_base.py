@@ -20,7 +20,7 @@ def test_should_return_default_template_name():
 
 @pytest.fixture
 def subscribe_with_no_role(mocker):
-    return mocker.patch('pythonpro.domain.subscription_domain.subscribe_with_no_role.delay')
+    return mocker.patch('pythonpro.pages.views.create_or_update_with_no_role.delay')
 
 
 def test_should_send_utm_tags_to_active_campaign(client, subscribe_with_no_role):
@@ -31,7 +31,6 @@ def test_should_send_utm_tags_to_active_campaign(client, subscribe_with_no_role)
     )
 
     subscribe_with_no_role.assert_called_with(
-        mock.ANY,
         'Moacir',
         'moacir@python.pro.br',
         'webinario-data-science',
