@@ -3,23 +3,16 @@
 <html lang="pt-br" data-wf-page="5f11fb784cf649f4dd0aa7ab" data-wf-site="5f07a1c9ac6e0b5937b108a7">
 <head>
     <link rel="canonical" href="https://www.dev.pro.br{{ request.get_full_path }}"/>
-    <!-- Google Tag Manager -->
-    <script>(function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({
-            'gtm.start':
-                new Date().getTime(), event: 'gtm.js'
-        });
-        var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-        j.async = true;
-        j.src =
-            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-        f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', '{{GOOGLE_TAG_MANAGER_ID}}');</script>
-    <!-- End Google Tag Manager -->
+{#    <!-- Google Tag Manager -->#}
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','{{GOOGLE_TAG_MANAGER_ID}}');</script>
+{#    <!-- End Google Tag Manager -->#}
+
     <meta charset="UTF-8">
-    <title>{% block title %}Dev Pro: Comunidade de Programação, Presencial Online, do Básico ao
+    <title>{% block title %}DevPro: Comunidade de Programação, Presencial Online, do Básico ao
         Avançado!{% endblock %}</title>
 
     <meta name="description" content="{% block description %}{% endblock %}"/>
@@ -43,9 +36,8 @@
 </head>
 <body class="{% block body_class %}{% endblock %}">
 {# Google Tag Manager (noscript)#}
-<noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id={{ GOOGLE_TAG_MANAGER_ID }}"
-            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ GOOGLE_TAG_MANAGER_ID }}"
+height="0" width="0" style="display:none;visibility:hidden"></iframe>
 </noscript>
 {# End Google Tag Manager (noscript)#}
 {% block navbar %}
