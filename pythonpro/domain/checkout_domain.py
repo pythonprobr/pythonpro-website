@@ -9,6 +9,8 @@ from pythonpro.email_marketing import facade as email_marketing_facade
 
 __all__ = ['contact_info_listener', 'user_factory', 'payment_handler_task', 'payment_change_handler']
 
+from pythonpro.memberkit.models import SubscriptionType, Subscription
+
 
 def contact_info_listener(name: str, email: str, phone: str, payment_item_slug: str, user=None):
     if (user is not None) and user.is_authenticated:
@@ -89,6 +91,15 @@ def availability_strategy(payment_item_config, request):
         return True
     elif payment_item_config.slug.startswith('bootcamp-webdev'):
         return core_facade.is_webdev(request.user)
+    elif payment_item_config.slug == 'programa-de-aceleracao-upgrade':
+        authenticated = request.user.is_authenticated
+        if not authenticated:
+            return False
+        has_active_subscription = SubscriptionType.objects.filter(
+            subscriptions__subscriber_id=request.user.id,
+            subscriptions__status=Subscription.Status.ACTIVE
+        ).exists()
+        return has_active_subscription
     return True
 
 

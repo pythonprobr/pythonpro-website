@@ -5,12 +5,28 @@
     <div class="container">
         <div class="row">
             <div class="col mb-5">
-                <h1 class="mt-5">Curso {{ payment_item_config.name }} Indisponível</h1>
-
-                <p>Infelizmente essa oferta não está mais disponível.
-                    Ela ficou válida até {{ payment_item_config.available_until }}.</p>
-                <p>Confira abaixo todos nossos cursos:</p>
-                <a class="btn btn-primary &raquo;" href="{% url 'modules:index' %}">Ver módulos</a>
+                {% if request.user.is_authenticated %}
+                    <h1 class="mt-5">Você não tem acesso ao upgrade</h1>
+                    <br/>
+                    <br/>
+                    <p>A razão disso é que o desconto de R$ 1000,00 só está disponível para quem tem um produto
+                        ativo.</p>
+                    <p>Você tem duas opções, clique abaixo</p>
+                    <ol>
+                        <li><a href="https://pythonpro.com.br/aceleracao-devpro/">Comprar o programa de Aceleração como
+                            aluno novo.</a></li>
+                        <li>
+                            <a href="https://api.whatsapp.com/send?phone=5511968983377&text=Olá! Gostaria de ter acesso ao desconto do Programa de Aceleração DevPro. Meu email é {{ request.user.email }}. Você pode me ajudar?">Entrar
+                                em contato com Suporte no Whatsapp.</a></li>
+                    </ol>
+                {% else %}
+                    <h1 class="mt-5">Você precisa logar para acesar essa página</h1>
+                    <br/>
+                    <br/>
+                    <p>Clique no botão abaixo para logar:</p>
+                    <a class="btn btn-primary &raquo;"
+                       href="{% url 'two_factor:login' %}?next={% url 'django_pagarme:pagarme' slug=payment_item_config.slug %}">Logar</a>
+                {% endif %}
             </div>
         </div>
     </div>
