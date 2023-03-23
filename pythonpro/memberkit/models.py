@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.utils import timezone
 
 YEAR_IN_DAYS = 365
 _ETERNAL_IN_HUMAN_LIFE_DAYS = YEAR_IN_DAYS * 200
@@ -71,6 +72,13 @@ class Subscription(models.Model):
         if self.activated_at:
             return self.activated_at + timedelta(days=self.days_of_access)
         return '--'
+
+    @property
+    def remaining_days(self):
+        if self.activated_at:
+            consumed_timedelta = timezone.now() - self.activated_at
+            return max(0, self.days_of_access - consumed_timedelta.days)
+        return 0
 
     @property
     def email_marketing_tags(self):
