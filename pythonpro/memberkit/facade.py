@@ -19,9 +19,8 @@ def synchronize_subscription_types() -> List[SubscriptionType]:
 
 
 def create_new_subscription_without_payment(
-    user, days_of_access=YEAR_IN_DAYS, subscription_types=[], observation: str = ''
+        user, days_of_access=YEAR_IN_DAYS, subscription_types=[], observation: str = ''
 ) -> Subscription:
-
     subscription = Subscription.objects.create(
         status=Subscription.Status.INACTIVE,
         subscriber=user,
@@ -52,11 +51,26 @@ def create_new_subscription(payment, observation: str = '') -> Subscription:
     return subscription
 
 
+# Esses ids de comunidade são os verdadeiros de produção, que foram extraidos do memberkit
+IDS_COMUNIDADE_SUBSCRIPTION = {11610, 12180}
+
+
 def activate(subscription, responsible=None, observation=''):
     user = subscription.subscriber
     subscription.activated_at = timezone.now()
     for subscription_type in subscription.subscription_types.all():
         expires_at = subscription.activated_at + timedelta(days=subscription_type.days_of_access)
+        if subscription_type.id in IDS_COMUNIDADE_SUBSCRIPTION:
+            active_comunidade_subscriptions = Subscription.objects.filter(
+                subscriber_id=user.id,
+                status=Subscription.Status.ACTIVE,
+                subscription_types__in=IDS_COMUNIDADE_SUBSCRIPTION
+            )
+
+            max_remaining_days = max(s.remaining_days for s in active_comunidade_subscriptions)
+            expires_at += timedelta(days=max_remaining_days)
+            subscription.days_of_access += max_remaining_days
+
         response_json = api.activate_user(
             user.get_full_name(), user.email, subscription_type.id, expires_at
         )

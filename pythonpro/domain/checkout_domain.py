@@ -91,7 +91,7 @@ def availability_strategy(payment_item_config, request):
         return True
     elif payment_item_config.slug.startswith('bootcamp-webdev'):
         return core_facade.is_webdev(request.user)
-    elif payment_item_config.slug == 'programa-de-aceleracao-upgrade':
+    elif payment_item_config.slug in {'programa-de-aceleracao-upgrade', 'renovacao-comunidade-devpro'}:
         authenticated = request.user.is_authenticated
         if not authenticated:
             return False
