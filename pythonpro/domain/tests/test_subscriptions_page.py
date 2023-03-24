@@ -45,7 +45,7 @@ def resp(client_with_lead, subscriptions):
 
 
 def test_status_code(resp):
-    return resp.status_code == 200
+    assert resp.status_code == 200
 
 
 def test_subscription_name_is_present(resp, subscriptions):
