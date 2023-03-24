@@ -58,7 +58,7 @@ def test_user_activation(resp, remove_tags_mock, logged_user):
 
 
 def test_topic_interaction_status_code(resp):
-    return resp.status_code == 200
+    assert resp.status_code == 200
 
 
 def test_topic_interaction_is_created(resp):

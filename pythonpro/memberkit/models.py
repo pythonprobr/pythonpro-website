@@ -126,7 +126,9 @@ class UserSubscriptionsSummary:
         Returns query set with user with at least one active subscription
         :return: Django Use Query Set
         """
-        return get_user_model().objects.filter(subscriptions__status=Subscription.Status.ACTIVE).distinct()
+        return get_user_model().objects.filter(
+            subscriptions__status=Subscription.Status.ACTIVE
+        ).order_by('-id').distinct()
 
     def memberkit_user_ids(self) -> set[int]:
         return set(Subscription.objects.filter(
