@@ -178,7 +178,7 @@ def test_deactivate_on_membership(django_user_model, logged_user, api_key, respo
     facade.inactivate(subscription, logged_user, msg)
     subscription.refresh_from_db()
     assert subscription.status == Subscription.Status.INACTIVE
-    assert subscription.activated_at is None
+    assert subscription.activated_at is not None
     assert subscription.memberkit_user_id == memberkit_user_id
     assert subscription.observation == msg
     assert subscription.responsible == logged_user
