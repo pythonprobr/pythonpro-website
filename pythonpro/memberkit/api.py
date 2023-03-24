@@ -45,12 +45,14 @@ def _configure_api_key(func, *args, api_key=_ApiKeyNone, **kwargs):
 @_configure_api_key
 def list_membership_levels(*, api_key=_ApiKeyNone):
     response = requests.get(f'{_base_url}/api/v1/membership_levels?api_key={api_key}')
+    response.raise_for_status()
     return response.json()
 
 
 @_configure_api_key
 def user_detail(email_or_memberkit_user_id, *, api_key=_ApiKeyNone):
     response = requests.get(f'{_base_url}/api/v1/users/{email_or_memberkit_user_id}?api_key={api_key}')
+    response.raise_for_status()
     return response.json()
 
 
@@ -73,11 +75,13 @@ def activate_user(full_name: str, email: str, subscription_type_id: int, expires
 
 
 @_configure_api_key
-def update_user_subscription(memberkit_user_id: int, subscription_type_id: int, status: str, expires_at: date = None, *,
+def update_user_subscription(memberkit_user_id: int, subscription_type_id: int, status: str, expires_at: date, *,
                              api_key=_ApiKeyNone):
+    valid_statuses = {'inactive', 'pending', 'active', 'expired'}
+    if status not in valid_statuses:
+        raise ValueError(f'{status} is not on of valid statuses: {valid_statuses}')
+
     user_json = user_detail(memberkit_user_id, api_key=api_key)
-    if expires_at is None:
-        expires_at = date(2200, 1, 1)
     data = {
         'full_name': user_json['full_name'],
         'email': user_json['email'],
@@ -88,6 +92,7 @@ def update_user_subscription(memberkit_user_id: int, subscription_type_id: int, 
         'expires_at': expires_at.strftime('%d/%m/%Y'),
     }
     response = requests.post(f'{_base_url}/api/v1/users?api_key={api_key}', json=data)
+    response.raise_for_status()
     return response.json()
 
 
@@ -105,6 +110,7 @@ def inactivate_user(memberkit_user_id: int, subscription_type_id: int, *,
         'expires_at': date.today().strftime('%d/%m/%Y'),
     }
     response = requests.post(f'{_base_url}/api/v1/users?api_key={api_key}', json=data)
+    response.raise_for_status()
     return response.json()
 
 
@@ -112,6 +118,7 @@ def inactivate_user(memberkit_user_id: int, subscription_type_id: int, *,
 def delete_user(memberkit_user_id: int, *, api_key=_ApiKeyNone):
     response = requests.delete(f'{_base_url}/api/v1/users/{memberkit_user_id}?api_key={api_key}')
     response.raise_for_status()
+    return response
 
 
 @_configure_api_key

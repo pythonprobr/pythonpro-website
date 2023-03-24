@@ -1,11 +1,12 @@
 from builtins import Exception
-from datetime import timedelta
 from itertools import count
 from logging import Logger
 from typing import List
 
 from celery import shared_task
+from django.db import transaction
 from django.utils import timezone
+from requests import HTTPError
 
 from pythonpro.memberkit import api
 from pythonpro.memberkit.models import SubscriptionType, Subscription, YEAR_IN_DAYS, UserSubscriptionsSummary
@@ -62,25 +63,34 @@ IDS_COMUNIDADE_SUBSCRIPTION = {11610, 12180}
 
 def activate(subscription, responsible=None, observation=''):
     user = subscription.subscriber
-    if subscription.status == Subscription.Status.INACTIVE or subscription.activated_at is None:
+    if subscription.activated_at is None:
+        # Faz extensão da anualidade se for a primeira ativação
         subscription.activated_at = timezone.now()
-    for subscription_type in subscription.subscription_types.all():
-        expires_at = subscription.activated_at + timedelta(days=subscription_type.days_of_access)
-        if subscription_type.id in IDS_COMUNIDADE_SUBSCRIPTION:
-            active_comunidade_subscriptions = Subscription.objects.filter(
-                subscriber_id=user.id,
-                status=Subscription.Status.ACTIVE,
-                subscription_types__in=IDS_COMUNIDADE_SUBSCRIPTION
+        for subscription_type in subscription.subscription_types.all():
+            if subscription_type.id in IDS_COMUNIDADE_SUBSCRIPTION:
+                active_comunidade_subscriptions = Subscription.objects.filter(
+                    subscriber_id=user.id,
+                    status=Subscription.Status.ACTIVE,
+                    subscription_types__in=IDS_COMUNIDADE_SUBSCRIPTION
+                )
+
+                max_remaining_days = max(
+                    (s.remaining_days for s in active_comunidade_subscriptions),
+                    default=0
+                )
+                subscription.days_of_access += max_remaining_days
+
+            response_json = api.activate_user(
+                user.get_full_name(), user.email, subscription_type.id, subscription.expires_at
             )
-
-            max_remaining_days = max(s.remaining_days for s in active_comunidade_subscriptions)
-            expires_at += timedelta(days=max_remaining_days)
-            subscription.days_of_access += max_remaining_days
-
-        response_json = api.activate_user(
-            user.get_full_name(), user.email, subscription_type.id, expires_at
-        )
-    subscription.memberkit_user_id = response_json['id']
+        subscription.memberkit_user_id = response_json['id']
+    else:
+        # Se for a segunda, só usa os dados já calculados
+        for subscription_type in subscription.subscription_types.all():
+            response_json = api.activate_user(
+                user.get_full_name(), user.email, subscription_type.id, subscription.expires_at
+            )
+        subscription.memberkit_user_id = response_json['id']
     subscription.status = Subscription.Status.ACTIVE
     if subscription.observation:
         subscription.observation += f'\n\n {observation}'
@@ -96,7 +106,6 @@ def inactivate(subscription, responsible=None, observation=''):
     for subscription_type in subscription.subscription_types.all().only('id'):
         api.inactivate_user(subscription.memberkit_user_id, subscription_type.id)
     subscription.status = Subscription.Status.INACTIVE
-    subscription.activated_at = None
     if responsible is not None:
         subscription.responsible = responsible
     if subscription.observation:
@@ -104,7 +113,7 @@ def inactivate(subscription, responsible=None, observation=''):
     else:
         subscription.observation = observation
     subscription.save(update_fields=[
-        'status', 'activated_at', 'responsible', 'observation'
+        'status', 'responsible', 'observation'
     ])
     return subscription
 
@@ -169,25 +178,37 @@ def process_expired_subscriptions(user_id):
     for subscription in active_subscriptions:
         if subscription.expires_at < now:
             subscription.status = Subscription.Status.INACTIVE
-            subscription.save()
     inactive_subscriptions = [s for s in active_subscriptions if s.status == Subscription.Status.INACTIVE]
     active_subscriptions = [s for s in active_subscriptions if s.status == Subscription.Status.ACTIVE]
     if len(active_subscriptions) == 0:
         for memberkit_user_id in summary.memberkit_user_ids():
             _logger.info(f'Deleted memberkit account for user_id: {user_id}')
-            api.delete_user(memberkit_user_id)
+            try:
+                api.delete_user(memberkit_user_id)
+            except HTTPError as e:
+                if e.response.status_code != 404:
+                    raise e
+
+        with transaction.atomic():
+            for subscription in inactive_subscriptions:
+                subscription.save()
     else:
-        for inactive_subscription in inactive_subscriptions:
-            _logger.info(f'Inactivated {inactive_subscription.name} for user_id: {user_id}')
-            inactivate(inactive_subscription, observation='Inativada por processo de inativação')
         for active_subscription in active_subscriptions:
-            for subscription_type in active_subscription.subscription_types.all().only('id'):
+            for subscription_type_id in active_subscription.subscription_types.all().values_list('id', flat=True):
                 _logger.info(f'Activated {active_subscription.name} for user_id: {user_id}')
                 api.update_user_subscription(
                     active_subscription.memberkit_user_id,
-                    subscription_type,
-                    'activate'
+                    subscription_type_id,
+                    'active',
+                    active_subscription.expires_at.date()
                 )
+        for inactive_subscription in inactive_subscriptions:
+            _logger.info(f'Inactivated {inactive_subscription.name} for user_id: {user_id}')
+            try:
+                inactivate(inactive_subscription, observation='Inativada por data de experição7')
+            except HTTPError as e:
+                if e.response.status_code != 404:
+                    raise e
 
 
 def inactivate_expired_subscriptions():

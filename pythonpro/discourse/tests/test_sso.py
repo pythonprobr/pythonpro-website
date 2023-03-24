@@ -120,15 +120,15 @@ def test_redirect_payload_lead_data(logged_user, nonce, response_with_lead):
 )
 def test_status_invalid_data(client_with_member, invalid_data):
     response = client_with_member.get(reverse('discourse:sso'), data=invalid_data)
-    return response.status_code == 400
+    assert response.status_code == 400
 
 
 def test_payload_without_nonce(response_without_nonce):
-    return response_without_nonce.status_code == 400
+    assert response_without_nonce.status_code == 400
 
 
 def test_payload_with_mismatch_signature(response_with_wrong_sig):
-    return response_with_wrong_sig.status_code == 400
+    assert response_with_wrong_sig.status_code == 400
 
 
 def test_user_not_logged_status_code(client):
