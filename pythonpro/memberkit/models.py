@@ -57,6 +57,7 @@ class Subscription(models.Model):
                                     related_name='created_subscriptions')
     observation = models.TextField(verbose_name='Observação', blank=True, default='')
     activated_at = models.DateTimeField(null=True, default=None)
+    expired_at = models.DateField(null=True)
     memberkit_user_id = models.IntegerField(null=True)
 
     @property
