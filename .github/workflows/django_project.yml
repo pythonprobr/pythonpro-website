@@ -15,7 +15,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:11.5
+        image: postgres:15.2
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -40,9 +40,8 @@ jobs:
           pipenv run flake8 .
       - name: Test with pytest
         run: |
-          pipenv run pytest pythonpro --cov=pythonpro
-      - name: Posting Coverage
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: |
-          pipenv run codecov
+          pipenv run pytest pythonpro --cov=pythonpro --cov-report=xml --cov-report=term
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
