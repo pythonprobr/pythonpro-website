@@ -1,13 +1,13 @@
 from builtins import Exception
 from itertools import count
 from logging import Logger
+from time import sleep
 from typing import List
 
 from celery import shared_task
 from django.db import transaction
 from django.utils import timezone
 from requests import HTTPError
-from tornado.gen import sleep
 
 from pythonpro.memberkit import api
 from pythonpro.memberkit.models import SubscriptionType, Subscription, YEAR_IN_DAYS, UserSubscriptionsSummary
