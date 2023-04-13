@@ -156,17 +156,18 @@ class UserSubscriptionsSummary:
         ).order_by('-id').distinct()
 
     @classmethod
-    def print_users_with_only_active_but_expired_subscriptions(cls):
+    def print_users_with_only_active_but_expired_subscriptions(cls, due_date=None):
         User = get_user_model()
-        now = timezone.now().date()
+        if due_date is None:
+            due_date = timezone.now().date()
         for user in User.objects.filter(
                 subscriptions__status=Subscription.Status.ACTIVE,
-                subscriptions__expired_at__lte=now
+                subscriptions__expired_at__lte=due_date
         ).order_by('-id').distinct():
             last_subscription_date = user.subscriptions.filter(
                 status=Subscription.Status.ACTIVE
             ).aggregate(Max('expired_at'))['expired_at__max']
-            if last_subscription_date < now:
+            if last_subscription_date < due_date:
                 print(user.id, user.email, last_subscription_date.isoformat(), sep=',')
 
     def memberkit_user_ids(self) -> set[int]:
