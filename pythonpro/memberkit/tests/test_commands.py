@@ -1,5 +1,6 @@
 import pytest as pytest
 from django.core import management
+from django.utils import timezone
 from django_pagarme import facade as pagarme_facade
 from django_pagarme.models import PagarmePayment, PagarmeItemConfig, PagarmeNotification
 from model_bakery import baker
@@ -170,6 +171,11 @@ def test_subscription_creation_another_subscription_type(role, subscription_type
 def test_inactivate_expired_subscriptions(django_user_model, mocker):
     process_expired_subscriptions_mock = mocker.patch('pythonpro.memberkit.facade.process_expired_subscriptions.delay')
     active_user = baker.make(django_user_model)
-    baker.make(Subscription, status=Subscription.Status.ACTIVE, subscriber=active_user)
+    baker.make(
+        Subscription,
+        status=Subscription.Status.ACTIVE,
+        subscriber=active_user,
+        expired_at=timezone.now()
+    )
     management.call_command('inactivate_expired_subscriptions')
     process_expired_subscriptions_mock.assert_called_once_with(active_user.id)
