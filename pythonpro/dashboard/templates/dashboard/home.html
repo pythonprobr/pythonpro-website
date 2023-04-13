@@ -29,7 +29,7 @@
                             <td>
                                 {{ subscription.get_status_display }}
                             </td>
-                            <td>{{ subscription.expires_at|date:"d/m/Y" }} {{ subscription.last_interaction|time:"H:i:s" }}</td>
+                            <td>{{ subscription.expired_at|date:"d/m/Y" }} {{ subscription.last_interaction|time:"H:i:s" }}</td>
                         </tr>
                     {% empty %}
                         <tr>

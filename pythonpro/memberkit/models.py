@@ -48,11 +48,14 @@ class Subscription(models.Model):
     status = models.CharField(max_length=1, choices=Status.choices)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    days_of_access = models.IntegerField(default=YEAR_IN_DAYS)
+    old_days_of_access = models.IntegerField(default=YEAR_IN_DAYS, db_column='days_of_access')
     payment = models.OneToOneField('django_pagarme.PagarmePayment', on_delete=models.DO_NOTHING, null=True, blank=True)
     subscription_types = models.ManyToManyField(SubscriptionType, related_name='subscriptions')
-    subscriber = models.ForeignKey(get_user_model(), on_delete=models.DO_NOTHING, null=True,
-                                   related_name='subscriptions')
+    subscriber = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        related_name='subscriptions')
     responsible = models.ForeignKey(get_user_model(), on_delete=models.DO_NOTHING, null=True,
                                     related_name='created_subscriptions')
     observation = models.TextField(verbose_name='Observação', blank=True, default='')
@@ -73,6 +76,17 @@ class Subscription(models.Model):
         if self.activated_at:
             return self.activated_at + timedelta(days=self.days_of_access)
         return '--'
+
+    @property
+    def days_of_access(self):
+        return self.old_days_of_access
+
+    @days_of_access.setter
+    def days_of_access(self, data):
+        if self.activated_at is None:
+            raise ValueError('activate at should not be None')
+        self.old_days_of_access = data
+        self.expired_at = (self.activated_at + timedelta(days=data)).date()
 
     @property
     def remaining_days(self):

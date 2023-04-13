@@ -76,10 +76,10 @@ class PaymentListFilter(admin.SimpleListFilter):
 
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
-    fields = ['payment', 'subscriber', 'subscription_types', 'observation', 'days_of_access']
+    fields = ['payment', 'subscriber', 'subscription_types', 'observation', 'expired_at']
     list_display = [
         'id', 'subscriber', 'pagarme_url_field', 'memberkit_user_url_field', 'responsible', 'status',
-        'created_at', 'updated_at', 'activated_at', 'expires_at'
+        'created_at', 'updated_at', 'activated_at', 'expired_at'
     ]
     autocomplete_fields = ['subscriber']
     search_fields = ['subscriber__email', 'payment__transaction_id']

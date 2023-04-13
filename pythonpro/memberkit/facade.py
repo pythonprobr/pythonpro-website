@@ -32,7 +32,7 @@ def create_new_subscription_without_payment(
         status=Subscription.Status.INACTIVE,
         subscriber=user,
         observation=observation,
-        days_of_access=days_of_access,
+        old_days_of_access=days_of_access,
     )
     subscription.subscription_types.set(subscription_types)
     return subscription
@@ -52,7 +52,7 @@ def create_new_subscription(payment, observation: str = '') -> Subscription:
         payment=payment,
         subscriber=payment.user,
         observation=observation,
-        days_of_access=days_of_access
+        old_days_of_access=days_of_access
     )
     subscription.subscription_types.set(subscription_types)
     return subscription
@@ -91,6 +91,7 @@ def activate(subscription, responsible=None, observation=''):
             response_json = api.activate_user(
                 user.get_full_name(), user.email, subscription_type.id, subscription.expires_at
             )
+
         subscription.memberkit_user_id = response_json['id']
     subscription.status = Subscription.Status.ACTIVE
     if subscription.observation:
