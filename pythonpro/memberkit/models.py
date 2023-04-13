@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.db.models import Max
 from django.utils import timezone
 
 YEAR_IN_DAYS = 365
@@ -153,6 +154,20 @@ class UserSubscriptionsSummary:
             subscriptions__expired_at__lte=timezone.now()
 
         ).order_by('-id').distinct()
+
+    @classmethod
+    def print_users_with_only_active_but_expired_subscriptions(cls):
+        User = get_user_model()
+        now = timezone.now().date()
+        for user in User.objects.filter(
+                subscriptions__status=Subscription.Status.ACTIVE,
+                subscriptions__expired_at__lte=now
+        ).order_by('-id').distinct():
+            last_subscription_date = user.subscriptions.filter(
+                status=Subscription.Status.ACTIVE
+            ).aggregate(Max('expired_at'))['expired_at__max']
+            if last_subscription_date < now:
+                print(user.id, user.email, last_subscription_date.isoformat(), sep=',')
 
     def memberkit_user_ids(self) -> set[int]:
         return set(Subscription.objects.filter(
