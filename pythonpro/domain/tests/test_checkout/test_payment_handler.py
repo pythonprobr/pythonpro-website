@@ -65,7 +65,7 @@ def test_subscription_creation(db, tag_as_mock, remove_tags_mock, logged_user,
     cohort = baker.make(Cohort)
     baker.make(PagarmeNotification, status=facade.PAID, payment=payment)
     config = baker.make(PagarmeItemConfig, payments=[payment])
-    subscription_type = baker.make(SubscriptionType, include_on_cohort=True)
+    subscription_type = baker.make(SubscriptionType, include_on_cohort=True, days_of_access=365)
     PaymentItemConfigToSubscriptionType.objects.create(payment_item=config, subscription_type=subscription_type)
     user_response = {
         'bio': None,
