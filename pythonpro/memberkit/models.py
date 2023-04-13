@@ -145,6 +145,15 @@ class UserSubscriptionsSummary:
             subscriptions__status=Subscription.Status.ACTIVE
         ).order_by('-id').distinct()
 
+    @classmethod
+    def users_with_expired_but_active_subscriptions(cls):
+
+        return get_user_model().objects.filter(
+            subscriptions__status=Subscription.Status.ACTIVE,
+            subscriptions__expired_at__lte=timezone.now()
+
+        ).order_by('-id').distinct()
+
     def memberkit_user_ids(self) -> set[int]:
         return set(Subscription.objects.filter(
             subscriber_id=self.user_id

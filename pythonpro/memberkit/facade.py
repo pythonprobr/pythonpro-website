@@ -215,7 +215,7 @@ def process_expired_subscriptions(user_id):
 
 def inactivate_expired_subscriptions():
     count = 0
-    for user_id in UserSubscriptionsSummary.users_with_active_subscriptions().values_list('id', flat=True):
+    for user_id in UserSubscriptionsSummary.users_with_expired_but_active_subscriptions().values_list('id', flat=True):
         count += 1
         _logger.info(f'Adding task to process subscriptions expiration for user_id: {user_id}')
         process_expired_subscriptions.delay(user_id)
