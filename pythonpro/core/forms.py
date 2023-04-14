@@ -1,7 +1,5 @@
 from collections import ChainMap
 
-from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV2Checkbox
 from django import forms
 from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
@@ -102,4 +100,6 @@ class LeadForm(UserSignupForm):
 
 
 class PythonProResetForm(PasswordResetForm):
-    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+    pass
+    # TODO: Investigate later: https://github.com/pythonprobr/pythonpro-website/issues/4830
+    # captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
