@@ -3,7 +3,7 @@ version: "3.3"
 services:
   database:
     container_name: pythonpro_database
-    image: postgres:11.5
+    image: postgres:12.14
     volumes:
       - ./.pgdata:/var/lib/postgresql/data
     environment:
