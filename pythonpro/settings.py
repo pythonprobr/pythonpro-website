@@ -86,7 +86,6 @@ INSTALLED_APPS = [
     'pythonpro.email_marketing',
     'pythonpro.dashboard',
     'pythonpro.launch',
-    'pythonpro.analytics',
     'pythonpro.checkout',
     'pythonpro.redirector',
     'pythonpro.pages',
