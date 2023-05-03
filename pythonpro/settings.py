@@ -151,7 +151,6 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'pythonpro.core.context_processors.global_settings',
                 'pythonpro.modules.context_processors.global_settings',
-                'pythonpro.analytics.context_processors.posthog_configurations',
             ],
         },
     },
@@ -328,9 +327,6 @@ CELERY_TIMEZONE = TIME_ZONE
 # Hotzapp configuration
 HOTZAPP_API_URL = config('HOTZAPP_API_URL')
 
-# PostHog configuration
-POSTHOG_API_URL = config('POSTHOG_API_URL')
-POSTHOG_API_KEY = config('POSTHOG_API_KEY')
 
 # needed to allow iframes in pixeling system
 X_FRAME_OPTIONS = 'ALLOWALL'
