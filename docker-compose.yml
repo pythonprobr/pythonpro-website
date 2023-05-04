@@ -3,7 +3,7 @@ version: "3.3"
 services:
   database:
     container_name: pythonpro_database
-    image: postgres:12.14
+    image: postgres:13.10
     volumes:
       - ./.pgdata:/var/lib/postgresql/data
     environment:
@@ -11,7 +11,7 @@ services:
       - POSTGRES_PASSWORD=pythonpro
       - POSTGRES_USER=pythonpro
     ports:
-      - 5433:5432
+      - 5432:5432
   celery_broker:
     container_name: pythonpro_celery_broker
     image: rabbitmq:3.8.2
