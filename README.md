@@ -1,13 +1,14 @@
 # Dev Pro Website
 
-Source code of website www.python.pro.br
+Source code of website [https://painel.dev.pro.br](https://painel.dev.pro.br/checkout/pagarme/comunidade-devpro)
 
 
 [![codecov](https://codecov.io/gh/pythonprobr/pythonpro-website/branch/master/graph/badge.svg)](https://codecov.io/gh/pythonprobr/pythonpro-website)
-[![Code Health](https://landscape.io/github/pythonprobr/pythonpro-website/master/landscape.svg?style=flat)](https://landscape.io/github/pythonprobr/pythonpro-website/master)
 
 
-It's developed using Django
+The web site is developed using Django.
+The project uses Pipenv as dependecy management tool and Python Decouple for configurations.
+
 
 How to install in locally (supposing you have git and python >= 3.7 installed):
 
@@ -19,8 +20,11 @@ python -m pip install pipenv
 pipenv install -d
 ```
 
-If you want use SQLite on your dev environment, please remove DATABASE_URL from .env file.
-Otherwise fill this value with your database credentials.
+The project uses Postgres as database. You can use docker compose to install it as a service running:
+
+```console
+docker compose up -d
+``` 
 
 You can apply migrations to generate database schema:
 
@@ -28,10 +32,10 @@ You can apply migrations to generate database schema:
 python manage.py migrate
 ``` 
 
-You can also create a user:
+You can seed database to create an admin and other usefull models:
 
 ```console
-python manage.py createsuperuser
+python manage.py seed_dev_db
 ```
 
 To run server locally (with virtualenv activated):
@@ -50,12 +54,6 @@ To tun the tests:
 
 ```console
 pytest pythonpro
-```
-
-If you want run your amb dev using postgres, you can add to your .env 
-
-```console
-DATABASE_URL=postgres://postgres:pass@localhost:5432/postgres
 ```
 
 

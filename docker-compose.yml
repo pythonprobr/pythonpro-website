@@ -8,8 +8,8 @@ services:
       - ./.pgdata:/var/lib/postgresql/data
     environment:
       - LC_ALL=C.UTF-8
-      - POSTGRES_PASSWORD=pythonpro
-      - POSTGRES_USER=pythonpro
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
     ports:
       - 5432:5432
   celery_broker:
