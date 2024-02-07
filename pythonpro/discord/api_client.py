@@ -35,17 +35,17 @@ class DiscordBotClient:
     def __init__(self, bot_token: str):
         self._bot_token = bot_token
 
-    def list_guild_members(self, guild_id, limit=1, after=0) -> dict:
+    def list_guild_members(self, guild_id, limit=100, after=0) -> dict:
         """
         :param guild_id: the discord server id
         """
         headers = {
             'Authorization': f'Bot {self._bot_token}'
         }
-        # data = {'limit': limit, 'after': after}
+        params = {'limit': limit, 'after': after}
         r = requests.get(
             f'{_BASE_ENDPOINT_URI}/guilds/{guild_id}/members',
-            # data=data,
+            params=params,
             headers=headers)
         try:
             r.raise_for_status()
@@ -141,6 +141,7 @@ class DiscordCredentials:
 
 
 if __name__ == '__main__':
-    c = DiscordBotClient('MTAwNDU0MTg3NTk1NDQwNTQzNg.GFcT5X.Kp4gVn0U1kOPvdwLku-oki7LI_wtbMma2E_ET4')
+    import decouple
+    c = DiscordBotClient(decouple.config('DISCORD_APP_BOT_TOKEN'))
     members = c.list_guild_members(971162582624903288)
     print(members)

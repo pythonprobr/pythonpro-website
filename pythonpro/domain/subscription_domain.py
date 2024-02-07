@@ -16,7 +16,7 @@ from pythonpro.memberkit import facade as memberkit_facade
 from pythonpro.memberkit.models import Subscription, SubscriptionType
 
 _logger = Logger(__file__)
-run_until_available = shared_task(autoretry_for=(JSONDecodeError,), retry_backoff=True, max_retries=None)
+run_until_available = shared_task(autoretry_for=(JSONDecodeError,), retry_backoff=True, max_retries=20)
 
 
 def validate_has_discourse_api_configuration():
