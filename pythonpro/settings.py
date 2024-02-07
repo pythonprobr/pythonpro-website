@@ -73,7 +73,7 @@ if has_captch_config:
     RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
     RECAPTCHA_REQUIRED_SCORE = 0.85
 else:
-    SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
+    SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
 
 # Application definition
 
@@ -90,7 +90,7 @@ INSTALLED_APPS = [
     'pythonpro.redirector',
     'pythonpro.pages',
     'pythonpro.memberkit',
-    'captcha',
+    'django_recaptcha',
     'rolepermissions',
     'ordered_model',
     'django.contrib.admin',
