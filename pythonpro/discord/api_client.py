@@ -35,6 +35,15 @@ class DiscordBotClient:
     def __init__(self, bot_token: str):
         self._bot_token = bot_token
 
+    def get_member(self, discord_user_id: str):
+        headers = {
+            'Authorization': f'Bot {self._bot_token}'
+        }
+        r = requests.get(f'{_BASE_ENDPOINT_URI}/users/{discord_user_id}', headers=headers)
+        r.raise_for_status()
+        discord_user_dict = r.json()
+        return discord_user_dict
+
     def list_guild_members(self, guild_id, limit=100, after=0) -> dict:
         """
         :param guild_id: the discord server id
@@ -138,10 +147,3 @@ class DiscordCredentials:
         if self._bot_token is None:
             return DiscordAppClient(access_token)
         return DiscordAppAndBotClient(access_token, self._bot_token)
-
-
-if __name__ == '__main__':
-    import decouple
-    c = DiscordBotClient(decouple.config('DISCORD_APP_BOT_TOKEN'))
-    members = c.list_guild_members(971162582624903288)
-    print(members)

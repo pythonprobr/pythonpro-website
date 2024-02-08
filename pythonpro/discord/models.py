@@ -15,3 +15,18 @@ class DiscordUser(models.Model):
 
     def __str__(self):
         return self.discord_email
+
+
+class DiscordLead(models.Model):
+    class Status(models.TextChoices):
+        ACTIVE = 'A', 'Ativa'
+        INACTIVE = 'I', 'Inativa'
+
+    discord_id = models.CharField(max_length=64, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    status = models.CharField(
+        max_length=32,
+        choices=Status.choices,
+        default=Status.INACTIVE
+    )

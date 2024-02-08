@@ -1,0 +1,21 @@
+from django.conf import settings
+
+from pythonpro.discord.api_client import DiscordBotClient
+from pythonpro.discord.tasks import clean_discord_user
+
+discord_bot_client = DiscordBotClient(settings.DISCORD_APP_BOT_TOKEN)
+
+
+def clean_discord_users():
+    discord_user_id = 0
+    while True:
+        discord_members = discord_bot_client.list_guild_members(settings.DISCORD_GUILD_ID, after=discord_user_id)
+        if len(discord_members) == 0:
+            break
+        for member in discord_members:
+            discord_user = member['user']
+            discord_user_id = discord_user['id']
+            is_bot = discord_user.get('bot', False)
+            if is_bot:
+                continue
+            clean_discord_user.delay(discord_user_id)
