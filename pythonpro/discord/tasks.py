@@ -1,7 +1,11 @@
+import logging
+
 from celery import shared_task
 
 from pythonpro.discord.models import DiscordLead
 from pythonpro.memberkit.models import Subscription
+
+logger = logging.getLogger(__name__)
 
 
 @shared_task(
@@ -24,4 +28,4 @@ def clean_discord_user(discord_user_id):
         discord_id=discord_user_id
     )
 
-    return print(f'Clean discord user: {discord_user_id}')
+    logging.info(f'Clean discord user: {discord_user_id} with status: {lead_status.label}')
