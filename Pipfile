@@ -36,6 +36,7 @@ django-pagarme = "*"
 django-redis = "*"
 posthog = "*"
 urllib3 = "<2"
+pytz = "*"
 
 [dev-packages]
 faker = "*"
