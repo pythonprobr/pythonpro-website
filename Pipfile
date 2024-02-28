@@ -35,6 +35,7 @@ django-recaptcha = "*"
 django-pagarme = "*"
 django-redis = "*"
 posthog = "*"
+urllib3 = "<2"
 
 [dev-packages]
 faker = "*"

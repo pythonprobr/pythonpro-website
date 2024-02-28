@@ -132,7 +132,7 @@ def test_email_normalization(resp_email_upper_case, email, django_user_model):
 
 @pytest.fixture
 def resp_lead_change_pasword(resp_lead_creation, client):
-    client.post(
+    return client.post(
         reverse('core:lead_change_password'),
         data={
             'new_password1': 'senha-muito-d1f1c1l',
