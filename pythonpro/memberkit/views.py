@@ -14,7 +14,7 @@ def migrate_to_memberkit(request):
     except facade.InactiveUserException:
         mail_admins(
             f'Verificar migração de {user.email}',
-            f'Link: https://www.python.pro.br/admin/memberkit/subscription/?q={user.email}'
+            f'Link: https://painel.dev.pro.br/admin/memberkit/subscription/?q={user.email}'
         )
         return render(request, 'memberkit/manual_migration.html')
     else:
