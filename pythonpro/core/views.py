@@ -24,9 +24,7 @@ from pythonpro.memberkit.facade import create_new_subscription_without_payment, 
 
 
 def index(request):
-    if request.user.is_authenticated:
-        return redirect(reverse('dashboard:home'))
-    return redirect('https://pythonpro.com.br')
+    return redirect(reverse('dashboard:home'))
 
 
 def thanks(request):
