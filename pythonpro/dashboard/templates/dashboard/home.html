@@ -10,9 +10,19 @@
 {% endblock head %}
 {% block body %}
     <div class="container mt-5 mb-5">
+        <div class="row pb-5">
+            <div class="col">
+                <h1 class="mb-4">Renove sua Assinatura da Comunidade DevPro</h1>
+                <a class="btn btn-success btn-lg"
+                   href="{% url 'django_pagarme:pagarme' slug='renovacao-comunidade-devpro' %}">
+                    Clique para Renovar
+                </a>
+
+            </div>
+        </div>
         <div class="row">
             <div class="col">
-                <h1 class="mb-4">Assinaturas</h1>
+                <h2 class="mb-4">Assinaturas</h2>
                 <p>Confira suas assinaturas</p>
                 <table class="table table-striped text-center">
                     <thead>
