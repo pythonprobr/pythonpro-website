@@ -25,7 +25,6 @@ pagarme-python = {editable = true, git = "https://github.com/pythonprobr/pagarme
 sentry-sdk = "*"
 python-dateutil = "*"
 django-extensions = "*"
-activecampaign-python = {editable = true,git = "https://github.com/renzon/activecampaign-python.git",ref = "update-list"}
 django-bootstrap4 = "*"
 celery = "*"
 redis = "*"
@@ -37,6 +36,7 @@ django-redis = "*"
 posthog = "*"
 urllib3 = "<2"
 pytz = "*"
+activecampaign-python = {ref = "update-list", git = "git+https://github.com/renzon/activecampaign-python.git"}
 
 [dev-packages]
 faker = "*"
