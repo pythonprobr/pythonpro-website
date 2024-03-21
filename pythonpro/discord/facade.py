@@ -2,10 +2,8 @@ import logging
 
 from django.conf import settings
 
-from pythonpro.discord.api_client import DiscordBotClient
+from pythonpro.discord.bot import discord_bot_client
 from pythonpro.discord.tasks import clean_discord_user
-
-discord_bot_client = DiscordBotClient(settings.DISCORD_APP_BOT_TOKEN)
 
 logger = logging.getLogger(__name__)
 

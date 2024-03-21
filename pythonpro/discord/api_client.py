@@ -35,6 +35,38 @@ class DiscordBotClient:
     def __init__(self, bot_token: str):
         self._bot_token = bot_token
 
+    def get_dm_channel(self, discord_user_id: str):
+        """
+        Reference: https://discord.com/developers/docs/resources/user#create-dm
+        """
+        headers = {
+            'Authorization': f'Bot {self._bot_token}'
+        }
+        r = requests.post(
+            f'{_BASE_ENDPOINT_URI}/users/@me/channels',
+            headers=headers,
+            json={'recipient_id': discord_user_id}
+        )
+        r.raise_for_status()
+        dm_channel = r.json()
+        return dm_channel
+
+    def create_message(self, channel_id: str, msg: str) -> dict:
+        """
+        Reference: https://discord.com/developers/docs/resources/channel#create-message
+        """
+        headers = {
+            'Authorization': f'Bot {self._bot_token}'
+        }
+        r = requests.post(
+            f'{_BASE_ENDPOINT_URI}/channels/{channel_id}/messages',
+            headers=headers,
+            json={'content': msg}
+        )
+        r.raise_for_status()
+        message = r.json()
+        return message
+
     def get_member(self, discord_user_id: str):
         headers = {
             'Authorization': f'Bot {self._bot_token}'
