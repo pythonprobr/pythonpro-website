@@ -27,7 +27,7 @@ discord_user_id = '1055109241507160165'
 
 
 @pytest.fixture
-def mock_discord_bot_msg_requests(responses):
+def mock_discord_bot_msg_requests(responses, settings):
     channel_id = '122334232132323'
     responses.add(
         responses.POST, 'https://discord.com/api/v10/users/@me/channels', json={'id': channel_id}, status=200,
@@ -38,6 +38,10 @@ def mock_discord_bot_msg_requests(responses):
     responses.add(
         responses.POST, f'https://discord.com/api/v10/channels/{channel_id}/messages', json={'id': 'message_id'},
         status=200
+    )
+    responses.add(
+        responses.DELETE, f'https://discord.com/api/v10/guilds/{settings.DISCORD_GUILD_ID}/members/{discord_user_id}',
+        status=204
     )
 
 
