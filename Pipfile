@@ -20,7 +20,6 @@ ipython = "<8"
 django-sitemaps = "*"
 django-role-permissions = "*"
 responses = "*"
-newrelic = "*"
 pagarme-python = {editable = true, git = "https://github.com/pythonprobr/pagarme-python.git", ref = "117"}
 sentry-sdk = "*"
 python-dateutil = "*"
