@@ -117,6 +117,15 @@ class DiscordBotClient:
                     "\nhttps://discord.com/developers/docs/topics/permissions#permission-hierarchy"
                 ) from error
 
+    def send_user_message(self, user_id: str, message: str):
+        """
+        This is only a shortcut for sending a message to a user
+        It calls get_dm_channel function to get a discord bot channel and after that
+        it calls create_message function to send a message to a user
+        """
+        dm_channel = self.get_dm_channel(user_id)
+        return self.create_message(dm_channel['id'], message)
+
 
 class DiscordAppAndBotClient(DiscordAppClient, DiscordBotClient):
     def __init__(self, access_token: str, bot_token: str):
