@@ -153,6 +153,67 @@ def test_remove_guild_member(responses):
     bot_client.remove_guild_member(guild_id=guild_id, user_id=user_id)
 
 
+def test_get_dm_channel(responses):
+    bot_token = 'MTAwNDU0MTg3NTk1NDQwNTQzNg.GFcT5X.Kp4gVn0U1kOPvdwLku-oki7LI_wtbMma2E_ET4'
+    bot_client = DiscordBotClient(bot_token)
+    user_id = 946364767864504360
+
+    channel_id = '122334232132323'
+    responses.add(
+        responses.POST, 'https://discord.com/api/v10/users/@me/channels', json={'id': channel_id}, status=200,
+        match=[
+            matchers.json_params_matcher({'recipient_id': user_id})
+        ]
+    )
+
+    resp_json = bot_client.get_dm_channel(user_id)
+    assert resp_json == {'id': channel_id}
+
+
+def test_create_msg(responses):
+    bot_token = 'MTAwNDU0MTg3NTk1NDQwNTQzNg.GFcT5X.Kp4gVn0U1kOPvdwLku-oki7LI_wtbMma2E_ET4'
+    bot_client = DiscordBotClient(bot_token)
+
+    message = 'some new message'
+    channel_id = '122334232132323'
+    responses.add(
+        responses.POST, f'https://discord.com/api/v10/channels/{channel_id}/messages', json={'id': 'message_id'},
+        status=200,
+        match=[
+            matchers.json_params_matcher({'content': message})
+        ]
+    )
+
+    resp_json = bot_client.create_message(channel_id, message)
+    assert resp_json == {'id': 'message_id'}
+
+
+def test_send_user_msg(responses):
+    bot_token = 'MTAwNDU0MTg3NTk1NDQwNTQzNg.GFcT5X.Kp4gVn0U1kOPvdwLku-oki7LI_wtbMma2E_ET4'
+    bot_client = DiscordBotClient(bot_token)
+
+    message = 'some new message'
+    channel_id = '122334232132323'
+    user_id = 946364767864504360
+
+    responses.add(
+        responses.POST, 'https://discord.com/api/v10/users/@me/channels', json={'id': channel_id}, status=200,
+        match=[
+            matchers.json_params_matcher({'recipient_id': user_id})
+        ]
+    )
+    responses.add(
+        responses.POST, f'https://discord.com/api/v10/channels/{channel_id}/messages', json={'id': 'message_id'},
+        status=200,
+        match=[
+            matchers.json_params_matcher({'content': message})
+        ]
+    )
+
+    resp_json = bot_client.send_user_message(user_id, message)
+    assert resp_json == {'id': 'message_id'}
+
+
 def test_remove_guild_member_bot_missing_permissionts(responses):
     bot_token = 'MTAwNDU0MTg3NTk1NDQwNTQzNg.GFcT5X.Kp4gVn0U1kOPvdwLku-oki7LI_wtbMma2E_ET4'
     bot_client = DiscordBotClient(bot_token)

@@ -31,8 +31,7 @@ def clean_discord_user(discord_user_id):
     )
 
     if not has_discord_access:
-        dm_channel = discord_bot_client.get_dm_channel(discord_user_id)
-        discord_bot_client.create_message(dm_channel['id'], msg)
+        discord_bot_client.send_user_message(discord_user_id, msg)
         discord_bot_client.remove_guild_member(settings.DISCORD_GUILD_ID, discord_user_id)
 
     logging.info(f'Clean discord user: {discord_user_id} with status: {lead_status.label}')
