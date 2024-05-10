@@ -22,3 +22,7 @@ def clean_discord_users():
                 continue
             logger.info(f'Scheduling Cleaning discord user with id {discord_user_id}')
             clean_discord_user.delay(discord_user_id)
+
+
+def warn_users_about_subscription_expiration():
+    return None
