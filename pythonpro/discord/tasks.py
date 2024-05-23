@@ -54,7 +54,8 @@ def clean_discord_user(discord_user_id):
 _SALES_MSG_TEMPLATE = """Usuário: {user_name}
 Com licença expirando em {expiration_date}
 Id: {user_id}
-email; {user_email}
+email: {user_email}
+---------------------------------------------------------
 """
 
 
