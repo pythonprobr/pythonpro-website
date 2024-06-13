@@ -58,7 +58,6 @@ email: {user_email}
 ---------------------------------------------------------
 """
 
-
 _WARN_USER_TEMPLATE = """Olá {user_name},
 
 Sua assinatura anual da DevPro está prestes a expirar, e queremos oferecer uma oportunidade imperdível para que você continue aproveitando todos os benefícios de ser nosso assinante. 
@@ -119,3 +118,23 @@ def warn_subscription_expiration(user_id: int, expiration_date: str):
         )
         logger.info(f'Subscription warn sent to user with id: {user.id}')
     return None
+
+
+_CHECKOUT_STATUS_CHANGED_TEMPLATE = """#####################################
+O status agora é {status}
+Transaction id = https://beta.dashboard.pagar.me/#/transactions/{transaction_id}
+"""
+
+
+@shared_task(
+    rate_limit=1,
+    max_retries=5,
+    retry_backoff=True,
+    retry_backoff_max=700,
+    retry_jitter=True
+)
+def send_payment_status_change(status, transaction_id):
+    return devpro_discord_bot_client.send_to_checkout_channel(_CHECKOUT_STATUS_CHANGED_TEMPLATE.format(
+        status=status,
+        transaction_id=transaction_id
+    ))

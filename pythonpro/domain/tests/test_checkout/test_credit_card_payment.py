@@ -95,6 +95,11 @@ def send_purchase_notification_mock(mocker):
     return mocker.patch('pythonpro.domain.checkout_domain.send_purchase_notification.delay')
 
 
+@pytest.fixture(autouse=True)
+def send_payment_status_change_mock(mocker):
+    return mocker.patch('pythonpro.domain.checkout_domain.send_payment_status_change.delay')
+
+
 # tests for user not logged
 
 @pytest.fixture
