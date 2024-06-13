@@ -3,6 +3,7 @@ from celery import shared_task
 from django_pagarme import facade as django_pagarme_facade
 
 from pythonpro.core import facade as core_facade
+from pythonpro.discord.tasks import send_payment_status_change
 from pythonpro.domain import user_domain, subscription_domain
 from pythonpro.domain.hotzapp_domain import verify_purchase, send_purchase_notification
 from pythonpro.email_marketing import facade as email_marketing_facade
@@ -57,6 +58,7 @@ def payment_handler_task(payment_id):
         pass  # no need to handle payment with no Item
     else:
         status = payment.status()
+        send_payment_status_change.delay(status, payment.transaction_id)
         if status == django_pagarme_facade.PAID:
             user = payment.user
             subscription_domain.create_subscription_and_activate_services(payment)

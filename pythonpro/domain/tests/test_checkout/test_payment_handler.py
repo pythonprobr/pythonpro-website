@@ -24,6 +24,11 @@ def send_purchase_notification_mock(mocker):
     return mocker.patch('pythonpro.domain.checkout_domain.send_purchase_notification.delay')
 
 
+@pytest.fixture(autouse=True)
+def send_payment_status_change_mock(mocker):
+    return mocker.patch('pythonpro.domain.checkout_domain.send_payment_status_change.delay')
+
+
 def test_pagarme_payment_paid_boleto(db, tag_as_mock, remove_tags_mock, logged_user,
                                      send_purchase_notification_mock, mock_subscription_creation):
     payment = baker.make(PagarmePayment, payment_method=facade.BOLETO, user=logged_user)
@@ -113,7 +118,8 @@ def mock_subscription_creation(mocker):
 
 
 def test_pagarme_payment_paid_credit_card(mock_subscription_creation, db, tag_as_mock, remove_tags_mock,
-                                          logged_user, send_purchase_notification_mock):
+                                          logged_user, send_purchase_notification_mock,
+                                          send_payment_status_change_mock):
     payment = baker.make(PagarmePayment, payment_method=facade.CREDIT_CARD, user=logged_user)
     baker.make(PagarmeNotification, status=facade.PAID, payment=payment)
     config = baker.make(PagarmeItemConfig, payments=[payment])
@@ -124,7 +130,8 @@ def test_pagarme_payment_paid_credit_card(mock_subscription_creation, db, tag_as
     remove_tags_mock.assert_called_once_with(
         logged_user.email, logged_user.id, f'{config.slug}-refused'
     )
-    send_purchase_notification_mock.asser_called_once_with(payment.id)
+    send_purchase_notification_mock.assert_called_once_with(payment.id)
+    send_payment_status_change_mock.assert_called_once_with(facade.PAID, payment.transaction_id)
 
 
 def test_pagarme_payment_waiting_payment_boleto(mock_subscription_creation, db, tag_as_mock, remove_tags_mock,
@@ -135,7 +142,7 @@ def test_pagarme_payment_waiting_payment_boleto(mock_subscription_creation, db, 
     checkout_domain.payment_handler_task(payment.id)
     assert remove_tags_mock.called is False
     tag_as_mock.assert_called_once_with(logged_user.email, logged_user.id, f'{config.slug}-boleto')
-    send_purchase_notification_mock.asser_called_once_with(payment.id)
+    send_purchase_notification_mock.assert_called_once_with(payment.id)
 
 
 @pytest.mark.parametrize(
@@ -212,4 +219,4 @@ def test_pagarme_payment_refused(db, tag_as_mock, remove_tags_mock, logged_user,
     checkout_domain.payment_handler_task(payment.id)
     assert remove_tags_mock.called is False
     tag_as_mock.assert_called_once_with(logged_user.email, logged_user.id, f'{config.slug}-refused')
-    send_purchase_notification_mock.asser_called_once_with(payment.id)
+    send_purchase_notification_mock.assert_called_once_with(payment.id)

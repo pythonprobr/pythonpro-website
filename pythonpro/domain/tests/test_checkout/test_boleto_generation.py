@@ -60,6 +60,11 @@ def send_purchase_notification_mock(mocker):
     return mocker.patch('pythonpro.domain.checkout_domain.send_purchase_notification.delay')
 
 
+@pytest.fixture(autouse=True)
+def send_payment_status_change_mock(mocker):
+    return mocker.patch('pythonpro.domain.checkout_domain.send_payment_status_change.delay')
+
+
 @pytest.fixture
 def resp(client, pagarme_responses, create_or_update_lead_mock, payment_handler_task_mock, tag_as_mock,
          active_product_item, sync_on_discourse_mock, send_purchase_notification_mock):
